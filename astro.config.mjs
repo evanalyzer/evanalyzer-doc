@@ -4,8 +4,7 @@ import starlight from "@astrojs/starlight";
 // Update `site` to your GitHub Pages URL: https://<username>.github.io
 // Update `base` to your repository name if it's not a user/org page.
 export default defineConfig({
-  site: "https://evanalyzer.github.io",
-  base: "/evanalyzer-doc",
+  site: "https://evanalyzer.org",
   integrations: [
     starlight({
       title: "EVAnalyzer Docs",
