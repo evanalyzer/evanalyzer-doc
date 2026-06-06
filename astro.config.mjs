@@ -1,10 +1,12 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightImageZoom from "starlight-image-zoom";
 
 export default defineConfig({
   site: "https://evanalyzer.org",
   integrations: [
     starlight({
+      plugins: [starlightImageZoom()],
       title: "EVAnalyzer Docs",
       sidebar: [
         {

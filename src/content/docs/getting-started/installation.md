@@ -7,14 +7,14 @@ EVAnalyzer is distributed as a pre-built binary. No package manager or build too
 
 ## System Requirements
 
-| Component | Requirement |
-|---|---|
-| **Operating system** | Linux x86-64, Linux ARM64, or Windows x86-64 |
-| **Java JDK** | Version 11 or later — required for Bio-Formats image reading |
-| **RAM** | 8 GB recommended (more for large whole-slide images) |
+| Component            | Requirement                                          |
+| -------------------- | ---------------------------------------------------- |
+| **Operating system** | Linux x86-64, Linux ARM64, or Windows x86-64         |
+| **RAM**              | 8 GB recommended (more for large whole-slide images) |
 
 :::caution[macOS not supported]
 The current release targets Linux and Windows only. macOS support is not planned for the near future.
+Thank Apple for their licensing restrictions.
 :::
 
 ### Linux additional libraries (GUI)
@@ -25,11 +25,7 @@ The GUI requires a few system libraries on Linux. Install them once with:
 apt-get install libinput10 libxkbcommon0 libfontconfig1 libgbm1
 ```
 
-### Java
-
-EVAnalyzer bundles a Java Runtime Environment (JRE) that is unpacked on first launch. You do **not** need a separate JDK installation for running the application — only for building from source.
-
-## Downloading a Release
+## Downloading
 
 1. Go to the [GitHub Releases page](https://github.com/evanalyzer/evanalyzer/releases/latest).
 2. Download the archive for your platform:

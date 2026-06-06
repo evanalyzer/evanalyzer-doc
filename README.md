@@ -1,4 +1,11 @@
 # evanalyzer-doc
+
+Run in devel mode
+
+```sh
+npm run dev -- --host
+```
+
 Documentation of EVAnalyzer
 All files are created. Here's what was set up:
 
@@ -22,7 +29,6 @@ Update astro.config.mjs — change site to your actual GitHub username URL (http
 Enable GitHub Pages in repo settings — go to Settings → Pages → Source → select GitHub Actions.
 
 Then run locally:
-
 
 npm install
 npm run dev
@@ -51,4 +57,3 @@ Removed 1 line
 The fix: removed cache: npm and switched npm ci to npm install. The cache: npm option in setup-node strictly requires a package-lock.json to exist — without it, the step fails before even reaching the install command.
 
 If you later want to restore caching (which speeds up builds), just run npm install locally once to generate a package-lock.json, commit it, and then you can revert to npm ci + cache: npm.
-

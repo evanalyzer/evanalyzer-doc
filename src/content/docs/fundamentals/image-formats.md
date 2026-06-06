@@ -3,7 +3,8 @@ title: Image Formats
 description: Supported image formats, multi-channel images, Z-stacks, and big image support.
 ---
 
-EVAnalyzer reads images through the open-source [Bio-Formats](https://www.openmicroscopy.org/bio-formats/) library, which is bundled with the application. Both 8-bit and 16-bit greyscale and 8-bit RGB colour images are supported.
+EVAnalyzer reads images through the open-source [Bio-Formats](https://www.openmicroscopy.org/bio-formats/) library, which is bundled with the application.
+Both 8-bit and 16-bit greyscale and 8-bit RGB colour images are supported.
 
 ## Supported Extensions
 
@@ -30,21 +31,24 @@ Certain Photoshop-encoded TIFF files are not supported. Use RAW TIFF or [OME-TIF
 
 ## Image Planes {#image-planes}
 
-A single microscopy file typically contains many individual images organised into three dimensions:
+A single microscopy file typically contains many individual images organized into three dimensions:
 
-| Dimension | Symbol | Description |
-|---|---|---|
-| Channel | C | Fluorescence or brightfield channel |
-| Z-plane | Z | Focal plane in a z-stack |
-| Time frame | T | Frame in a time-lapse sequence |
+| Dimension  | Symbol | Description                         |
+| ---------- | ------ | ----------------------------------- |
+| Channel    | C      | Fluorescence or brightfield channel |
+| Z-plane    | Z      | Focal plane in a z-stack            |
+| Time frame | T      | Frame in a time-lapse sequence      |
 
-Each unique combination of (C, Z, T) is one **image plane**. EVAnalyzer can access and process any plane individually.
+Each unique combination of (C, Z, T) is one **image plane**.
+EVAnalyzer can access and process any plane individually.
 
-Pipeline input is specified by channel index (0-based). Z and T handling is configured in the [Project tab](/guide/project-setup/#z-stack).
+Pipeline input is specified by channel index (0-based).
+Z and T handling is configured in the [Image control tab](/guide/project-setup/#z-stack) on the right hand side.
 
 ## OME-XML Metadata {#ome-xml}
 
 EVAnalyzer reads OME-XML metadata embedded in or alongside image files. OME metadata provides:
+
 - Number and order of channels
 - Physical pixel sizes (nm/µm/mm)
 - Z-step size
@@ -55,9 +59,10 @@ If no OME metadata is found in a multi-channel file, EVAnalyzer assumes a single
 
 ## Big Images {#big-images}
 
-Large whole-slide images are handled automatically via tiling. EVAnalyzer splits any image larger than the configured tile size into overlapping tiles, analyses them independently, and stitches the results.
+Large whole-slide images are handled automatically via tiling.
+EVAnalyzer splits any image larger than the configured tile size into overlapping tiles, analyses them independently, and stitches the results.
 
-The maximum tile size (default: 4096 × 4096 px) is set in the [Project tab](/guide/project-setup/). A smaller tile size reduces RAM usage at the cost of more tile transitions.
+The tile size used for analysis is 4096 × 4096 px.
 
 :::note
 EVAnalyzer can generate a navigator minimap for big images only when the file contains a pyramid representation (reduced-resolution levels). Ensure pyramid support is enabled when saving whole-slide images.
