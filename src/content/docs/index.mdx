@@ -1,15 +1,50 @@
 ---
-title: Welcome to EVAnalyzer Docs
-description: Documentation for EVAnalyzer.
+title: EVAnalyzer Documentation
+description: High-performance bioimage analysis for fluorescence microscopy and high-content screening.
 template: splash
 hero:
-  tagline: Hello World! Welcome to the EVAnalyzer documentation.
+  tagline: A high-performance bioimage analysis desktop application written in Rust — combining a multi-channel image viewer with a configurable analysis pipeline.
   actions:
     - text: Get Started
-      link: /evanalyzer-doc/guides/getting-started/
+      link: /getting-started/installation/
       icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/evanalyzer/evanalyzer
+      icon: external
+      variant: minimal
 ---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## What is EVAnalyzer?
 
-EVAnalyzer is your project description here. Update this page to tell your users what EVAnalyzer does.
+EVAnalyzer is the Rust reimplementation of [ImageC](https://github.com/imagec) and the successor of the [EVAnalyzer ImageJ plugin](https://github.com/evanalyzer/evanalyzer-ij). It provides a high-performance image viewer combined with a fully configurable, multi-step analysis pipeline for fluorescence microscopy and high-content screening data.
+
+<CardGrid>
+  <Card title="Installation" icon="laptop">
+    Download and install EVAnalyzer on Linux or Windows. [Get started →](/getting-started/installation/)
+  </Card>
+  <Card title="First Steps" icon="rocket">
+    Create your first project and run your first analysis. [Learn more →](/getting-started/first-steps/)
+  </Card>
+  <Card title="Commands" icon="puzzle">
+    Browse the full library of 26 pipeline commands. [Explore commands →](/commands/overview/)
+  </Card>
+  <Card title="Tutorials" icon="open-book">
+    Step-by-step guides for spot counting, colocalization, and more. [View tutorials →](/tutorials/spot-count/)
+  </Card>
+</CardGrid>
+
+## Key Features
+
+| Feature | Description |
+|---|---|
+| **40+ file formats** | CZI, ND2, LIF, VSI, OME-TIFF, SLD, SCN, and more via [Bio-Formats](https://www.openmicroscopy.org/bio-formats/) |
+| **Multi-channel viewer** | Per-channel brightness/contrast, visibility toggles, and colour assignment |
+| **Z-stack & T-stack** | Intensity projections (Max, Min, Avg, Sum, Middle) or per-frame processing |
+| **ROI annotation** | Rectangle, oval, and polygon regions of interest drawn directly on the image |
+| **Analysis pipeline** | 26 composable processing steps from preprocessing to object classification |
+| **Multi-well plate layout** | Group images by well/plate for high-content screening experiments |
+| **CSV export** | Pipeline results exported per image and per well |
+| **Scale bar & minimap** | Physical scale bar and navigator thumbnail overlay |
+| **Cross-platform** | Linux (Skia renderer) and Windows (software renderer) |
