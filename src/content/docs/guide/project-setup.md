@@ -5,6 +5,8 @@ description: Configure experiment metadata, image grouping, plate layout, and Z/
 
 The **Project** tab is the first configuration step. It holds metadata about your experiment and controls how images are loaded and grouped.
 
+![Project Settings dialog](../../../assets/screenshots/screenshot-project-settings.png)
+
 ## Experiment Metadata
 
 | Field | Description |

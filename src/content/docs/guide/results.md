@@ -11,6 +11,8 @@ EVAnalyzer stores results in a DuckDB database file named `results.evadb` inside
 
 Open an existing results file from the toolbar: click the **arrow** beside the **Open** button and select the file.
 
+![Results list](../../../assets/screenshots/screenshot-results-list.png)
+
 ## Results Views
 
 ### Plate View
@@ -32,6 +34,8 @@ Double-click an image in the Image view to open the **detail view**, which shows
 - A **density map** — the image is divided into square tiles; the average metric value of all objects within each tile is visualised as a colour.
 - A **per-object table** — every detected object with all its measured metrics.
 
+![Per-object results table](../../../assets/screenshots/screenshot-results.png)
+
 Select a row in the object table to jump to that object in the image and highlight its position.
 
 :::note[Original images required for interactive mode]
@@ -45,9 +49,30 @@ The results table shows only the columns configured in the **Class Editor** by d
 1. Click the blue **Add column** button.
 2. Choose from the list of all available metrics.
 
+![Column selector](../../../assets/screenshots/screenshot-results-filter.png)
+
 Columns can also be removed by right-clicking the column header. Table layout is saved with the `results.evadb` file and restored on the next open.
 
 See [Metrics](/fundamentals/metrics/) for a full description of all available measurements and statistics.
+
+## Grouping and Aggregating Rows
+
+Click the **stack icon** in the table toolbar to open the **Group by** / **Aggregate** panel, which summarises the per-object table into one row per group instead of one row per object.
+
+![Group by and Aggregate panel](../../../assets/screenshots/screenshot-results-group-by.png)
+
+**Group by** — choose how rows are bucketed:
+
+| Mode | Behaviour |
+|---|---|
+| **None** | No grouping; one row per object (default) |
+| **Image name** | One row per source image |
+| **Folder name** | One row per parent folder |
+| **Regex on image name** | One row per distinct match of a regular expression against the filename, e.g. `^([A-Z]\d+)_` to group by well ID |
+
+**Aggregate** — choose which statistics to compute per group for each numeric metric: **Min**, **Max**, **Average** (checked by default), **Median**, **Std. dev.**, **Sum**.
+
+Click **Apply** to replace the per-object view with the grouped/aggregated summary. Switch **Group by** back to **None** to return to the full per-object table.
 
 ## Exporting Results
 

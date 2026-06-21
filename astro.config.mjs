@@ -35,6 +35,12 @@ export default defineConfig({
           ],
         },
         {
+          label: "AI",
+          items: [
+            { label: "AI Models", slug: "ai/overview" },
+          ],
+        },
+        {
           label: "Commands",
           items: [
             { label: "Overview", slug: "commands/overview" },
@@ -76,6 +82,14 @@ export default defineConfig({
               label: "Morphology",
               items: [
                 { label: "Morphological Transform", slug: "commands/morphology/morphological-transform" },
+              ],
+            },
+            {
+              label: "AI Segmentation",
+              items: [
+                { label: "Stardist", slug: "commands/ai-segmentation/stardist" },
+                { label: "UNet", slug: "commands/ai-segmentation/unet" },
+                { label: "Cellpose", slug: "commands/ai-segmentation/cellpose" },
               ],
             },
             {

@@ -21,6 +21,8 @@ Available presets include:
 
 Click a pipeline name to open the pipeline editor.
 
+![Edit Pipeline dialog](../../../assets/screenshots/screenshot-add-pipeline-dialog.png)
+
 ### Pipeline settings
 
 | Setting | Description |
@@ -42,6 +44,8 @@ Click a pipeline name to open the pipeline editor.
 
 Steps are listed top-to-bottom and executed in that order. Click **+ Add step** (the `— + —` button) to open the command picker, which shows only commands compatible with the current pipeline state.
 
+![Pipeline editor with steps](../../../assets/screenshots/screenshot-pipeline.png)
+
 Commands fall into categories indicated by colour:
 - **Grey** — image processing (input: image, output: image)
 - **White** — segmentation (input: image, output: binary mask)
@@ -60,6 +64,16 @@ A typical pipeline flow:
 The viewport on the right shows the result of all pipeline steps applied to the currently selected image. Changing any parameter immediately updates the preview. A live object count is shown in the legend.
 
 Use the **zoom** controls to inspect segmentation quality, and the **side-by-side** button to compare the original and processed image simultaneously.
+
+## Saving a Pipeline as a Template
+
+Click **Save as Template** to store the current pipeline (all steps and parameters) for reuse in other projects.
+
+![Save Pipeline as Template dialog](../../../assets/screenshots/Screenshot from 2026-06-21 19-42-14.png)
+
+Fill in **Name**, **Short description**, **Description**, **Author**, and **Organization**, then click **Next…** to choose a save location in the native file dialog. Pipeline templates use the `.evapipe` extension.
+
+Templates saved to the default location (`~/evanalyzer/templates/`) automatically appear in the preset drop-down next to **New pipeline** the next time you create a pipeline, alongside the built-in presets (EV channel, Cell brightfield, Nucleus, EV in cell).
 
 ## Pipeline History
 

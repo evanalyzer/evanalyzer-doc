@@ -15,6 +15,21 @@ Click any row to:
 
 The selected image is also the one used as the live preview source when editing pipeline parameters.
 
+## Image Meta Panel
+
+Selecting an image opens the **Image Meta** panel, which shows detailed acquisition metadata for that file:
+
+| Section | Fields |
+|---|---|
+| **Acquisition** | Magnification, Channels · Z · T, Bit depth |
+| **Channels** | Per-channel name and emission wavelength (nm) |
+| **Dimensions** | Width × Height, storage size |
+| **Calibration** | Pixel X / Y / Z size (nm) — editable via **Edit** / **Done** / **Reset** |
+
+![Image Meta panel](../../../assets/screenshots/screenshot-image-meta.png)
+
+Use the **Calibration** section to correct pixel size if it was not embedded correctly in the source file — this affects the scale bar and all physical-unit measurements (area, distance) calculated during analysis.
+
 ## Image Viewer
 
 The viewer panel shows the selected image with the following controls:
@@ -46,6 +61,14 @@ A physical scale bar is overlaid on the image. The unit (nm, µm, mm) is configu
 ### Navigator minimap
 
 For large images, a thumbnail minimap in the corner shows the full image with the current viewport highlighted. Click or drag the minimap to pan to a different area.
+
+### Position and pixel value readout
+
+As you move the mouse over the viewport, a HUD overlay in the top-left corner shows the cursor's **position** (in physical units, using the calibrated pixel size) and the **pixel value** for every visible channel.
+
+![Position and pixel value readout](../../../assets/screenshots/screenshot-image-measure-points.png)
+
+This is a live readout that updates continuously with mouse movement — it does not place a persistent measurement marker.
 
 ### ROI Annotation
 

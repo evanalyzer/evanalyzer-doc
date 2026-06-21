@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 26 pipeline commands grouped by category.
+description: All 29 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -13,6 +13,7 @@ Pipeline commands are the building blocks of an analysis. Each command takes eit
 | **Edge & feature detection** | Grey | Image | Image |
 | **Segmentation** | White | Image | Binary mask |
 | **Morphology** | White | Binary/greyscale image | Image |
+| **AI segmentation** | White | Image | Binary mask / object instances |
 | **Object processing** | Green | Objects | Objects / measurements |
 
 :::note
@@ -66,6 +67,16 @@ Commands for modifying the shape of binary or greyscale regions.
 | Command | Purpose |
 |---|---|
 | [Morphological Transform](/commands/morphology/morphological-transform/) | Erosion, dilation, opening, closing |
+
+## AI Segmentation
+
+Commands that run a pretrained deep-learning model for segmentation. Only available in builds with the `ai` Cargo feature enabled.
+
+| Command | Purpose |
+|---|---|
+| [Stardist](/commands/ai-segmentation/stardist/) | Instance segmentation via star-convex polygons — separates touching objects directly |
+| [UNet](/commands/ai-segmentation/unet/) | Semantic foreground/background mask — pair with Connected Components (+ Watershed) to separate instances |
+| [Cellpose](/commands/ai-segmentation/cellpose/) | Instance segmentation via flow-field dynamics — handles irregular and overlapping shapes |
 
 ## Object Processing
 

@@ -21,6 +21,8 @@ Use `<prefix>@<type>` where the prefix (typically the fluorophore) is used for s
 
 Click the **+** button to add a new class. Double-click an existing class to open the **Class Editor**, which lets you set:
 
+![Class Settings dialog](../../../assets/screenshots/screenhsot-add-classs-dialog.png)
+
 | Field | Description |
 |---|---|
 | **Name** | Class label, e.g. `cy5@spot` |
