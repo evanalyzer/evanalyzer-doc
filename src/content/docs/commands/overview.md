@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 29 pipeline commands grouped by category.
+description: All 30 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -88,6 +88,7 @@ Commands that operate on extracted objects.
 | [Classify ROIs](/commands/object/classify-rois/) | Filter and assign final object classes |
 | [Colocalization](/commands/object/colocalization/) | Find overlapping objects across classes |
 | [Voronoi](/commands/object/voronoi/) | Partition space from object centroids |
+| [Object Transform](/commands/object/transform-rois/) | Scale, snap a circle around, or fit an ellipse to objects |
 | [Distance Transform](/commands/object/distance-transform/) | Measure distances between object pairs |
 | [Save Image](/commands/object/save-image/) | Write a control image to disk |
 

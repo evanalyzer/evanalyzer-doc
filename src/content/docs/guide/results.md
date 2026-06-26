@@ -72,7 +72,34 @@ Click the **stack icon** in the table toolbar to open the **Group by** / **Aggre
 
 **Aggregate** — choose which statistics to compute per group for each numeric metric: **Min**, **Max**, **Average** (checked by default), **Median**, **Std. dev.**, **Sum**.
 
-Click **Apply** to replace the per-object view with the grouped/aggregated summary. Switch **Group by** back to **None** to return to the full per-object table.
+Two additional toggles further split each group into multiple rows:
+
+| Toggle | Behaviour |
+|---|---|
+| **Also group by class** | Splits every group into one row per object class (e.g. `Image1 / Nucleus`, `Image1 / Cytoplasm`). An object carrying more than one class contributes to each of its classes' rows |
+| **Colocalized / not colocalized** | Splits every group into two rows: one for colocalising objects, one for non-colocalising objects (see [Colocalization](/commands/object/colocalization/)) |
+
+Both toggles can be combined with any **Group by** mode and with each other. Click **Apply** to replace the per-object view with the grouped/aggregated summary. Switch **Group by** back to **None** to return to the full per-object table.
+
+If a colocalization partner class is configured, two extra columns are available per partner: the **number** of partner objects each object colocalises with, and their **object IDs** (comma-separated). The count column is numeric and can be aggregated like any other metric.
+
+## Charts
+
+Click the **chart icon** in the results toolbar to switch from the table to the **Charts** panel, plotted from the same (optionally grouped/filtered) rows currently loaded in the table.
+
+Three chart types are available, each with its own controls:
+
+| Chart | Controls | Shows |
+|---|---|---|
+| **Histogram** | Column, Buckets (2–200), Log scale | Frequency distribution of one numeric metric |
+| **Scatter** | X axis, Y axis, Color by (*None*, *Class*, *Colocalized*) | Two numeric metrics plotted against each other, optionally coloured by class or colocalization status |
+| **Heatmap** | Color by (*Count* or the average of a numeric metric), Cell size (px) | Spatial distribution of objects across a single image, binned into square cells |
+
+Only visible, numeric columns appear in the pickers — hide a column in the table to remove it from the chart pickers too. For large scatter plots, EVAnalyzer deterministically samples down to a fixed number of points and reports "Showing N of M points" so re-rendering the same filter always produces the same subset.
+
+Click **Plot** to render the chart. Hover over (or click) the rendered chart to see a tooltip with the exact bucket range/count, point coordinates and group, or cell value/count under the cursor.
+
+Click the **save icon** next to the chart to export exactly what's on screen as a PNG file. Charts are not included in the XLSX/R export — use the save icon for chart images and the **Download** button below for tabular data.
 
 ## Exporting Results
 

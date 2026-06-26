@@ -11,13 +11,17 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting Started",
+          collapsed: true,
           items: [
             { label: "Installation", slug: "getting-started/installation" },
+            { label: "System Requirements", slug: "getting-started/system-requirements" },
+            { label: "Downloads", slug: "getting-started/downloads" },
             { label: "First Steps", slug: "getting-started/first-steps" },
           ],
         },
         {
           label: "User Guide",
+          collapsed: true,
           items: [
             { label: "Project Setup", slug: "guide/project-setup" },
             { label: "Images", slug: "guide/images" },
@@ -28,6 +32,7 @@ export default defineConfig({
         },
         {
           label: "Fundamentals",
+          collapsed: true,
           items: [
             { label: "Image Formats", slug: "fundamentals/image-formats" },
             { label: "Objects", slug: "fundamentals/objects" },
@@ -36,16 +41,20 @@ export default defineConfig({
         },
         {
           label: "AI",
+          collapsed: true,
           items: [
             { label: "AI Models", slug: "ai/overview" },
+            { label: "Importing bioimage.io Models", slug: "ai/bioimageio-import" },
           ],
         },
         {
           label: "Commands",
+          collapsed: true,
           items: [
             { label: "Overview", slug: "commands/overview" },
             {
               label: "Image Processing",
+              collapsed: true,
               items: [
                 { label: "Blur", slug: "commands/image-processing/blur" },
                 { label: "Gaussian Blur", slug: "commands/image-processing/gaussian-blur" },
@@ -61,6 +70,7 @@ export default defineConfig({
             },
             {
               label: "Edge & Feature Detection",
+              collapsed: true,
               items: [
                 { label: "Canny Edge Detection", slug: "commands/edge-detection/canny" },
                 { label: "Sobel Edge Detection", slug: "commands/edge-detection/sobel" },
@@ -72,6 +82,7 @@ export default defineConfig({
             },
             {
               label: "Segmentation",
+              collapsed: true,
               items: [
                 { label: "Threshold", slug: "commands/segmentation/threshold" },
                 { label: "Connected Components", slug: "commands/segmentation/connected-components" },
@@ -80,12 +91,14 @@ export default defineConfig({
             },
             {
               label: "Morphology",
+              collapsed: true,
               items: [
                 { label: "Morphological Transform", slug: "commands/morphology/morphological-transform" },
               ],
             },
             {
               label: "AI Segmentation",
+              collapsed: true,
               items: [
                 { label: "Stardist", slug: "commands/ai-segmentation/stardist" },
                 { label: "UNet", slug: "commands/ai-segmentation/unet" },
@@ -94,11 +107,13 @@ export default defineConfig({
             },
             {
               label: "Object Processing",
+              collapsed: true,
               items: [
                 { label: "Extract ROIs", slug: "commands/object/extract-rois" },
                 { label: "Classify ROIs", slug: "commands/object/classify-rois" },
                 { label: "Colocalization", slug: "commands/object/colocalization" },
                 { label: "Voronoi", slug: "commands/object/voronoi" },
+                { label: "Object Transform", slug: "commands/object/transform-rois" },
                 { label: "Distance Transform", slug: "commands/object/distance-transform" },
                 { label: "Save Image", slug: "commands/object/save-image" },
               ],
@@ -107,12 +122,14 @@ export default defineConfig({
         },
         {
           label: "CLI",
+          collapsed: true,
           items: [
             { label: "Command Line Interface", slug: "cli/cli" },
           ],
         },
         {
           label: "Tutorials",
+          collapsed: true,
           items: [
             { label: "Spot Count", slug: "tutorials/spot-count" },
             { label: "Spot Count per Cell", slug: "tutorials/spot-count-per-cell" },
@@ -121,6 +138,7 @@ export default defineConfig({
         },
         {
           label: "Development",
+          collapsed: true,
           items: [
             { label: "Building", slug: "development/building" },
             { label: "Testing", slug: "development/testing" },

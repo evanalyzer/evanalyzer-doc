@@ -24,6 +24,7 @@ EVAnalyzer measures a set of metrics for every detected object and stores them i
 | **Center of mass X** | X coordinate of the centre of mass |
 | **Center of mass Y** | Y coordinate of the centre of mass |
 | **Intersection** | Number of objects from another class that overlap this object |
+| **Colocalization partner count / IDs** | Per colocalization partner class: how many of that class's objects this object colocalises with, and their object IDs (see [Colocalization](/commands/object/colocalization/)) |
 | **Object ID** | Unique object identifier within a run |
 | **Origin object ID** | Object ID of the source when this object was copied by reclassification |
 | **Parent object ID** | Object ID of the parent when this object was reclassified by intersection |

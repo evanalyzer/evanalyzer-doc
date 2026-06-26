@@ -1,0 +1,308 @@
+---
+const REPO = "evanalyzer/evanalyzer";
+---
+
+<div class="download-picker" data-repo={REPO}>
+  <div class="picker-step">
+    <p class="picker-label">1. Choose your operating system</p>
+    <div class="picker-options" role="group" aria-label="Operating system">
+      <button type="button" class="picker-btn" data-os="windows">
+        <span class="picker-btn-title">Windows</span>
+        <span class="picker-btn-sub">x86-64</span>
+      </button>
+      <button type="button" class="picker-btn" data-os="linux">
+        <span class="picker-btn-title">Linux</span>
+        <span class="picker-btn-sub">x86-64</span>
+      </button>
+      <button type="button" class="picker-btn" data-os="macos">
+        <span class="picker-btn-title">macOS</span>
+        <span class="picker-btn-sub">Apple Silicon</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="picker-step">
+    <p class="picker-label">2. CUDA acceleration?</p>
+    <div class="picker-options" role="group" aria-label="CUDA acceleration">
+      <button type="button" class="picker-btn" data-cuda="false">
+        <span class="picker-btn-title">No CUDA</span>
+        <span class="picker-btn-sub">CPU only — works everywhere</span>
+      </button>
+      <button type="button" class="picker-btn" data-cuda="true">
+        <span class="picker-btn-title">With CUDA</span>
+        <span class="picker-btn-sub">NVIDIA GPU required</span>
+      </button>
+    </div>
+    <p class="picker-note" data-cuda-note hidden>
+      CUDA builds aren't available for macOS — showing the CPU build instead.
+    </p>
+  </div>
+
+  <div class="picker-result" data-result>
+    <p class="picker-placeholder">Pick an operating system above to see the matching download.</p>
+  </div>
+</div>
+
+<script define:vars={{ REPO }}>
+  // Module scripts never set `document.currentScript`, and only one picker is
+  // ever rendered per page, so a plain class lookup is the reliable option.
+  const root = document.querySelector(".download-picker");
+  const osButtons = root.querySelectorAll("[data-os]");
+  const cudaButtons = root.querySelectorAll("[data-cuda]");
+  const cudaNote = root.querySelector("[data-cuda-note]");
+  const resultEl = root.querySelector("[data-result]");
+
+  let state = { os: null, cuda: false };
+  let releasesPromise = null;
+
+  function osKeywords(os) {
+    return { windows: ["windows"], linux: ["linux"], macos: ["macos", "darwin"] }[os] || [];
+  }
+
+  function assetMatches(name, os, cuda) {
+    const n = name.toLowerCase();
+    if (!n.startsWith("evanalyzer-")) return false;
+    if (!osKeywords(os).some((k) => n.includes(k))) return false;
+    const hasCuda = n.includes("cuda");
+    return cuda ? hasCuda : !hasCuda;
+  }
+
+  function formatSize(bytes) {
+    const mb = bytes / (1024 * 1024);
+    if (mb > 1024) return `${(mb / 1024).toFixed(2)} GB`;
+    return `${mb.toFixed(0)} MB`;
+  }
+
+  async function fetchReleases() {
+    if (!releasesPromise) {
+      releasesPromise = fetch(`https://api.github.com/repos/${REPO}/releases?per_page=30`)
+        .then((res) => {
+          if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
+          return res.json();
+        })
+        .then((releases) => releases.filter((r) => r.tag_name !== "app-deps" && !r.draft));
+    }
+    return releasesPromise;
+  }
+
+  function releasesUrl() {
+    return `https://github.com/${REPO}/releases/latest`;
+  }
+
+  function renderLoading() {
+    resultEl.innerHTML = `<p class="picker-placeholder">Looking up the latest build…</p>`;
+  }
+
+  function renderError(message) {
+    resultEl.innerHTML = `
+      <p class="picker-error">${message}</p>
+      <p><a href="${releasesUrl()}">Browse all releases on GitHub →</a></p>
+    `;
+  }
+
+  function renderNoSelection() {
+    resultEl.innerHTML = `<p class="picker-placeholder">Pick an operating system above to see the matching download.</p>`;
+  }
+
+  function renderNoMatch() {
+    resultEl.innerHTML = `
+      <p class="picker-error">No build for this combination has been published yet.</p>
+      <p><a href="${releasesUrl()}">Check the releases page →</a> — a build may be uploading.</p>
+    `;
+  }
+
+  function renderMatch(release, assets) {
+    const sorted = [...assets].sort((a, b) => a.name.localeCompare(b.name));
+    const links = sorted
+      .map(
+        (a) => `
+        <a class="picker-download" href="${a.browser_download_url}">
+          <span class="picker-download-name">${a.name}</span>
+          <span class="picker-download-size">${formatSize(a.size)}</span>
+        </a>`
+      )
+      .join("");
+
+    const multiPart =
+      sorted.length > 1
+        ? `<p class="picker-note">This build is split into ${sorted.length} parts. Download all of them into the same folder, then extract the first part (e.g. with <code>7z x ${sorted[0].name}</code>) — the rest are pulled in automatically.</p>`
+        : "";
+
+    resultEl.innerHTML = `
+      <p class="picker-version">Latest matching release: <strong>${release.tag_name}</strong></p>
+      <div class="picker-downloads">${links}</div>
+      ${multiPart}
+    `;
+  }
+
+  async function update() {
+    if (!state.os) {
+      renderNoSelection();
+      return;
+    }
+    renderLoading();
+    try {
+      const releases = await fetchReleases();
+      for (const release of releases) {
+        const assets = (release.assets || []).filter((a) => assetMatches(a.name, state.os, state.cuda));
+        if (assets.length > 0) {
+          renderMatch(release, assets);
+          return;
+        }
+      }
+      renderNoMatch();
+    } catch (err) {
+      renderError(`Couldn't reach the GitHub API (${err.message}).`);
+    }
+  }
+
+  osButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.os = btn.dataset.os;
+      osButtons.forEach((b) => b.classList.toggle("is-selected", b === btn));
+
+      const isMac = state.os === "macos";
+      cudaButtons.forEach((b) => (b.disabled = isMac && b.dataset.cuda === "true"));
+      cudaNote.hidden = !(isMac && state.cuda);
+      if (isMac) {
+        state.cuda = false;
+        cudaButtons.forEach((b) => b.classList.toggle("is-selected", b.dataset.cuda === "false"));
+      }
+      update();
+    });
+  });
+
+  cudaButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (btn.disabled) return;
+      state.cuda = btn.dataset.cuda === "true";
+      cudaButtons.forEach((b) => b.classList.toggle("is-selected", b === btn));
+      cudaNote.hidden = !(state.os === "macos" && state.cuda);
+      update();
+    });
+  });
+
+  // Default selection: no CUDA, OS auto-detected from the browser (user can override).
+  cudaButtons.forEach((b) => b.classList.toggle("is-selected", b.dataset.cuda === "false"));
+  const ua = navigator.userAgent.toLowerCase();
+  const guessedOs = ua.includes("windows") ? "windows" : ua.includes("mac") ? "macos" : ua.includes("linux") ? "linux" : null;
+  if (guessedOs) {
+    const btn = root.querySelector(`[data-os="${guessedOs}"]`);
+    if (btn) btn.click();
+  }
+</script>
+
+<style>
+  .download-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .picker-label {
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .picker-options {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .picker-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    padding: 0.65rem 1.1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background: var(--sl-color-bg);
+    color: var(--sl-color-text);
+    cursor: pointer;
+    min-width: 9rem;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .picker-btn:hover:not(:disabled) {
+    border-color: var(--sl-color-accent);
+  }
+
+  .picker-btn.is-selected {
+    border-color: var(--sl-color-accent);
+    background: var(--sl-color-accent-low);
+  }
+
+  .picker-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .picker-btn-title {
+    font-weight: 600;
+  }
+
+  .picker-btn-sub {
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .picker-note {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--sl-color-gray-3);
+  }
+
+  .picker-result {
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background: var(--sl-color-bg-sidebar);
+  }
+
+  .picker-placeholder {
+    color: var(--sl-color-gray-3);
+    margin: 0;
+  }
+
+  .picker-error {
+    color: var(--sl-color-orange);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .picker-version {
+    margin: 0 0 0.75rem 0;
+  }
+
+  .picker-downloads {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .picker-download {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    border-radius: 0.4rem;
+    background: var(--sl-color-accent);
+    color: var(--sl-color-white);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .picker-download:hover {
+    background: var(--sl-color-accent-high);
+  }
+
+  .picker-download-size {
+    font-weight: 400;
+    opacity: 0.85;
+    font-size: 0.85rem;
+    margin-left: 1rem;
+    white-space: nowrap;
+  }
+</style>
