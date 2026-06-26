@@ -99,13 +99,15 @@ Only visible, numeric columns appear in the pickers — hide a column in the tab
 
 Click **Plot** to render the chart. Hover over (or click) the rendered chart to see a tooltip with the exact bucket range/count, point coordinates and group, or cell value/count under the cursor.
 
-Click the **save icon** next to the chart to export exactly what's on screen as a PNG file. Charts are not included in the XLSX/R export — use the save icon for chart images and the **Download** button below for tabular data.
+Click the **save icon** next to the chart to export exactly what's on screen as a PNG file. Charts are not included in the CSV/XLSX export — use the save icon for chart images and the **Download** button below for tabular data.
+
+Charts, table export, and grouping are also available headlessly via the [CLI](/cli/cli/#export) (`evanalyzer cli export chart …`), which renders from the same `results.evadb` file using identical logic.
 
 ## Exporting Results
 
 Click the **Download** button (↓) in the toolbar to export the current view. Available formats:
+- **CSV** — comma-separated values.
 - **XLSX** — Microsoft Excel workbook.
-- **R** — data frame suitable for import into R.
 
 You can export at the plate level, well level, or individual image level.
 
