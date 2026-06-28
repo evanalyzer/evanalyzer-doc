@@ -11,22 +11,22 @@ All files are created. Here's what was set up:
 
 Project structure:
 
-package.json — Astro + Starlight dependencies
-astro.config.mjs — Starlight config with sidebar
-tsconfig.json — TypeScript config
-src/content/docs/index.mdx — Hello World splash page
-src/content/docs/guides/getting-started.md — Getting started guide
+package.json - Astro + Starlight dependencies
+astro.config.mjs - Starlight config with sidebar
+tsconfig.json - TypeScript config
+src/content/docs/index.mdx - Hello World splash page
+src/content/docs/guides/getting-started.md - Getting started guide
 DevContainer:
 
-.devcontainer/devcontainer.json — Node 22 + Astro VS Code extension, auto-runs npm install, forwards port 4321
+.devcontainer/devcontainer.json - Node 22 + Astro VS Code extension, auto-runs npm install, forwards port 4321
 CI/CD:
 
-.github/workflows/deploy.yml — Builds on push to main and deploys to GitHub Pages
+.github/workflows/deploy.yml - Builds on push to main and deploys to GitHub Pages
 Before pushing, you need to do two things:
 
-Update astro.config.mjs — change site to your actual GitHub username URL (https://<your-username>.github.io). The base: '/evanalyzer-doc' is already set to match your repo name.
+Update astro.config.mjs - change site to your actual GitHub username URL (https://<your-username>.github.io). The base: '/evanalyzer-doc' is already set to match your repo name.
 
-Enable GitHub Pages in repo settings — go to Settings → Pages → Source → select GitHub Actions.
+Enable GitHub Pages in repo settings - go to Settings → Pages → Source → select GitHub Actions.
 
 Then run locally:
 
@@ -54,6 +54,6 @@ npm isn't available locally so we can't generate a package-lock.json. The error 
 Read deploy.yml
 Edit deploy.yml
 Removed 1 line
-The fix: removed cache: npm and switched npm ci to npm install. The cache: npm option in setup-node strictly requires a package-lock.json to exist — without it, the step fails before even reaching the install command.
+The fix: removed cache: npm and switched npm ci to npm install. The cache: npm option in setup-node strictly requires a package-lock.json to exist - without it, the step fails before even reaching the install command.
 
 If you later want to restore caching (which speeds up builds), just run npm install locally once to generate a package-lock.json, commit it, and then you can revert to npm ci + cache: npm.

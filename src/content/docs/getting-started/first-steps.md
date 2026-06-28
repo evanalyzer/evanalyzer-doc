@@ -26,7 +26,7 @@ Click an image to preview it and inspect its metadata (channels, pixel sizes, Z/
 
 ### Classification tab
 
-Before building pipelines, define the **object classes** you want to detect — for example, `CY7`, `CY5`, `DAPI`.
+Before building pipelines, define the **object classes** you want to detect - for example, `CY7`, `CY5`, `DAPI`.
 
 - Click the **+** button to add a class.
 - Assign a name and a display color.
@@ -42,9 +42,9 @@ Pipelines extract objects from image channels.
 Click **New pipeline** which opens the pipeline edit dialog.
 Enter a pipeline name and select the image source the pipeline should start.
 
-- **Scratchpad** — starts with an empty image, this option is used if the pipeline should work on already extracted objects
-- **Memory slot** — images can be stored to a temporary memory using the `ImageCache` command, start with an image from this cache
-- **Channel** — the default value is to start with a specific image channel the pipeline should work on.
+- **Scratchpad** - starts with an empty image, this option is used if the pipeline should work on already extracted objects
+- **Memory slot** - images can be stored to a temporary memory using the `ImageCache` command, start with an image from this cache
+- **Channel** - the default value is to start with a specific image channel the pipeline should work on.
 
 ![Pipeline edit](../../../assets/getting-started/screenshot-pipeline-edit.png)
 
@@ -53,13 +53,13 @@ The order is always **Preprocessing → Segmentation → Object detection → Ob
 
 A minimal spot-detection pipeline looks like:
 
-1. **Rolling Ball** — remove uneven background
-2. **Gaussian Blur** — reduce noise
-3. **Threshold** — convert greyscale to binary
-4. **Connected Components** — label each foreground region
-5. **Watershed** — split touching objects
-6. **Extract ROIs** — create region of interest objects to work on
-7. **Classify ROIs** — filter by size/circularity and assign an object class
+1. **Rolling Ball** - remove uneven background
+2. **Gaussian Blur** - reduce noise
+3. **Threshold** - convert greyscale to binary
+4. **Connected Components** - label each foreground region
+5. **Watershed** - split touching objects
+6. **Extract ROIs** - create region of interest objects to work on
+7. **Classify ROIs** - filter by size/circularity and assign an object class
 
 Before the preview can be shown or the analysis can be started, the project must be saved using the **Save** button in the toolbar.
 

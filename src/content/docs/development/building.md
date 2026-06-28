@@ -7,11 +7,11 @@ EVAnalyzer is written in Rust (2024 edition) and uses Cargo as its build system.
 
 ## Requirements
 
-| Tool | Version |
-|---|---|
-| [Rust toolchain](https://rustup.rs/) | 1.80 or later |
-| Java JDK | 11 or later (required for Bio-Formats) |
-| Linux system libraries (GUI) | `libinput10 libxkbcommon0 libfontconfig1 libgbm1` |
+| Tool                                 | Version                                           |
+| ------------------------------------ | ------------------------------------------------- |
+| [Rust toolchain](https://rustup.rs/) | 1.80 or later                                     |
+| Java JDK                             | 11 or later (required for Bio-Formats)            |
+| Linux system libraries (GUI)         | `libinput10 libxkbcommon0 libfontconfig1 libgbm1` |
 
 ## Clone the repository
 
@@ -57,14 +57,14 @@ Build artifacts are placed in `target/<target>/release/`.
 
 The workspace is split into focused crates:
 
-| Crate | Description |
-|---|---|
+| Crate             | Description                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------- |
 | `evanalyzer_core` | Image I/O (Bio-Formats via JVM), processing algorithms, ROI model, pipeline execution |
-| `evanalyzer_cfg` | Project settings, JSON serialisation, pipeline command configuration |
-| `evanalyzer_app` | Application handle, shared project state |
-| `evanalyzer_gui` | Slint-based desktop GUI — viewport, histogram, ROI tools, classification panel |
-| `evanalyzer_cli` | Command-line interface for headless batch analysis |
-| `evanalyzer_bin` | Binary entry point — launches GUI or CLI depending on arguments |
+| `evanalyzer_cfg`  | Project settings, JSON serialisation, pipeline command configuration                  |
+| `evanalyzer_app`  | Application handle, shared project state                                              |
+| `evanalyzer_gui`  | Slint-based desktop GUI - viewport, histogram, ROI tools, classification panel        |
+| `evanalyzer_cli`  | Command-line interface for headless batch analysis                                    |
+| `evanalyzer_bin`  | Binary entry point - launches GUI or CLI depending on arguments                       |
 
 ## Previewing the GUI inside a container
 
@@ -87,9 +87,9 @@ cargo llvm-cov --lcov --output-path lcov.info    # lcov format (e.g. VS Code Cov
 
 ## UI Performance Targets
 
-| Action | Target | Rationale |
-|---|---|---|
-| Pan / drag | < 10 ms | Must feel attached to the cursor |
-| Zoom | < 16 ms | Prevents motion sickness |
-| Channel toggle | < 100 ms | Perceived as instant |
-| Auto-adjust | < 200 ms | Acceptable for a complex calculation |
+| Action         | Target   | Rationale                            |
+| -------------- | -------- | ------------------------------------ |
+| Pan / drag     | < 10 ms  | Must feel attached to the cursor     |
+| Zoom           | < 16 ms  | Prevents motion sickness             |
+| Channel toggle | < 100 ms | Perceived as instant                 |
+| Auto-adjust    | < 200 ms | Acceptable for a complex calculation |

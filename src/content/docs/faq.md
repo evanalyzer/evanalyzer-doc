@@ -15,7 +15,7 @@ EVAnalyzer is an open source project initiated as a leisure project by Joachim D
 <details>
 <summary>Why was the project previously called ImageC?</summary>
 
-Inspired by [ImageJ](https://imagej.net/ij/) — a **J**ava-written image processing tool for single-image processing — the project was originally named **ImageC**, signaling a high-throughput tool written in **C**++.
+Inspired by [ImageJ](https://imagej.net/ij/) - a **J**ava-written image processing tool for single-image processing - the project was originally named **ImageC**, signaling a high-throughput tool written in **C**++.
 
 It has since been rewritten in Rust and rebranded **EVAnalyzer**, but the focus on high-throughput, easy-to-use image processing remains the same. See [About EVAnalyzer](/about/) for the full history.
 
@@ -38,7 +38,7 @@ Open a [feature request issue](https://github.com/evanalyzer/evanalyzer/issues) 
 <details>
 <summary>I found a bug or have a question. What should I do?</summary>
 
-Check the [GitHub issues page](https://github.com/evanalyzer/evanalyzer/issues) — your question may already be answered there. If not, open a new issue. See [Support](/support/) for details.
+Check the [GitHub issues page](https://github.com/evanalyzer/evanalyzer/issues) - your question may already be answered there. If not, open a new issue. See [Support](/support/) for details.
 
 </details>
 
@@ -60,7 +60,7 @@ Several factors influence the processing speed of a pipeline:
 - The longer the pipeline, the longer the analysis time.
 - The more objects detected in an image, the longer the analysis time.
 - [Rolling Ball](/commands/image-processing/rolling-ball/), [Watershed](/commands/segmentation/watershed/), and [Rank Filter](/commands/image-processing/rank-filter/) are commands that cost a lot of time.
-- Classical object segmentation is faster than AI-based object detection — and AI segmentation steps run substantially faster on a [CUDA build](/getting-started/downloads/) with a compatible NVIDIA GPU.
+- Classical object segmentation is faster than AI-based object detection - and AI segmentation steps run substantially faster on a [CUDA build](/getting-started/downloads/) with a compatible NVIDIA GPU.
 
 EVAnalyzer tries to use all available CPU cores to run an analysis (see the [`--threads` CLI option](/cli/cli/#analyze)). Using a machine with more cores can significantly reduce processing time.
 
@@ -73,6 +73,6 @@ EVAnalyzer tries to use all available CPU cores to run an analysis (see the [`--
 
 EVAnalyzer was developed by a group of biologists specializing in extracellular vesicles (nano-sized vesicles). One of its main use cases is identifying spots in fluorescence microscopy images, counting them, and calculating colocalization between channels.
 
-That said, EVAnalyzer is highly flexible and can be used in fields other than biology — for instance, in astronomy to count stars in the sky. In a nutshell: any application that needs to automatically quantify images and automate that process is a good fit.
+That said, EVAnalyzer is highly flexible and can be used in fields other than biology - for instance, in astronomy to count stars in the sky. In a nutshell: any application that needs to automatically quantify images and automate that process is a good fit.
 
 </details>

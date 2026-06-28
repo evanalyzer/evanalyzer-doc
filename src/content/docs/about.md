@@ -7,13 +7,13 @@ When we started our research, we were faced with the challenge of quantifying a 
 
 Starting with the search for a low-cost / free tool to help tame the amount of data, we looked at a number of tools including [ImageJ](https://imagej.net/ij/), [CellProfiler](https://cellprofiler.org/), and a couple of other smaller applications. All of them are feature-rich, but none fulfilled our requirements for an easy-to-use tool that can do reproducible data quantification.
 
-This was the starting point of the [EVAnalyzer ImageJ plugin](https://github.com/joda01/evanalyzer), which automates a lot of the processes involved in quantifying images in the research field of extracellular vesicles. It allows batch processing of hundreds of images using a set of predefined, often-used functions like counting and colocalization measurement of spots.
+This was the starting point of the [EVAnalyzer Fiji/ImageJ plugin](https://github.com/joda01/evanalyzer), which automates a lot of the processes involved in quantifying images in the research field of extracellular vesicles. It allows batch processing of hundreds of images using a set of predefined, often-used functions like counting and colocalization measurement of spots.
 
-Over time the applications got more and more complex, beginning with the switch from *in vitro* to *in vivo*. Histological images are large and require more effort to analyze. Further applications, such as serum assays, made the processing algorithms even more complex.
+Over time the applications got more and more complex, beginning with the switch from _in vitro_ to _in vivo_. Histological images are large and require more effort to analyze. Further applications, such as serum assays, made the processing algorithms even more complex.
 
-Even for these more complex applications we wanted to provide an easy-to-use tool, but it had to be more flexible than the EVAnalyzer ImageJ plugin. So the development of **ImageC** began — a standalone C++ application that bridges the gap between tools like ImageJ, which excel at processing single images and provide a wide range of toolboxes, and tools like CellProfiler, which also provide a large number of plugins but can be more complex to use and require a deeper understanding of image processing.
+Even for these more complex applications we wanted to provide an easy-to-use tool, but it had to be more flexible than the EVAnalyzer Fiji/ImageJ plugin. So the development of a standalone C++ application, codenamed **ImageC**, began - bridging the gap between tools like ImageJ, which excel at processing single images and provide a wide range of toolboxes, and tools like CellProfiler, which also provide a large number of plugins but can be more complex to use and require a deeper understanding of image processing.
 
-ImageC has since been rewritten in Rust and rebranded **EVAnalyzer** — the application these docs describe — carrying the same philosophy forward with better performance and memory safety.
+For stability reasons, ImageC was eventually rewritten in Rust, which led to the professional, final standalone application described in these docs, simply named **EVAnalyzer** - carrying the same philosophy forward with better performance and memory safety.
 
 ## What makes EVAnalyzer
 

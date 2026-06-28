@@ -7,29 +7,29 @@ The **Morphological Transform** command applies a structural element to reshape 
 
 ## Operations
 
-| Operation | Effect |
-|---|---|
-| **Erosion** | Shrinks bright regions; removes thin protrusions and isolated noise pixels |
-| **Dilation** | Expands bright regions; fills small holes and gaps |
-| **Opening** | Erosion followed by dilation — removes small bright objects while preserving large ones |
-| **Closing** | Dilation followed by erosion — fills small dark holes while preserving overall shape |
+| Operation    | Effect                                                                                  |
+| ------------ | --------------------------------------------------------------------------------------- |
+| **Erosion**  | Shrinks bright regions; removes thin protrusions and isolated noise pixels              |
+| **Dilation** | Expands bright regions; fills small holes and gaps                                      |
+| **Opening**  | Erosion followed by dilation - removes small bright objects while preserving large ones |
+| **Closing**  | Dilation followed by erosion - fills small dark holes while preserving overall shape    |
 
 ## Parameters
 
-| Parameter | Description |
-|---|---|
-| **Operation** | *Erosion*, *Dilation*, *Opening*, or *Closing* |
-| **Kernel size** | Side length of the structuring element (pixels) |
-| **Kernel shape** | *Box* (square), *Cross* (plus), or *Ellipse* (circle/oval) |
-| **Iterations** | Number of times the operation is repeated (default: 1) |
+| Parameter         | Description                                                           |
+| ----------------- | --------------------------------------------------------------------- |
+| **Operation**     | _Erosion_, _Dilation_, _Opening_, or _Closing_                        |
+| **Kernel size**   | Side length of the structuring element (pixels)                       |
+| **Kernel shape**  | _Box_ (square), _Cross_ (plus), or _Ellipse_ (circle/oval)            |
+| **Iterations**    | Number of times the operation is repeated (default: 1)                |
 | **Use greyscale** | Apply the operation to the greyscale image instead of the binary mask |
 
 ### Kernel shapes
 
-| Shape | Description |
-|---|---|
-| **Box** | All pixels in a square neighbourhood are included |
-| **Cross** | Only horizontal and vertical neighbours (plus pattern) |
+| Shape       | Description                                                                                     |
+| ----------- | ----------------------------------------------------------------------------------------------- |
+| **Box**     | All pixels in a square neighbourhood are included                                               |
+| **Cross**   | Only horizontal and vertical neighbours (plus pattern)                                          |
 | **Ellipse** | Pixels inside an elliptical boundary; creates circular structuring elements when width = height |
 
 ### Iterations
@@ -38,7 +38,7 @@ Running an operation multiple times is equivalent to using a larger effective ke
 
 ## When to use
 
-- **Erosion** — separate objects that are barely touching; remove single-pixel noise.
-- **Dilation** — connect small gaps in a detected contour.
-- **Opening** — remove debris / small artefacts from a binary mask without changing the size of larger objects significantly.
-- **Closing** — fill small holes inside detected objects.
+- **Erosion** - separate objects that are barely touching; remove single-pixel noise.
+- **Dilation** - connect small gaps in a detected contour.
+- **Opening** - remove debris / small artefacts from a binary mask without changing the size of larger objects significantly.
+- **Closing** - fill small holes inside detected objects.

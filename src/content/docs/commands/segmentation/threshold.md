@@ -11,13 +11,13 @@ The output of Threshold feeds directly into [Connected Components](/commands/seg
 
 Define one threshold entry to produce a simple binary mask:
 
-| Parameter | Description |
-|---|---|
-| **Method** | *Manual* or one of the auto-threshold algorithms |
-| **Min threshold** | Minimum intensity to include as foreground |
-| **Max threshold** | Maximum intensity to include as foreground (set to 65535 to disable) |
-| **Unit** | Intensity unit (*Absolute* 0–65535, *Percent* 0–100, or *Relative* 0–1) |
-| **Object class** | The segmentation class assigned to objects detected by this threshold entry |
+| Parameter         | Description                                                                 |
+| ----------------- | --------------------------------------------------------------------------- |
+| **Method**        | _Manual_ or one of the auto-threshold algorithms                            |
+| **Min threshold** | Minimum intensity to include as foreground                                  |
+| **Max threshold** | Maximum intensity to include as foreground (set to 65535 to disable)        |
+| **Unit**          | Intensity unit (_Absolute_ 0–65535, _Percent_ 0–100, or _Relative_ 0–1)     |
+| **Object class**  | The segmentation class assigned to objects detected by this threshold entry |
 
 :::tip
 Examine the image histogram to choose a starting value for the minimum threshold. Set it just above the highest background pixel intensity.
@@ -35,10 +35,10 @@ Under the hood, each threshold class maps to a distinct greyscale value in the b
 
 ## Auto-threshold algorithms
 
-When **Method** is not *Manual*, EVAnalyzer analyses the image histogram and computes a threshold automatically. Available methods include Otsu, Triangle, Mean, and others.
+When **Method** is not _Manual_, EVAnalyzer analyses the image histogram and computes a threshold automatically. Available methods include Otsu, Triangle, Mean, and others.
 
 Auto-thresholds can fail on empty images (no objects, only noise) because they always find a separation. Prevent this by setting a non-zero **Min threshold** as a lower bound: if the computed value falls below it, EVAnalyzer uses the minimum instead.
 
 ## Maximum threshold
 
-Setting **Max threshold** to a value below 65535 restricts detection to pixels within the `[min, max]` range. This allows extraction of a specific intensity band — for example to separate bright artefacts from dim objects, or to extract the background itself by setting Min to 0 and Max to just below the signal level.
+Setting **Max threshold** to a value below 65535 restricts detection to pixels within the `[min, max]` range. This allows extraction of a specific intensity band - for example to separate bright artefacts from dim objects, or to extract the background itself by setting Min to 0 and Max to just below the signal level.

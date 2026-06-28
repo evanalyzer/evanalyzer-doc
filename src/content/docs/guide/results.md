@@ -31,8 +31,9 @@ Double-click a well in the plate view (or click any row in the table view) to op
 ### Image Detail View
 
 Double-click an image in the Image view to open the **detail view**, which shows:
-- A **density map** — the image is divided into square tiles; the average metric value of all objects within each tile is visualised as a colour.
-- A **per-object table** — every detected object with all its measured metrics.
+
+- A **density map** - the image is divided into square tiles; the average metric value of all objects within each tile is visualised as a colour.
+- A **per-object table** - every detected object with all its measured metrics.
 
 ![Per-object results table](../../../assets/screenshots/screenshot-results.png)
 
@@ -61,23 +62,23 @@ Click the **stack icon** in the table toolbar to open the **Group by** / **Aggre
 
 ![Group by and Aggregate panel](../../../assets/screenshots/screenshot-results-group-by.png)
 
-**Group by** — choose how rows are bucketed:
+**Group by** - choose how rows are bucketed:
 
-| Mode | Behaviour |
-|---|---|
-| **None** | No grouping; one row per object (default) |
-| **Image name** | One row per source image |
-| **Folder name** | One row per parent folder |
+| Mode                    | Behaviour                                                                                                        |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **None**                | No grouping; one row per object (default)                                                                        |
+| **Image name**          | One row per source image                                                                                         |
+| **Folder name**         | One row per parent folder                                                                                        |
 | **Regex on image name** | One row per distinct match of a regular expression against the filename, e.g. `^([A-Z]\d+)_` to group by well ID |
 
-**Aggregate** — choose which statistics to compute per group for each numeric metric: **Min**, **Max**, **Average** (checked by default), **Median**, **Std. dev.**, **Sum**.
+**Aggregate** - choose which statistics to compute per group for each numeric metric: **Min**, **Max**, **Average** (checked by default), **Median**, **Std. dev.**, **Sum**.
 
 Two additional toggles further split each group into multiple rows:
 
-| Toggle | Behaviour |
-|---|---|
-| **Also group by class** | Splits every group into one row per object class (e.g. `Image1 / Nucleus`, `Image1 / Cytoplasm`). An object carrying more than one class contributes to each of its classes' rows |
-| **Colocalized / not colocalized** | Splits every group into two rows: one for colocalising objects, one for non-colocalising objects (see [Colocalization](/commands/object/colocalization/)) |
+| Toggle                            | Behaviour                                                                                                                                                                         |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Also group by class**           | Splits every group into one row per object class (e.g. `Image1 / Nucleus`, `Image1 / Cytoplasm`). An object carrying more than one class contributes to each of its classes' rows |
+| **Colocalized / not colocalized** | Splits every group into two rows: one for colocalising objects, one for non-colocalising objects (see [Colocalization](/commands/object/colocalization/))                         |
 
 Both toggles can be combined with any **Group by** mode and with each other. Click **Apply** to replace the per-object view with the grouped/aggregated summary. Switch **Group by** back to **None** to return to the full per-object table.
 
@@ -89,46 +90,47 @@ Click the **chart icon** in the results toolbar to switch from the table to the 
 
 Three chart types are available, each with its own controls:
 
-| Chart | Controls | Shows |
-|---|---|---|
-| **Histogram** | Column, Buckets (2–200), Log scale | Frequency distribution of one numeric metric |
-| **Scatter** | X axis, Y axis, Color by (*None*, *Class*, *Colocalized*) | Two numeric metrics plotted against each other, optionally coloured by class or colocalization status |
-| **Heatmap** | Color by (*Count* or the average of a numeric metric), Cell size (px) | Spatial distribution of objects across a single image, binned into square cells |
+| Chart         | Controls                                                              | Shows                                                                                                 |
+| ------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Histogram** | Column, Buckets (2–200), Log scale                                    | Frequency distribution of one numeric metric                                                          |
+| **Scatter**   | X axis, Y axis, Color by (_None_, _Class_, _Colocalized_)             | Two numeric metrics plotted against each other, optionally coloured by class or colocalization status |
+| **Heatmap**   | Color by (_Count_ or the average of a numeric metric), Cell size (px) | Spatial distribution of objects across a single image, binned into square cells                       |
 
-Only visible, numeric columns appear in the pickers — hide a column in the table to remove it from the chart pickers too. For large scatter plots, EVAnalyzer deterministically samples down to a fixed number of points and reports "Showing N of M points" so re-rendering the same filter always produces the same subset.
+Only visible, numeric columns appear in the pickers - hide a column in the table to remove it from the chart pickers too. For large scatter plots, EVAnalyzer deterministically samples down to a fixed number of points and reports "Showing N of M points" so re-rendering the same filter always produces the same subset.
 
 Click **Plot** to render the chart. Hover over (or click) the rendered chart to see a tooltip with the exact bucket range/count, point coordinates and group, or cell value/count under the cursor.
 
-Click the **save icon** next to the chart to export exactly what's on screen as a PNG file. Charts are not included in the CSV/XLSX export — use the save icon for chart images and the **Download** button below for tabular data.
+Click the **save icon** next to the chart to export exactly what's on screen as a PNG file. Charts are not included in the CSV/XLSX export - use the save icon for chart images and the **Download** button below for tabular data.
 
 Charts, table export, and grouping are also available headlessly via the [CLI](/cli/cli/#export) (`evanalyzer cli export chart …`), which renders from the same `results.evadb` file using identical logic.
 
 ## Exporting Results
 
 Click the **Download** button (↓) in the toolbar to export the current view. Available formats:
-- **CSV** — comma-separated values.
-- **XLSX** — Microsoft Excel workbook.
+
+- **CSV** - comma-separated values.
+- **XLSX** - Microsoft Excel workbook.
 
 You can export at the plate level, well level, or individual image level.
 
 ### Export styles
 
-| Style | Description |
-|---|---|
-| **Table** | One row per object/well; columns are metrics |
-| **Heatmap** | Values arranged in the plate grid layout |
+| Style       | Description                                  |
+| ----------- | -------------------------------------------- |
+| **Table**   | One row per object/well; columns are metrics |
+| **Heatmap** | Values arranged in the plate grid layout     |
 
 ## File Layout
 
 After an analysis run, the job folder contains:
 
-| Path | Description |
-|---|---|
-| `results.evadb` | DuckDB database with all object metrics |
-| `settings.improj` | Snapshot of the project settings used for this run |
-| `profiling.json` | Execution timing per pipeline step |
-| `images/` | Control images saved by [Save Image](/commands/object/save-image/) steps |
-| `models/` | Copy of any ML model files referenced in the project |
-| `data/` | Copy of manual ROI annotations |
+| Path              | Description                                                              |
+| ----------------- | ------------------------------------------------------------------------ |
+| `results.evadb`   | DuckDB database with all object metrics                                  |
+| `settings.improj` | Snapshot of the project settings used for this run                       |
+| `profiling.json`  | Execution timing per pipeline step                                       |
+| `images/`         | Control images saved by [Save Image](/commands/object/save-image/) steps |
+| `models/`         | Copy of any ML model files referenced in the project                     |
+| `data/`           | Copy of manual ROI annotations                                           |
 
 The `results.evadb` file can also be opened directly with any [DuckDB client](https://duckdb.org/docs/stable/clients/cli/overview.html) for custom SQL queries.

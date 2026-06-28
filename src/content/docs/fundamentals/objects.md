@@ -45,7 +45,7 @@ The smallest axis-aligned rectangle that contains all pixels of the object.
 
 ### Confidence
 
-- **Threshold segmentation** — the threshold value that was used to extract the object. Range: 0–65535.
+- **Threshold segmentation** - the threshold value that was used to extract the object. Range: 0–65535.
 
 ### Solidity, Aspect Ratio, Eccentricity, Feret Diameter
 
@@ -66,6 +66,7 @@ EVAnalyzer supports a parent–child hierarchy between objects. When [Classify R
 An object can have at most one parent.
 
 Example hierarchy:
+
 - A **cell** object contains a **nucleus**.
 - The nucleus's parent object ID is the cell's object ID.
 - A **spot** inside the nucleus has the nucleus's object ID as its parent.
@@ -84,13 +85,13 @@ Tracking IDs are assigned by the [Colocalization](/commands/object/colocalizatio
 
 EVAnalyzer calculates Euclidean distances between pairs of objects:
 
-| Measurement | Description |
-|---|---|
-| **Centre-to-centre** | Distance between the two centroids |
-| **Centre-to-surface (min)** | Shortest distance from one centroid to the other object's boundary |
-| **Centre-to-surface (max)** | Longest distance from one centroid to the other object's boundary |
-| **Surface-to-surface (min)** | Shortest distance between the two boundaries |
-| **Surface-to-surface (max)** | Longest distance between the two boundaries |
+| Measurement                  | Description                                                        |
+| ---------------------------- | ------------------------------------------------------------------ |
+| **Centre-to-centre**         | Distance between the two centroids                                 |
+| **Centre-to-surface (min)**  | Shortest distance from one centroid to the other object's boundary |
+| **Centre-to-surface (max)**  | Longest distance from one centroid to the other object's boundary  |
+| **Surface-to-surface (min)** | Shortest distance between the two boundaries                       |
+| **Surface-to-surface (max)** | Longest distance between the two boundaries                        |
 
 $$
 d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}

@@ -3,7 +3,7 @@ title: Command Line Interface
 description: Run EVAnalyzer headlessly for batch analysis, scripting, and exporting results.
 ---
 
-EVAnalyzer can be driven entirely from the command line via the `evanalyzer cli` subcommand, enabling headless batch processing, integration into automated workflows, and remote execution on servers — no GUI/display required.
+EVAnalyzer can be driven entirely from the command line via the `evanalyzer cli` subcommand, enabling headless batch processing, integration into automated workflows, and remote execution on servers - no GUI/display required.
 
 ## Overview
 
@@ -18,13 +18,13 @@ The same `evanalyzer` binary handles both modes:
 evanalyzer.exe cli <command> [options...]
 ```
 
-| Command | Purpose |
-|---|---|
-| [`analyze`](#analyze) | Run a project's enabled pipelines over its images and write a new results database |
-| [`project-info`](#project-info) | Print a project's images, classes, and pipelines without running anything |
-| [`view`](#view) | Print a quick summary and a page of rows from a results database |
-| [`columns`](#columns) | List the column ids available for grouping/chart axes in a results database |
-| [`export`](#export) | Export a results database to CSV, XLSX, or a chart image |
+| Command                         | Purpose                                                                            |
+| ------------------------------- | ---------------------------------------------------------------------------------- |
+| [`analyze`](#analyze)           | Run a project's enabled pipelines over its images and write a new results database |
+| [`project-info`](#project-info) | Print a project's images, classes, and pipelines without running anything          |
+| [`view`](#view)                 | Print a quick summary and a page of rows from a results database                   |
+| [`columns`](#columns)           | List the column ids available for grouping/chart axes in a results database        |
+| [`export`](#export)             | Export a results database to CSV, XLSX, or a chart image                           |
 
 Every command supports `--help`:
 
@@ -40,11 +40,11 @@ Runs a project's enabled [pipelines](/guide/pipelines/) over its images and writ
 ./evanalyzer cli analyze --project settings.improj
 ```
 
-| Argument | Description |
-|---|---|
-| `--project <path>` | Project file to analyze (required) |
-| `--images <dir>` | Scan this directory and use it as the project's image root before running. If omitted, the project's already-saved image list is used as-is |
-| `--threads <n>` | Number of images to process in parallel (default: number of CPUs minus one) |
+| Argument           | Description                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--project <path>` | Project file to analyze (required)                                                                                                          |
+| `--images <dir>`   | Scan this directory and use it as the project's image root before running. If omitted, the project's already-saved image list is used as-is |
+| `--threads <n>`    | Number of images to process in parallel (default: number of CPUs minus one)                                                                 |
 
 The command prints a progress line per image as it completes, then a summary:
 
@@ -64,7 +64,7 @@ A project with no images (and no `--images` override) fails fast with an error i
 
 ## project-info
 
-Prints a project's image count, classes, and pipelines without running anything — useful for sanity-checking a project file before kicking off a long batch run.
+Prints a project's image count, classes, and pipelines without running anything - useful for sanity-checking a project file before kicking off a long batch run.
 
 ```sh
 ./evanalyzer cli project-info --project settings.improj
@@ -90,7 +90,7 @@ If the configured image root can't be found on disk, **Reachable** reports why i
 
 ## Results Database
 
-`analyze` writes results to a `results.evadb` file (DuckDB format) under the project's job folder — the same file the GUI's [Results](/guide/results/) view opens. `view`, `columns`, and `export` all read from this file via `--db`.
+`analyze` writes results to a `results.evadb` file (DuckDB format) under the project's job folder - the same file the GUI's [Results](/guide/results/) view opens. `view`, `columns`, and `export` all read from this file via `--db`.
 
 ```sh
 duckdb results.evadb "SELECT object_class_name, COUNT(*) FROM rois GROUP BY object_class_name"
@@ -98,25 +98,25 @@ duckdb results.evadb "SELECT object_class_name, COUNT(*) FROM rois GROUP BY obje
 
 ## view
 
-Prints a database summary (image/class counts, T/Z-stack ranges) followed by a paginated, human-readable table of per-object rows — a quick terminal preview without exporting anything.
+Prints a database summary (image/class counts, T/Z-stack ranges) followed by a paginated, human-readable table of per-object rows - a quick terminal preview without exporting anything.
 
 ```sh
 ./evanalyzer cli view --db results.evadb --limit 10
 ```
 
-| Argument | Description |
-|---|---|
-| `--db <path>` | Results database produced by `analyze` (required) |
-| `--page <n>` | Zero-based page index (default `0`) |
-| `--limit <n>` | Rows per page (default `25`) |
-| `--channels` | Also show per-channel intensity columns |
-| `--image <name>` | Restrict to this image name (repeatable) |
-| `--class <name>` | Restrict to this object class (repeatable) |
+| Argument                      | Description                                               |
+| ----------------------------- | --------------------------------------------------------- |
+| `--db <path>`                 | Results database produced by `analyze` (required)         |
+| `--page <n>`                  | Zero-based page index (default `0`)                       |
+| `--limit <n>`                 | Rows per page (default `25`)                              |
+| `--channels`                  | Also show per-channel intensity columns                   |
+| `--image <name>`              | Restrict to this image name (repeatable)                  |
+| `--class <name>`              | Restrict to this object class (repeatable)                |
 | `--colocalized <true\|false>` | Restrict to colocalizing or non-colocalizing objects only |
 
 ## columns
 
-Lists every column id available in a results database — including per-channel intensity columns and per-partner-class colocalization columns — along with whether each is numeric (and therefore usable for `--group-by`, chart axes, or `--metric`/`--agg`).
+Lists every column id available in a results database - including per-channel intensity columns and per-partner-class colocalization columns - along with whether each is numeric (and therefore usable for `--group-by`, chart axes, or `--metric`/`--agg`).
 
 ```sh
 ./evanalyzer cli columns --db results.evadb
@@ -138,7 +138,7 @@ coloc_partner__cy7@spot__count       Coloc w/ cy7@spot (#)           yes
 coloc_partner__cy7@spot__ids         Coloc w/ cy7@spot (IDs)
 ```
 
-Run this first when scripting `export` — column ids are the values to pass to `--column`, `--x`/`--y`, and `--metric`.
+Run this first when scripting `export` - column ids are the values to pass to `--column`, `--x`/`--y`, and `--metric`.
 
 ## export
 
@@ -152,16 +152,16 @@ Exports a results database to a table file or a chart image, with the same filte
   --group-by regex --group-regex '^([A-Z]\d+)_' --agg avg,median --group-by-class
 ```
 
-| Argument | Description |
-|---|---|
-| `--db <path>` | Results database to export (required) |
-| `--out <path>` | Output file path (required) |
-| *filter args* | See [Filter Arguments](#filter-arguments) |
-| *group args* | See [Group Arguments](#group-arguments) |
+| Argument       | Description                               |
+| -------------- | ----------------------------------------- |
+| `--db <path>`  | Results database to export (required)     |
+| `--out <path>` | Output file path (required)               |
+| _filter args_  | See [Filter Arguments](#filter-arguments) |
+| _group args_   | See [Group Arguments](#group-arguments)   |
 
 ### export chart histogram / scatter / heatmap
 
-Renders a chart straight to a PNG file — the CLI equivalent of the GUI's [Charts panel](/guide/results/#charts).
+Renders a chart straight to a PNG file - the CLI equivalent of the GUI's [Charts panel](/guide/results/#charts).
 
 ```sh
 # Histogram of object area, log-scaled
@@ -177,20 +177,20 @@ Renders a chart straight to a PNG file — the CLI equivalent of the GUI's [Char
   --metric count --cell-size 256
 ```
 
-| Argument | Histogram | Scatter | Heatmap |
-|---|---|---|---|
-| `--db <path>` | ✓ required | ✓ required | ✓ required |
-| `--out <path>` | ✓ required | ✓ required | ✓ required |
-| `--column <id>` | ✓ required | — | — |
-| `--x <id>` / `--y <id>` | — | ✓ required | — |
-| `--metric <count\|column-id>` | — | — | ✓ required |
-| `--buckets <n>` (default `20`) | ✓ | — | — |
-| `--log-scale` | ✓ | — | — |
-| `--color-by <none\|class\|colocalized>` (default `none`) | — | ✓ | — |
-| `--max-points <n>` (default `5000`, `0` = no cap) | — | ✓ | — |
-| `--cell-size <px>` (default `256`) | — | — | ✓ |
-| `--width <px>` / `--height <px>` (default `1000`×`700`) | ✓ | ✓ | ✓ |
-| *filter args* | ✓ | ✓ | ✓ |
+| Argument                                                 | Histogram  | Scatter    | Heatmap    |
+| -------------------------------------------------------- | ---------- | ---------- | ---------- |
+| `--db <path>`                                            | ✓ required | ✓ required | ✓ required |
+| `--out <path>`                                           | ✓ required | ✓ required | ✓ required |
+| `--column <id>`                                          | ✓ required | -          | -          |
+| `--x <id>` / `--y <id>`                                  | -          | ✓ required | -          |
+| `--metric <count\|column-id>`                            | -          | -          | ✓ required |
+| `--buckets <n>` (default `20`)                           | ✓          | -          | -          |
+| `--log-scale`                                            | ✓          | -          | -          |
+| `--color-by <none\|class\|colocalized>` (default `none`) | -          | ✓          | -          |
+| `--max-points <n>` (default `5000`, `0` = no cap)        | -          | ✓          | -          |
+| `--cell-size <px>` (default `256`)                       | -          | -          | ✓          |
+| `--width <px>` / `--height <px>` (default `1000`×`700`)  | ✓          | ✓          | ✓          |
+| _filter args_                                            | ✓          | ✓          | ✓          |
 
 Column ids (`--column`, `--x`/`--y`, `--metric`) come from [`columns`](#columns).
 
@@ -198,29 +198,29 @@ Column ids (`--column`, `--x`/`--y`, `--metric`) come from [`columns`](#columns)
 
 Shared by `view` and every `export` subcommand:
 
-| Argument | Description |
-|---|---|
-| `--image <name>` | Restrict to this image name (repeatable) |
-| `--class <name>` | Restrict to this object class (repeatable) |
+| Argument                      | Description                                               |
+| ----------------------------- | --------------------------------------------------------- |
+| `--image <name>`              | Restrict to this image name (repeatable)                  |
+| `--class <name>`              | Restrict to this object class (repeatable)                |
 | `--colocalized <true\|false>` | Restrict to colocalizing or non-colocalizing objects only |
 
 ### Group Arguments
 
-Shared by `export csv` and `export xlsx` — mirrors the GUI's [Grouping and Aggregating Rows](/guide/results/#grouping-and-aggregating-rows):
+Shared by `export csv` and `export xlsx` - mirrors the GUI's [Grouping and Aggregating Rows](/guide/results/#grouping-and-aggregating-rows):
 
-| Argument | Description |
-|---|---|
-| `--group-by <image\|folder\|regex>` | Aggregate rows instead of exporting one row per object |
-| `--group-regex <pattern>` | Regex used when `--group-by regex`; the first capture group (or the whole match if none) becomes the group key |
-| `--agg <list>` | Comma-separated aggregate function(s) applied to every numeric column: `min`, `max`, `avg` (default), `median`, `stdev`, `sum` |
-| `--split-colocalized` | Additionally split each group into a colocalizing / non-colocalizing row |
-| `--group-by-class` | Additionally split each group by object class |
+| Argument                            | Description                                                                                                                    |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `--group-by <image\|folder\|regex>` | Aggregate rows instead of exporting one row per object                                                                         |
+| `--group-regex <pattern>`           | Regex used when `--group-by regex`; the first capture group (or the whole match if none) becomes the group key                 |
+| `--agg <list>`                      | Comma-separated aggregate function(s) applied to every numeric column: `min`, `max`, `avg` (default), `median`, `stdev`, `sum` |
+| `--split-colocalized`               | Additionally split each group into a colocalizing / non-colocalizing row                                                       |
+| `--group-by-class`                  | Additionally split each group by object class                                                                                  |
 
 ## Project File
 
 The CLI operates on an EVAnalyzer project file (`.improj`). Create and configure the project using the GUI, save it, and then use the saved file for headless runs.
 
-The project file is a JSON document — it can be modified programmatically using any scripting language.
+The project file is a JSON document - it can be modified programmatically using any scripting language.
 
 ## Automated Parameter Variation
 
@@ -286,8 +286,8 @@ The project file is a JSON document following the EVAnalyzer schema. Key top-lev
 
 ### File extensions
 
-| Extension | Description |
-|---|---|
-| `.improj` | EVAnalyzer project file |
-| `.impt` | Project template file |
-| `.evadb` | Results database (DuckDB format) |
+| Extension | Description                      |
+| --------- | -------------------------------- |
+| `.improj` | EVAnalyzer project file          |
+| `.impt`   | Project template file            |
+| `.evadb`  | Results database (DuckDB format) |

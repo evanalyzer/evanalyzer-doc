@@ -8,14 +8,16 @@ Pipelines define the sequence of processing steps applied to each image. EVAnaly
 ## Creating a Pipeline
 
 In the **Pipelines** tab, click:
-- **New pipeline** — start with an empty pipeline.
-- The **arrow** beside **New pipeline** — choose a preset template to load a pre-configured set of steps.
+
+- **New pipeline** - start with an empty pipeline.
+- The **arrow** beside **New pipeline** - choose a preset template to load a pre-configured set of steps.
 
 Available presets include:
-- **EV channel** — optimised for extracellular vesicle quantification in single-vesicle imaging with low background.
-- **Cell brightfield** — optimised for cell segmentation in brightfield images.
-- **Nucleus** — optimised for nucleus segmentation from fluorescent labelling (Hoechst, DAPI).
-- **EV in cell** — optimised for EV quantification inside cells.
+
+- **EV channel** - optimised for extracellular vesicle quantification in single-vesicle imaging with low background.
+- **Cell brightfield** - optimised for cell segmentation in brightfield images.
+- **Nucleus** - optimised for nucleus segmentation from fluorescent labelling (Hoechst, DAPI).
+- **EV in cell** - optimised for EV quantification inside cells.
 
 ## Pipeline Editor
 
@@ -25,31 +27,32 @@ Click a pipeline name to open the pipeline editor.
 
 ### Pipeline settings
 
-| Setting | Description |
-|---|---|
+| Setting           | Description                                                          |
+| ----------------- | -------------------------------------------------------------------- |
 | **Pipeline name** | Human-readable label; use distinct names to simplify troubleshooting |
-| **Enabled** | Disabled pipelines are skipped during analysis |
+| **Enabled**       | Disabled pipelines are skipped during analysis                       |
 
 ### Pipeline input
 
-| Setting | Description |
-|---|---|
-| **Image channel** | The channel index (0-based) to use as the starting image |
-| **Z-projection** | Which projection mode to use when the project Z-stack setting is *Intensity Projection* |
-| **Z index** | Which Z plane to use when the Z-stack setting is *Exact one* |
-| **T index** | Which time frame to use |
-| **Empty input** | Start with a blank image (useful for pure object-manipulation pipelines) |
+| Setting           | Description                                                                             |
+| ----------------- | --------------------------------------------------------------------------------------- |
+| **Image channel** | The channel index (0-based) to use as the starting image                                |
+| **Z-projection**  | Which projection mode to use when the project Z-stack setting is _Intensity Projection_ |
+| **Z index**       | Which Z plane to use when the Z-stack setting is _Exact one_                            |
+| **T index**       | Which time frame to use                                                                 |
+| **Empty input**   | Start with a blank image (useful for pure object-manipulation pipelines)                |
 
 ### Pipeline steps
 
-Steps are listed top-to-bottom and executed in that order. Click **+ Add step** (the `— + —` button) to open the command picker, which shows only commands compatible with the current pipeline state.
+Steps are listed top-to-bottom and executed in that order. Click **+ Add step** (the `- + -` button) to open the command picker, which shows only commands compatible with the current pipeline state.
 
 ![Pipeline editor with steps](../../../assets/screenshots/screenshot-pipeline.png)
 
 Commands fall into categories indicated by colour:
-- **Grey** — image processing (input: image, output: image)
-- **White** — segmentation (input: image, output: binary mask)
-- **Green** — object operations (input: objects, output: objects or measurements)
+
+- **Grey** - image processing (input: image, output: image)
+- **White** - segmentation (input: image, output: binary mask)
+- **Green** - object operations (input: objects, output: objects or measurements)
 
 A typical pipeline flow:
 
@@ -88,6 +91,7 @@ Once all pipelines are configured, click **Play** (▶) in the toolbar to start 
 - Click **Open results folder** to locate the output files immediately.
 
 Results are written to:
+
 ```
 <image_directory>/evanalyzer/<job_name>/results.evadb
 ```

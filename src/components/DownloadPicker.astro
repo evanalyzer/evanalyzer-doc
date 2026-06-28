@@ -26,7 +26,7 @@ const REPO = "evanalyzer/evanalyzer";
     <div class="picker-options" role="group" aria-label="CUDA acceleration">
       <button type="button" class="picker-btn" data-cuda="false">
         <span class="picker-btn-title">No CUDA</span>
-        <span class="picker-btn-sub">CPU only — works everywhere</span>
+        <span class="picker-btn-sub">CPU only - works everywhere</span>
       </button>
       <button type="button" class="picker-btn" data-cuda="true">
         <span class="picker-btn-title">With CUDA</span>
@@ -34,7 +34,7 @@ const REPO = "evanalyzer/evanalyzer";
       </button>
     </div>
     <p class="picker-note" data-cuda-note hidden>
-      CUDA builds aren't available for macOS — showing the CPU build instead.
+      CUDA builds aren't available for macOS - showing the CPU build instead.
     </p>
   </div>
 
@@ -107,7 +107,7 @@ const REPO = "evanalyzer/evanalyzer";
   function renderNoMatch() {
     resultEl.innerHTML = `
       <p class="picker-error">No build for this combination has been published yet.</p>
-      <p><a href="${releasesUrl()}">Check the releases page →</a> — a build may be uploading.</p>
+      <p><a href="${releasesUrl()}">Check the releases page →</a> - a build may be uploading.</p>
     `;
   }
 
@@ -125,7 +125,7 @@ const REPO = "evanalyzer/evanalyzer";
 
     const multiPart =
       sorted.length > 1
-        ? `<p class="picker-note">This build is split into ${sorted.length} parts. Download all of them into the same folder, then extract the first part (e.g. with <code>7z x ${sorted[0].name}</code>) — the rest are pulled in automatically.</p>`
+        ? `<p class="picker-note">This build is split into ${sorted.length} parts. Download all of them into the same folder, then extract the first part (e.g. with <code>7z x ${sorted[0].name}</code>) - the rest are pulled in automatically.</p>`
         : "";
 
     resultEl.innerHTML = `

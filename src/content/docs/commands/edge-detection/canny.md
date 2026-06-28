@@ -11,11 +11,11 @@ Use Canny when you need precise, thin edge maps. Compared to [Sobel](/commands/e
 
 ## Parameters
 
-| Parameter | Description |
-|---|---|
-| **Kernel size** | Size of the Gaussian smoothing kernel applied before gradient computation (range 3–27) |
-| **Threshold min** | Lower hysteresis threshold — edges weaker than this are discarded |
-| **Threshold max** | Upper hysteresis threshold — edges stronger than this are always retained |
+| Parameter         | Description                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| **Kernel size**   | Size of the Gaussian smoothing kernel applied before gradient computation (range 3–27) |
+| **Threshold min** | Lower hysteresis threshold - edges weaker than this are discarded                      |
+| **Threshold max** | Upper hysteresis threshold - edges stronger than this are always retained              |
 
 ### Hysteresis thresholding
 

@@ -7,14 +7,15 @@ The **Image Cache** command saves or loads an intermediate image to/from a named
 
 ## Parameters
 
-| Parameter | Description |
-|---|---|
-| **Mode** | *Store* — save the current image to the cache; *Load* — replace the current image with a cached image |
-| **Address** | The cache slot identifier |
+| Parameter   | Description                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------- |
+| **Mode**    | _Store_ - save the current image to the cache; _Load_ - replace the current image with a cached image |
+| **Address** | The cache slot identifier                                                                             |
 
 ## When to use
 
 Use Image Cache when you need to:
+
 - Re-use an intermediate processing result in a later pipeline step or a different pipeline.
 - Pass a pre-processed image to [Image Math](/commands/image-processing/image-math/) as the second operand.
 

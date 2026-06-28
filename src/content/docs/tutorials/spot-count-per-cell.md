@@ -5,9 +5,9 @@ description: Count spots inside cells by combining nucleus/cell segmentation wit
 
 This tutorial extends the [Spot Count](/tutorials/spot-count/) workflow to count spots on a per-cell basis. Three pipelines work together:
 
-1. **Nucleus** — segment nuclei from the DAPI channel.
-2. **Cell area** (optional) — segment the cell body, or use Voronoi approximation.
-3. **EV Detection** — detect spots, then link each spot to the cell it falls in.
+1. **Nucleus** - segment nuclei from the DAPI channel.
+2. **Cell area** (optional) - segment the cell body, or use Voronoi approximation.
+3. **EV Detection** - detect spots, then link each spot to the cell it falls in.
 
 ## Prerequisites
 
@@ -16,26 +16,26 @@ This tutorial extends the [Spot Count](/tutorials/spot-count/) workflow to count
 
 ## Step 1: Define Classes
 
-| Class | Purpose |
-|---|---|
-| `dapi@nucleus` | Segmented nuclei |
-| `cy5@spot` | Detected spots |
+| Class                 | Purpose                          |
+| --------------------- | -------------------------------- |
+| `dapi@nucleus`        | Segmented nuclei                 |
+| `cy5@spot`            | Detected spots                   |
 | `cy5@spot-in-nucleus` | Spots that fall inside a nucleus |
-| `cy5@spot-outside` | Spots outside any nucleus |
+| `cy5@spot-outside`    | Spots outside any nucleus        |
 
 ## Step 2: Nucleus Pipeline
 
 Create a pipeline named `Nucleus` targeting the DAPI channel:
 
-| Step | Settings |
-|---|---|
-| Rolling Ball | Radius: 20–50 (larger than nuclei) |
-| Gaussian Blur | Kernel: 5 |
-| Threshold | Manual or Otsu auto-threshold |
-| Connected Components | — |
-| Watershed | Tolerance: 0.3 (optional) |
-| Extract ROIs | — |
-| Classify ROIs | Target: `dapi@nucleus`; Min area: 500 px²; Min circularity: 0.3 |
+| Step                 | Settings                                                        |
+| -------------------- | --------------------------------------------------------------- |
+| Rolling Ball         | Radius: 20–50 (larger than nuclei)                              |
+| Gaussian Blur        | Kernel: 5                                                       |
+| Threshold            | Manual or Otsu auto-threshold                                   |
+| Connected Components | -                                                               |
+| Watershed            | Tolerance: 0.3 (optional)                                       |
+| Extract ROIs         | -                                                               |
+| Classify ROIs        | Target: `dapi@nucleus`; Min area: 500 px²; Min circularity: 0.3 |
 
 ## Step 3: EV Detection Pipeline
 
@@ -45,10 +45,10 @@ Follow the [Spot Count](/tutorials/spot-count/) pipeline for the EV channel to p
 
 After the Classify ROIs step in the EV pipeline, add a second **Classify ROIs** step:
 
-| Setting | Value |
-|---|---|
-| Origin class | `cy5@spot` |
-| Target class | `cy5@spot-in-nucleus` |
+| Setting                | Value                                                  |
+| ---------------------- | ------------------------------------------------------ |
+| Origin class           | `cy5@spot`                                             |
+| Target class           | `cy5@spot-in-nucleus`                                  |
 | Intersection condition | Intersects with `dapi@nucleus` (min intersection: 10%) |
 
 Objects that intersect a nucleus are moved to `cy5@spot-in-nucleus`. Spots that do not intersect remain as `cy5@spot` and can optionally be moved to `cy5@spot-outside` by an additional step.
@@ -56,6 +56,7 @@ Objects that intersect a nucleus are moved to `cy5@spot-in-nucleus`. Spots that 
 ## Step 5: Results
 
 In the results view:
+
 - The `cy5@spot-in-nucleus` **Count** per image gives total spots inside nuclei.
 - With the parent object ID relationship, you can query spots per nucleus in the DuckDB results file:
 
@@ -70,12 +71,12 @@ GROUP BY parent_object_id;
 
 If no cell-body stain is available, use [Voronoi](/commands/object/voronoi/) to approximate cell territories from nucleus centres:
 
-| Setting | Value |
-|---|---|
-| Centers | `dapi@nucleus` |
-| Max radius | 30 µm (adjust to expected cell size) |
-| Output class | `cell@voronoi` |
-| Exclude areas at edges | enabled |
-| Exclude areas without centre | enabled |
+| Setting                      | Value                                |
+| ---------------------------- | ------------------------------------ |
+| Centers                      | `dapi@nucleus`                       |
+| Max radius                   | 30 µm (adjust to expected cell size) |
+| Output class                 | `cell@voronoi`                       |
+| Exclude areas at edges       | enabled                              |
+| Exclude areas without centre | enabled                              |
 
 Then use `cell@voronoi` instead of `dapi@nucleus` in the intersection step.
