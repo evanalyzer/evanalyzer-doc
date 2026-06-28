@@ -121,14 +121,16 @@ header.header {
 }
 
 /*
- * Search: a smaller, icon-first trigger (no border/box) and a white,
+ * Search: a smaller, icon-first trigger pushed to the right edge of its
+ * grid column (next to the theme toggle, not centered) and a white,
  * blurred overlay + panel instead of the default dark-tinted ones
  * (old/css/search.scss `.searchoverlay`).
  */
 @media (min-width: 50rem) {
 	site-search button[data-open-modal] {
 		max-width: 12rem;
-		border: none !important;
+		margin-inline-start: auto;
+		border-color: var(--sl-color-hairline-shade);
 		background-color: transparent !important;
 	}
 }
