@@ -9,6 +9,10 @@ export default defineConfig({
       plugins: [starlightImageZoom()],
       title: "EVAnalyzer Docs",
       customCss: ["./src/styles/custom.css"],
+      components: {
+        SiteTitle: "./src/components/overrides/SiteTitle.astro",
+        ThemeSelect: "./src/components/overrides/ThemeSelect.astro",
+      },
       sidebar: [
         {
           label: "Getting Started",

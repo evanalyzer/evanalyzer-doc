@@ -1,0 +1,62 @@
+---
+// Override of @astrojs/starlight/components/ThemeSelect.astro.
+// The default is a 3-way "Auto/Dark/Light" <select> dropdown; the old site
+// used a single icon button that just toggles light/dark
+// (old/css/main.scss `button.mode`). Reuses Starlight's own
+// `starlight-theme` localStorage key so ThemeProvider.astro (which still
+// runs on every page to avoid a flash-of-wrong-theme) stays in sync.
+import { Icon } from '@astrojs/starlight/components';
+---
+
+<button id="evx-theme-toggle" type="button" aria-label="Toggle light/dark theme">
+	<Icon name="moon" class="evx-icon evx-icon-moon" />
+	<Icon name="sun" class="evx-icon evx-icon-sun" />
+</button>
+
+<script>
+	const storageKey = 'starlight-theme';
+	const button = document.getElementById('evx-theme-toggle');
+
+	function apply(theme: 'light' | 'dark') {
+		document.documentElement.dataset.theme = theme;
+		localStorage.setItem(storageKey, theme);
+	}
+
+	button?.addEventListener('click', () => {
+		const current = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+		apply(current === 'light' ? 'dark' : 'light');
+	});
+</script>
+
+<style>
+	button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		padding: 0;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 10px;
+		background-color: transparent;
+		color: var(--sl-color-gray-2);
+		cursor: pointer;
+	}
+	button:hover {
+		border-color: var(--sl-color-accent);
+		color: var(--sl-color-accent);
+	}
+	.evx-icon {
+		width: 1.1rem;
+		height: 1.1rem;
+	}
+	.evx-icon-sun {
+		display: none;
+	}
+	:root[data-theme='light'] .evx-icon-moon {
+		display: none;
+	}
+	:root[data-theme='light'] .evx-icon-sun {
+		display: block;
+	}
+</style>

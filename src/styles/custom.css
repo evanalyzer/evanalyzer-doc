@@ -18,3 +18,128 @@
 	--sl-color-accent: hsl(203, 56%, 30%); /* #225677 - the old site's button blue */
 	--sl-color-accent-high: hsl(203, 65%, 24%);
 }
+
+/*
+ * Fonts ported from the old site's self-hosted webfonts
+ * (old/css/main.scss, old/css/webfont/*) - SuisseIntl for body/headings,
+ * JetBrainsMono for code, instead of Starlight's system-font stack.
+ */
+@font-face {
+	font-family: 'SuisseIntl';
+	src:
+		url('/fonts/SuisseIntl-Book-WebXL.woff2') format('woff2'),
+		url('/fonts/SuisseIntl-Book-WebXL.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'SuisseIntl';
+	src:
+		url('/fonts/SuisseIntl-Medium-WebXL.woff2') format('woff2'),
+		url('/fonts/SuisseIntl-Medium-WebXL.woff') format('woff');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'SuisseIntl';
+	src:
+		url('/fonts/SuisseIntl-SemiBold-WebXL.woff2') format('woff2'),
+		url('/fonts/SuisseIntl-SemiBold-WebXL.woff') format('woff');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'SuisseIntl';
+	src:
+		url('/fonts/SuisseIntl-Bold-WebS.woff2') format('woff2'),
+		url('/fonts/SuisseIntl-Bold-WebS.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'JetBrainsMono';
+	src:
+		url('/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2') format('woff2'),
+		url('/fonts/JetBrainsMono/JetBrainsMonoNL-Regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'JetBrainsMono';
+	src:
+		url('/fonts/JetBrainsMono/JetBrainsMono-Bold.woff2') format('woff2'),
+		url('/fonts/JetBrainsMono/JetBrainsMonoNL-Bold.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'JetBrainsMono';
+	src:
+		url('/fonts/JetBrainsMono/JetBrainsMono-Italic.woff2') format('woff2'),
+		url('/fonts/JetBrainsMono/JetBrainsMonoNL-Italic.woff') format('woff');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'JetBrainsMono';
+	src:
+		url('/fonts/JetBrainsMono/JetBrainsMono-Bold-Italic.woff2') format('woff2'),
+		url('/fonts/JetBrainsMono/JetBrainsMonoNL-BoldItalic.woff') format('woff');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+:root {
+	--sl-font: 'SuisseIntl';
+	--sl-font-mono: 'JetBrainsMono';
+}
+
+/*
+ * Header: translucent white blur instead of a flat opaque background
+ * (old/css/main.scss `header .headerline`: rgba(250,250,250,.6) + blur(15px)).
+ */
+header.header {
+	background-color: hsla(0, 0%, 98%, 0.6);
+	-webkit-backdrop-filter: blur(15px);
+	backdrop-filter: blur(15px);
+}
+:root:not([data-theme='light']) header.header {
+	background-color: hsla(224, 10%, 10%, 0.6);
+}
+
+/* Buttons: less rounded than Starlight's default pill shape (old used 10px). */
+.sl-link-button {
+	border-radius: 10px !important;
+}
+
+/*
+ * Search: a smaller, icon-first trigger (no border/box) and a white,
+ * blurred overlay + panel instead of the default dark-tinted ones
+ * (old/css/search.scss `.searchoverlay`).
+ */
+@media (min-width: 50rem) {
+	site-search button[data-open-modal] {
+		max-width: 12rem;
+		border: none !important;
+		background-color: transparent !important;
+	}
+}
+
+:root[data-theme='light'] {
+	--sl-color-backdrop-overlay: hsla(0, 0%, 100%, 0.7);
+}
+site-search dialog::backdrop {
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
+}
+:root[data-theme='light'] site-search dialog {
+	background-color: var(--sl-color-bg);
+}
