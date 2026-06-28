@@ -4,6 +4,33 @@ description: High-performance bioimage analysis for fluorescence microscopy and 
 template: splash
 hero:
   tagline: A high-performance bioimage analysis desktop application written in Rust — combining a multi-channel image viewer with a configurable analysis pipeline.
+  image:
+    html: |
+      <div class="evx-spinner">
+        <img class="evx-spinner-img is-active" loading="eager" decoding="async" width="800" height="800"
+             src="/spinner/cell-detection.webp" alt="EVAnalyzer cell detection overlay on a fluorescence microscopy image" />
+        <img class="evx-spinner-img" loading="lazy" decoding="async" width="800" height="800"
+             src="/spinner/landing-page.webp" alt="EVAnalyzer detected objects overlaid on a microscopy image" />
+        <img class="evx-spinner-img" loading="lazy" decoding="async" width="800" height="800"
+             src="/spinner/control_0_0.webp" alt="EVAnalyzer per-object detection overlay" />
+      </div>
+      <style>
+        .evx-spinner { position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 1.25rem; overflow: hidden; box-shadow: var(--sl-shadow-lg); }
+        .evx-spinner-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 1.2s ease; }
+        .evx-spinner-img.is-active { opacity: 1; }
+      </style>
+      <script>
+        (function () {
+          var imgs = document.querySelectorAll(".evx-spinner-img");
+          if (imgs.length < 2) return;
+          var i = 0;
+          setInterval(function () {
+            imgs[i].classList.remove("is-active");
+            i = (i + 1) % imgs.length;
+            imgs[i].classList.add("is-active");
+          }, 3500);
+        })();
+      </script>
   actions:
     - text: Get Started
       link: /getting-started/installation/
@@ -18,7 +45,7 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 ## What is EVAnalyzer?
 
-EVAnalyzer is the Rust reimplementation of [ImageC](https://github.com/imagec) and the successor of the [EVAnalyzer ImageJ plugin](https://github.com/evanalyzer/evanalyzer-ij). It provides a high-performance image viewer combined with a fully configurable, multi-step analysis pipeline for fluorescence microscopy and high-content screening data.
+EVAnalyzer is the Rust reimplementation of [ImageC](https://github.com/joda01/imagec) and the successor of the [EVAnalyzer ImageJ plugin](https://github.com/evanalyzer/evanalyzer-ij). It provides a high-performance image viewer combined with a fully configurable, multi-step analysis pipeline for fluorescence microscopy and high-content screening data. See [About](/about/) for the full history.
 
 <CardGrid>
   <Card title="Installation" icon="laptop">
@@ -47,6 +74,6 @@ EVAnalyzer is the Rust reimplementation of [ImageC](https://github.com/imagec) a
 | **Interactive charts** | Histogram, scatter, and spatial heatmap views over the results table |
 | **bioimage.io import** | Import a published model's RDF and auto-configure an AI Segmentation step |
 | **Multi-well plate layout** | Group images by well/plate for high-content screening experiments |
-| **XLSX & R export** | Pipeline results exported per image, per well, or per object |
+| **CSV & XLSX export** | Pipeline results exported per image, per well, or per object |
 | **Scale bar & minimap** | Physical scale bar and navigator thumbnail overlay |
 | **Cross-platform** | Linux, Windows, and macOS, with optional CUDA-accelerated AI builds |

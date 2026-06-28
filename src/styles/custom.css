@@ -1,0 +1,20 @@
+/*
+ * Accent palette ported from the original ImageC/EVAnalyzer marketing site
+ * (old/_sass/variables.scss, old/_sass/mixins.scss `.button.blue`), which used
+ * a darker, desaturated steel-blue (#225677) rather than Starlight's default
+ * vivid blue-purple. Same hue (~203) throughout, just less saturated/brighter
+ * than Starlight's defaults for a cleaner, flatter look.
+ */
+
+:root {
+	/* Dark mode (Starlight's default :root) */
+	--sl-color-accent-low: hsl(203, 50%, 18%);
+	--sl-color-accent: hsl(203, 55%, 55%);
+	--sl-color-accent-high: hsl(203, 70%, 82%);
+}
+
+:root[data-theme='light'] {
+	--sl-color-accent-low: hsl(203, 50%, 92%);
+	--sl-color-accent: hsl(203, 56%, 30%); /* #225677 - the old site's button blue */
+	--sl-color-accent-high: hsl(203, 65%, 24%);
+}

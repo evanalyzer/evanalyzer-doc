@@ -8,6 +8,7 @@ export default defineConfig({
     starlight({
       plugins: [starlightImageZoom()],
       title: "EVAnalyzer Docs",
+      customCss: ["./src/styles/custom.css"],
       sidebar: [
         {
           label: "Getting Started",
@@ -142,6 +143,16 @@ export default defineConfig({
           items: [
             { label: "Building", slug: "development/building" },
             { label: "Testing", slug: "development/testing" },
+          ],
+        },
+        {
+          label: "Project",
+          collapsed: true,
+          items: [
+            { label: "About", slug: "about" },
+            { label: "Citation", slug: "citation" },
+            { label: "FAQ", slug: "faq" },
+            { label: "Support", slug: "support" },
           ],
         },
       ],
