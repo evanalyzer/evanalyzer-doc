@@ -64,16 +64,38 @@ EVAnalyzer is the Rust reimplementation of [ImageC](https://github.com/joda01/im
 
 ## Key Features
 
-| Feature | Description |
-|---|---|
-| **40+ file formats** | CZI, ND2, LIF, VSI, OME-TIFF, SLD, SCN, and more via [Bio-Formats](https://www.openmicroscopy.org/bio-formats/) |
-| **Multi-channel viewer** | Per-channel brightness/contrast, visibility toggles, and colour assignment |
-| **Z-stack & T-stack** | Intensity projections (Max, Min, Avg, Sum, Middle) or per-frame processing |
-| **ROI annotation** | Rectangle, oval, and polygon regions of interest drawn directly on the image |
-| **Analysis pipeline** | 30 composable processing steps from preprocessing to object classification |
-| **Interactive charts** | Histogram, scatter, and spatial heatmap views over the results table |
-| **bioimage.io import** | Import a published model's RDF and auto-configure an AI Segmentation step |
-| **Multi-well plate layout** | Group images by well/plate for high-content screening experiments |
-| **CSV & XLSX export** | Pipeline results exported per image, per well, or per object |
-| **Scale bar & minimap** | Physical scale bar and navigator thumbnail overlay |
-| **Cross-platform** | Linux, Windows, and macOS, with optional CUDA-accelerated AI builds |
+<CardGrid>
+  <Card title="40+ file formats" icon="document">
+    CZI, ND2, LIF, VSI, OME-TIFF, SLD, SCN, and more via [Bio-Formats](https://www.openmicroscopy.org/bio-formats/).
+  </Card>
+  <Card title="Multi-channel viewer" icon="magnifier">
+    Per-channel brightness/contrast, visibility toggles, and colour assignment.
+  </Card>
+  <Card title="Z-stack & T-stack" icon="random">
+    Intensity projections (Max, Min, Avg, Sum, Middle) or per-frame processing.
+  </Card>
+  <Card title="ROI annotation" icon="pencil">
+    Rectangle, oval, and polygon regions of interest drawn directly on the image.
+  </Card>
+  <Card title="Analysis pipeline" icon="puzzle">
+    30 composable [processing steps](/commands/overview/) from preprocessing to object classification.
+  </Card>
+  <Card title="Interactive charts" icon="star">
+    [Histogram, scatter, and spatial heatmap](/guide/results/#charts) views over the results table.
+  </Card>
+  <Card title="bioimage.io import" icon="cloud-download">
+    Import a [published model's RDF](/ai/bioimageio-import/) and auto-configure an AI Segmentation step.
+  </Card>
+  <Card title="Multi-well plate layout" icon="list-format">
+    Group images by well/plate for high-content screening experiments.
+  </Card>
+  <Card title="CSV & XLSX export" icon="download">
+    Pipeline results exported per image, per well, or per object.
+  </Card>
+  <Card title="Scale bar & minimap" icon="information">
+    Physical scale bar and navigator thumbnail overlay.
+  </Card>
+  <Card title="Cross-platform" icon="laptop">
+    Linux, Windows, and macOS, with [optional CUDA-accelerated](/getting-started/downloads/) AI builds.
+  </Card>
+</CardGrid>
