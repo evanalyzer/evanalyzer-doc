@@ -7,9 +7,9 @@ description: Minimum and recommended hardware and software requirements for runn
 
 | Component           | Minimum                                                      | Recommended                                               |
 | ------------------- | ------------------------------------------------------------ | --------------------------------------------------------- |
-| **RAM**             | 8 GB                                                         | 16 GB or more for large whole-slide images                |
+| **RAM**             | 4 GB                                                         | 16 GB or more for large whole-slide images                |
+| **CPU**             | 2 cores, 64-bit x86-64 (Windows/Linux) or Apple Silicon arm64 (macOS) | 4+ cores for faster parallel pipeline execution |
 | **Free disk space** | ~5 GB                                                        | More if you plan to store multiple AI model files locally |
-| **CPU**             | 64-bit x86-64 (Windows/Linux) or Apple Silicon arm64 (macOS) | Multi-core CPU for faster pipeline execution              |
 | **Display**         | 1280×800                                                     | 1920×1080 or larger                                       |
 
 ## Supported Operating Systems

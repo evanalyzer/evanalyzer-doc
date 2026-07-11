@@ -22,6 +22,7 @@ evanalyzer.exe cli <command> [options...]
 | ------------------------------- | ---------------------------------------------------------------------------------- |
 | [`analyze`](#analyze)           | Run a project's enabled pipelines over its images and write a new results database |
 | [`project-info`](#project-info) | Print a project's images, classes, and pipelines without running anything          |
+| [`validate`](#validate)         | Check that every image referenced by a project can be found on disk                |
 | [`view`](#view)                 | Print a quick summary and a page of rows from a results database                   |
 | [`columns`](#columns)           | List the column ids available for grouping/chart axes in a results database        |
 | [`export`](#export)             | Export a results database to CSV, XLSX, or a chart image                           |
@@ -44,7 +45,9 @@ Runs a project's enabled [pipelines](/guide/pipelines/) over its images and writ
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--project <path>` | Project file to analyze (required)                                                                                                          |
 | `--images <dir>`   | Scan this directory and use it as the project's image root before running. If omitted, the project's already-saved image list is used as-is |
-| `--threads <n>`    | Number of images to process in parallel (default: number of CPUs minus one)                                                                 |
+| `--threads <n>`    | Number of images to process in parallel. If omitted, EVAnalyzer picks the highest thread count that fits within available RAM and CPU cores |
+
+The parallelism is automatically capped to whichever is lower — the number of CPU cores or the number of images that fit in available RAM — so a low-memory machine never launches more parallel workers than it can sustain.
 
 The command prints a progress line per image as it completes, then a summary:
 
@@ -62,6 +65,8 @@ Results database written under: ./evanalyzer/EV Detection
 
 A project with no images (and no `--images` override) fails fast with an error instead of running.
 
+Press **Ctrl+C** to request a graceful stop; in-flight images will finish before the process exits.
+
 ## project-info
 
 Prints a project's image count, classes, and pipelines without running anything - useful for sanity-checking a project file before kicking off a long batch run.
@@ -69,6 +74,11 @@ Prints a project's image count, classes, and pipelines without running anything 
 ```sh
 ./evanalyzer cli project-info --project settings.improj
 ```
+
+| Argument           | Description                              |
+| ------------------ | ---------------------------------------- |
+| `--project <path>` | Project file to inspect (required)       |
+| `--json`           | Emit machine-readable JSON instead of human-readable text |
 
 ```
 Project:    settings.improj
@@ -87,6 +97,25 @@ Pipelines (1):
 ```
 
 If the configured image root can't be found on disk, **Reachable** reports why instead of just "no".
+
+## validate
+
+Checks that every image referenced by a project can be found on disk. Useful as a pre-flight step before starting a long headless run.
+
+```sh
+./evanalyzer cli validate --project settings.improj
+```
+
+| Argument           | Description                        |
+| ------------------ | ---------------------------------- |
+| `--project <path>` | Project file to check (required)   |
+
+The command exits with a non-zero status code if any images are missing, making it suitable for use in CI scripts:
+
+```sh
+./evanalyzer cli validate --project settings.improj && \
+  ./evanalyzer cli analyze --project settings.improj
+```
 
 ## Results Database
 
@@ -110,6 +139,7 @@ Prints a database summary (image/class counts, T/Z-stack ranges) followed by a p
 | `--page <n>`                  | Zero-based page index (default `0`)                       |
 | `--limit <n>`                 | Rows per page (default `25`)                              |
 | `--channels`                  | Also show per-channel intensity columns                   |
+| `--json`                      | Emit machine-readable JSON instead of human-readable text |
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
 | `--colocalized <true\|false>` | Restrict to colocalizing or non-colocalizing objects only |
@@ -121,6 +151,11 @@ Lists every column id available in a results database - including per-channel in
 ```sh
 ./evanalyzer cli columns --db results.evadb
 ```
+
+| Argument      | Description                                                 |
+| ------------- | ----------------------------------------------------------- |
+| `--db <path>` | Results database to inspect (required)                      |
+| `--json`      | Emit machine-readable JSON instead of the formatted table   |
 
 ```
 ID                                   LABEL                            NUMERIC

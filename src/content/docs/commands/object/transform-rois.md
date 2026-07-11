@@ -22,8 +22,10 @@ The **Object Transform** command applies a geometric transform to every object c
 | **Min circle**      | Draws a circle around the object's bounding box, using **Min diameter** as a lower bound - the circle never shrinks below the object's own bounding box |
 | **Draw circle**     | Draws a circle with exactly **Diameter** as its diameter. If **Diameter** is 0, the object's bounding box is used instead                               |
 | **Fitting ellipse** | Replaces the object with the ellipse fitted to its mask, scaled by **Scale** (values ≤ 1.0 have no effect)                                              |
+| **Expand**          | Grows the object outward by **Margin** (in the chosen **Unit**), following its actual contour uniformly. Unlike **Scale**, irregular shapes grow by a flat margin rather than proportionally |
+| **Shrink**          | Shrinks the object inward by **Margin**, following its actual contour. Objects that vanish after shrinking are removed                                   |
 
-`Snap area`, `Min circle`, and `Draw circle` express their size in a configurable **Unit** (e.g. _px_, _nm_, _µm_).
+`Snap area`, `Min circle`, `Draw circle`, `Expand`, and `Shrink` express their size in a configurable **Unit** (e.g. _px_, _nm_, _µm_).
 
 ## Behaviour Notes
 

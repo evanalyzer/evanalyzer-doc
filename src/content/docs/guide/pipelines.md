@@ -78,6 +78,18 @@ Fill in **Name**, **Short description**, **Description**, **Author**, and **Orga
 
 Templates saved to the default location (`~/evanalyzer/templates/`) automatically appear in the preset drop-down next to **New pipeline** the next time you create a pipeline, alongside the built-in presets (EV channel, Cell brightfield, Nucleus, EV in cell).
 
+## Saving a Project as a Template
+
+In addition to saving individual pipelines, you can save an entire project — including its class definitions, plate configuration, and all pipelines — as a **project template**.
+
+Click **Save as Template** in the **Project** tab (or from the project menu) to open the template dialog. Fill in **Name**, **Short description**, **Description**, **Author**, and **Organization**, then choose a save location. Project templates use the `.impt` extension.
+
+To create a new project from a template, click the **arrow** next to **New Project** on the start screen and select a template file. This pre-populates the class editor, plate settings, and all pipelines, so you can start a new experiment with a known-good configuration without rebuilding from scratch.
+
+:::tip
+Use project templates to standardise analysis configurations across your lab — share a single `.impt` file to ensure every team member starts from the same pipeline and class setup.
+:::
+
 ## Pipeline History
 
 Every settings change is recorded. Click **History** to open the change log (last 64 changes). Double-click any entry to restore that state. Click **Tag** to mark the current state so it is easy to find later.

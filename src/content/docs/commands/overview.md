@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 30 pipeline commands grouped by category.
+description: All 31 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -82,15 +82,16 @@ Commands that run a pretrained deep-learning model for segmentation. Only availa
 
 Commands that operate on extracted objects.
 
-| Command                                                    | Purpose                                                   |
-| ---------------------------------------------------------- | --------------------------------------------------------- |
-| [Extract ROIs](/commands/object/extract-rois/)             | Convert binary mask regions to segmentation-class objects |
-| [Classify ROIs](/commands/object/classify-rois/)           | Filter and assign final object classes                    |
-| [Colocalization](/commands/object/colocalization/)         | Find overlapping objects across classes                   |
-| [Voronoi](/commands/object/voronoi/)                       | Partition space from object centroids                     |
-| [Object Transform](/commands/object/transform-rois/)       | Scale, snap a circle around, or fit an ellipse to objects |
-| [Distance Transform](/commands/object/distance-transform/) | Measure distances between object pairs                    |
-| [Save Image](/commands/object/save-image/)                 | Write a control image to disk                             |
+| Command                                                    | Purpose                                                                    |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [Extract ROIs](/commands/object/extract-rois/)             | Convert binary mask regions to segmentation-class objects                  |
+| [Classify ROIs](/commands/object/classify-rois/)           | Filter and assign final object classes                                     |
+| [Colocalization](/commands/object/colocalization/)         | Find overlapping objects across classes                                    |
+| [Voronoi](/commands/object/voronoi/)                       | Partition space from object centroids                                      |
+| [Object Transform](/commands/object/transform-rois/)       | Scale, snap, expand, shrink, or fit an ellipse to objects                  |
+| [ROI Math](/commands/object/roi-math/)                     | Boolean set operations (AND, OR, XOR, Subtract) between two object classes |
+| [Distance Transform](/commands/object/distance-transform/) | Measure distances between object pairs                                     |
+| [Save Image](/commands/object/save-image/)                 | Write a control image to disk                                              |
 
 ## Typical Pipeline Order
 
