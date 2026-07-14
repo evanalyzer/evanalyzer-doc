@@ -43,7 +43,7 @@ Each unique combination of (C, Z, T) is one **image plane**.
 EVAnalyzer can access and process any plane individually.
 
 Pipeline input is specified by channel index (0-based).
-Z and T handling is configured in the [Image control tab](/guide/project-setup/#z-stack) on the right hand side.
+Z and T handling is configured in the [Image control tab]() on the right hand side.
 
 ## OME-XML Metadata {#ome-xml}
 

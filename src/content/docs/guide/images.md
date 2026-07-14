@@ -3,7 +3,7 @@ title: Images
 description: Browse, preview, and configure images in the Images tab.
 ---
 
-The **Images** tab lists every image file found in the configured image directory. It appears after at least one image directory has been set in the [Project tab](/guide/project-setup/).
+The **Images** tab lists every image file found in the configured image directory. It appears after at least one image directory has been set.
 
 ## Image List
 

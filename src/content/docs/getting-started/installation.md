@@ -3,7 +3,8 @@ title: Installation
 description: How to download and install EVAnalyzer on Linux, Windows, or macOS.
 ---
 
-EVAnalyzer is distributed as a pre-built binary for Linux, Windows, and macOS. No package manager or build toolchain is required to run the application.
+EVAnalyzer is distributed as a pre-built binary for Linux, Windows, and macOS.
+No package manager or build toolchain is required to run the application.
 
 Before downloading, check the [System Requirements](/getting-started/system-requirements/) page - in particular if you plan to use a CUDA build for GPU-accelerated AI segmentation.
 
