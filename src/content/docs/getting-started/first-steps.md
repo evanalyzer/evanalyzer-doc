@@ -74,14 +74,12 @@ When complete, switch to the **Results** tab to open the results of the analysis
 Results are saved to:
 
 ```
-<project_directory>/results/<job_name>.evadb
+<image_directory>/evanalyzer/<job_name>/results.evadb
 ```
 
 ## 4. View Results
 
-EVAnalyzer is scanning the `results` folder of where the project is stored.
-Every found results database file with **evadb** endian is listed in the results list.
-Open the results by single click on one of the listed files.
+Switch to the **Results** tab. EVAnalyzer scans the `evanalyzer/` subfolder inside your image directory and lists every `results.evadb` file it finds. Click any entry to open it.
 
 ![Results view](../../../assets/getting-started/screenshot-results.png)
 

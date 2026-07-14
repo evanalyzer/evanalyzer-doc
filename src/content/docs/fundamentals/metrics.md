@@ -3,7 +3,7 @@ title: Metrics
 description: Complete reference of all object metrics and statistics available in EVAnalyzer.
 ---
 
-EVAnalyzer measures a set of metrics for every detected object and stores them in the results database. Metrics are visible in the results table and can be exported to XLSX or R.
+EVAnalyzer measures a set of metrics for every detected object and stores them in the results database. Metrics are visible in the results table and can be exported to CSV or XLSX.
 
 ## Available Metrics
 

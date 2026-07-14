@@ -37,7 +37,7 @@ Create a new pipeline named `EV Detection` and add the following steps in order:
 | [Rolling Ball](/commands/image-processing/rolling-ball/)                                               | Radius: 4, Type: Paraboloid - removes uneven background                   |
 | [Gaussian Blur](/commands/image-processing/gaussian-blur/) or [Blur](/commands/image-processing/blur/) | Kernel: 3, repeat 2× - reduces noise artefacts                            |
 | [Threshold](/commands/segmentation/threshold/)                                                         | Method: Manual - **adapt to your images**; start with Min: 200            |
-| [Connected Components](/commands/segmentation/connected-components/)                                   | No settings                                                               |
+| [Connected Components](/commands/segmentation/connected-components/)                                   | Min size: 3–10 px² recommended to suppress single-pixel noise            |
 | [Watershed](/commands/segmentation/watershed/)                                                         | Tolerance: 0.5 - separates closely touching spots                         |
 | [Extract ROIs](/commands/object/extract-rois/)                                                         | No settings                                                               |
 | [Classify ROIs](/commands/object/classify-rois/)                                                       | Target: `ch1@spot`; Min area: 3 px²; Min circularity: 0.1                 |

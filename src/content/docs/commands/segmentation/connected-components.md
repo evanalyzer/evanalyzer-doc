@@ -11,7 +11,11 @@ Connected Components is a required intermediate step between Threshold and Extra
 
 ## Parameters
 
-This command has no configurable parameters. It operates on the binary mask from the previous step and outputs a labelled image.
+| Parameter             | Description                                                                                                                                                                                                     |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Min size** (px²)    | Objects with a pixel area below this threshold are discarded immediately after labelling, before any downstream step sees them. Useful for suppressing noise and speckle artifacts. Default `0` disables the filter |
+
+Setting **Min size** to a small positive value (e.g. 5–20 px²) is a lightweight alternative to running a [Morphological Transform](/commands/morphology/morphological-transform/) opening step just to remove speckle, and avoids inflating the object count seen by [Extract ROIs](/commands/object/extract-rois/).
 
 ## Pipeline position
 
