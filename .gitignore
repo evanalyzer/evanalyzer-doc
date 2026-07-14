@@ -24,3 +24,4 @@ pnpm-debug.log*
 old/
 .claude
 crates
+/bin

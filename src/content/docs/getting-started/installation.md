@@ -9,7 +9,8 @@ Before downloading, check the [System Requirements](/getting-started/system-requ
 
 ## Downloading
 
-Use the [Downloads](/getting-started/downloads/) page to pick the correct package for your operating system (and, for Windows/Linux, whether you want CUDA acceleration). It always links to the latest release.
+Use the [Downloads](/getting-started/downloads/) page to pick the correct package for your operating system (and, for Windows/Linux, whether you want CUDA acceleration).
+It always links to the latest release.
 
 Packages follow this naming scheme on the [GitHub Releases page](https://github.com/evanalyzer/evanalyzer/releases/latest):
 
@@ -31,14 +32,6 @@ The CUDA-enabled Linux build bundles the CUDA runtime libraries and exceeds GitH
 
 Extract the downloaded archive to a directory of your choice.
 
-### Linux additional libraries (GUI)
-
-The GUI requires a few system libraries on Linux. Install them once with:
-
-```sh
-apt-get install libinput10 libxkbcommon0 libfontconfig1 libgbm1
-```
-
 ## Starting EVAnalyzer
 
 ### Linux
@@ -46,6 +39,17 @@ apt-get install libinput10 libxkbcommon0 libfontconfig1 libgbm1
 ```sh
 ./evanalyzer
 ```
+
+:::note[Linux libraries]
+
+Sometimes the GUI requires a few system libraries on Linux.
+If not still installed, install them once with:
+
+```sh
+apt-get install libinput10 libxkbcommon0 libfontconfig1 libgbm1
+```
+
+:::
 
 ### Windows
 
@@ -55,9 +59,49 @@ Double-click `evanalyzer.exe`, or from PowerShell:
 .\evanalyzer.exe
 ```
 
+:::note[Windows SmartScreen warning]
+Because EVAnalyzer is an open-source project and its releases are not commercially code-signed, Windows SmartScreen may block the application on first launch. This is expected and safe to dismiss.
+
+**Step 1** — When the blue "Windows protected your PC" dialog appears, click **More info**.
+
+![Windows SmartScreen — More info](../../../assets/screenshots/screenshot-win-exe-warning-01.png)
+
+**Step 2** — A **Run anyway** button becomes visible at the bottom of the dialog. Click it to start EVAnalyzer.
+
+![Windows SmartScreen — Run anyway](../../../assets/screenshots/screenshot-win-exe-warning-02.png)
+
+You will only need to do this once. Windows remembers your choice for this executable.
+:::
+
 ### macOS
 
-Open `EVAnalyzer.app` from the extracted folder. On first launch, macOS Gatekeeper may require you to right-click the app and choose **Open** since the build is not notarized yet.
+Open `EVAnalyzer.app` from the extracted folder.
+
+:::note[macOS Gatekeeper quarantine]
+Because EVAnalyzer is not notarized through Apple's developer program, macOS places a quarantine flag on the downloaded archive. Attempting to open the app with a double-click will show a dialog saying the app cannot be opened. Follow one of the two methods below to start it for the first time — you will not be asked again afterward.
+
+**Method 1 — Right-click (quickest)**
+
+Right-click (or Control-click) `EVAnalyzer.app` in Finder and choose **Open** from the context menu. A dialog will appear that — unlike the double-click dialog — includes an **Open** button. Click it to confirm and launch the application.
+
+**Method 2 — System Settings**
+
+If the right-click method does not work, macOS may have blocked the app silently. To unblock it:
+
+1. Open **System Settings** -> **Privacy & Security**.
+2. Scroll down to the **Security** section. You will see a message such as _"EVAnalyzer was blocked from use because it is not from an identified developer."_
+3. Click **Open Anyway**, then confirm with **Open** in the dialog that follows.
+
+**Method 3 — Terminal (remove quarantine attribute)**
+
+For users comfortable with the command line, you can remove the quarantine flag directly:
+
+```sh
+xattr -cr EVAnalyzer.app
+```
+
+After running this command, the app opens normally with a double-click, with no further prompts.
+:::
 
 The application opens to the start screen showing the project configuration panel.
 
