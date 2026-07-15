@@ -3,7 +3,7 @@ title: Results
 description: Viewing, exploring, and exporting analysis results.
 ---
 
-EVAnalyzer stores results in a DuckDB database file named `results.evadb` inside the job folder:
+EVAnalyzer stores results in a DuckDB database file named `results.evadb` inside the project folder:
 
 ```
 <image_directory>/evanalyzer/<job_name>/results.evadb
