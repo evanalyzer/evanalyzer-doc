@@ -3,7 +3,8 @@ title: Pipelines
 description: Build, edit, and manage image analysis pipelines.
 ---
 
-Pipelines define the sequence of processing steps applied to each image. EVAnalyzer supports multiple pipelines per project; each pipeline is executed independently and can process a different image channel.
+Pipelines define the sequence of processing steps applied to each image with the goal to extract region of interests.
+EVAnalyzer supports multiple pipelines per project; each pipeline is executed independently and can process a different image channel or can just work in still existing objects.
 
 ## Creating a Pipeline
 
@@ -25,34 +26,20 @@ Click a pipeline name to open the pipeline editor.
 
 ![Edit Pipeline dialog](../../../assets/screenshots/screenshot-add-pipeline-dialog.png)
 
-### Pipeline settings
++### Pipeline steps
 
-| Setting           | Description                                                          |
-| ----------------- | -------------------------------------------------------------------- |
-| **Pipeline name** | Human-readable label; use distinct names to simplify troubleshooting |
-| **Enabled**       | Disabled pipelines are skipped during analysis                       |
+Steps are listed top-to-bottom and executed in that order.
+Click **+ Add step** (the `- + -` button) to open the command picker, which shows only commands compatible with the current pipeline state.
 
-### Pipeline input
-
-| Setting           | Description                                                                             |
-| ----------------- | --------------------------------------------------------------------------------------- |
-| **Image channel** | The channel index (0-based) to use as the starting image                                |
-| **Z-projection**  | Which projection mode to use when the project Z-stack setting is _Intensity Projection_ |
-| **Z index**       | Which Z plane to use when the Z-stack setting is _Exact one_                            |
-| **T index**       | Which time frame to use                                                                 |
-| **Empty input**   | Start with a blank image (useful for pure object-manipulation pipelines)                |
-
-### Pipeline steps
-
-Steps are listed top-to-bottom and executed in that order. Click **+ Add step** (the `- + -` button) to open the command picker, which shows only commands compatible with the current pipeline state.
-
-![Pipeline editor with steps](../../../assets/screenshots/screenshot-pipeline.png)
+![Pipeline editor with steps](../../../assets/screenshots/screenshot-add-pipeline-step.png)
 
 Commands fall into categories indicated by colour:
 
-- **Grey** - image processing (input: image, output: image)
-- **White** - segmentation (input: image, output: binary mask)
-- **Green** - object operations (input: objects, output: objects or measurements)
+- **Cyan** - image processing (input: image, output: image) e.g. Smoothing, Edge detection, ...
+- **Rosa** - segmentation (input: image, output: segmentation mask) e.g. Threshold, AI UNet, ...
+- **Orange** - object operations (input: segmentation mask, output: objects) e.g. Connected components, Watershed, ...
+- **Yellow** - measurement (input: objects, output: region of interests)
+- **Green** - classify (input: region of interests, output: region of interests)
 
 A typical pipeline flow:
 
@@ -62,6 +49,14 @@ A typical pipeline flow:
 4. **Classify ROIs** applies size/circularity filters and assigns an object class.
 5. **Object processing** commands perform further analysis (Colocalization, Distance Transform, …).
 
+![Pipeline editor with steps](../../../assets/screenshots/screenshot-pipeline.png)
+
+### Pipeline templates
+
+The command selection dialog also provides a **Template** section.
+This section contain predefined command sequences which can be used inside your pipeline.
+By selecting a template the template commands are added in defined order at your selected position.
+
 ### Live preview
 
 The viewport on the right shows the result of all pipeline steps applied to the currently selected image. Changing any parameter immediately updates the preview. A live object count is shown in the legend.
@@ -70,9 +65,9 @@ Use the **zoom** controls to inspect segmentation quality, and the **side-by-sid
 
 ## Saving a Pipeline as a Template
 
-Click **Save as Template** to store the current pipeline (all steps and parameters) for reuse in other projects.
+Click the **Save** button at the button of the pipelines panel, to store the current pipeline (all steps and parameters) for reuse in other projects.
 
-![Save Pipeline as Template dialog](../../../assets/screenshots/Screenshot from 2026-06-21 19-42-14.png)
+![Save Pipeline as Template dialog](../../../assets/screenshots/screenshot-save-pipeline-as-template.png)
 
 Fill in **Name**, **Short description**, **Description**, **Author**, and **Organization**, then click **Next…** to choose a save location in the native file dialog. Pipeline templates use the `.evapipe` extension.
 
@@ -82,21 +77,20 @@ Templates saved to the default location (`~/evanalyzer/templates/`) automaticall
 
 In addition to saving individual pipelines, you can save an entire project — including its class definitions, plate configuration, and all pipelines — as a **project template**.
 
-Click **Save as Template** in the **Project** tab (or from the project menu) to open the template dialog. Fill in **Name**, **Short description**, **Description**, **Author**, and **Organization**, then choose a save location. Project templates use the `.impt` extension.
+Click **Save as Template** in the **File** menu to open the template dialog.
+Fill in **Name**, **Short description**, **Description**, **Author**, and **Organization**, then choose a save location.
+Project templates use the `.evapt` extension.
 
-To create a new project from a template, click the **arrow** next to **New Project** on the start screen and select a template file. This pre-populates the class editor, plate settings, and all pipelines, so you can start a new experiment with a known-good configuration without rebuilding from scratch.
+To create a new project from a template, click open the **File** menu and select **New from Template**.
+This pre-populates the class editor, plate settings, and all pipelines, so you can start a new experiment with a known-good configuration without rebuilding from scratch.
 
 :::tip
-Use project templates to standardise analysis configurations across your lab — share a single `.impt` file to ensure every team member starts from the same pipeline and class setup.
+Use project templates to standardize analysis configurations across your lab — share a single `.evapt` file to ensure every team member starts from the same pipeline and class setup.
 :::
-
-## Pipeline History
-
-Every settings change is recorded. Click **History** to open the change log (last 64 changes). Double-click any entry to restore that state. Click **Tag** to mark the current state so it is easy to find later.
 
 ## Running the Analysis
 
-Once all pipelines are configured, click **Play** (▶) in the toolbar to start the analysis.
+Once all pipelines are configured, click **Run** in the toolbar to start the analysis.
 
 - A progress dialog shows per-image and per-pipeline progress.
 - Click **Stop** to interrupt; in-progress tasks will finish before halting.
@@ -110,6 +104,5 @@ Results are written to:
 
 ## Best Practices
 
-- Add **one pipeline per image channel** you want to analyse.
+- Add **one pipeline per image channel** you want to analyze.
 - Add **separate pipelines** for object-processing steps (colocalization, in-cell counting) that operate on already-extracted objects.
-- Use the **Tag** history feature to bookmark a known-good state before experimenting with parameters.

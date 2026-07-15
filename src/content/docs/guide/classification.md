@@ -3,7 +3,8 @@ title: Classification
 description: Define object classes before building analysis pipelines.
 ---
 
-The **Classification** tab is where you define the object populations that your pipelines will detect and measure. Every detected object is assigned to exactly one class.
+The **Classification** tab is where you define the object populations that your pipelines will detect and measure.
+Every detected object is assigned to one ore more classes class.
 
 ## What is a Class?
 
@@ -20,31 +21,21 @@ Use `<prefix>@<type>` where the prefix (typically the fluorophore) is used for s
 
 ## Adding and Editing Classes
 
-Click the **+** button to add a new class. Double-click an existing class to open the **Class Editor**, which lets you set:
+Click the **+** button to add a new class.
+Select an existing class and click the **Edit** button to open the **Class Editor**, which lets you set:
 
 ![Class Settings dialog](../../../assets/screenshots/screenhsot-add-classs-dialog.png)
 
-| Field               | Description                                                        |
-| ------------------- | ------------------------------------------------------------------ |
-| **Name**            | Class label, e.g. `cy5@spot`                                       |
-| **Colour**          | Display colour used for detected objects in the viewer             |
-| **Notes**           | Optional free-text description                                     |
-| **Default metrics** | Which measurement columns to display by default after the analysis |
-
-The default metrics can be changed at any time, even after an analysis has been completed, without re-running the analysis.
+| Field      | Description                                            |
+| ---------- | ------------------------------------------------------ |
+| **Name**   | Class label, e.g. `cy5@spot`                           |
+| **Colour** | Display colour used for detected objects in the viewer |
+| **Notes**  | Optional free-text description                         |
 
 ## Auto-populate from Image Metadata
 
-Click the **Magic Stick** button to have EVAnalyzer automatically create classes based on the channel information read from the current image. This creates one class per image channel as a starting point.
-
-## Classification Presets
-
-Presets are shared sets of class definitions for consistent naming across experiments:
-
-- **Load preset** - choose from the drop-down beside the **+** button to load a predefined set of classes.
-- **Save as template** - save your current classification settings as a `.impt` template file for reuse and sharing.
-
-Template files are stored in `~/evanalyzer/templates/` and appear in the preset list on the next launch.
+Click the **Auto** button to have EVAnalyzer automatically create classes based on the channel information read from the current image.
+This creates one class per image channel as a starting point.
 
 ## How Classes Relate to Pipelines
 

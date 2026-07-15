@@ -3,22 +3,24 @@ title: Images
 description: Browse, preview, and configure images in the Images tab.
 ---
 
-The **Images** tab lists every image file found in the configured image directory. It appears after at least one image directory has been set.
+The **Images** tab lists every image file found in the configured image directory.
+If a single image was opened using the **Open** button all the other images from the directory this image is placed in are also displayed there.
 
 ## Image List
 
-All discovered images are shown in a table. Use the **search field** at the top to filter by filename.
+All discovered images are shown in a table.
+Use the **search field** at the top to filter by filename.
 
 Click any row to:
 
 - Load the image in the viewport for preview.
-- Display image metadata in the properties panel below - dimensions, pixel size, number of channels, Z planes, and time frames.
+- Display image metadata in the meta panel below - dimensions, pixel size, number of channels, Z planes, and time frames.
 
 The selected image is also the one used as the live preview source when editing pipeline parameters.
 
 ## Image Meta Panel
 
-Selecting an image opens the **Image Meta** panel, which shows detailed acquisition metadata for that file:
+Selecting an image fills the **Image Meta** panel with detailed meta information about the image.
 
 | Section         | Fields                                                                   |
 | --------------- | ------------------------------------------------------------------------ |
@@ -60,11 +62,15 @@ When an image has multiple time frames:
 
 ### Scale bar
 
-A physical scale bar is overlaid on the image. The unit (nm, µm, mm) is configured in the toolbar. Pixel size is read from the image metadata.
+A physical scale bar is overlaid on the image.
+The units are nm, µm or mm based on the actual zoom level.
+Pixel sizes are read from the image metadata.
+
+If the image does not contain pixel size information use the **Calibration** section to define it manually.
 
 ### Navigator minimap
 
-For large images, a thumbnail minimap in the corner shows the full image with the current viewport highlighted. Click or drag the minimap to pan to a different area.
+For large images, a thumbnail minimap in the corner shows the full image with the current viewport highlighted.
 
 ### Position and pixel value readout
 
@@ -74,6 +80,10 @@ As you move the mouse over the viewport, a HUD overlay in the top-left corner sh
 
 This is a live readout that updates continuously with mouse movement - it does not place a persistent measurement marker.
 
+To place a persistent measurement use the **cross fade** button from the toolbar and click on the wanted position in the image.
+A permanent marker with the intensity values of all image channels is displayed.
+Right click on the permanent marker to remove it.
+
 ### ROI Annotation
 
 Draw manual regions of interest directly on the image:
@@ -82,11 +92,12 @@ Draw manual regions of interest directly on the image:
 - **Oval** - drag to define an oval/elliptical ROI.
 - **Polygon** - click to place vertices, double-click to close.
 
-Annotations are saved per-image to `<project_directory>/data/<image_id>/*.icroi` and are preserved across sessions.
+Annotations are saved per-image to the project file and are preserved across sessions.
 
 ## Series Selection
 
-Some image formats (e.g. LIF, CZI) store multiple image series in a single file. Select the desired series index in the properties panel to analyse a specific sub-image.
+Some image formats (e.g. LIF, CZI) store multiple image series in a single file.
+Select the desired series index in the properties panel to analyze a specific sub-image.
 
 ## Supported Formats
 
