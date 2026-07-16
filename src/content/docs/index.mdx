@@ -3,6 +3,34 @@ title: EVAnalyzer Documentation
 description: High-performance bioimage analysis for fluorescence microscopy and high-content screening.
 template: splash
 hero:
+  title: |
+    <span class="evx-type" aria-label="EVAnalyzer"
+      ><span class="evx-type-char" aria-hidden="true" style="--i:0">E</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:1">V</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:2">A</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:3">n</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:4">a</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:5">l</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:6">y</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:7">z</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:8">e</span
+      ><span class="evx-type-char" aria-hidden="true" style="--i:9">r</span
+    ></span>
+    <style>
+      .evx-type-char {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(0.4em);
+        animation: evx-reveal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation-delay: calc(var(--i) * 45ms + 100ms);
+      }
+      @keyframes evx-reveal {
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .evx-type-char { animation: none; opacity: 1; transform: none; }
+      }
+    </style>
   tagline: A high-performance bioimage analysis desktop application - combining a multi-channel image viewer with a configurable analysis pipeline.
   image:
     html: |
@@ -16,8 +44,16 @@ hero:
       </div>
       <style>
         .evx-spinner { position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 1.25rem; overflow: hidden; box-shadow: var(--sl-shadow-lg); }
-        .evx-spinner-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 1.2s ease; }
-        .evx-spinner-img.is-active { opacity: 1; }
+        .evx-spinner-img {
+          position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;
+          transform: translateX(100%);
+          transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .evx-spinner-img.is-active { transform: translateX(0); }
+        .evx-spinner-img.is-leaving { transform: translateX(-100%); }
+        @media (prefers-reduced-motion: reduce) {
+          .evx-spinner-img { transition: none; }
+        }
       </style>
       <script>
         (function () {
@@ -25,9 +61,20 @@ hero:
           if (imgs.length < 2) return;
           var i = 0;
           setInterval(function () {
-            imgs[i].classList.remove("is-active");
+            var current = imgs[i];
+            var next = imgs[(i + 1) % imgs.length];
             i = (i + 1) % imgs.length;
-            imgs[i].classList.add("is-active");
+            current.classList.remove("is-active");
+            current.classList.add("is-leaving");
+            next.classList.add("is-active");
+            current.addEventListener("transitionend", function reset(event) {
+              if (event.propertyName !== "transform") return;
+              current.removeEventListener("transitionend", reset);
+              current.classList.remove("is-leaving");
+              current.style.transition = "none";
+              current.getBoundingClientRect();
+              current.style.transition = "";
+            });
           }, 3500);
         })();
       </script>
