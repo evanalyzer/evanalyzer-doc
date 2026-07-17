@@ -146,69 +146,39 @@ site-search dialog::backdrop {
 	background-color: var(--sl-color-bg);
 }
 
-/*
- * Homepage hero: a panel with a light sweep that shines across it once on
- * load, instead of Starlight's default hero which just sits on the page
- * background. Bright pearly-white in light mode, dark charcoal in dark
- * mode - so colors are hardcoded per-theme below instead of using the
- * theme-flipping --sl-color-* tokens (those are tuned for body text, not
- * this panel's own always-dark or always-light surface).
- */
-.hero {
-	position: relative;
-	padding: clamp(2rem, 3vw + 1.5rem, 4rem) clamp(1.5rem, 2vw + 1rem, 3rem) !important;
-	border-radius: 1.5rem;
-	background: radial-gradient(ellipse 60% 55% at 50% 0%, hsla(0, 0%, 95%, 0.5), transparent 70%),
-		linear-gradient(180deg, hsl(0, 0%, 24%) 0%, hsl(0, 0%, 9%) 100%);
+/* Homepage: supported-formats badge strip below the intro paragraph. */
+.evx-formats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin: 1.5rem 0;
+}
+.evx-formats span {
+	font-family: var(--sl-font-mono);
+	font-size: var(--sl-text-xs);
+	line-height: 1;
+	padding: 0.4rem 0.75rem;
+	border-radius: 999px;
+	border: 1px solid var(--sl-color-hairline);
+	color: var(--sl-color-gray-2);
+	background: var(--sl-color-bg-nav);
+}
+
+/* Homepage: product screenshot between the Getting Started and Key Features grids. */
+.evx-screenshot {
+	margin: 2.5rem 0;
+}
+.evx-screenshot img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 0.75rem;
 	box-shadow: var(--sl-shadow-lg);
-	overflow: hidden;
 }
-:root[data-theme='light'] .hero {
-	background: radial-gradient(ellipse 70% 65% at 50% 0%, #ffffff 0%, #f2f4f6 55%, #e7eaed 100%);
-}
-.hero::after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(
-		100deg,
-		transparent 30%,
-		hsla(0, 0%, 100%, 0.85) 48%,
-		hsla(0, 0%, 100%, 0.85) 52%,
-		transparent 70%
-	);
-	transform: translateX(-120%);
-	animation: evx-shine 1.8s ease-in-out 0.5s 1 forwards;
-	pointer-events: none;
-}
-@keyframes evx-shine {
-	to {
-		transform: translateX(120%);
-	}
-}
-@media (prefers-reduced-motion: reduce) {
-	.hero::after {
-		animation: none;
-		display: none;
-	}
-}
-.hero h1 {
-	color: #fff !important;
-}
-.hero .tagline {
-	color: hsl(0, 0%, 78%) !important;
-}
-.hero .sl-link-button.minimal,
-.hero .sl-link-button.secondary {
-	color: #fff !important;
-}
-:root[data-theme='light'] .hero h1 {
-	color: hsl(220, 15%, 12%) !important;
-}
-:root[data-theme='light'] .hero .tagline {
-	color: hsl(220, 8%, 38%) !important;
-}
-:root[data-theme='light'] .hero .sl-link-button.minimal,
-:root[data-theme='light'] .hero .sl-link-button.secondary {
-	color: hsl(220, 15%, 12%) !important;
+.evx-caption {
+	margin-top: 0.75rem;
+	text-align: center;
+	font-size: var(--sl-text-sm);
+	color: var(--sl-color-gray-3);
 }
