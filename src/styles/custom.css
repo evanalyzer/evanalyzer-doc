@@ -146,6 +146,17 @@ site-search dialog::backdrop {
 	background-color: var(--sl-color-bg);
 }
 
+/*
+ * Cards: a single accent color for every icon badge instead of Starlight's
+ * default rotating rainbow (orange/green/red/blue/purple per position) -
+ * reads as one consistent, deliberate system rather than a decorative
+ * template default.
+ */
+.card {
+	--sl-card-border: var(--sl-color-accent) !important;
+	--sl-card-bg: var(--sl-color-accent-low) !important;
+}
+
 /* Homepage: supported-formats badge strip below the intro paragraph. */
 .evx-formats {
 	display: flex;

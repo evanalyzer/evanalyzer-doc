@@ -34,48 +34,51 @@ hero:
   tagline: A high-performance bioimage analysis desktop application - combining a multi-channel image viewer with a configurable analysis pipeline.
   image:
     html: |
-      <div class="evx-spinner">
-        <img class="evx-spinner-img is-active" loading="eager" decoding="async" width="800" height="800"
-             src="/spinner/cell-detection.webp" alt="EVAnalyzer cell detection overlay on a fluorescence microscopy image" />
-        <img class="evx-spinner-img" loading="lazy" decoding="async" width="800" height="800"
-             src="/spinner/landing-page.webp" alt="EVAnalyzer detected objects overlaid on a microscopy image" />
-        <img class="evx-spinner-img" loading="lazy" decoding="async" width="800" height="800"
-             src="/spinner/control_0_0.webp" alt="EVAnalyzer per-object detection overlay" />
+      <div class="evx-compare" style="--pos: 50%">
+        <img class="evx-compare-img evx-compare-after" loading="eager" decoding="async" width="1197" height="1200"
+             src="/spinner/uptake-processed.webp" alt="Analyzed: the same image with EVAnalyzer's nucleus and cell segmentation overlay" />
+        <img class="evx-compare-img evx-compare-before" loading="eager" decoding="async" width="1197" height="1200"
+             src="/spinner/uptake-raw.webp" alt="Raw: unprocessed fluorescence microscopy image before analysis" />
+        <span class="evx-compare-label evx-compare-label-before">Raw</span>
+        <span class="evx-compare-label evx-compare-label-after">Analyzed</span>
+        <div class="evx-compare-line" aria-hidden="true"><span class="evx-compare-grip">⇔</span></div>
+        <input class="evx-compare-range" type="range" min="0" max="100" value="50" step="1"
+               aria-label="Drag to compare the raw image with EVAnalyzer's analysis" />
       </div>
       <style>
-        .evx-spinner { position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 1.25rem; overflow: hidden; box-shadow: var(--sl-shadow-lg); }
-        .evx-spinner-img {
-          position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top;
-          transform: translateX(100%);
-          transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        .evx-compare {
+          position: relative; aspect-ratio: 1 / 1; width: 100%; border-radius: 1.25rem; overflow: hidden;
+          box-shadow: var(--sl-shadow-lg); touch-action: pan-y;
         }
-        .evx-spinner-img.is-active { transform: translateX(0); }
-        .evx-spinner-img.is-leaving { transform: translateX(-100%); }
-        @media (prefers-reduced-motion: reduce) {
-          .evx-spinner-img { transition: none; }
+        .evx-compare-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; -webkit-user-drag: none; user-select: none; }
+        .evx-compare-before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+        .evx-compare-label {
+          position: absolute; top: 0.75rem; font-family: var(--sl-font-mono); font-size: var(--sl-text-xs);
+          padding: 0.3rem 0.6rem; border-radius: 999px; color: #fff; background: rgba(0, 0, 0, 0.55); pointer-events: none;
         }
+        .evx-compare-label-before { left: 0.75rem; }
+        .evx-compare-label-after { right: 0.75rem; }
+        .evx-compare-line {
+          position: absolute; top: 0; bottom: 0; left: var(--pos); transform: translateX(-50%);
+          width: 2px; background: #fff; pointer-events: none; display: flex; align-items: center; justify-content: center;
+        }
+        .evx-compare-grip {
+          display: flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 999px;
+          background: #fff; color: #111; font-size: 1rem; box-shadow: var(--sl-shadow-sm);
+        }
+        .evx-compare-range {
+          position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; appearance: none; -webkit-appearance: none;
+        }
+        .evx-compare-range:focus-visible ~ .evx-compare-line .evx-compare-grip { outline: 2px solid var(--sl-color-accent); outline-offset: 2px; }
       </style>
       <script>
         (function () {
-          var imgs = document.querySelectorAll(".evx-spinner-img");
-          if (imgs.length < 2) return;
-          var i = 0;
-          setInterval(function () {
-            var current = imgs[i];
-            var next = imgs[(i + 1) % imgs.length];
-            i = (i + 1) % imgs.length;
-            current.classList.remove("is-active");
-            current.classList.add("is-leaving");
-            next.classList.add("is-active");
-            current.addEventListener("transitionend", function reset(event) {
-              if (event.propertyName !== "transform") return;
-              current.removeEventListener("transitionend", reset);
-              current.classList.remove("is-leaving");
-              current.style.transition = "none";
-              current.getBoundingClientRect();
-              current.style.transition = "";
-            });
-          }, 3500);
+          var compare = document.querySelector(".evx-compare");
+          if (!compare) return;
+          var range = compare.querySelector(".evx-compare-range");
+          range.addEventListener("input", function () {
+            compare.style.setProperty("--pos", range.value + "%");
+          });
         })();
       </script>
   actions:
@@ -99,10 +102,10 @@ It provides a high-performance image viewer combined with a fully configurable, 
 See [About](/about/) for the full history.
 
 <div class="evx-formats">
-  <span>CZI</span><span>ND2</span><span>LIF</span><span>VSI</span><span>OME-TIFF</span><span>SLD</span><span>SCN</span><span>+ 30 more via Bio-Formats</span>
+  <span>CZI</span><span>ND2</span><span>LIF</span><span>VSI</span><span>OME-TIFF</span><span>SLD</span><span>SCN</span><span>+ 30 more</span>
 </div>
 
-<Aside type="tip" title="Cite EVAnalyzer">
+<Aside type="note" title="Cite EVAnalyzer">
   Using EVAnalyzer in your research? Please cite the [original EVAnalyzer
   paper](https://doi.org/10.1002/jev2.12282) (Schürz et al., 2022, *J Extracell
   Vesicles*) - see the [Citation page](/citation/) for full details and BibTeX.
