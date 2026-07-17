@@ -13,124 +13,106 @@ Open an existing results file from the toolbar: click the **arrow** beside the *
 
 ![Results list](../../../assets/screenshots/screenshot-results-list.png)
 
-## Results Views
+## Results Table
 
-### Plate View
+By default, results open in the **Table** view: one row per detected region of interest (ROI), with columns for **ROI ID**, **Image**, **Class**, **Area (px²)**, **Area (nm²)**, **Circularity**, **Colocalized**, and one **Min / Max / Avg / Sum** column per measured channel (Ch0, Ch1, …).
 
-The plate view is the default opening view when image grouping is configured. It shows one cell per well, with the selected metric value averaged across all images in that well.
+Click a column header to sort by it; click again to reverse the direction. The **Image**, **Class**, and **Colocalized** headers each have a filter icon that opens a searchable checklist of values, so you can narrow the table to specific images or classes without leaving the results window.
 
-Switch between **table** and **heatmap** display using the heatmap button. In heatmap mode, the colour represents the metric value relative to the full range; the toolbar drop-down selects which column to visualise.
+Results load in pages as you scroll, so even large result sets with hundreds of thousands of ROIs stay responsive.
 
-### Image View
+![Results table](../../../assets/screenshots/screenshot-results-table-view.png)
 
-Double-click a well in the plate view (or click any row in the table view) to open the **Image view** for that well. Each image is shown in its well-order position as defined in the project settings.
+### Columns
 
-- Images flagged as **excluded** are crossed out and omitted from statistics.
-- Use the context menu on any image to toggle exclusion.
+Click **Columns** in the toolbar to show or hide individual columns, including per-channel intensity metrics, without changing what was measured.
 
-### Image Detail View
+![Column picker](../../../assets/screenshots/screenshot-results-table-view-group-by-image-column-filter.png)
 
-Double-click an image in the Image view to open the **detail view**, which shows:
+### Grouping and Aggregation
 
-- A **density map** - the image is divided into square tiles; the average metric value of all objects within each tile is visualised as a colour.
-- A **per-object table** - every detected object with all its measured metrics.
+Click **Group by** to collapse the per-ROI table into one row per **image name**, **folder name**, or a **regex** extracted from the image name. Choose one or more aggregation functions — **Min**, **Max**, **Average**, **Median**, **Std. dev.**, **Sum** — then click **Apply**.
 
-![Per-object results table](../../../assets/screenshots/screenshot-results.png)
+![Group by](../../../assets/screenshots/screenshot-results-group-by.png)
 
-Select a row in the object table to jump to that object in the image and highlight its position.
+Each numeric column is duplicated per selected aggregation (for example **Area (px²) [avg]** and **Area (px²) [sum]**), so you can compare, say, average object size against total covered area per image.
 
-:::note[Original images required for interactive mode]
-The detail view needs access to the original images to overlay objects. If the `results.evadb` file or the images are moved after the analysis, EVAnalyzer will prompt you to specify the new location.
-:::
+![Grouped results table](../../../assets/screenshots/screenshot-results-table-view-group-by-image.png)
 
-## Adding and Removing Columns
+With grouped results, the **Columns** picker nests per-channel metrics under an **Intensity** group so you can toggle a whole channel's aggregates at once instead of one column at a time.
 
-The results table shows only the columns configured in the **Class Editor** by default. To add more:
+![Column picker for grouped results](../../../assets/screenshots/screenshot-results-table-view-group-by-image-column-filter.png)
 
-1. Click the blue **Add column** button.
-2. Choose from the list of all available metrics.
+### Colocalization Details
 
-![Column selector](../../../assets/screenshots/screenshot-results-filter.png)
+If a pipeline includes a [Colocalization](/commands/object/colocalization/) step, switch to the **Coloc details** view to flatten each ROI's matched partners into their own columns — one set of measurement columns per partner class, with a dash where no partner was found. This is the same underlying data as the **Colocalized** column in the main table, broken out partner by partner.
 
-Columns can also be removed by right-clicking the column header. Table layout is saved with the `results.evadb` file and restored on the next open.
-
-See [Metrics](/fundamentals/metrics/) for a full description of all available measurements and statistics.
-
-## Grouping and Aggregating Rows
-
-Click the **stack icon** in the table toolbar to open the **Group by** / **Aggregate** panel, which summarises the per-object table into one row per group instead of one row per object.
-
-![Group by and Aggregate panel](../../../assets/screenshots/screenshot-results-group-by.png)
-
-**Group by** - choose how rows are bucketed:
-
-| Mode                    | Behaviour                                                                                                        |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **None**                | No grouping; one row per object (default)                                                                        |
-| **Image name**          | One row per source image                                                                                         |
-| **Folder name**         | One row per parent folder                                                                                        |
-| **Regex on image name** | One row per distinct match of a regular expression against the filename, e.g. `^([A-Z]\d+)_` to group by well ID |
-
-**Aggregate** - choose which statistics to compute per group for each numeric metric: **Min**, **Max**, **Average** (checked by default), **Median**, **Std. dev.**, **Sum**.
-
-Two additional toggles further split each group into multiple rows:
-
-| Toggle                            | Behaviour                                                                                                                                                                         |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Also group by class**           | Splits every group into one row per object class (e.g. `Image1 / Nucleus`, `Image1 / Cytoplasm`). An object carrying more than one class contributes to each of its classes' rows |
-| **Colocalized / not colocalized** | Splits every group into two rows: one for colocalising objects, one for non-colocalising objects (see [Colocalization](/commands/object/colocalization/))                         |
-
-Both toggles can be combined with any **Group by** mode and with each other. Click **Apply** to replace the per-object view with the grouped/aggregated summary. Switch **Group by** back to **None** to return to the full per-object table.
-
-If a colocalization partner class is configured, two extra columns are available per partner: the **number** of partner objects each object colocalises with, and their **object IDs** (comma-separated). The count column is numeric and can be aggregated like any other metric.
+![Colocalization details view](../../../assets/screenshots/screenshot-results-coloc-details-view.png)
 
 ## Charts
 
-Click the **chart icon** in the results toolbar to switch from the table to the **Charts** panel, plotted from the same (optionally grouped/filtered) rows currently loaded in the table.
+Switch **View** to **Chart** to visualize the currently filtered/grouped rows instead of reading them as a table. Three chart types are available; all three respect the active column filters and grouping, shown as removable chips (e.g. **filtered**) beneath the toolbar, with the plotted row count in the bottom-left corner.
 
-Three chart types are available, each with its own controls:
+### Histogram
 
-| Chart         | Controls                                                              | Shows                                                                                                 |
-| ------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Histogram** | Column, Buckets (2–200), Log scale                                    | Frequency distribution of one numeric metric                                                          |
-| **Scatter**   | X axis, Y axis, Color by (_None_, _Class_, _Colocalized_)             | Two numeric metrics plotted against each other, optionally coloured by class or colocalization status |
-| **Heatmap**   | Color by (_Count_ or the average of a numeric metric), Cell size (px) | Spatial distribution of objects across a single image, binned into square cells                       |
+Pick a numeric **Column**, the number of **Buckets**, and optionally enable **Log scale** for right-skewed distributions (like object area). **Color by** **Class** or **Colocalized** to overlay multiple distributions using shared bucket edges, making them directly comparable.
 
-Only visible, numeric columns appear in the pickers - hide a column in the table to remove it from the chart pickers too. For large scatter plots, EVAnalyzer deterministically samples down to a fixed number of points and reports "Showing N of M points" so re-rendering the same filter always produces the same subset.
+![Histogram view](../../../assets/screenshots/screenshot-results-histogram.png)
 
-Click **Plot** to render the chart. Hover over (or click) the rendered chart to see a tooltip with the exact bucket range/count, point coordinates and group, or cell value/count under the cursor.
+### Scatter
 
-Click the **save icon** next to the chart to export exactly what's on screen as a PNG file. Charts are not included in the CSV/XLSX export - use the save icon for chart images and the **Download** button below for tabular data.
+Choose numeric **X** and **Y** columns and optionally **Color by** class or colocalization status. Very large datasets are downsampled deterministically (not randomly) for rendering — a note like _"Showing 5000 of 273725 points (sampled)"_ appears above the plot when this happens, and the legend shows the object count behind each color.
 
-Charts, table export, and grouping are also available headlessly via the [CLI](/cli/cli/#export) (`evanalyzer cli export chart …`), which renders from the same `results.evadb` file using identical logic.
+![Scatter view](../../../assets/screenshots/screenshot-results-scatter.png)
+
+### Spatial Heatmap
+
+Bins ROI centroids into a grid across the image (or plate) and colors each cell by object **Count** or the **Average** of a chosen metric. Configure the **Cell size (px)** and a **Colors** scheme (Viridis, Magma, Plasma, or Grayscale). This is particularly useful for spotting spatial trends across a whole-slide image or across wells in a plate.
+
+![Spatial heatmap view](../../../assets/screenshots/screenshot-results-heatmap.png)
+
+Hover any bar, point, or cell for its exact value. Use the export icon in the chart toolbar to save the current plot as a PNG.
 
 ## Exporting Results
 
-Click the **Download** button (↓) in the toolbar to export the current view. Available formats:
+Click the export icon in the toolbar to open the **Export results** dialog. Unlike the table itself, exporting is built around a **queue of one or more export combinations** ("batches") that all get written out together.
 
-- **CSV** - comma-separated values.
-- **XLSX** - Microsoft Excel workbook.
+![Export dialog](../../../assets/screenshots/screenshot-results-export-dialog.png)
 
-You can export at the plate level, well level, or individual image level.
+### 1. Configure a combination
 
-### Export styles
+- **Export style** — **Table** or **Coloc details**.
+- **Group by** — **No Grouping**, **Image**, or **Regex** (table style only; the aggregation functions from the main table apply here too). Folder grouping isn't available in the batch queue — use **Export as Displayed** below for that.
+- **Images to export** — pick at least one image. Enable **Export each checked image as its own file** to write one file per checked image (the filename gets the image name) instead of a single combined file.
+- **Classes to include** — pick at least one class.
+- **Columns to export** — pick which columns to include, with **None** / **Avg+Sum** / **All** presets for intensity columns.
+- **Name** and **Format** (CSV or XLSX) for the resulting file(s). If **Name** is left blank, it's generated from the selected classes.
 
-| Style       | Description                                  |
-| ----------- | -------------------------------------------- |
-| **Table**   | One row per object/well; columns are metrics |
-| **Heatmap** | Values arranged in the plate grid layout     |
+### 2. Queue it
 
-## File Layout
+- Click **+ Add** to snapshot the current dialog settings above as a batch and add it to the **Combinations to export** list below. The checklists then stay open so you can change them and add another, different combination.
+- Click **Add from table** instead to queue a batch that mirrors exactly what the results table is *currently* showing — its live filters, grouping, and visible columns — reusing whichever Name/Format you've typed.
 
-After an analysis run, the job folder contains:
+Repeat as many times as needed; each queued combination appears as its own row (name, classes, images, style/grouping, format) and can be removed individually with its **X**.
 
-| Path              | Description                                                              |
-| ----------------- | ------------------------------------------------------------------------ |
-| `results.evadb`   | DuckDB database with all object metrics                                  |
-| `settings.improj` | Snapshot of the project settings used for this run                       |
-| `profiling.json`  | Execution timing per pipeline step                                       |
-| `images/`         | Control images saved by [Save Image](/commands/object/save-image/) steps |
-| `models/`         | Copy of any ML model files referenced in the project                     |
-| `data/`           | Copy of manual ROI annotations                                           |
+### 3. Export
 
-The `results.evadb` file can also be opened directly with any [DuckDB client](https://duckdb.org/docs/stable/clients/cli/overview.html) for custom SQL queries.
+Click **Export All** to choose a single destination **folder**, then every queued combination is written as its own file into it (or one file per image, for batches with "export each image as its own file" enabled) — all in one background run, with a progress bar and a status message, cancellable partway through. If you never clicked **+ Add**, the dialog's current settings are exported as a single one-off batch, so a lone export doesn't require the extra step.
+
+Filenames are de-duplicated automatically if two combinations would otherwise collide.
+
+Separately, **Export as Displayed** (bottom-left of the dialog) skips the queue entirely: it immediately exports a single file matching the results table's live state — including folder grouping, which only works here — and prompts for one output file rather than a folder.
+
+Both CSV and XLSX exports stream rows to disk rather than holding the whole result set in memory, so exporting very large projects doesn't require large amounts of RAM.
+
+:::tip
+For colocalization exports, partner lookups are resolved in batches of 5,000 source ROIs at a time — large colocalization datasets export reliably without needing to load everything at once.
+:::
+
+## Copying to the Clipboard
+
+Click the clipboard icon in the toolbar to copy the currently visible rows — respecting active filters and sorting — as tab-separated values, ready to paste directly into a spreadsheet.
+
+## Filtering by Frame
+
+For time-lapse or Z-stack acquisitions, use the **T** and **Z** frame steppers in the toolbar to restrict the table and charts to a single time point or depth slice.
