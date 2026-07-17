@@ -180,13 +180,6 @@ site-search dialog::backdrop {
 .evx-screenshot {
 	margin: 2.5rem 0;
 }
-.evx-screenshot img {
-	display: block;
-	width: 100%;
-	height: auto;
-	border-radius: 0.75rem;
-	box-shadow: var(--sl-shadow-lg);
-}
 .evx-caption {
 	margin-top: 0.75rem;
 	text-align: center;

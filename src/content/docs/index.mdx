@@ -92,8 +92,9 @@ hero:
 ---
 
 import { Card, CardGrid, Aside } from "@astrojs/starlight/components";
-import { Image } from "astro:assets";
-import screenshotPipeline from "../../assets/screenshots/screenshot-pipeline.png";
+import CompareSlider from "../../components/CompareSlider.astro";
+import screenshotPipeline from "../../assets/screenshots/screenshot-pipeline-zoom.png";
+import screenshotPipelineDark from "../../assets/screenshots/screenshot-pipeline-dark-zoom.png";
 
 ## What is EVAnalyzer?
 
@@ -141,45 +142,60 @@ See [About](/about/) for the full history.
 </CardGrid>
 
 <div class="evx-screenshot">
-  <Image
-    src={screenshotPipeline}
-    alt="EVAnalyzer's pipeline editor showing a configured 8-step analysis pipeline with a live histogram and channel controls over a multi-channel fluorescence microscopy image"
+  <CompareSlider
+    beforeSrc={screenshotPipeline}
+    afterSrc={screenshotPipelineDark}
+    beforeAlt="EVAnalyzer's pipeline editor in light mode, zoomed in on detected nuclei with segmentation overlays over a multi-channel fluorescence microscopy image"
+    afterAlt="The same zoomed-in pipeline preview and segmentation overlays in dark mode"
+    beforeLabel="Light"
+    afterLabel="Dark"
   />
   <p class="evx-caption">
-    Configure multi-step pipelines and preview results live against your raw
-    image data.
+    Configure multi-step pipelines and preview segmentation results live against
+    your raw image data - in light or dark mode.
   </p>
 </div>
 
 ## Key Features
 
 <CardGrid>
+  <Card title="Multiple pipelines" icon="puzzle">
+    Create as many independent image processing [pipelines](/guide/pipelines/)
+    as your experiment needs - one per channel, or chained together for complex
+    multi-step workflows.
+  </Card>
   <Card title="40+ file formats" icon="document">
     CZI, ND2, LIF, VSI, OME-TIFF, SLD, SCN, and more via
-    [Bio-Formats](https://www.openmicroscopy.org/bio-formats/).
-  </Card>
-  <Card title="Multi-channel viewer" icon="magnifier">
-    Per-channel brightness/contrast, visibility toggles, and colour assignment.
-  </Card>
-  <Card title="Analysis pipeline" icon="puzzle">
-    31 composable [processing steps](/commands/overview/) from preprocessing to
-    object classification.
-  </Card>
-  <Card title="bioimage.io import" icon="cloud-download">
-    Import a [published model's RDF](/ai/bioimageio-import/) and auto-configure
-    an AI Segmentation step.
-  </Card>
-  <Card title="Multi-well plate layout" icon="list-format">
-    Group images by well/plate for high-content screening experiments.
-  </Card>
-  <Card title="Interactive charts" icon="star">
-    [Histogram, scatter, and spatial heatmap](/guide/results/#charts) views over
-    the results table.
+    [Bio-Formats](https://www.openmicroscopy.org/bio-formats/), with full
+    multi-channel support out of the box.
   </Card>
   <Card title="Whole-slide image support" icon="bars">
     Large pyramidal, tiled whole-slide images are streamed and analysed [tile by
     tile](/fundamentals/image-formats/#big-images) automatically - no manual
     downsampling required.
+  </Card>
+  <Card title="Z-stacks & time-lapse" icon="random">
+    Intensity projections (Max, Min, Avg, Sum, Middle) or per-frame processing
+    across Z-stacks and time-lapse (T-stack) sequences.
+  </Card>
+  <Card title="Live multi-channel viewer" icon="magnifier">
+    Per-channel brightness/contrast, visibility toggles, and colour assignment,
+    with a live pipeline preview that updates as you tune each step.
+  </Card>
+  <Card title="Interactive charts & results database" icon="star">
+    [Histogram, scatter, and spatial heatmap](/guide/results/#charts) views over
+    results stored in a queryable local database, ready for grouping, filtering,
+    and export.
+  </Card>
+  <Card title="Batch processing at scale" icon="rocket">
+    Queue and process thousands of images unattended - the same pipeline runs
+    consistently across an entire dataset, storing results as it goes.
+  </Card>
+  <Card title="Classical & AI segmentation" icon="cloud-download">
+    Combine classical algorithms (Threshold, Watershed, Edge Detection) with
+    AI-based object detection (Stardist, UNet, Cellpose) in the same pipeline -
+    or [import a published bioimage.io model](/ai/bioimageio-import/) to
+    auto-configure one.
   </Card>
 </CardGrid>
 
