@@ -23,7 +23,8 @@ export default defineConfig({
             {
               label: "Pipeline JSON Schema",
               url: "https://evanalyzer.org/schema/project.schema.json",
-              description: "Machine-readable JSON Schema for .evaproj project/pipeline files",
+              description:
+                "Machine-readable JSON Schema for .evaproj project/pipeline files",
             },
           ],
           // The homepage hero's title animation and compare sliders are raw
@@ -70,7 +71,10 @@ export default defineConfig({
             { label: "Image Formats", slug: "fundamentals/image-formats" },
             { label: "Objects", slug: "fundamentals/objects" },
             { label: "Metrics", slug: "fundamentals/metrics" },
-            { label: "Project File Schema", slug: "fundamentals/project-schema" },
+            {
+              label: "Project File Schema",
+              slug: "fundamentals/project-schema",
+            },
           ],
         },
         {
@@ -218,6 +222,10 @@ export default defineConfig({
                   label: "Distance Transform",
                   slug: "commands/object/distance-transform",
                 },
+                {
+                  label: "ROI's math",
+                  slug: "commands/object/roi-math",
+                },
                 { label: "Save Image", slug: "commands/object/save-image" },
               ],
             },
@@ -256,6 +264,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { label: "About", slug: "about" },
+            { label: "Comparison", slug: "comparison" },
             { label: "Citation", slug: "citation" },
             { label: "FAQ", slug: "faq" },
             { label: "Support", slug: "support" },
