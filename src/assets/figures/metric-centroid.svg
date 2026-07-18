@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .shape { fill: #cfe0f7; stroke: #2563eb; stroke-width: 2.5; }
+    .hull { fill: none; stroke: #ea580c; stroke-width: 2; stroke-dasharray: 6 5; }
+    .dim { stroke: #6b7280; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .dot { fill: #111827; }
+    .dot2 { fill: #ea580c; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><path class="shape" d="M 90.0,25.0 L 240.0,25.0 L 240.0,65.0 L 130.0,65.0 L 130.0,175.0 L 90.0,175.0 Z"/><rect class="hull" x="90" y="25" width="150" height="150"/><circle class="dot" cx="165.0" cy="100.0" r="5"/><circle class="dot2" cx="141.7" cy="76.7" r="5"/><line class="dim" x1="165.0" y1="100.0" x2="141.7" y2="76.7"/><text class="lbl-sm" x="175.0" y="70.0">EVAnalyzer</text><text class="lbl-sm" x="175.0" y="84.0">"Center of Mass"</text><text class="lbl-sm" fill="#ea580c" x="86.7" y="98.7">true centroid</text><text class="lbl-bold" x="220" y="205" text-anchor="middle">bounding-box center &#8800; true centroid</text><text class="lbl-sm" x="220" y="221" text-anchor="middle">the gap grows for asymmetric / L-shaped objects</text></svg>

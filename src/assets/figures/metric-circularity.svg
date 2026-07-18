@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .shape { fill: #cfe0f7; stroke: #2563eb; stroke-width: 2.5; }
+    .shape2 { fill: #ffe3cc; stroke: #ea580c; stroke-width: 2.5; }
+    .hull { fill: none; stroke: #ea580c; stroke-width: 2; stroke-dasharray: 6 5; }
+    .axis { stroke: #111827; stroke-width: 2; }
+    .axis-minor { stroke: #ea580c; stroke-width: 2; }
+    .dim { stroke: #6b7280; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .dot { fill: #111827; }
+    .dot2 { fill: #ea580c; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><circle class="shape" cx="115" cy="105" r="62"/><text class="lbl-bold" x="115" y="200" text-anchor="middle">Circularity &#8776; 1.0</text><text class="lbl-sm" x="115" y="216" text-anchor="middle">smooth, compact</text><polygon class="shape2" points="325.0,27.0 338.0,73.6 380.2,49.8 356.4,92.0 403.0,105.0 356.4,118.0 380.2,160.2 338.0,136.4 325.0,183.0 312.0,136.4 269.8,160.2 293.6,118.0 247.0,105.0 293.6,92.0 269.8,49.8 312.0,73.6"/><text class="lbl-bold" x="325" y="200" text-anchor="middle">Circularity &#8776; 0.3</text><text class="lbl-sm" x="325" y="216" text-anchor="middle">same area, jagged boundary</text></svg>
