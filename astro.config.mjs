@@ -3,13 +3,21 @@ import { unified } from "@astrojs/markdown-remark";
 import starlight from "@astrojs/starlight";
 import starlightImageZoom from "starlight-image-zoom";
 import starlightLlmsTxt from "starlight-llms-txt";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 export default defineConfig({
   site: "https://evanalyzer.org",
   // starlight-image-zoom doesn't support Astro's newer default "satteri"
   // markdown processor yet - stay on the remark/rehype pipeline until it does.
+  // remark-math/rehype-katex render the $$ ... $$ formula blocks used in the
+  // fundamentals docs (e.g. metrics.md) - without them, "$$" is emitted as
+  // literal text instead of typeset math.
   markdown: {
-    processor: unified(),
+    processor: unified({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
+    }),
   },
   integrations: [
     starlight({
@@ -35,7 +43,7 @@ export default defineConfig({
         }),
       ],
       title: "EVAnalyzer Docs",
-      customCss: ["./src/styles/custom.css"],
+      customCss: ["katex/dist/katex.min.css", "./src/styles/custom.css"],
       components: {
         SiteTitle: "./src/components/overrides/SiteTitle.astro",
         ThemeSelect: "./src/components/overrides/ThemeSelect.astro",
@@ -69,8 +77,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { label: "Image Formats", slug: "fundamentals/image-formats" },
-            { label: "Objects", slug: "fundamentals/objects" },
-            { label: "Metrics", slug: "fundamentals/metrics" },
+            { label: "Objects & Metrics", slug: "fundamentals/metrics" },
             {
               label: "Project File Schema",
               slug: "fundamentals/project-schema",
