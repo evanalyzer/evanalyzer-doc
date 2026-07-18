@@ -5,13 +5,16 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "node scripts/fetch-schema.mjs",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "fetch-schema": "node scripts/fetch-schema.mjs"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.32.5",
-    "astro": "^5.8.0",
-    "starlight-image-zoom": "^0.13.2"
+    "@astrojs/starlight": "^0.41.3",
+    "astro": "^7.1.1",
+    "starlight-image-zoom": "^0.15.0",
+    "starlight-llms-txt": "^0.11.0"
   }
 }

@@ -1,0 +1,44 @@
+User-agent: *
+Allow: /
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+
+# Google (Gemini / AI training - separate from regular Googlebot search indexing)
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Common Crawl (used as training data by many AI labs)
+User-agent: CCBot
+Allow: /
+
+# Anthropic Live Retrieval (Additional 2026 string)
+User-agent: anthropic-ai
+Allow: /
+
+# Meta (AI training data scrapers)
+User-agent: FacebookBot
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+
+Sitemap: https://evanalyzer.org/sitemap-index.xml
+
+

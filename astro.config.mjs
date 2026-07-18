@@ -1,12 +1,38 @@
 import { defineConfig } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 import starlight from "@astrojs/starlight";
 import starlightImageZoom from "starlight-image-zoom";
+import starlightLlmsTxt from "starlight-llms-txt";
 
 export default defineConfig({
   site: "https://evanalyzer.org",
+  // starlight-image-zoom doesn't support Astro's newer default "satteri"
+  // markdown processor yet - stay on the remark/rehype pipeline until it does.
+  markdown: {
+    processor: unified(),
+  },
   integrations: [
     starlight({
-      plugins: [starlightImageZoom()],
+      plugins: [
+        starlightImageZoom(),
+        starlightLlmsTxt({
+          projectName: "EVAnalyzer",
+          details:
+            "EVAnalyzer's pipeline configuration format is described by a JSON Schema published at https://evanalyzer.org/schema/project.schema.json - a `oneOf` discriminated union covering every pipeline command, suitable for validating or generating `.evaproj` project/pipeline files programmatically.",
+          optionalLinks: [
+            {
+              label: "Pipeline JSON Schema",
+              url: "https://evanalyzer.org/schema/project.schema.json",
+              description: "Machine-readable JSON Schema for .evaproj project/pipeline files",
+            },
+          ],
+          // The homepage hero's title animation and compare sliders are raw
+          // HTML (with inline <style>/<script>) injected via Starlight's
+          // hero.title/hero.image, since that's the only way to customize
+          // them - strip those tags so they don't dump as tag soup here.
+          customSelectors: { all: ["style", "script"] },
+        }),
+      ],
       title: "EVAnalyzer Docs",
       customCss: ["./src/styles/custom.css"],
       components: {
@@ -44,6 +70,7 @@ export default defineConfig({
             { label: "Image Formats", slug: "fundamentals/image-formats" },
             { label: "Objects", slug: "fundamentals/objects" },
             { label: "Metrics", slug: "fundamentals/metrics" },
+            { label: "Project File Schema", slug: "fundamentals/project-schema" },
           ],
         },
         {
