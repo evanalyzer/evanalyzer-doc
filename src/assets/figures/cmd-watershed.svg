@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+    .axis { stroke: #374151; stroke-width: 1.5; fill: none; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><g><circle cx="170" cy="110" r="55" fill="#cfe0f7" stroke="none"/><circle cx="270" cy="110" r="55" fill="#cfe0f7" stroke="none"/></g><path d="M 170 60 A 55 55 0 0 0 130 150" fill="none" stroke="#2563eb" stroke-width="2.5"/><path d="M 170 160 A 55 55 0 0 0 210 118" fill="none" stroke="#2563eb" stroke-width="2.5"/><path d="M 270 60 A 55 55 0 0 1 310 150" fill="none" stroke="#2563eb" stroke-width="2.5"/><path d="M 270 160 A 55 55 0 0 1 230 118" fill="none" stroke="#2563eb" stroke-width="2.5"/><line x1="220" y1="70" x2="220" y2="150" stroke="#ea580c" stroke-width="3"/><circle cx="170" cy="110" r="4" fill="#111827"/><circle cx="270" cy="110" r="4" fill="#111827"/><text class="lbl-sm" x="170" y="185" text-anchor="middle">seed (EDM maximum)</text><text class="lbl-sm" fill="#ea580c" x="220" y="60" text-anchor="middle">watershed line</text><text class="lbl-bold" x="220" y="205" text-anchor="middle">Watershed</text><text class="lbl-sm" x="220" y="221" text-anchor="middle">floods from each distance-map maximum; draws a line where regions meet</text></svg>

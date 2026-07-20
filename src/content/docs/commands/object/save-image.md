@@ -5,6 +5,8 @@ description: Write a control image to disk showing detected objects overlaid on 
 
 The **Save Image** command writes a composite image to disk. It overlays detected objects (outlines or filled shapes) on the original or processed image and saves it as a TIFF file. These *control images* are useful for visually verifying segmentation quality.
 
+![Detected objects overlaid on the source canvas and written out as a TIFF](../../../../assets/figures/cmd-save-image.svg)
+
 ## Parameters
 
 | Parameter | Description |

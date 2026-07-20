@@ -5,6 +5,10 @@ description: Semantic segmentation using a pretrained U-Net model.
 
 The **AI UNet Segmentation** command runs semantic segmentation using a pretrained [U-Net](https://en.wikipedia.org/wiki/U-Net) model exported as TorchScript. Unlike [AI Stardist Segmentation](/commands/ai-segmentation/stardist/), U-Net produces only a foreground/background mask - it has no notion of individual object instances. Touching objects must be separated with a follow-up step (see [Splitting touching objects](#splitting-touching-objects) below).
 
+U-Net's defining feature is its symmetric shape: an encoder repeatedly downsamples the image to build up coarse, high-level context, and a decoder mirrors it back up to full resolution - but at each level, the decoder also receives the encoder's same-resolution features directly via a "skip connection", so fine spatial detail lost during downsampling doesn't have to be reconstructed from scratch.
+
+![An encoder downsamples for context; a decoder upsamples back to full resolution, with skip connections carrying fine detail across](../../../../assets/figures/cmd-unet.svg)
+
 :::note[Build requirement]
 AI segmentation commands are only available in builds with the `ai` Cargo feature enabled (via [tch-rs](https://github.com/LaurentMazare/tch-rs)/libtorch).
 :::
@@ -67,3 +71,7 @@ AI UNet Segmentation → Connected Components → Watershed → Extract ROIs
 ```
 
 [Connected Components](/commands/segmentation/connected-components/) labels each blob; [Watershed](/commands/segmentation/watershed/) re-splits any blob containing more than one object. This only works when touching objects form a pinched "peanut" shape - heavily overlapping objects with no waist cannot be split from the mask alone.
+
+## Background
+
+Olaf Ronneberger, Philipp Fischer, and Thomas Brox, "U-Net: Convolutional Networks for Biomedical Image Segmentation," *Medical Image Computing and Computer-Assisted Intervention (MICCAI)*, 2015, pp. 234-241.

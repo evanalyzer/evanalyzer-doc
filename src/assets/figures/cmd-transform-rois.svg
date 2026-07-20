@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><path d="M 93.6,110.0 L 92.9,126.6 L 78.6,136.4 L 62.5,133.2 L 49.0,125.3 L 44.3,110.0 L 48.2,94.1 L 61.4,83.5 L 77.2,87.8 L 88.6,96.5 Z" fill="#cfe0f7" stroke="#2563eb" stroke-width="2"/><text class="lbl-bold" x="70" y="165" text-anchor="middle">Original</text><path d="M 183.6,110.0 L 182.9,126.6 L 168.6,136.4 L 152.5,133.2 L 139.0,125.3 L 134.3,110.0 L 138.2,94.1 L 151.4,83.5 L 167.2,87.8 L 178.6,96.5 Z" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M 194.5,110.0 L 193.4,134.3 L 172.5,148.5 L 149.0,143.9 L 129.3,132.3 L 122.5,110.0 L 128.1,86.8 L 147.4,71.3 L 170.6,77.5 L 187.1,90.3 Z" fill="#ffe3cc" fill-opacity="0.5" stroke="#ea580c" stroke-width="2"/><text class="lbl-bold" x="160" y="165" text-anchor="middle">Scale / Expand</text><circle cx="255" cy="110" r="36" fill="#d1fae5" fill-opacity="0.6" stroke="#16a34a" stroke-width="2"/><text class="lbl-bold" x="255" y="165" text-anchor="middle">Snap / Min circle</text><ellipse cx="350" cy="110" rx="40" ry="24" fill="#e9d5ff" fill-opacity="0.6" stroke="#9333ea" stroke-width="2"/><text class="lbl-bold" x="350" y="165" text-anchor="middle">Fitting ellipse</text><text class="lbl-bold" x="220" y="205" text-anchor="middle">Object transform</text><text class="lbl-sm" x="220" y="221" text-anchor="middle">reshapes each object around its own centre</text></svg>

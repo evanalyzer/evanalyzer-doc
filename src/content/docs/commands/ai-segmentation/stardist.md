@@ -5,6 +5,8 @@ description: Instance segmentation using a pretrained StarDist model.
 
 The **AI Stardist Segmentation** command runs instance segmentation using a pretrained [StarDist](https://github.com/stardist/stardist) model exported as TorchScript. Unlike threshold-based segmentation, StarDist predicts individual object instances directly - no [Connected Components](/commands/segmentation/connected-components/) or [Watershed](/commands/segmentation/watershed/) step is needed afterward.
 
+![Each grid cell predicts object probability plus distances along n rays, which trace out a star-convex polygon](../../../../assets/figures/cmd-stardist.svg)
+
 :::note[Build requirement]
 AI segmentation commands are only available in builds with the `ai` Cargo feature enabled (via [tch-rs](https://github.com/LaurentMazare/tch-rs)/libtorch).
 :::
@@ -39,3 +41,7 @@ Runs on GPU automatically if CUDA is available in the linked libtorch build, oth
 :::tip[Genuine StarDist exports only]
 Only models that predict object probability + radial distances work with this command. A boundary-aware U-Net export (mask + boundary channels) is a different model type - use [AI UNet Segmentation](/commands/ai-segmentation/unet/) for those instead.
 :::
+
+## Background
+
+Uwe Schmidt, Martin Weigert, Coleman Broaddus, and Gene Myers, "Cell Detection with Star-Convex Polygons," *Medical Image Computing and Computer Assisted Intervention (MICCAI)*, 2018, pp. 265-273. The 3D extension used for volumetric data is described in Martin Weigert, Uwe Schmidt, Robert Haase, Ko Sugawara, and Gene Myers, "Star-Convex Polyhedra for 3D Object Detection and Segmentation in Microscopy," *IEEE Winter Conference on Applications of Computer Vision (WACV)*, 2020, pp. 3666-3673.

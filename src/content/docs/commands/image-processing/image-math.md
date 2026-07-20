@@ -5,6 +5,10 @@ description: Combine two images using a mathematical operation.
 
 The **Image Math** command applies a pixel-wise mathematical operation between the current pipeline image and a second image. The second image can come from a specific image channel or from a previously cached image.
 
+This is the command that lets a pipeline reason across channels rather than within just one: subtract one channel's signal from another to remove bleed-through, combine two channels into a composite mask, or divide by a reference image to correct for uneven illumination captured separately.
+
+![Two images combined pixel-by-pixel into a result](../../../../assets/figures/cmd-image-math.svg)
+
 ## Parameters
 
 | Parameter                | Description                                                                                                 |

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><circle cx="170" cy="110" r="45" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/><circle cx="230" cy="110" r="45" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/><text class="lbl-sm" fill="#2563eb" x="130" y="70">cy5@spot</text><text class="lbl-sm" fill="#ea580c" x="250" y="70">cy7@spot</text><text class="lbl-sm" x="200" y="115" text-anchor="middle">overlap</text><text class="lbl-sm" x="200" y="128" text-anchor="middle">area</text><text class="lbl-bold" x="220" y="185" text-anchor="middle">tracking ID: 42</text><text class="lbl-sm" x="220" y="200" text-anchor="middle">shared by both spots + the overlap object</text><text class="lbl-bold" x="220" y="30" text-anchor="middle">Colocalization</text></svg>

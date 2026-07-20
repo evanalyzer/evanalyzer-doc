@@ -5,6 +5,10 @@ description: Apply a linear brightness/contrast adjustment or a log/square-root 
 
 The **Intensity Transform** command adjusts pixel intensities using a configurable mathematical transformation.
 
+The three modes trace out different curves through the same input→output space: Linear keeps proportions intact (twice as bright stays twice as bright), while Logarithmic and Square root bend the curve to compress the high end and expand the low end - useful when a few very bright pixels would otherwise dominate the visible range and hide dim but real signal.
+
+![Linear keeps proportions; log/sqrt compress bright values and expand dark ones](../../../../assets/figures/cmd-intensity-transform.svg)
+
 ## Parameters
 
 | Parameter      | Description                                                    |

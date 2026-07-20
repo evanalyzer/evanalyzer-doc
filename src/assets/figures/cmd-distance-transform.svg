@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><circle cx="220" cy="110" r="70" fill="#1e3a8a"/><circle cx="220" cy="110" r="56" fill="#2563eb"/><circle cx="220" cy="110" r="42" fill="#22d3ee"/><circle cx="220" cy="110" r="28" fill="#86efac"/><circle cx="220" cy="110" r="14" fill="#fde047"/><text class="lbl-sm" fill="#ffffff" x="220" y="114" text-anchor="middle">max</text><text class="lbl-sm" x="140" y="110" text-anchor="end">0</text><text class="lbl-bold" x="220" y="205" text-anchor="middle">Distance transform (EDM)</text><text class="lbl-sm" x="220" y="221" text-anchor="middle">every foreground pixel's value = distance to the nearest background pixel</text></svg>

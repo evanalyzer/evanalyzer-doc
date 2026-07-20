@@ -5,6 +5,10 @@ description: Box (average) blur for noise reduction.
 
 The **Blur** command applies a box (mean) filter to the image. Every pixel is replaced by the average intensity of its surrounding neighbourhood.
 
+Because every pixel in the window contributes equally, a box blur is the cheapest possible smoothing operation - just a running average - which makes it fast, but it can also leave faint rectangular "ringing" artifacts around sharp edges that a distance-weighted kernel like [Gaussian Blur](/commands/image-processing/gaussian-blur/) avoids.
+
+![A noisy image next to its box-blurred version](../../../../assets/figures/cmd-blur.svg)
+
 ## When to use
 
 Use Blur as a fast, lightweight noise-reduction step before segmentation. For better edge preservation, consider [Gaussian Blur](/commands/image-processing/gaussian-blur/) instead.

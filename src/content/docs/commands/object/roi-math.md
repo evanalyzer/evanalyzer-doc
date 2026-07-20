@@ -7,6 +7,8 @@ The **ROI Math** command performs a pixel-level boolean set operation between tw
 
 When multiple **Other class** objects overlap a single **Input class** object, they are first unified into one combined "B" mask before the operation is applied.
 
+![The four boolean operations applied to the same pair of overlapping shapes](../../../../assets/figures/cmd-roi-math.svg)
+
 ## Parameters
 
 | Parameter              | Description                                                                                                                           |

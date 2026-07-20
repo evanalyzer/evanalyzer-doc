@@ -5,6 +5,10 @@ description: Store the current image in a named cache slot for retrieval in a la
 
 The **Image Cache** command saves or loads an intermediate image to/from a named cache slot. Cache slots are shared across all pipelines within a single image analysis run.
 
+Pipelines in EVAnalyzer normally run independently, each seeing only its own image data - Image Cache is the one mechanism that lets one pipeline hand a processed image to another, so a channel-specific preprocessing result (a background estimate, a mask) can be reused elsewhere instead of being recomputed.
+
+![A checkpoint stored by one pipeline and loaded by another](../../../../assets/figures/cmd-image-cache.svg)
+
 ## Parameters
 
 | Parameter   | Description                                                                                           |

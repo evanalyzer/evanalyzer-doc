@@ -5,6 +5,10 @@ description: Filter extracted regions and assign them to final object classes.
 
 The **Classify ROIs** command takes segmentation-class objects produced by [Extract ROIs](/commands/object/extract-rois/) and applies a set of shape and intensity filters. Objects that pass all filters are assigned to the **target class**; objects that fail are discarded.
 
+This is where raw segmentation output ("every connected group of bright pixels") turns into biological meaning ("this is a nucleus, that speck isn't") - the filters exist because segmentation almost always over-detects, picking up noise, debris, and imaging artifacts alongside genuine objects.
+
+![Objects are measured against shape/intensity filters; only those that pass every one reach the target class](../../../../assets/figures/cmd-classify-rois.svg)
+
 ## Input Selection
 
 | Parameter               | Description                                                        |

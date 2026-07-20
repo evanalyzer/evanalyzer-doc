@@ -5,6 +5,10 @@ description: Convert labelled binary regions into segmentation-class objects.
 
 The **Extract ROIs** command reads the labelled image produced by [Connected Components](/commands/segmentation/connected-components/) (or [Watershed](/commands/segmentation/watershed/)) and creates one segmentation-class object per labelled region. These objects are the raw candidates passed to [Classify ROIs](/commands/object/classify-rois/) for final filtering and class assignment.
 
+This is the boundary between "pixels" and "objects" in the pipeline: everything before this step operates on whole images, and everything after operates on individually addressable regions with their own [metrics](/fundamentals/metrics/), mask, and object ID.
+
+![Each labelled region turns into an addressable object record with its own mask, geometry, and metrics](../../../../assets/figures/cmd-extract-rois.svg)
+
 ## Parameters
 
 | Parameter | Description |

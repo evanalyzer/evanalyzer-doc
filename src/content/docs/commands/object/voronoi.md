@@ -7,6 +7,8 @@ The **Voronoi** command constructs a Voronoi diagram from the centroid positions
 
 A common use case is approximating cell boundaries from known nucleus positions when no cell-surface stain is available.
 
+![Every pixel is assigned to whichever seed's centroid it's closest to, tiling the image into cells](../../../../assets/figures/cmd-voronoi.svg)
+
 ## Parameters
 
 | Parameter | Description |
@@ -38,3 +40,7 @@ Enable **Exclude areas without centre** when combining Voronoi with a masking cl
 - **Mask**: segmented cell-body class (if available)
 - **Output class**: `cell@voronoi`
 :::
+
+## Background
+
+The Voronoi diagram is named after Georgy Voronoy, "Nouvelles applications des paramètres continus à la théorie des formes quadratiques," *Journal für die reine und angewandte Mathematik*, vol. 133, pp. 97-178, 1908, though the concept dates back to Descartes and Dirichlet - it remains one of the most widely used constructions in computational geometry for exactly this kind of "nearest region" partitioning.

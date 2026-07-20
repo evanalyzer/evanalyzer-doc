@@ -5,6 +5,10 @@ description: Erosion, dilation, opening, and closing on binary or greyscale imag
 
 The **Morphological Transform** command applies a structural element to reshape regions in an image. It is typically used after thresholding to clean up binary masks before object extraction.
 
+All four operations boil down to sliding a small shape (the structuring element) across the image and asking either "does it fit entirely inside the bright region here?" (erosion) or "does it touch the bright region at all here?" (dilation) - opening and closing just chain the two in different orders to get asymmetric effects: shrink-then-grow erases anything too small to contain the structuring element at all, while grow-then-shrink bridges gaps that are narrower than it.
+
+![Dilate grows the bright region outward; erode shrinks it inward](../../../../assets/figures/cmd-morphological-transform.svg)
+
 ## Operations
 
 | Operation    | Effect                                                                                  |
@@ -42,3 +46,7 @@ Running an operation multiple times is equivalent to using a larger effective ke
 - **Dilation** - connect small gaps in a detected contour.
 - **Opening** - remove debris / small artefacts from a binary mask without changing the size of larger objects significantly.
 - **Closing** - fill small holes inside detected objects.
+
+## Background
+
+The mathematical framework behind these operations - structuring elements, erosion, dilation, and their compositions - is mathematical morphology, developed by Georges Matheron and Jean Serra at the Centre de Morphologie Mathématique in the 1960s-70s and formalized in Jean Serra, *Image Analysis and Mathematical Morphology*, Academic Press, 1982.

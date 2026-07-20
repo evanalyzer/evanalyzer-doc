@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+    .axis { stroke: #374151; stroke-width: 1.5; fill: none; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><circle cx="90" cy="90" r="32" fill="#2563eb" fill-opacity="0.25" stroke="#2563eb" stroke-width="2.5"/><text class="lbl-bold" x="90" y="95" text-anchor="middle" fill="#2563eb">1</text><circle cx="180" cy="70" r="26" fill="#ea580c" fill-opacity="0.25" stroke="#ea580c" stroke-width="2.5"/><text class="lbl-bold" x="180" y="75" text-anchor="middle" fill="#ea580c">2</text><circle cx="190" cy="140" r="22" fill="#16a34a" fill-opacity="0.25" stroke="#16a34a" stroke-width="2.5"/><text class="lbl-bold" x="190" y="145" text-anchor="middle" fill="#16a34a">3</text><circle cx="320" cy="100" r="36" fill="#9333ea" fill-opacity="0.25" stroke="#9333ea" stroke-width="2.5"/><text class="lbl-bold" x="320" y="105" text-anchor="middle" fill="#9333ea">4</text><text class="lbl-bold" x="220" y="195" text-anchor="middle">Connected components</text><text class="lbl-sm" x="220" y="211" text-anchor="middle">each isolated group of foreground pixels gets its own label</text></svg>

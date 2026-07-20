@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+    .axis { stroke: #374151; stroke-width: 1.5; fill: none; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><circle cx="90" cy="110" r="35" fill="#cfe0f7" stroke="#2563eb" stroke-width="2"/><text class="lbl-bold" x="90" y="175" text-anchor="middle">Original</text><circle cx="220" cy="110" r="47" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-dasharray="5 3"/><circle cx="220" cy="110" r="35" fill="#cfe0f7" stroke="#2563eb" stroke-width="1.5"/><text class="lbl-bold" x="220" y="175" text-anchor="middle">Dilate</text><text class="lbl-sm" x="220" y="191" text-anchor="middle">grows bright regions</text><circle cx="350" cy="110" r="35" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3 2"/><circle cx="350" cy="110" r="23" fill="#cfe0f7" stroke="#ea580c" stroke-width="2.5"/><text class="lbl-bold" x="350" y="175" text-anchor="middle">Erode</text><text class="lbl-sm" x="350" y="191" text-anchor="middle">shrinks bright regions</text><text class="lbl-bold" x="220" y="205" text-anchor="middle">Morphological transform</text><text class="lbl-sm" x="220" y="221" text-anchor="middle">Open = erode then dilate (removes specks); Close = dilate then erode (fills gaps)</text></svg>

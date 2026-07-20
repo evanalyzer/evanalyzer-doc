@@ -5,6 +5,8 @@ description: Reshape objects by scaling, snapping a circle around them, or repla
 
 The **Object Transform** command applies a geometric transform to every object carrying **Input class**, keeping the object's bounding-box centre fixed. Depending on the **Output class**, the transformed shape either replaces the input object in place or is added as a new, separate object alongside the untouched original.
 
+![The same nucleus reshaped by four different functions: scale/expand, snap-to-circle, and fitting ellipse](../../../../assets/figures/cmd-transform-rois.svg)
+
 ## Parameters
 
 | Parameter        | Description                                                                                                                                                                                                                   |
