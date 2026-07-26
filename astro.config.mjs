@@ -43,6 +43,7 @@ export default defineConfig({
         }),
       ],
       title: "EVAnalyzer Docs",
+      favicon: "/favicon.png",
       customCss: ["katex/dist/katex.min.css", "./src/styles/custom.css"],
       components: {
         SiteTitle: "./src/components/overrides/SiteTitle.astro",
@@ -242,6 +243,11 @@ export default defineConfig({
           label: "CLI",
           collapsed: true,
           items: [{ label: "Command Line Interface", slug: "cli/cli" }],
+        },
+        {
+          label: "VS Code Extension",
+          collapsed: true,
+          items: [{ label: "Editing Project Files", slug: "vscode/extension" }],
         },
         {
           label: "Tutorials",
