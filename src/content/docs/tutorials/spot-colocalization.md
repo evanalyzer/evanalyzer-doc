@@ -19,7 +19,7 @@ This tutorial demonstrates how to detect spots in two fluorescence channels and 
 
 ## Step 2: Per-Channel Detection Pipelines
 
-Create **one pipeline per channel** following the [Spot Count](/tutorials/spot-count/) workflow. Each pipeline should end with a Classify ROIs step that assigns the respective class:
+Create **one pipeline per channel** following the [Spot Count](/tutorials/spot-count/) workflow. Each pipeline should end with a Classify Objects step that assigns the respective class:
 
 - Pipeline 1 → `cy5@spot`
 - Pipeline 2 → `cy7@spot`
@@ -56,7 +56,7 @@ After running:
 
 ## Filtering by colocalization area
 
-Add a **Classify ROIs** step after Colocalization targeting `coloc@cy5cy7` to filter out low-overlap events:
+Add a **Classify Objects** step after Colocalization targeting `coloc@cy5cy7` to filter out low-overlap events:
 
 | Filter   | Value                                                         |
 | -------- | ------------------------------------------------------------- |

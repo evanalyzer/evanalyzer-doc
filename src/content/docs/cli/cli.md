@@ -122,7 +122,7 @@ The command exits with a non-zero status code if any images are missing, making 
 `analyze` writes results to a `results.evadb` file (DuckDB format) under the project's job folder - the same file the GUI's [Results](/guide/results/) view opens. `view`, `columns`, and `export` all read from this file via `--db`.
 
 ```sh
-duckdb results.evadb "SELECT object_class_name, COUNT(*) FROM rois GROUP BY object_class_name"
+duckdb results.evadb "SELECT object_class_name, COUNT(*) FROM objects GROUP BY object_class_name"
 ```
 
 ## view
@@ -159,7 +159,7 @@ Lists every column id available in a results database - including per-channel in
 
 ```
 ID                                   LABEL                            NUMERIC
-roi_id                               ROI ID
+object_id                            Object ID
 image                                Image
 class                                Class
 area_px                              Area (px²)                      yes

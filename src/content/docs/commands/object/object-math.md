@@ -1,13 +1,13 @@
 ---
-title: ROI Math
+title: Object Math
 description: Apply boolean set operations (AND, OR, XOR, Subtract) between two object classes to derive new object shapes.
 ---
 
-The **ROI Math** command performs a pixel-level boolean set operation between two object classes — an **Input class** ("A") and an **Other class** ("B") — and writes the result into an **Output class**. It is used to derive new object shapes from the combination of existing segmented regions, for example to subtract a nucleus mask from a whole-cell mask to isolate cytoplasm, or to restrict spots to the interior of another object.
+The **Object Math** command performs a pixel-level boolean set operation between two object classes — an **Input class** ("A") and an **Other class** ("B") — and writes the result into an **Output class**. It is used to derive new object shapes from the combination of existing segmented regions, for example to subtract a nucleus mask from a whole-cell mask to isolate cytoplasm, or to restrict spots to the interior of another object.
 
 When multiple **Other class** objects overlap a single **Input class** object, they are first unified into one combined "B" mask before the operation is applied.
 
-![The four boolean operations applied to the same pair of overlapping shapes](../../../../assets/figures/cmd-roi-math.svg)
+![The four boolean operations applied to the same pair of overlapping shapes](../../../../assets/figures/cmd-object-math.svg)
 
 ## Parameters
 

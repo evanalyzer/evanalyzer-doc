@@ -33,7 +33,7 @@ Always set a **minimum threshold greater than zero** even when using an auto-thr
 
 Click **+ Add** to define additional threshold entries for the same image. Each entry uses a different intensity range and assigns a different segmentation class, allowing two or more object populations to be detected from one image in a single step.
 
-Under the hood, each threshold class maps to a distinct greyscale value in the binary output (65535 for the first class, decrementing for subsequent classes). [Connected Components](/commands/segmentation/connected-components/) and [Extract ROIs](/commands/object/extract-rois/) use these values to distinguish the populations.
+Under the hood, each threshold class maps to a distinct greyscale value in the binary output (65535 for the first class, decrementing for subsequent classes). [Connected Components](/commands/segmentation/connected-components/) and [Extract Objects](/commands/object/extract-objects/) use these values to distinguish the populations.
 
 ## Auto-threshold algorithms
 

@@ -34,8 +34,8 @@ Create a pipeline named `Nucleus` targeting the DAPI channel:
 | Threshold            | Manual or Otsu auto-threshold                                   |
 | Connected Components | -                                                               |
 | Watershed            | Tolerance: 0.3 (optional)                                       |
-| Extract ROIs         | -                                                               |
-| Classify ROIs        | Target: `dapi@nucleus`; Min area: 500 px²; Min circularity: 0.3 |
+| Extract Objects      | -                                                               |
+| Classify Objects     | Target: `dapi@nucleus`; Min area: 500 px²; Min circularity: 0.3 |
 
 ## Step 3: EV Detection Pipeline
 
@@ -43,7 +43,7 @@ Follow the [Spot Count](/tutorials/spot-count/) pipeline for the EV channel to p
 
 ## Step 4: Link Spots to Nuclei
 
-After the Classify ROIs step in the EV pipeline, add a second **Classify ROIs** step:
+After the Classify Objects step in the EV pipeline, add a second **Classify Objects** step:
 
 | Setting                | Value                                                  |
 | ---------------------- | ------------------------------------------------------ |

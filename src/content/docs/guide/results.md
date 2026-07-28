@@ -15,11 +15,11 @@ Open an existing results file from the toolbar: click the **arrow** beside the *
 
 ## Results Table
 
-By default, results open in the **Table** view: one row per detected region of interest (ROI), with columns for **ROI ID**, **Image**, **Class**, **Area (px²)**, **Area (nm²)**, **Circularity**, **Colocalized**, and one **Min / Max / Avg / Sum** column per measured channel (Ch0, Ch1, …).
+By default, results open in the **Table** view: one row per detected object, with columns for **Object ID**, **Image**, **Class**, **Area (px²)**, **Area (nm²)**, **Circularity**, **Colocalized**, and one **Min / Max / Avg / Sum** column per measured channel (Ch0, Ch1, …).
 
 Click a column header to sort by it; click again to reverse the direction. The **Image**, **Class**, and **Colocalized** headers each have a filter icon that opens a searchable checklist of values, so you can narrow the table to specific images or classes without leaving the results window.
 
-Results load in pages as you scroll, so even large result sets with hundreds of thousands of ROIs stay responsive.
+Results load in pages as you scroll, so even large result sets with hundreds of thousands of objects stay responsive.
 
 ![Results table](../../../assets/screenshots/screenshot-results-table-view.png)
 
@@ -31,7 +31,7 @@ Click **Columns** in the toolbar to show or hide individual columns, including p
 
 ### Grouping and Aggregation
 
-Click **Group by** to collapse the per-ROI table into one row per **image name**, **folder name**, or a **regex** extracted from the image name. Choose one or more aggregation functions — **Min**, **Max**, **Average**, **Median**, **Std. dev.**, **Sum** — then click **Apply**.
+Click **Group by** to collapse the per-object table into one row per **image name**, **folder name**, or a **regex** extracted from the image name. Choose one or more aggregation functions — **Min**, **Max**, **Average**, **Median**, **Std. dev.**, **Sum** — then click **Apply**.
 
 ![Group by](../../../assets/screenshots/screenshot-results-group-by.png)
 
@@ -45,7 +45,7 @@ With grouped results, the **Columns** picker nests per-channel metrics under an 
 
 ### Colocalization Details
 
-If a pipeline includes a [Colocalization](/commands/object/colocalization/) step, switch to the **Coloc details** view to flatten each ROI's matched partners into their own columns — one set of measurement columns per partner class, with a dash where no partner was found. This is the same underlying data as the **Colocalized** column in the main table, broken out partner by partner.
+If a pipeline includes a [Colocalization](/commands/object/colocalization/) step, switch to the **Coloc details** view to flatten each object's matched partners into their own columns — one set of measurement columns per partner class, with a dash where no partner was found. This is the same underlying data as the **Colocalized** column in the main table, broken out partner by partner.
 
 ![Colocalization details view](../../../assets/screenshots/screenshot-results-coloc-details-view.png)
 
@@ -67,7 +67,7 @@ Choose numeric **X** and **Y** columns and optionally **Color by** class or colo
 
 ### Spatial Heatmap
 
-Bins ROI centroids into a grid across the image (or plate) and colors each cell by object **Count** or the **Average** of a chosen metric. Configure the **Cell size (px)** and a **Colors** scheme (Viridis, Magma, Plasma, or Grayscale). This is particularly useful for spotting spatial trends across a whole-slide image or across wells in a plate.
+Bins object centroids into a grid across the image (or plate) and colors each cell by object **Count** or the **Average** of a chosen metric. Configure the **Cell size (px)** and a **Colors** scheme (Viridis, Magma, Plasma, or Grayscale). This is particularly useful for spotting spatial trends across a whole-slide image or across wells in a plate.
 
 ![Spatial heatmap view](../../../assets/screenshots/screenshot-results-heatmap.png)
 
@@ -106,7 +106,7 @@ Separately, **Export as Displayed** (bottom-left of the dialog) skips the queue 
 Both CSV and XLSX exports stream rows to disk rather than holding the whole result set in memory, so exporting very large projects doesn't require large amounts of RAM.
 
 :::tip
-For colocalization exports, partner lookups are resolved in batches of 5,000 source ROIs at a time — large colocalization datasets export reliably without needing to load everything at once.
+For colocalization exports, partner lookups are resolved in batches of 5,000 source objects at a time — large colocalization datasets export reliably without needing to load everything at once.
 :::
 
 ## Copying to the Clipboard

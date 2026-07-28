@@ -84,12 +84,12 @@ Commands that operate on extracted objects.
 
 | Command                                                    | Purpose                                                                    |
 | ---------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [Extract ROIs](/commands/object/extract-rois/)             | Convert binary mask regions to segmentation-class objects                  |
-| [Classify ROIs](/commands/object/classify-rois/)           | Filter and assign final object classes                                     |
+| [Extract Objects](/commands/object/extract-objects/)       | Convert binary mask regions to segmentation-class objects                  |
+| [Classify Objects](/commands/object/classify-objects/)     | Filter and assign final object classes                                     |
 | [Colocalization](/commands/object/colocalization/)         | Find overlapping objects across classes                                    |
 | [Voronoi](/commands/object/voronoi/)                       | Partition space from object centroids                                      |
-| [Object Transform](/commands/object/transform-rois/)       | Scale, snap, expand, shrink, or fit an ellipse to objects                  |
-| [ROI Math](/commands/object/roi-math/)                     | Boolean set operations (AND, OR, XOR, Subtract) between two object classes |
+| [Object Transform](/commands/object/transform-objects/)    | Scale, snap, expand, shrink, or fit an ellipse to objects                  |
+| [Object Math](/commands/object/object-math/)               | Boolean set operations (AND, OR, XOR, Subtract) between two object classes |
 | [Distance Transform](/commands/object/distance-transform/) | Measure distances between object pairs                                     |
 | [Save Image](/commands/object/save-image/)                 | Write a control image to disk                                              |
 
@@ -99,8 +99,8 @@ Commands that operate on extracted objects.
 Image
   └─ Preprocessing (Blur, Rolling Ball, …)
        └─ Segmentation (Threshold → Connected Components → Watershed)
-            └─ Extract ROIs
-                 └─ Classify ROIs
+            └─ Extract Objects
+                 └─ Classify Objects
                       └─ Object Processing (Colocalization, Distance, …)
                            └─ Save Image
 ```

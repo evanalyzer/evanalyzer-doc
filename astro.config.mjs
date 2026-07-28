@@ -212,10 +212,13 @@ export default defineConfig({
               label: "Object Processing",
               collapsed: true,
               items: [
-                { label: "Extract ROIs", slug: "commands/object/extract-rois" },
                 {
-                  label: "Classify ROIs",
-                  slug: "commands/object/classify-rois",
+                  label: "Extract Objects",
+                  slug: "commands/object/extract-objects",
+                },
+                {
+                  label: "Classify Objects",
+                  slug: "commands/object/classify-objects",
                 },
                 {
                   label: "Colocalization",
@@ -224,15 +227,15 @@ export default defineConfig({
                 { label: "Voronoi", slug: "commands/object/voronoi" },
                 {
                   label: "Object Transform",
-                  slug: "commands/object/transform-rois",
+                  slug: "commands/object/transform-objects",
                 },
                 {
                   label: "Distance Transform",
                   slug: "commands/object/distance-transform",
                 },
                 {
-                  label: "ROI's math",
-                  slug: "commands/object/roi-math",
+                  label: "Object Math",
+                  slug: "commands/object/object-math",
                 },
                 { label: "Save Image", slug: "commands/object/save-image" },
               ],

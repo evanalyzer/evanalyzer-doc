@@ -34,7 +34,7 @@ It was originally created for massive whole-slide pathology images, but it handl
 
 ### What CellProfiler & EVAnalyzer Can Do (That QuPath Cannot)
 
-- **Custom Geometric Math & Shape Morphing:** In QuPath, your cell body is usually derived by expanding a set distance outward from the nucleus. You cannot cleanly warp, shrink, subtract custom masks, or perform complex mathematical steps (like creating a 3-pixel wide rim around an organelle) mid-pipeline the way you can with CellProfiler, or with EVAnalyzer's [RoiMath](/commands/object/roi-math/) boolean object operations.
+- **Custom Geometric Math & Shape Morphing:** In QuPath, your cell body is usually derived by expanding a set distance outward from the nucleus. You cannot cleanly warp, shrink, subtract custom masks, or perform complex mathematical steps (like creating a 3-pixel wide rim around an organelle) mid-pipeline the way you can with CellProfiler, or with EVAnalyzer's [Object Math](/commands/object/object-math/) boolean object operations.
 - **True Independent Per-Channel Preprocessing:** QuPath's fast cell detector requires choosing **one principal anchor channel** (usually DAPI/Nuclei) to locate cells. If you have a channel that requires a completely custom mathematical background extraction method or adaptive thresholding before detection, it is hard to isolate it. EVAnalyzer excels here by allowing you to split every channel into a completely custom [pipeline](/guide/pipelines/).
 
 ---

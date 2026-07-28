@@ -5,7 +5,7 @@ description: Find objects from multiple classes that spatially overlap and assig
 
 The **Colocalization** command identifies objects from two or more input classes that overlap each other. Overlapping objects are defined as _colocalising_. EVAnalyzer assigns all colocalising objects a shared **tracking ID**, allowing them to be grouped in the results table.
 
-Unlike [ROI Math](/commands/object/roi-math/), which *derives a new shape* from two object sets, Colocalization's job is to *link* objects that already exist - each overlapping pair (or group) keeps its own identity and metrics, but gains a shared tracking ID and, optionally, a new object recording the overlap area itself.
+Unlike [Object Math](/commands/object/object-math/), which *derives a new shape* from two object sets, Colocalization's job is to *link* objects that already exist - each overlapping pair (or group) keeps its own identity and metrics, but gains a shared tracking ID and, optionally, a new object recording the overlap area itself.
 
 ![Overlapping objects from two classes, plus the overlap region itself, all share one tracking ID](../../../../assets/figures/cmd-colocalization.svg)
 

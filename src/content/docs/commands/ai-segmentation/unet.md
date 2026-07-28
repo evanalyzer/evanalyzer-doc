@@ -57,7 +57,7 @@ Models that predict an explicit boundary channel - e.g. bioimage.io's [`affable-
 4. Chain a plain [Connected Components](/commands/segmentation/connected-components/) afterward - no watershed needed:
 
 ```
-AI UNet Segmentation (foreground_channel: 0, boundary_channel: 1) → Connected Components → Extract ROIs
+AI UNet Segmentation (foreground_channel: 0, boundary_channel: 1) → Connected Components → Extract Objects
 ```
 
 Discarding the boundary channel and relying on watershed instead is the most common reason touching objects "won't split" - a distance-map watershed can't separate a blob that has no waist, and the waist information lives in the boundary channel.
@@ -67,7 +67,7 @@ Discarding the boundary channel and relying on watershed instead is the most com
 If the model gives only a foreground mask (no boundary), chain a distance-map watershed instead:
 
 ```
-AI UNet Segmentation → Connected Components → Watershed → Extract ROIs
+AI UNet Segmentation → Connected Components → Watershed → Extract Objects
 ```
 
 [Connected Components](/commands/segmentation/connected-components/) labels each blob; [Watershed](/commands/segmentation/watershed/) re-splits any blob containing more than one object. This only works when touching objects form a pinched "peanut" shape - heavily overlapping objects with no waist cannot be split from the mask alone.

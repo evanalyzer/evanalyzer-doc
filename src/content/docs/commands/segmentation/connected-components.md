@@ -11,7 +11,7 @@ Internally this runs as a two-pass union-find labeling: a first pass walks the i
 
 ## When to use
 
-Connected Components is a required intermediate step between Threshold and Extract ROIs. It separates the monolithic foreground mask into individually labelled regions that can be further split by [Watershed](/commands/segmentation/watershed/) or immediately passed to [Extract ROIs](/commands/object/extract-rois/).
+Connected Components is a required intermediate step between Threshold and Extract Objects. It separates the monolithic foreground mask into individually labelled regions that can be further split by [Watershed](/commands/segmentation/watershed/) or immediately passed to [Extract Objects](/commands/object/extract-objects/).
 
 ## Parameters
 
@@ -19,12 +19,12 @@ Connected Components is a required intermediate step between Threshold and Extra
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Min size** (px²)    | Objects with a pixel area below this threshold are discarded immediately after labelling, before any downstream step sees them. Useful for suppressing noise and speckle artifacts. Default `0` disables the filter |
 
-Setting **Min size** to a small positive value (e.g. 5–20 px²) is a lightweight alternative to running a [Morphological Transform](/commands/morphology/morphological-transform/) opening step just to remove speckle, and avoids inflating the object count seen by [Extract ROIs](/commands/object/extract-rois/).
+Setting **Min size** to a small positive value (e.g. 5–20 px²) is a lightweight alternative to running a [Morphological Transform](/commands/morphology/morphological-transform/) opening step just to remove speckle, and avoids inflating the object count seen by [Extract Objects](/commands/object/extract-objects/).
 
 ## Pipeline position
 
 ```
-Threshold → Connected Components → [optional Watershed] → Extract ROIs
+Threshold → Connected Components → [optional Watershed] → Extract Objects
 ```
 
 :::note[New in EVAnalyzer vs ImageC]

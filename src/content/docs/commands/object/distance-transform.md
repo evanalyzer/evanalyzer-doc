@@ -16,7 +16,7 @@ The Distance Transform is useful as an intermediate processing step:
 - Feed the EDM into [Watershed](/commands/segmentation/watershed/) for improved separation of touching objects.
 - Use the EDM to create distance-weighted masks.
 
-For measuring pairwise distances **between detected objects**, refer to the distance metrics in [Classify ROIs](/commands/object/classify-rois/) and the [Metrics](/fundamentals/metrics/) reference - these are computed automatically during object classification.
+For measuring pairwise distances **between detected objects**, refer to the distance metrics in [Classify Objects](/commands/object/classify-objects/) and the [Metrics](/fundamentals/metrics/) reference - these are computed automatically during object classification.
 
 ## Parameters
 

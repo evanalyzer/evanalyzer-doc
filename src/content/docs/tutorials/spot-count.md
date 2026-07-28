@@ -39,8 +39,8 @@ Create a new pipeline named `EV Detection` and add the following steps in order:
 | [Threshold](/commands/segmentation/threshold/)                                                         | Method: Manual - **adapt to your images**; start with Min: 200            |
 | [Connected Components](/commands/segmentation/connected-components/)                                   | Min size: 3–10 px² recommended to suppress single-pixel noise            |
 | [Watershed](/commands/segmentation/watershed/)                                                         | Tolerance: 0.5 - separates closely touching spots                         |
-| [Extract ROIs](/commands/object/extract-rois/)                                                         | No settings                                                               |
-| [Classify ROIs](/commands/object/classify-rois/)                                                       | Target: `ch1@spot`; Min area: 3 px²; Min circularity: 0.1                 |
+| [Extract Objects](/commands/object/extract-objects/)                                                   | No settings                                                               |
+| [Classify Objects](/commands/object/classify-objects/)                                                 | Target: `ch1@spot`; Min area: 3 px²; Min circularity: 0.1                 |
 | [Save Image](/commands/object/save-image/)                                                             | Path: `images/${imageName}` - save a control image (remove if not needed) |
 
 :::tip[Threshold selection]
@@ -58,9 +58,9 @@ If you have a dedicated calibration-bead channel, create a second pipeline named
 | Threshold                                                 | Method: Manual - adapt to bead channel                                                                                                                                                        |
 | Connected Components                                      | -                                                                                                                                                                                             |
 | Watershed                                                 | Tolerance: 0.5                                                                                                                                                                                |
-| Extract ROIs                                              | -                                                                                                                                                                                             |
-| Classify ROIs                                             | Target: `tetraspeck@spot`; Min area: 5 px²                                                                                                                                                    |
-| [Classify ROIs](/commands/object/classify-rois/) (second) | Source: `ch1@spot`; Intersects with: `tetraspeck@spot`; Target: `tetraspeck@spot` - moves any EV spot that overlaps a bead to the tetraspeck class, effectively removing it from the EV count |
+| Extract Objects                                              | -                                                                                                                                                                                             |
+| Classify Objects                                             | Target: `tetraspeck@spot`; Min area: 5 px²                                                                                                                                                    |
+| [Classify Objects](/commands/object/classify-objects/) (second) | Source: `ch1@spot`; Intersects with: `tetraspeck@spot`; Target: `tetraspeck@spot` - moves any EV spot that overlaps a bead to the tetraspeck class, effectively removing it from the EV count |
 
 ## Step 5: Run and Inspect
 
@@ -73,4 +73,4 @@ Click **Play** to run the analysis. When complete:
 ## Tips
 
 - The **Tetraspeck** pipeline should be **disabled** if no calibration bead channel is available.
-- Add a [Classify ROIs](/commands/object/classify-rois/) step after the EV classifier with additional filters (e.g. `Min area: 10`) to gate the population further without rerunning the full analysis.
+- Add a [Classify Objects](/commands/object/classify-objects/) step after the EV classifier with additional filters (e.g. `Min area: 10`) to gate the population further without rerunning the full analysis.

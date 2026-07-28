@@ -59,7 +59,7 @@ The workspace is split into focused crates:
 
 | Crate             | Description                                                                           |
 | ----------------- | ------------------------------------------------------------------------------------- |
-| `evanalyzer_core` | Image I/O (Bio-Formats via JVM), processing algorithms, ROI model, pipeline execution |
+| `evanalyzer_core` | Image I/O (Bio-Formats via JVM), processing algorithms, object model, pipeline execution |
 | `evanalyzer_cfg`  | Project settings, JSON serialisation, pipeline command configuration                  |
 | `evanalyzer_app`  | Application handle, shared project state                                              |
 | `evanalyzer_gui`  | Slint-based desktop GUI - viewport, histogram, ROI tools, classification panel        |

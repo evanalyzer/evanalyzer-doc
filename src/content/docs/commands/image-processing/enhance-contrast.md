@@ -32,5 +32,5 @@ Applies histogram equalization: each intensity value is remapped so that the cum
 Enhance Contrast can improve visibility in the live preview or in exported control images. For analysis pipelines, normalisation before thresholding can reduce sensitivity to exposure variation between images.
 
 :::caution
-Both modes change pixel values, which changes any downstream intensity measurement. If you need the raw intensity metrics (Sum/Avg/Min/Max) to reflect the original acquisition, apply Enhance Contrast only for visualization/export, on a branch that doesn't feed into [Classify ROIs](/commands/object/classify-rois/).
+Both modes change pixel values, which changes any downstream intensity measurement. If you need the raw intensity metrics (Sum/Avg/Min/Max) to reflect the original acquisition, apply Enhance Contrast only for visualization/export, on a branch that doesn't feed into [Classify Objects](/commands/object/classify-objects/).
 :::

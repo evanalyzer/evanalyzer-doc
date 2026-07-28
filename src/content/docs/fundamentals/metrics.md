@@ -3,7 +3,7 @@ title: Objects & Metrics
 description: What objects are and the complete reference of all object metrics and statistics available in EVAnalyzer, with the formula and intuition behind each one.
 ---
 
-An **object** is the result of an image classification step. It represents a quantified region of interest (ROI) extracted from an image plane and stored in the results database.
+An **object** is the result of an image classification step. It represents a quantified region extracted from an image plane and stored in the results database.
 
 Every object is assigned to exactly one [object class](/guide/classification/). Together with the class assignment, a set of geometric, intensity, and relational metrics is calculated and stored - visible in the results table and exportable to CSV or XLSX.
 
@@ -83,7 +83,7 @@ Handy for telling round objects (nuclei, vesicles) apart from rod- or fiber-like
 
 ### Eccentricity
 
-Elongation of the object's fitted ellipse (0 = circle, approaching 1 = increasingly elongated - a flattened sliver). It answers the same "how stretched is this object?" question as [Aspect Ratio](#aspect-ratio), just on a bounded 0-1 scale instead of an open-ended ratio, which can make it easier to set a filter threshold in [Classify ROIs](/commands/object/classify-rois/).
+Elongation of the object's fitted ellipse (0 = circle, approaching 1 = increasingly elongated - a flattened sliver). It answers the same "how stretched is this object?" question as [Aspect Ratio](#aspect-ratio), just on a bounded 0-1 scale instead of an open-ended ratio, which can make it easier to set a filter threshold in [Classify Objects](/commands/object/classify-objects/).
 
 The ellipse is fitted from the mask's second-order central moments - a standard way of asking "if I approximated this exact pixel mask with the closest-fitting ellipse, how big would its axes be?":
 
@@ -133,7 +133,7 @@ The smallest axis-aligned rectangle that contains all pixels of the object.
 
 ## Intensity Metrics
 
-Calculated independently for each image channel/plane configured in the [Classify ROIs](/commands/object/classify-rois/) step, over the $n$ pixels of the object's mask - the actual signal being measured, as opposed to the shape metrics above:
+Calculated independently for each image channel/plane configured in the [Classify Objects](/commands/object/classify-objects/) step, over the $n$ pixels of the object's mask - the actual signal being measured, as opposed to the shape metrics above:
 
 $$
 \text{Sum} = \sum_{i=1}^{n} v_i, \qquad
@@ -154,7 +154,7 @@ Use the **With object ID** option in [Save Image](/commands/object/save-image/) 
 
 ### Parent Object ID
 
-EVAnalyzer supports a parent-child hierarchy between objects. When [Classify ROIs](/commands/object/classify-rois/) or [Colocalization](/commands/object/colocalization/) is configured to intersect objects, the **parent object ID** of the child is set to the object ID of the containing parent.
+EVAnalyzer supports a parent-child hierarchy between objects. When [Classify Objects](/commands/object/classify-objects/) or [Colocalization](/commands/object/colocalization/) is configured to intersect objects, the **parent object ID** of the child is set to the object ID of the containing parent.
 
 An object can have at most one parent.
 
@@ -166,7 +166,7 @@ Example hierarchy:
 
 ### Origin Object ID
 
-When an object is duplicated (via a copy operation in [Classify ROIs](/commands/object/classify-rois/) or [Colocalization](/commands/object/colocalization/)), the new object records the origin object's ID. The origin ID propagates through further duplications.
+When an object is duplicated (via a copy operation in [Classify Objects](/commands/object/classify-objects/) or [Colocalization](/commands/object/colocalization/)), the new object records the origin object's ID. The origin ID propagates through further duplications.
 
 ### Tracking ID
 
@@ -198,7 +198,7 @@ See [Distance Transform](/commands/object/distance-transform/) for how to measur
 
 ## Intersection Count
 
-The number of objects from another class that overlap with this object. Used as a filter criterion in [Classify ROIs](/commands/object/classify-rois/) and as input to [Colocalization](/commands/object/colocalization/).
+The number of objects from another class that overlap with this object. Used as a filter criterion in [Classify Objects](/commands/object/classify-objects/) and as input to [Colocalization](/commands/object/colocalization/).
 
 ## Colocalization Partner Count / IDs
 

@@ -60,8 +60,8 @@ A minimal spot-detection pipeline looks like:
 3. **Threshold** - convert greyscale to binary
 4. **Connected Components** - label each foreground region
 5. **Watershed** - split touching objects
-6. **Extract ROIs** - create region of interest objects to work on
-7. **Classify ROIs** - filter by size/circularity and assign an object class
+6. **Extract Objects** - create objects to work on from the segmented regions
+7. **Classify Objects** - filter by size/circularity and assign an object class
 
 Before the preview can be shown or the analysis can be started, the project must be saved using the **Save** button in the toolbar.
 

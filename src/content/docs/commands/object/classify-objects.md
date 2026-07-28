@@ -1,13 +1,13 @@
 ---
-title: Classify ROIs
+title: Classify Objects
 description: Filter extracted regions and assign them to final object classes.
 ---
 
-The **Classify ROIs** command takes segmentation-class objects produced by [Extract ROIs](/commands/object/extract-rois/) and applies a set of shape and intensity filters. Objects that pass all filters are assigned to the **target class**; objects that fail are discarded.
+The **Classify Objects** command takes segmentation-class objects produced by [Extract Objects](/commands/object/extract-objects/) and applies a set of shape, intensity, and intersection filters. Objects that pass all filters are assigned to the **target class**; objects that fail are discarded.
 
 This is where raw segmentation output ("every connected group of bright pixels") turns into biological meaning ("this is a nucleus, that speck isn't") - the filters exist because segmentation almost always over-detects, picking up noise, debris, and imaging artifacts alongside genuine objects.
 
-![Objects are measured against shape/intensity filters; only those that pass every one reach the target class](../../../../assets/figures/cmd-classify-rois.svg)
+![Objects are measured against shape/intensity filters; only those that pass every one reach the target class](../../../../assets/figures/cmd-classify-objects.svg)
 
 ## Input Selection
 
@@ -51,6 +51,15 @@ Shape filters that depend on physical size (area, Feret) can use:
 | **Intensity unit**                          | _Absolute_ (0–65535), _Percent_ (0–100), or _Relative_ (0–1) |
 
 Intensity is measured in the channel/plane configured in the input address. Set –1 to disable either bound.
+
+## Intersection Filter
+
+| Filter                    | Description                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Overlapping with**      | An object class to test overlap against. Only objects that overlap at least one object of this class pass |
+| **Min intersection area** | Minimum overlap area (in the chosen **Size unit**) required to count as an intersection; –1 disables the filter |
+
+This corresponds to the [Intersection Count](/fundamentals/metrics/#intersection-count) metric - counting how many objects from another class overlap a given object - used here as a pass/fail filter rather than just a recorded value.
 
 ## Example: Spot detection
 
