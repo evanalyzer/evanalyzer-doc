@@ -78,6 +78,7 @@ export default defineConfig({
           collapsed: true,
           items: [
             { label: "Image Formats", slug: "fundamentals/image-formats" },
+            { label: "Object Classes", slug: "fundamentals/classes" },
             { label: "Objects & Metrics", slug: "fundamentals/metrics" },
             {
               label: "Project File Schema",

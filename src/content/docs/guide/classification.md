@@ -39,9 +39,4 @@ This creates one class per image channel as a starting point.
 
 ## How Classes Relate to Pipelines
 
-Each pipeline step that produces objects must specify a target class. There are two ways a class is assigned:
-
-1. **Extract Objects** - the first object-extraction step in a pipeline assigns a _segmentation class_ (an internal intermediate class used to hold the binary mask results).
-2. **Classify Objects** - converts segmentation-class objects into named user classes, applying optional filters (area, circularity, intensity) to accept or reject each detected region.
-
-Downstream steps - [Colocalization](/commands/object/colocalization/), [Voronoi](/commands/object/voronoi/), [Distance Transform](/commands/object/distance-transform/) - all reference classes by name to select their input objects.
+Classes defined here aren't just labels - they're what every object-processing pipeline step selects, filters, and reassigns by. See [Object Classes](/fundamentals/classes/) for the full lifecycle, from a `Threshold` entry's raw segmentation class through to a named class assigned by [Classify Objects](/commands/object/classify-objects/).

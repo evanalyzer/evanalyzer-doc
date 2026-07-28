@@ -50,10 +50,7 @@ Enter a pipeline name and select the image source the pipeline should start.
 
 ![Pipeline edit](../../../assets/getting-started/screenshot-pipeline-edit.png)
 
-Now the **+ Add step** and **+** buttons can be used to add pipeline steps.
-The order is always **Preprocessing → Segmentation → Object detection → Object extraction**
-
-A minimal spot-detection pipeline looks like:
+Now the **+ Add step** and **+** buttons can be used to add pipeline steps. A minimal spot-detection pipeline looks like:
 
 1. **Rolling Ball** - remove uneven background
 2. **Gaussian Blur** - reduce noise
@@ -62,6 +59,8 @@ A minimal spot-detection pipeline looks like:
 5. **Watershed** - split touching objects
 6. **Extract Objects** - create objects to work on from the segmented regions
 7. **Classify Objects** - filter by size/circularity and assign an object class
+
+See [Pipelines](/guide/pipelines/) for the general command-category flow and what each category color means.
 
 Before the preview can be shown or the analysis can be started, the project must be saved using the **Save** button in the toolbar.
 

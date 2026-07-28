@@ -13,9 +13,9 @@ This is where raw segmentation output ("every connected group of bright pixels")
 
 | Parameter         | Description                                                                                                                                           |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Input Classes** | Restrict evaluation to objects that already carry at least one of these classes. Leave empty to evaluate every object regardless of its current class |
+| **Input Classes** | Restrict evaluation to objects that already carry **every** one of these classes. Leave empty to evaluate every object regardless of its current class |
 
-Objects created by [Extract Objects](/commands/object/extract-objects/) carry their segmentation class as an object class from the start, so a fresh, unfiltered population can be selected here the same way as an already-named class from an earlier Classify Objects step.
+Objects created by [Extract Objects](/commands/object/extract-objects/) carry their segmentation class as an object class from the start, so a fresh, unfiltered population can be selected here the same way as an already-named class from an earlier Classify Objects step. See [Object Classes](/fundamentals/classes/) for how that numbering works and why listing more than one class here narrows the population rather than widening it.
 
 ## Shape Criteria
 
