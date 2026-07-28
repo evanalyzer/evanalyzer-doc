@@ -84,12 +84,12 @@ To place a persistent measurement use the **cross fade** button from the toolbar
 A permanent marker with the intensity values of all image channels is displayed.
 Right click on the permanent marker to remove it.
 
-### ROI Annotation
+### Region Annotation
 
-Draw manual regions of interest directly on the image:
+Draw manual regions directly on the image, independent of any segmentation or classification pipeline:
 
-- **Rectangle** - drag to define a rectangular ROI.
-- **Oval** - drag to define an oval/elliptical ROI.
+- **Rectangle** - drag to define a rectangular region.
+- **Oval** - drag to define an oval/elliptical region.
 - **Polygon** - click to place vertices, double-click to close.
 
 Annotations are saved per-image to the project file and are preserved across sessions.

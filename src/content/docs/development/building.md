@@ -62,7 +62,7 @@ The workspace is split into focused crates:
 | `evanalyzer_core` | Image I/O (Bio-Formats via JVM), processing algorithms, object model, pipeline execution |
 | `evanalyzer_cfg`  | Project settings, JSON serialisation, pipeline command configuration                  |
 | `evanalyzer_app`  | Application handle, shared project state                                              |
-| `evanalyzer_gui`  | Slint-based desktop GUI - viewport, histogram, ROI tools, classification panel        |
+| `evanalyzer_gui`  | Slint-based desktop GUI - viewport, histogram, annotation tools, classification panel |
 | `evanalyzer_cli`  | Command-line interface for headless batch analysis                                    |
 | `evanalyzer_bin`  | Binary entry point - launches GUI or CLI depending on arguments                       |
 
