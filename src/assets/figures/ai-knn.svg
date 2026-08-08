@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="300" viewBox="0 0 440 300">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .plot { fill: #ffffff; stroke: #d8dce1; stroke-width: 1; }
+    .neighborhood { fill: none; stroke: #9ca3af; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .neighbor-line { stroke: #cbd5e1; stroke-width: 1; }
+    .ptA { fill: #2563eb; }
+    .ptB { fill: #ea580c; }
+    .ringA { fill: none; stroke: #2563eb; stroke-width: 2; }
+    .ringB { fill: none; stroke: #ea580c; stroke-width: 2; }
+    .query { fill: #111827; stroke: #ffffff; stroke-width: 1.5; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <rect class="bg" x="0.5" y="0.5" width="439" height="299" rx="10"/>
+  <rect class="plot" x="30" y="20" width="260" height="220"/>
+
+  <!-- points outside the k=5 neighborhood -->
+  <circle class="ptB" cx="60" cy="50" r="5"/>
+  <circle class="ptA" cx="75" cy="205" r="5"/>
+  <circle class="ptB" cx="255" cy="55" r="5"/>
+  <circle class="ptA" cx="265" cy="200" r="5"/>
+  <circle class="ptA" cx="45" cy="140" r="5"/>
+  <circle class="ptB" cx="220" cy="35" r="5"/>
+  <circle class="ptB" cx="250" cy="130" r="5"/>
+  <circle class="ptB" cx="100" cy="225" r="5"/>
+
+  <!-- neighborhood boundary -->
+  <circle class="neighborhood" cx="160" cy="130" r="58"/>
+
+  <!-- the 5 nearest neighbors, connected to the query -->
+  <path class="neighbor-line" d="M160,130 L130,100"/>
+  <path class="neighbor-line" d="M160,130 L185,105"/>
+  <path class="neighbor-line" d="M160,130 L140,160"/>
+  <path class="neighbor-line" d="M160,130 L195,150"/>
+  <path class="neighbor-line" d="M160,130 L170,175"/>
+
+  <circle class="ptA" cx="130" cy="100" r="5"/>
+  <circle class="ringA" cx="130" cy="100" r="8"/>
+  <circle class="ptA" cx="185" cy="105" r="5"/>
+  <circle class="ringA" cx="185" cy="105" r="8"/>
+  <circle class="ptA" cx="140" cy="160" r="5"/>
+  <circle class="ringA" cx="140" cy="160" r="8"/>
+  <circle class="ptB" cx="195" cy="150" r="5"/>
+  <circle class="ringB" cx="195" cy="150" r="8"/>
+  <circle class="ptB" cx="170" cy="175" r="5"/>
+  <circle class="ringB" cx="170" cy="175" r="8"/>
+
+  <!-- query point -->
+  <rect class="query" x="152" y="122" width="16" height="16" transform="rotate(45 160 130)"/>
+
+  <!-- legend -->
+  <circle class="ptA" cx="310" cy="40" r="5"/>
+  <text class="lbl-sm" x="322" y="44">Class A</text>
+  <circle class="ptB" cx="310" cy="65" r="5"/>
+  <text class="lbl-sm" x="322" y="69">Class B</text>
+  <rect class="query" x="304" y="84" width="12" height="12" transform="rotate(45 310 90)"/>
+  <text class="lbl-sm" x="322" y="94">New sample</text>
+  <circle class="ringA" cx="310" cy="115" r="6"/>
+  <text class="lbl-sm" x="322" y="119">Nearest neighbor</text>
+
+  <text class="lbl-sm" x="160" y="255" text-anchor="middle">Feature 1 &#8594;</text>
+  <text class="lbl-sm" x="15" y="130" text-anchor="middle" transform="rotate(-90 15 130)">Feature 2 &#8594;</text>
+
+  <text class="lbl-bold" x="220" y="280" text-anchor="middle">k = 5: 3 of 5 nearest neighbors are Class A &#8594; predicted A</text>
+</svg>

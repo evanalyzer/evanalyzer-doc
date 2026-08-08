@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="260" viewBox="0 0 620 260">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .input { fill: #ffffff; stroke: #6b7280; stroke-width: 2; }
+    .node { fill: #eef1f5; stroke: #6b7280; stroke-width: 2; }
+    .leafA { fill: #cfe0f7; stroke: #2563eb; stroke-width: 2.5; }
+    .leafB { fill: #ffe3cc; stroke: #ea580c; stroke-width: 2.5; }
+    .distribute { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+    .path-chosen { stroke: #111827; stroke-width: 2.5; fill: none; }
+    .path-skip { stroke: #cbd5e1; stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+    .vote-a { stroke: #2563eb; stroke-width: 2; fill: none; }
+    .vote-b { stroke: #ea580c; stroke-width: 2; fill: none; }
+    .voteBox { fill: #eef1f5; stroke: #6b7280; stroke-width: 2; }
+    .outBox { fill: #cfe0f7; stroke: #2563eb; stroke-width: 2.5; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <rect class="bg" x="0.5" y="0.5" width="619" height="259" rx="10"/>
+
+  <ellipse class="input" cx="25" cy="77" rx="21" ry="17"/>
+  <text class="lbl-sm" x="25" y="81" text-anchor="middle">Input</text>
+  <path class="distribute" d="M46,73 L78,58"/>
+  <path class="distribute" d="M46,77 L218,58"/>
+  <path class="distribute" d="M46,80 L358,58"/>
+
+  <text class="lbl-bold" x="90" y="25" text-anchor="middle">Tree 1</text>
+  <circle class="node" cx="90" cy="55" r="13"/>
+  <path class="path-chosen" d="M90,68 L55,100"/>
+  <path class="path-skip" d="M90,68 L125,100"/>
+  <rect class="leafA" x="44" y="89" width="22" height="22" rx="4"/>
+  <text class="lbl-bold" x="55" y="104" text-anchor="middle">A</text>
+  <rect class="leafB" x="114" y="89" width="22" height="22" rx="4" opacity="0.35"/>
+  <text class="lbl-sm" x="125" y="104" text-anchor="middle" opacity="0.5">B</text>
+
+  <text class="lbl-bold" x="230" y="25" text-anchor="middle">Tree 2</text>
+  <circle class="node" cx="230" cy="55" r="13"/>
+  <path class="path-chosen" d="M230,68 L195,100"/>
+  <path class="path-skip" d="M230,68 L265,100"/>
+  <rect class="leafA" x="184" y="89" width="22" height="22" rx="4"/>
+  <text class="lbl-bold" x="195" y="104" text-anchor="middle">A</text>
+  <rect class="leafB" x="254" y="89" width="22" height="22" rx="4" opacity="0.35"/>
+  <text class="lbl-sm" x="265" y="104" text-anchor="middle" opacity="0.5">B</text>
+
+  <text class="lbl-bold" x="370" y="25" text-anchor="middle">Tree 3</text>
+  <circle class="node" cx="370" cy="55" r="13"/>
+  <path class="path-skip" d="M370,68 L335,100"/>
+  <path class="path-chosen" d="M370,68 L405,100"/>
+  <rect class="leafA" x="324" y="89" width="22" height="22" rx="4" opacity="0.35"/>
+  <text class="lbl-sm" x="335" y="104" text-anchor="middle" opacity="0.5">A</text>
+  <rect class="leafB" x="394" y="89" width="22" height="22" rx="4"/>
+  <text class="lbl-bold" x="405" y="104" text-anchor="middle">B</text>
+
+  <path class="vote-a" d="M55,111 L160,155"/>
+  <path class="vote-a" d="M195,111 L230,155"/>
+  <path class="vote-b" d="M405,111 L300,155"/>
+
+  <rect class="voteBox" x="120" y="155" width="220" height="50" rx="8"/>
+  <text class="lbl" x="230" y="175" text-anchor="middle">Votes: A, A, B</text>
+  <text class="lbl-bold" x="230" y="194" text-anchor="middle">Majority &#8594; Class A</text>
+
+  <path class="vote-a" d="M340,180 L458,180"/>
+  <polygon points="468,180 458,175 458,185" fill="#2563eb"/>
+  <rect class="outBox" x="470" y="155" width="120" height="50" rx="8"/>
+  <text class="lbl-sm" x="530" y="173" text-anchor="middle">Predicted</text>
+  <text class="lbl-bold" x="530" y="194" text-anchor="middle">Class A</text>
+
+  <text class="lbl-sm" x="310" y="240" text-anchor="middle">Each tree sees a random subset of samples &amp; features - majority vote wins.</text>
+</svg>

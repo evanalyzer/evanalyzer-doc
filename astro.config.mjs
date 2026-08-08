@@ -95,6 +95,16 @@ export default defineConfig({
               label: "Importing bioimage.io Models",
               slug: "ai/bioimageio-import",
             },
+            { label: "Training a Classifier", slug: "ai/training" },
+            { label: "Random Forest", slug: "ai/random-forest" },
+            {
+              label: "k-Nearest Neighbors",
+              slug: "ai/k-nearest-neighbors",
+            },
+            {
+              label: "Neural Network (MLP)",
+              slug: "ai/neural-network-mlp",
+            },
           ],
         },
         {
@@ -207,6 +217,10 @@ export default defineConfig({
                   label: "Cellpose",
                   slug: "commands/ai-segmentation/cellpose",
                 },
+                {
+                  label: "AI Pixel Classifier",
+                  slug: "commands/ai-segmentation/pixel-classifier",
+                },
               ],
             },
             {
@@ -220,6 +234,10 @@ export default defineConfig({
                 {
                   label: "Classify Objects",
                   slug: "commands/object/classify-objects",
+                },
+                {
+                  label: "AI Object Classifier",
+                  slug: "commands/object/ai-object-classifier",
                 },
                 {
                   label: "Colocalization",

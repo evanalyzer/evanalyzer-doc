@@ -9,6 +9,8 @@ EVAnalyzer can run pretrained deep-learning models as a segmentation step in a p
 Rather than configuring a model's parameters by hand, you can import a [bioimage.io](https://bioimage.io) model's `rdf.yaml` directly from the command picker, which auto-detects the architecture and pre-fills the step for you. See [Importing bioimage.io Models](/ai/bioimageio-import/).
 :::
 
+Looking for the opposite direction - a model built from your own annotations rather than one you supply? See [Training a Classifier](/ai/training/), which trains a Random Forest, k-Nearest Neighbors, or neural-network pixel/object classifier from examples you paint directly on your images.
+
 Three architectures are currently implemented as pipeline commands:
 
 | Model                                           | Predicts                                  | Separates touching objects?       |

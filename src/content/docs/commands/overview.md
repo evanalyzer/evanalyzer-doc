@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 31 pipeline commands grouped by category.
+description: All 33 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -77,6 +77,7 @@ Commands that run a pretrained deep-learning model for segmentation. Only availa
 | [Stardist](/commands/ai-segmentation/stardist/) | Instance segmentation via star-convex polygons - separates touching objects directly                     |
 | [UNet](/commands/ai-segmentation/unet/)         | Semantic foreground/background mask - pair with Connected Components (+ Watershed) to separate instances |
 | [Cellpose](/commands/ai-segmentation/cellpose/) | Instance segmentation via flow-field dynamics - handles irregular and overlapping shapes                 |
+| [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) | Semantic mask from a Random Forest/k-NN/MLP model you [train yourself](/ai/training/) on painted examples |
 
 ## Object Processing
 
@@ -86,6 +87,7 @@ Commands that operate on extracted objects.
 | ---------------------------------------------------------- | -------------------------------------------------------------------------- |
 | [Extract Objects](/commands/object/extract-objects/)       | Convert binary mask regions to segmentation-class objects                  |
 | [Classify Objects](/commands/object/classify-objects/)     | Filter and assign final object classes                                     |
+| [AI Object Classifier](/commands/object/ai-object-classifier/) | Classify objects with a Random Forest/k-NN/MLP model you [train yourself](/ai/training/) on painted examples |
 | [Colocalization](/commands/object/colocalization/)         | Find overlapping objects across classes                                    |
 | [Voronoi](/commands/object/voronoi/)                       | Partition space from object centroids                                      |
 | [Object Transform](/commands/object/transform-objects/)    | Scale, snap, expand, shrink, or fit an ellipse to objects                  |
