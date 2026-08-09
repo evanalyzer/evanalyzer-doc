@@ -1,188 +1,150 @@
-/*
- * Accent palette ported from the original ImageC/EVAnalyzer marketing site
- * (old/_sass/variables.scss, old/_sass/mixins.scss `.button.blue`), which used
- * a darker, desaturated steel-blue (#225677) rather than Starlight's default
- * vivid blue-purple. Same hue (~203) throughout, just less saturated/brighter
- * than Starlight's defaults for a cleaner, flatter look.
- */
-
 :root {
-	/* Dark mode (Starlight's default :root) */
-	--sl-color-accent-low: hsl(203, 50%, 18%);
-	--sl-color-accent: hsl(203, 55%, 55%);
-	--sl-color-accent-high: hsl(203, 70%, 82%);
+  --sl-color-accent-low: #172554;
+  --sl-color-accent: #60a5fa;
+  --sl-color-accent-high: #bfdbfe;
 }
 
-:root[data-theme='light'] {
-	--sl-color-accent-low: hsl(203, 50%, 92%);
-	--sl-color-accent: hsl(203, 56%, 30%); /* #225677 - the old site's button blue */
-	--sl-color-accent-high: hsl(203, 65%, 24%);
-}
-
-/*
- * Fonts ported from the old site's self-hosted webfonts
- * (old/css/main.scss, old/css/webfont/*) - SuisseIntl for body/headings,
- * JetBrainsMono for code, instead of Starlight's system-font stack.
- */
-@font-face {
-	font-family: 'SuisseIntl';
-	src:
-		url('/fonts/SuisseIntl-Book-WebXL.woff2') format('woff2'),
-		url('/fonts/SuisseIntl-Book-WebXL.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'SuisseIntl';
-	src:
-		url('/fonts/SuisseIntl-Medium-WebXL.woff2') format('woff2'),
-		url('/fonts/SuisseIntl-Medium-WebXL.woff') format('woff');
-	font-weight: 500;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'SuisseIntl';
-	src:
-		url('/fonts/SuisseIntl-SemiBold-WebXL.woff2') format('woff2'),
-		url('/fonts/SuisseIntl-SemiBold-WebXL.woff') format('woff');
-	font-weight: 600;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'SuisseIntl';
-	src:
-		url('/fonts/SuisseIntl-Bold-WebS.woff2') format('woff2'),
-		url('/fonts/SuisseIntl-Bold-WebS.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'JetBrainsMono';
-	src:
-		url('/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2') format('woff2'),
-		url('/fonts/JetBrainsMono/JetBrainsMonoNL-Regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'JetBrainsMono';
-	src:
-		url('/fonts/JetBrainsMono/JetBrainsMono-Bold.woff2') format('woff2'),
-		url('/fonts/JetBrainsMono/JetBrainsMonoNL-Bold.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'JetBrainsMono';
-	src:
-		url('/fonts/JetBrainsMono/JetBrainsMono-Italic.woff2') format('woff2'),
-		url('/fonts/JetBrainsMono/JetBrainsMonoNL-Italic.woff') format('woff');
-	font-weight: 400;
-	font-style: italic;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'JetBrainsMono';
-	src:
-		url('/fonts/JetBrainsMono/JetBrainsMono-Bold-Italic.woff2') format('woff2'),
-		url('/fonts/JetBrainsMono/JetBrainsMonoNL-BoldItalic.woff') format('woff');
-	font-weight: 700;
-	font-style: italic;
-	font-display: swap;
+:root[data-theme="light"] {
+  --sl-color-accent-low: #eff6ff;
+  --sl-color-accent: #2563eb;
+  --sl-color-accent-high: #1e3a8a;
 }
 
 :root {
-	--sl-font: 'SuisseIntl';
-	--sl-font-mono: 'JetBrainsMono';
+  --sl-hue-blue: 258;
+  --sl-hue-purple: 142;
+  --sl-hue-orange: 21;
+  --sl-hue-red: 0;
+  --sl-hue-green: 142;
 }
 
-/*
- * Header: translucent white blur instead of a flat opaque background
- * (old/css/main.scss `header .headerline`: rgba(250,250,250,.6) + blur(15px)).
- */
+.starlight-aside--note {
+  --sl-color-asides-text-accent: #ddd6fe;
+  --sl-color-asides-border: #a78bfa;
+  background-color: #2e1065;
+}
+:root[data-theme="light"] .starlight-aside--note {
+  --sl-color-asides-text-accent: #6d28d9;
+  --sl-color-asides-border: #8b5cf6;
+  background-color: #f5f3ff;
+}
+
+:root {
+  --sl-font: "Inter";
+}
+
+@font-face {
+  font-family: "JetBrainsMono";
+  src:
+    url("/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2") format("woff2"),
+    url("/fonts/JetBrainsMono/JetBrainsMonoNL-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrainsMono";
+  src:
+    url("/fonts/JetBrainsMono/JetBrainsMono-Bold.woff2") format("woff2"),
+    url("/fonts/JetBrainsMono/JetBrainsMonoNL-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrainsMono";
+  src:
+    url("/fonts/JetBrainsMono/JetBrainsMono-Italic.woff2") format("woff2"),
+    url("/fonts/JetBrainsMono/JetBrainsMonoNL-Italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrainsMono";
+  src:
+    url("/fonts/JetBrainsMono/JetBrainsMono-Bold-Italic.woff2") format("woff2"),
+    url("/fonts/JetBrainsMono/JetBrainsMonoNL-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --sl-font-mono: "JetBrainsMono";
+}
+
 header.header {
-	background-color: hsla(0, 0%, 98%, 0.6);
-	-webkit-backdrop-filter: blur(15px);
-	backdrop-filter: blur(15px);
+  background-color: hsla(0, 0%, 98%, 0.6);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
 }
-:root:not([data-theme='light']) header.header {
-	background-color: hsla(224, 10%, 10%, 0.6);
+:root:not([data-theme="light"]) header.header {
+  background-color: hsla(224, 10%, 10%, 0.6);
 }
 
-/* Buttons: less rounded than Starlight's default pill shape (old used 10px). */
 .sl-link-button {
-	border-radius: 10px !important;
+  border-radius: 10px !important;
 }
 
-/*
- * Search: a smaller, icon-first trigger pushed to the right edge of its
- * grid column (next to the theme toggle, not centered) and a white,
- * blurred overlay + panel instead of the default dark-tinted ones
- * (old/css/search.scss `.searchoverlay`).
- */
+.hero .sl-link-button {
+  padding-block: 0.5rem;
+}
 @media (min-width: 50rem) {
-	site-search button[data-open-modal] {
-		max-width: 12rem;
-		margin-inline-start: auto;
-		border-color: var(--sl-color-hairline-shade);
-		background-color: transparent !important;
-	}
+  .hero .sl-link-button {
+    padding-block: 0.5625rem;
+  }
 }
 
-:root[data-theme='light'] {
-	--sl-color-backdrop-overlay: hsla(0, 0%, 100%, 0.7);
+@media (min-width: 50rem) {
+  site-search button[data-open-modal] {
+    max-width: 12rem;
+    margin-inline-start: auto;
+    border-color: var(--sl-color-hairline-shade);
+    background-color: transparent !important;
+  }
+}
+
+:root[data-theme="light"] {
+  --sl-color-backdrop-overlay: hsla(0, 0%, 100%, 0.7);
 }
 site-search dialog::backdrop {
-	-webkit-backdrop-filter: blur(8px);
-	backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
-:root[data-theme='light'] site-search dialog {
-	background-color: var(--sl-color-bg);
+:root[data-theme="light"] site-search dialog {
+  background-color: var(--sl-color-bg);
 }
 
-/*
- * Cards: a single accent color for every icon badge instead of Starlight's
- * default rotating rainbow (orange/green/red/blue/purple per position) -
- * reads as one consistent, deliberate system rather than a decorative
- * template default.
- */
 .card {
-	--sl-card-border: var(--sl-color-accent) !important;
-	--sl-card-bg: var(--sl-color-accent-low) !important;
+  --sl-card-border: var(--sl-color-accent) !important;
+  --sl-card-bg: var(--sl-color-accent-low) !important;
 }
 
-/* Homepage: supported-formats badge strip below the intro paragraph. */
 .evx-formats {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-	justify-content: center;
-	margin: 1.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1.5rem 0;
 }
 .evx-formats span {
-	font-family: var(--sl-font-mono);
-	font-size: var(--sl-text-xs);
-	line-height: 1;
-	padding: 0.4rem 0.75rem;
-	border-radius: 999px;
-	border: 1px solid var(--sl-color-hairline);
-	color: var(--sl-color-gray-2);
-	background: var(--sl-color-bg-nav);
+  font-family: var(--sl-font-mono);
+  font-size: var(--sl-text-xs);
+  line-height: 1;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--sl-color-hairline);
+  color: var(--sl-color-gray-2);
+  background: var(--sl-color-bg-nav);
 }
 
-/* Homepage: product screenshot between the Getting Started and Key Features grids. */
 .evx-screenshot {
-	margin: 2.5rem 0;
+  margin: 2.5rem 0;
 }
 .evx-caption {
-	margin-top: 0.75rem;
-	text-align: center;
-	font-size: var(--sl-text-sm);
-	color: var(--sl-color-gray-3);
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: var(--sl-text-sm);
+  color: var(--sl-color-gray-3);
 }

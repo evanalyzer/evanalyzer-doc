@@ -1,5 +1,5 @@
 ---
-title: EVAnalyzer Documentation
+title: EVAnalyzer
 description: High-performance bioimage analysis for fluorescence microscopy and high-content screening.
 template: splash
 hero:
@@ -31,7 +31,74 @@ hero:
         .evx-type-char { animation: none; opacity: 1; transform: none; }
       }
     </style>
-  tagline: Enhanced Visual Analyzer (EVAnalyzer) High-performance bioimage analysis featuring a multi-channel viewer and customizable pipelines.
+  tagline: |
+    Enhanced Visual Analyzer (EVAnalyzer) - high-performance</br>
+    <span id="evx-typed" style="color: var(--sl-color-accent); font-weight: 600;"></span
+    ><span id="evx-caret" class="evx-caret" style="color: var(--sl-color-accent);" aria-hidden="true">|</span>
+    analysis,</br> with a multi-channel viewer and customizable pipelines.
+    <style>
+      @keyframes evx-caret-blink { 50% { opacity: 0; } }
+      .evx-caret {
+        display: inline-block;
+        font-weight: 300;
+        animation: evx-caret-blink 1s step-end infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .evx-caret { animation: none; }
+      }
+    </style>
+    <script>
+      (function () {
+        var words = [
+          "fluorescence microscopy",
+          "extracellular vesicle",
+          "whole-slide image",
+          "time-lapse",
+          "high-content",
+        ];
+        var typedEl = document.getElementById("evx-typed");
+        if (!typedEl) return;
+
+        var TYPE_MS = 65;
+        var DELETE_MS = 35;
+        var HOLD_MS = 2200;
+        var BETWEEN_MS = 400;
+
+        var w = 0;
+        var i = 0;
+        var deleting = false;
+
+        function tick() {
+          var current = words[w];
+          if (!deleting) {
+            i++;
+            typedEl.textContent = current.slice(0, i);
+            if (i === current.length) {
+              deleting = true;
+              setTimeout(tick, HOLD_MS);
+              return;
+            }
+            setTimeout(tick, TYPE_MS);
+          } else {
+            i--;
+            typedEl.textContent = current.slice(0, i);
+            if (i === 0) {
+              deleting = false;
+              w = (w + 1) % words.length;
+              setTimeout(tick, BETWEEN_MS);
+              return;
+            }
+            setTimeout(tick, DELETE_MS);
+          }
+        }
+
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          typedEl.textContent = words[0];
+          return;
+        }
+        tick();
+      })();
+    </script>
   image:
     html: |
       <div class="evx-compare" style="--pos: 50%">
@@ -192,8 +259,8 @@ See [About](/about/) for the full history.
     consistently across an entire dataset, storing results as it goes.
   </Card>
   <Card title="Built in Rust" icon="setting">
-    EVAnalyzer is written in [Rust](/about/) rather than Python, for
-    native-code performance and memory safety across large batch runs.
+    EVAnalyzer is written in [Rust](/about/) rather than Python, for native-code
+    performance and memory safety across large batch runs.
   </Card>
   <Card title="Classical & AI segmentation" icon="cloud-download">
     Combine classical algorithms (Threshold, Watershed, Edge Detection) with
@@ -202,8 +269,8 @@ See [About](/about/) for the full history.
     auto-configure one.
   </Card>
   <Card title="Train your own AI classifiers" icon="pencil">
-    Paint examples directly on your images and [train a Random Forest, k-NN,
-    or neural-network pixel/object classifier](/ai/training/) in minutes - no
+    Paint examples directly on your images and [train a Random Forest, k-NN, or
+    neural-network pixel/object classifier](/ai/training/) in minutes - no
     external model or dataset required, ready to use as a pipeline step.
   </Card>
 </CardGrid>
