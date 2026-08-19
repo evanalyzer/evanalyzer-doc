@@ -65,6 +65,8 @@ The viewport on the right shows the result of all pipeline steps applied to the 
 
 Use the **zoom** controls to inspect segmentation quality, and the **side-by-side** button to compare the original and processed image simultaneously.
 
+Click the **eye** icon in the toolbar to force a preview refresh on demand - useful for re-running the preview after switching images or when automatic live updates are off. The status bar also shows the name of the currently selected image next to the preview status message.
+
 ## Saving a Pipeline as a Template
 
 Click the **Save** button at the button of the pipelines panel, to store the current pipeline (all steps and parameters) for reuse in other projects.

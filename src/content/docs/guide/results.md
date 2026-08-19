@@ -19,6 +19,8 @@ By default, results open in the **Table** view: one row per detected object, wit
 
 Click a column header to sort by it; click again to reverse the direction. The **Image**, **Class**, and **Colocalized** headers each have a filter icon that opens a searchable checklist of values, so you can narrow the table to specific images or classes without leaving the results window.
 
+In the **Image** filter's checklist, each row also has a disable icon next to it. Toggling it marks that image as disabled: its label turns red wherever the image appears (including the Matrix view, where the image is shown crossed out), and it's excluded from exports by default - though it can still be checked back in for an individual export in the [export dialog](#exporting-results). This state is saved into the `.evadb` results file, so it persists the next time the file is opened.
+
 Results load in pages as you scroll, so even large result sets with hundreds of thousands of objects stay responsive.
 
 ![Results table](../../../assets/screenshots/screenshot-results-table-view.png)
@@ -82,8 +84,8 @@ Click the export icon in the toolbar to open the **Export results** dialog. Unli
 ### 1. Configure a combination
 
 - **Export style** — **Table** or **Coloc details**.
-- **Group by** — **No Grouping**, **Image**, or **Regex** (table style only; the aggregation functions from the main table apply here too). Folder grouping isn't available in the batch queue — use **Export as Displayed** below for that.
-- **Images to export** — pick at least one image. Enable **Export each checked image as its own file** to write one file per checked image (the filename gets the image name) instead of a single combined file.
+- **Group by** — **No Grouping**, **Image**, or **Regex** (table style only; the aggregation functions from the main table apply here too). Folder grouping isn't available in the batch queue — use **Export as Displayed** below for that. When **Regex** is selected, click **Auto-detect** to derive a grouping pattern from the loaded image filenames instead of writing one by hand — a hint below the field reports how many filenames matched (e.g. _"Matched 24/24 filenames"_), or that no consistent pattern was found. The detected pattern is also saved to the project's plate settings, so Matrix grouping picks it up too.
+- **Images to export** — pick at least one image. Images [disabled](#results-table) in the table's Image filter start out unchecked here, so they're left out unless you check them back in. Enable **Export each checked image as its own file** to write one file per checked image (the filename gets the image name) instead of a single combined file.
 - **Classes to include** — pick at least one class.
 - **Columns to export** — pick which columns to include, with **None** / **Avg+Sum** / **All** presets for intensity columns.
 - **Name** and **Format** (CSV or XLSX) for the resulting file(s). If **Name** is left blank, it's generated from the selected classes.

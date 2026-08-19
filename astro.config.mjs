@@ -249,6 +249,10 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
+                  label: "Fill Holes",
+                  slug: "commands/object/fill-holes",
+                },
+                {
                   label: "Extract Objects",
                   slug: "commands/object/extract-objects",
                 },

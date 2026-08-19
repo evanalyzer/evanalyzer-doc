@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 33 pipeline commands grouped by category.
+description: All 34 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -72,28 +72,29 @@ Commands for modifying the shape of binary or greyscale regions.
 
 Commands that run a pretrained deep-learning model for segmentation. Only available in builds with the `ai` Cargo feature enabled.
 
-| Command                                         | Purpose                                                                                                  |
-| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| [Stardist](/commands/ai-segmentation/stardist/) | Instance segmentation via star-convex polygons - separates touching objects directly                     |
-| [UNet](/commands/ai-segmentation/unet/)         | Semantic foreground/background mask - pair with Connected Components (+ Watershed) to separate instances |
-| [Cellpose](/commands/ai-segmentation/cellpose/) | Instance segmentation via flow-field dynamics - handles irregular and overlapping shapes                 |
+| Command                                                            | Purpose                                                                                                   |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| [Stardist](/commands/ai-segmentation/stardist/)                    | Instance segmentation via star-convex polygons - separates touching objects directly                      |
+| [UNet](/commands/ai-segmentation/unet/)                            | Semantic foreground/background mask - pair with Connected Components (+ Watershed) to separate instances  |
+| [Cellpose](/commands/ai-segmentation/cellpose/)                    | Instance segmentation via flow-field dynamics - handles irregular and overlapping shapes                  |
 | [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) | Semantic mask from a Random Forest/k-NN/MLP model you [train yourself](/ai/training/) on painted examples |
 
 ## Object Processing
 
 Commands that operate on extracted objects.
 
-| Command                                                    | Purpose                                                                    |
-| ---------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [Extract Objects](/commands/object/extract-objects/)       | Convert binary mask regions to segmentation-class objects                  |
-| [Classify Objects](/commands/object/classify-objects/)     | Filter and assign final object classes                                     |
+| Command                                                        | Purpose                                                                                                      |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| [Fill Holes](/commands/object/fill-holes/)                     | Close enclosed background holes in the segmentation map                                                      |
+| [Extract Objects](/commands/object/extract-objects/)           | Convert binary mask regions to segmentation-class objects                                                    |
+| [Classify Objects](/commands/object/classify-objects/)         | Filter and assign final object classes                                                                       |
 | [AI Object Classifier](/commands/object/ai-object-classifier/) | Classify objects with a Random Forest/k-NN/MLP model you [train yourself](/ai/training/) on painted examples |
-| [Colocalization](/commands/object/colocalization/)         | Find overlapping objects across classes                                    |
-| [Voronoi](/commands/object/voronoi/)                       | Partition space from object centroids                                      |
-| [Object Transform](/commands/object/transform-objects/)    | Scale, snap, expand, shrink, or fit an ellipse to objects                  |
-| [Object Math](/commands/object/object-math/)               | Boolean set operations (AND, OR, XOR, Subtract) between two object classes |
-| [Distance Transform](/commands/object/distance-transform/) | Measure distances between object pairs                                     |
-| [Save Image](/commands/object/save-image/)                 | Write a control image to disk                                              |
+| [Colocalization](/commands/object/colocalization/)             | Find overlapping objects across classes                                                                      |
+| [Voronoi](/commands/object/voronoi/)                           | Partition space from object centroids                                                                        |
+| [Object Transform](/commands/object/transform-objects/)        | Scale, snap, expand, shrink, or fit an ellipse to objects                                                    |
+| [Object Math](/commands/object/object-math/)                   | Boolean set operations (AND, OR, XOR, Subtract) between two object classes                                   |
+| [Distance Transform](/commands/object/distance-transform/)     | Measure distances between object pairs                                                                       |
+| [Save Image](/commands/object/save-image/)                     | Write a control image to disk                                                                                |
 
 ## Typical Pipeline Order
 
@@ -101,8 +102,9 @@ Commands that operate on extracted objects.
 Image
   └─ Preprocessing (Blur, Rolling Ball, …)
        └─ Segmentation (Threshold → Connected Components → Watershed)
-            └─ Extract Objects
-                 └─ Classify Objects
-                      └─ Object Processing (Colocalization, Distance, …)
-                           └─ Save Image
+            └─ Fill Holes (optional mask cleanup)
+                 └─ Extract Objects
+                      └─ Classify Objects
+                           └─ Object Processing (Colocalization, Distance, …)
+                                └─ Save Image
 ```

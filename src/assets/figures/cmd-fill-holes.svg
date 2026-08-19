@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+    .arrow { stroke: #4b5563; stroke-width: 2; fill: none; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><path d="M110 55 C145 55 160 80 158 100 C156 122 175 128 168 150 C161 172 130 165 110 165 C88 165 62 172 58 148 C54 126 66 118 62 98 C58 76 75 55 110 55 Z" fill="#2563eb"/><circle cx="112" cy="108" r="17" fill="#f7f8fa" stroke="#ea580c" stroke-width="2" stroke-dasharray="3 2"/><text class="lbl-bold" x="112" y="197" text-anchor="middle">Before</text><text class="lbl-sm" x="112" y="212" text-anchor="middle">enclosed background hole</text><path class="arrow" d="M188 108 L248 108" marker-end="url(#arrow)"/><text class="lbl-sm" x="218" y="98" text-anchor="middle">Fill Holes</text><path d="M330 55 C365 55 380 80 378 100 C376 122 395 128 388 150 C381 172 350 165 330 165 C308 165 282 172 278 148 C274 126 286 118 282 98 C278 76 295 55 330 55 Z" fill="#2563eb"/><text class="lbl-bold" x="330" y="197" text-anchor="middle">After</text><text class="lbl-sm" x="330" y="212" text-anchor="middle">hole filled, outer shape unchanged</text><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#4b5563"/></marker></defs></svg>
