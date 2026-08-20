@@ -3,7 +3,7 @@ title: VS Code Extension
 description: Edit EVAnalyzer project, project template, and pipeline template files in VS Code with validation, autocomplete, and creation wizards.
 ---
 
-**EVAnalyzer File Support** is a VS Code extension for EVAnalyzer's three JSON-based file formats, developed in the [evanalyzer-vscode](https://github.com/evanalyzer/evanalyzer-vscode) repository. See [Downloads](/getting-started/downloads/#vs-code-extension) to get the latest release.
+**EVAnalyzer File Support** is a VS Code extension for EVAnalyzer's three JSON-based file formats, developed in the [evanalyzer-vscode](https://github.com/evanalyzer/evanalyzer-vscode) repository. See [Installation](/getting-started/installation/#vs-code-extension) to get the latest release.
 
 | Extension | Contents | Schema |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ Since the wizard reads the same JSON Schema that EVAnalyzer itself generates (se
 
 The extension isn't published to the VS Code Marketplace or Open VSX yet, so install the packaged `.vsix` directly:
 
-1. Download `evanalyzer-file-support-*.vsix` from the [latest release](https://github.com/evanalyzer/evanalyzer-vscode/releases/latest) (also linked from [Downloads](/getting-started/downloads/#vs-code-extension)).
+1. Download `evanalyzer-file-support-*.vsix` from the [latest release](https://github.com/evanalyzer/evanalyzer-vscode/releases/latest) (also linked from [Installation](/getting-started/installation/#vs-code-extension)).
 2. Install it:
 
    ```sh

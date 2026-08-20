@@ -1,0 +1,297 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+import { Zoom } from "starlight-image-zoom/components";
+
+interface Props {
+  category: "template" | "model";
+}
+
+const { category } = Astro.props;
+
+const entries = await getCollection(
+  "downloads",
+  (entry) => entry.data.category === category,
+);
+entries.sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const cards = await Promise.all(
+  entries.map(async (entry) => ({ entry, rendered: await render(entry) })),
+);
+
+const allTags = [...new Set(cards.flatMap(({ entry }) => entry.data.tags ?? []))].sort(
+  (a, b) => a.localeCompare(b),
+);
+---
+
+<div class="gallery-wrapper not-content" data-gallery>
+  {
+    cards.length === 0 && (
+      <p class="gallery-empty">Coming soon.</p>
+    )
+  }
+  {
+    allTags.length > 0 && (
+      <div class="tag-filter" role="group" aria-label="Filter by tag">
+        {allTags.map((tag) => (
+          <button type="button" class="tag-filter-btn" data-tag={tag} aria-pressed="false">
+            {tag}
+          </button>
+        ))}
+      </div>
+    )
+  }
+  <div class="download-gallery">
+  {
+    cards.map(({ entry, rendered: { Content } }) => (
+      <article class="download-card" data-tags={(entry.data.tags ?? []).join(",")}>
+        {entry.data.images && entry.data.images.length > 0 && (
+          <div class="card-media">
+            {entry.data.images.map((img) => (
+              <Zoom label={entry.data.title}>
+                <Image src={img} alt="" width={480} loading="lazy" />
+              </Zoom>
+            ))}
+          </div>
+        )}
+        <div class="card-body">
+          <h3 class="card-title">{entry.data.title}</h3>
+          <p class="card-description">{entry.data.description}</p>
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <ul class="card-tags">
+              {entry.data.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          )}
+          <details class="card-more">
+            <summary>More details</summary>
+            <div class="card-more-body">
+              <Content />
+            </div>
+          </details>
+          <div class="card-actions">
+            <a class="card-download" href={entry.data.file} download>
+              {entry.data.bundleFile ? "Template only" : "Download"}
+              {entry.data.fileSize ? ` (${entry.data.fileSize})` : ""}
+            </a>
+            {entry.data.bundleFile && (
+              <a class="card-download card-download-secondary" href={entry.data.bundleFile} download>
+                + Example images (.zip)
+                {entry.data.bundleSize ? ` (${entry.data.bundleSize})` : ""}
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    ))
+  }
+  </div>
+  {
+    allTags.length > 0 && (
+      <p class="gallery-no-matches" hidden>
+        No downloads match the selected tags.
+      </p>
+    )
+  }
+</div>
+
+{
+  allTags.length > 0 && (
+    <script>
+      document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((gallery) => {
+        const buttons = gallery.querySelectorAll<HTMLButtonElement>(".tag-filter-btn");
+        const cards = gallery.querySelectorAll<HTMLElement>(".download-card");
+        const noMatches = gallery.querySelector<HTMLElement>(".gallery-no-matches");
+        if (buttons.length === 0) return;
+
+        function applyFilter() {
+          const active = [...buttons]
+            .filter((btn) => btn.classList.contains("is-active"))
+            .map((btn) => btn.dataset.tag);
+          let visibleCount = 0;
+          cards.forEach((card) => {
+            const tags = (card.dataset.tags ?? "").split(",").filter(Boolean);
+            const show = active.length === 0 || tags.some((tag) => active.includes(tag));
+            card.hidden = !show;
+            if (show) visibleCount++;
+          });
+          if (noMatches) noMatches.hidden = visibleCount > 0;
+        }
+
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const nowActive = !btn.classList.contains("is-active");
+            btn.classList.toggle("is-active", nowActive);
+            btn.setAttribute("aria-pressed", String(nowActive));
+            applyFilter();
+          });
+        });
+      });
+    </script>
+  )
+}
+
+<style>
+  .download-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  @media (max-width: 40rem) {
+    .download-gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .gallery-empty {
+    color: var(--sl-color-gray-3);
+  }
+
+  .tag-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .tag-filter-btn {
+    font: inherit;
+    font-size: var(--sl-text-xs);
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--sl-color-gray-5);
+    background: var(--sl-color-bg-sidebar);
+    color: var(--sl-color-gray-2);
+    cursor: pointer;
+  }
+
+  .tag-filter-btn:hover {
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-text);
+  }
+
+  .tag-filter-btn.is-active {
+    background: var(--sl-color-accent);
+    border-color: var(--sl-color-accent);
+    color: var(--sl-color-white);
+  }
+
+  .gallery-no-matches {
+    color: var(--sl-color-gray-3);
+  }
+
+  .download-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background: var(--sl-color-bg-sidebar);
+    overflow: hidden;
+  }
+
+  .download-card[hidden] {
+    display: none;
+  }
+
+  .card-media {
+    display: flex;
+    overflow-x: auto;
+    gap: 2px;
+    background: var(--sl-color-black);
+  }
+
+  .card-media :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem 1.25rem;
+    flex: 1;
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: var(--sl-text-h5);
+  }
+
+  .card-description {
+    margin: 0;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    flex: 1;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card-tags li {
+    font-size: var(--sl-text-xs);
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-gray-2);
+  }
+
+  .card-more summary {
+    cursor: pointer;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-accent);
+  }
+
+  .card-more-body {
+    margin-top: 0.5rem;
+    font-size: var(--sl-text-sm);
+  }
+
+  .card-more-body :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .card-download {
+    display: inline-block;
+    text-align: center;
+    padding: 0.55rem 1rem;
+    border-radius: 0.4rem;
+    background: var(--sl-color-accent);
+    color: var(--sl-color-white);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: var(--sl-text-sm);
+  }
+
+  .card-download:hover {
+    background: var(--sl-color-accent-high);
+  }
+
+  .card-download-secondary {
+    background: transparent;
+    color: var(--sl-color-text);
+    border: 1px solid var(--sl-color-gray-5);
+  }
+
+  .card-download-secondary:hover {
+    background: var(--sl-color-gray-6);
+  }
+</style>

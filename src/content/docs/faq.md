@@ -60,7 +60,7 @@ Several factors influence the processing speed of a pipeline:
 - The longer the pipeline, the longer the analysis time.
 - The more objects detected in an image, the longer the analysis time.
 - [Rolling Ball](/commands/image-processing/rolling-ball/), [Watershed](/commands/segmentation/watershed/), and [Rank Filter](/commands/image-processing/rank-filter/) are commands that cost a lot of time.
-- Classical object segmentation is faster than AI-based object detection - and AI segmentation steps run substantially faster on a [CUDA build](/getting-started/downloads/) with a compatible NVIDIA GPU.
+- Classical object segmentation is faster than AI-based object detection - and AI segmentation steps run substantially faster on a [CUDA build](/getting-started/installation/#downloading) with a compatible NVIDIA GPU.
 
 EVAnalyzer tries to use all available CPU cores to run an analysis (see the [`--threads` CLI option](/cli/cli/#analyze)). Using a machine with more cores can significantly reduce processing time.
 

@@ -69,6 +69,7 @@ export default defineConfig({
       components: {
         SiteTitle: "./src/components/overrides/SiteTitle.astro",
         ThemeSelect: "./src/components/overrides/ThemeSelect.astro",
+        Header: "./src/components/overrides/Header.astro",
       },
       sidebar: [
         {
@@ -80,7 +81,6 @@ export default defineConfig({
               label: "System Requirements",
               slug: "getting-started/system-requirements",
             },
-            { label: "Downloads", slug: "getting-started/downloads" },
             { label: "First Steps", slug: "getting-started/first-steps" },
           ],
         },

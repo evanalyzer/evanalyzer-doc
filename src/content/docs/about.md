@@ -29,7 +29,7 @@ EVAnalyzer is provided for Linux, Windows, and macOS. It behaves the same regard
 
 ### Fast
 
-EVAnalyzer has a focus on really high-throughput image processing. It's written in Rust, balancing C/C++-level performance with memory safety, and a [CUDA-accelerated build](/getting-started/downloads/) is available for GPU-bound AI segmentation steps.
+EVAnalyzer has a focus on really high-throughput image processing. It's written in Rust, balancing C/C++-level performance with memory safety, and a [CUDA-accelerated build](/getting-started/installation/#downloading) is available for GPU-bound AI segmentation steps.
 
 A side effect of this approach is that EVAnalyzer can be used on standard laptops, eliminating the need for expensive hardware even for complex pipelines.
 

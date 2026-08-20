@@ -3,6 +3,8 @@ title: Installation
 description: How to download and install EVAnalyzer on Linux, Windows, or macOS.
 ---
 
+import DownloadPicker from "../../../components/DownloadPicker.astro";
+
 EVAnalyzer is distributed as a pre-built binary for Linux, Windows, and macOS.
 No package manager or build toolchain is required to run the application.
 
@@ -10,13 +12,22 @@ Before downloading, check the [System Requirements](/getting-started/system-requ
 
 ## Downloading
 
-Use the [Downloads](/getting-started/downloads/) page to pick the correct package for your operating system (and, for Windows/Linux, whether you want CUDA acceleration).
-It always links to the latest release.
+Pick your operating system and whether you want a CUDA-accelerated build. The link below always points at the latest published release on [GitHub](https://github.com/evanalyzer/evanalyzer/releases).
+
+<DownloadPicker />
+
+:::tip[Not sure which to pick?]
+If you don't have a dedicated NVIDIA GPU, choose **No CUDA** - the CPU build runs everywhere and AI segmentation still works, just slower. See [System Requirements](/getting-started/system-requirements/) for GPU/driver details.
+:::
+
+:::note[Looking for project templates or AI models?]
+Those live on the separate [Downloads](/downloads/) page, linked at the top of every page.
+:::
 
 Packages follow this naming scheme on the [GitHub Releases page](https://github.com/evanalyzer/evanalyzer/releases/latest):
 
 | Platform              | CPU-only                         | CUDA-accelerated                                  |
-| --------------------- | -------------------------------- | ------------------------------------------------- |
+| ---------------------- | -------------------------------- | ------------------------------------------------- |
 | Windows x86-64        | `evanalyzer-windows-x86_64.zip`  | `evanalyzer-windows-cuda-x86_64.zip`              |
 | Linux x86-64          | `evanalyzer-linux-x86_64.tar.gz` | `evanalyzer-linux-cuda-x86_64.7z.001` + `.7z.002` |
 | macOS (Apple Silicon) | `evanalyzer-macos-arm64.tar.gz`  | - (CUDA is not available on macOS)                |
@@ -32,6 +43,22 @@ The CUDA-enabled Linux build bundles the CUDA runtime libraries and exceeds GitH
 :::
 
 Extract the downloaded archive to a directory of your choice.
+
+## VS Code Extension
+
+The [EVAnalyzer File Support](/vscode/extension/) extension adds validation, autocomplete, and creation wizards for `.evapipe`, `.evaproj`, and `.evapt` files to VS Code.
+
+**[Download the latest release →](https://github.com/evanalyzer/evanalyzer-vscode/releases/latest)**
+
+Grab the `evanalyzer-file-support-*.vsix` file from the release's assets, then install it:
+
+```sh
+code --install-extension evanalyzer-file-support-*.vsix
+```
+
+:::note[Not yet on the Marketplace]
+This extension isn't published to the VS Code Marketplace or Open VSX yet, so it's installed from the downloaded `.vsix` file rather than through the Extensions view's search. You can also install it via **Extensions → ... → Install from VSIX...** in VS Code - see [VS Code Extension](/vscode/extension/#installation) for details.
+:::
 
 ## Starting EVAnalyzer
 

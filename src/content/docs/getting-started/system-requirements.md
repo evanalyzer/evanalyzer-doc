@@ -22,7 +22,7 @@ description: Minimum and recommended hardware and software requirements for runn
 
 ## GPU / CUDA Requirements
 
-AI segmentation steps ([Stardist](/commands/ai-segmentation/stardist/), [UNet](/commands/ai-segmentation/unet/), [Cellpose](/commands/ai-segmentation/cellpose/)) run on CPU by default and work on every supported platform. For significantly faster inference, download a **CUDA build** (Windows or Linux only - see [Downloads](/getting-started/downloads/)) if your machine has:
+AI segmentation steps ([Stardist](/commands/ai-segmentation/stardist/), [UNet](/commands/ai-segmentation/unet/), [Cellpose](/commands/ai-segmentation/cellpose/)) run on CPU by default and work on every supported platform. For significantly faster inference, download a **CUDA build** (Windows or Linux only - see [Installation](/getting-started/installation/#downloading)) if your machine has:
 
 | Component  | Requirement                                                             |
 | ---------- | ----------------------------------------------------------------------- |
