@@ -1,17 +1,18 @@
 {
+  "schemaVersion": 2,
   "meta": {
-    "name": "Cell uptake 2 channels coloc",
-    "shortDescription": "Uptake assay with two spot channels and brightfield cell.",
-    "description": "Uptake assay with two spot channels and brightfield cell.",
-    "authorFirstName": "Melanie",
-    "authorLastName": "Schuerz",
+    "name": "Coloc 2 channels",
+    "shortDescription": "Spot colocalization with two image channels.",
+    "description": "Spot colocalization with two image channels.",
+    "authors": [
+      "Melanie Schuerz"
+    ],
     "authorOrganization": "University of Salzburg",
     "creationTime": "2026-06-11T00:00:00Z",
-    "category": "Cell Biology / Uptake",
+    "category": "Colocalization",
     "tags": [
-      "uptake-assay",
       "colocalization",
-      "brightfield",
+      "spots",
       "2-channel"
     ]
   },
@@ -244,49 +245,49 @@
   },
   "pipelines": [
     {
-      "meta": {
-        "name": "Nuclei",
-        "shortDescription": "Nuclei",
-        "description": "1. Set image nucleus channel\n2. Adapt threshold. Recommanded autoTH: Triangle, Moments or Otsu\n3. Define min particle size in \"Classifier\" to filter out small aggregates not connected to Nuclei.",
-        "authorFirstName": "EVAnalyzer",
-        "authorLastName": "Team",
-        "authorOrganization": "evanalyzer.org",
-        "creationTime": "2026-06-11T00:00:00Z"
+      "id": 1,
+      "name": "Nuclei",
+      "description": "1. Set image nucleus channel\n2. Adapt threshold. Recommanded autoTH: Triangle, Moments or Otsu\n3. Define min particle size in \"Classifier\" to filter out small aggregates not connected to Nuclei.",
+      "imageSource": {
+        "channel": 0
       },
-      "pipelineSteps": [
+      "enabled": true,
+      "steps": [
         {
           "enabled": true,
           "command": {
-            "type": "rollingBall",
+            "type": "ROLLING_BALL",
             "radius": 4.0,
             "ballType": "PARABOLOID",
-            "preSmooth": true
+            "preSmooth": false
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "threshold",
+            "type": "THRESHOLD",
             "thresholds": [
               {
-                "method": "TRIANGLE",
+                "method": {
+                  "type": "TRIANGLE"
+                },
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
-                "unit": "bit",
+                "unit": "BIT",
                 "objectClassId": 4
               }
             ]
@@ -295,7 +296,7 @@
         {
           "enabled": true,
           "command": {
-            "type": "watershed",
+            "type": "WATERSHED",
             "maximumFinderTolerance": 0.5,
             "smoothingSigma": 0.0,
             "minObjectSize": 0
@@ -304,27 +305,27 @@
         {
           "enabled": true,
           "command": {
-            "type": "connectedComponents"
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "extractObjects",
+            "type": "EXTRACT_OBJECTS",
             "maxObjectsBeforeFail": 100000
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "classifyObjects",
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
             "inputClasses": [
               {
                 "VALID": 4
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
-            "originSegmentation": [],
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
@@ -347,75 +348,75 @@
       ]
     },
     {
-      "meta": {
-        "name": "Cell area",
-        "shortDescription": "Cell area",
-        "description": "Detects the whole brightfield cell area.\n1. Define Brightfield image channel\n2. Adjust TH if needed\n3. Define min particle size in \"Classifier\" to filter out small aggregates.",
-        "authorFirstName": "EVAnalyzer",
-        "authorLastName": "Team",
-        "authorOrganization": "evanalyzer.org",
-        "creationTime": "2026-06-11T00:00:00Z"
+      "id": 2,
+      "name": "Cell area",
+      "description": "Detects the whole brightfield cell area.\n1. Define Brightfield image channel\n2. Adjust TH if needed\n3. Define min particle size in \"Classifier\" to filter out small aggregates.",
+      "imageSource": {
+        "channel": 1
       },
-      "pipelineSteps": [
+      "enabled": true,
+      "steps": [
         {
           "enabled": true,
           "command": {
-            "type": "edgeDetectionSobel",
+            "type": "EDGE_DETECTION_SOBEL",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "threshold",
+            "type": "THRESHOLD",
             "thresholds": [
               {
-                "method": "MIN_ERROR",
+                "method": {
+                  "type": "MIN_ERROR"
+                },
                 "minThreshold": 0.0,
                 "maxThreshold": 65535.0,
-                "unit": "bit",
+                "unit": "BIT",
                 "objectClassId": 11
               }
             ]
@@ -424,27 +425,27 @@
         {
           "enabled": true,
           "command": {
-            "type": "connectedComponents"
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "extractObjects",
+            "type": "EXTRACT_OBJECTS",
             "maxObjectsBeforeFail": 100000
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "classifyObjects",
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
             "inputClasses": [
               {
                 "VALID": 11
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
-            "originSegmentation": [],
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
@@ -467,20 +468,16 @@
       ]
     },
     {
-      "meta": {
-        "name": "Cells",
-        "shortDescription": "Cells",
-        "description": "Based on the detected nuclei a Voronoi algorithm is used to separete individual cells. The detected cell area is used to find the border of the cells\n1. Measure intensity per cell in your required channels (default Ch0,1 and 2 is measured)",
-        "authorFirstName": "EVAnalyzer",
-        "authorLastName": "Team",
-        "authorOrganization": "evanalyzer.org",
-        "creationTime": "2026-06-11T00:00:00Z"
-      },
-      "pipelineSteps": [
+      "id": 3,
+      "name": "Cells",
+      "description": "Based on the detected nuclei a Voronoi algorithm is used to separete individual cells. The detected cell area is used to find the border of the cells\n1. Measure intensity per cell in your required channels (default Ch0,1 and 2 is measured)",
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
         {
           "enabled": true,
           "command": {
-            "type": "voronoi",
+            "type": "VORONOI",
             "centers": {
               "VALID": 4
             },
@@ -492,7 +489,7 @@
             "outputClass": {
               "VALID": 12
             },
-            "unit": "px",
+            "unit": "PIXELS",
             "maxRadius": 0.0,
             "excludeAreasAtTheEdges": false,
             "excludeAreasWithNoCenter": true
@@ -501,40 +498,40 @@
       ]
     },
     {
-      "meta": {
-        "name": "spot ch1",
-        "shortDescription": "spot ch1",
-        "description": "1. Select EV image channel\n2. Adapt manual threshold\n\n Approximation notes: $reclassify was approximated via Colocalization",
-        "authorFirstName": "EVAnalyzer",
-        "authorLastName": "Team",
-        "authorOrganization": "evanalyzer.org",
-        "creationTime": "2026-06-11T00:00:00Z"
+      "id": 4,
+      "name": "spot ch1",
+      "description": "1. Select EV image channel\n2. Adapt manual threshold\n\n Approximation notes: $reclassify was approximated via Colocalization",
+      "imageSource": {
+        "channel": 2
       },
-      "pipelineSteps": [
+      "enabled": true,
+      "steps": [
         {
           "enabled": true,
           "command": {
-            "type": "medianSubtract",
+            "type": "MEDIAN_SUBTRACT",
             "radius": 3.0
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "threshold",
+            "type": "THRESHOLD",
             "thresholds": [
               {
-                "method": "MANUAL",
+                "method": {
+                  "type": "MANUAL"
+                },
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
-                "unit": "bit",
+                "unit": "BIT",
                 "objectClassId": 21
               }
             ]
@@ -543,7 +540,7 @@
         {
           "enabled": true,
           "command": {
-            "type": "watershed",
+            "type": "WATERSHED",
             "maximumFinderTolerance": 0.5,
             "smoothingSigma": 0.0,
             "minObjectSize": 0
@@ -552,20 +549,20 @@
         {
           "enabled": true,
           "command": {
-            "type": "connectedComponents"
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "extractObjects",
+            "type": "EXTRACT_OBJECTS",
             "maxObjectsBeforeFail": 100000
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "classifyObjects",
+            "type": "CLASSIFY_OBJECTS",
             "originSegmentation": [],
             "inputClasses": [
               {
@@ -595,7 +592,7 @@
         {
           "enabled": true,
           "command": {
-            "type": "colocalization",
+            "type": "COLOCALIZATION",
             "classesToColoc": [
               {
                 "VALID": 21
@@ -616,40 +613,40 @@
       ]
     },
     {
-      "meta": {
-        "name": "spot ch2",
-        "shortDescription": "spot ch2",
-        "description": "1. Select EV image channel\n2. Adapt manual threshold\n\n Approximation notes: $reclassify was approximated via Colocalization",
-        "authorFirstName": "EVAnalyzer",
-        "authorLastName": "Team",
-        "authorOrganization": "evanalyzer.org",
-        "creationTime": "2026-06-11T00:00:00Z"
+      "id": 5,
+      "name": "spot ch2",
+      "description": "1. Select EV image channel\n2. Adapt manual threshold\n\n Approximation notes: $reclassify was approximated via Colocalization",
+      "imageSource": {
+        "channel": 3
       },
-      "pipelineSteps": [
+      "enabled": true,
+      "steps": [
         {
           "enabled": true,
           "command": {
-            "type": "medianSubtract",
+            "type": "MEDIAN_SUBTRACT",
             "radius": 3.0
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "blur",
+            "type": "BLUR",
             "kernelSize": 3
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "threshold",
+            "type": "THRESHOLD",
             "thresholds": [
               {
-                "method": "MANUAL",
+                "method": {
+                  "type": "MANUAL"
+                },
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
-                "unit": "bit",
+                "unit": "BIT",
                 "objectClassId": 1
               }
             ]
@@ -658,7 +655,7 @@
         {
           "enabled": true,
           "command": {
-            "type": "watershed",
+            "type": "WATERSHED",
             "maximumFinderTolerance": 0.5,
             "smoothingSigma": 0.0,
             "minObjectSize": 0
@@ -667,27 +664,27 @@
         {
           "enabled": true,
           "command": {
-            "type": "connectedComponents"
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "extractObjects",
+            "type": "EXTRACT_OBJECTS",
             "maxObjectsBeforeFail": 100000
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "classifyObjects",
+            "type": "CLASSIFY_OBJECTS",
             "originSegmentation": [],
             "inputClasses": [
               {
                 "VALID": 1
               }
             ],
-            "matchHandling": "REMOVE_INPUT_CLASS_IF_NOT_MATCH",
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
@@ -710,7 +707,7 @@
         {
           "enabled": true,
           "command": {
-            "type": "colocalization",
+            "type": "COLOCALIZATION",
             "classesToColoc": [
               {
                 "VALID": 1
@@ -731,20 +728,16 @@
       ]
     },
     {
-      "meta": {
-        "name": "Coloc",
-        "shortDescription": "Coloc",
-        "description": "Coloc pipeline. Approximation notes: $colocalization N-way matrix approximated as pairwise Colocalization steps (each non-Undefined entry paired with the first other non-Undefined entry)",
-        "authorFirstName": "EVAnalyzer",
-        "authorLastName": "Team",
-        "authorOrganization": "evanalyzer.org",
-        "creationTime": "2026-06-11T00:00:00Z"
-      },
-      "pipelineSteps": [
+      "id": 6,
+      "name": "Coloc",
+      "description": "Coloc pipeline. Approximation notes: $colocalization N-way matrix approximated as pairwise Colocalization steps (each non-Undefined entry paired with the first other non-Undefined entry)",
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
         {
           "enabled": true,
           "command": {
-            "type": "colocalization",
+            "type": "COLOCALIZATION",
             "classesToColoc": [
               {
                 "VALID": 13
@@ -765,7 +758,7 @@
         {
           "enabled": true,
           "command": {
-            "type": "colocalization",
+            "type": "COLOCALIZATION",
             "classesToColoc": [
               {
                 "VALID": 3

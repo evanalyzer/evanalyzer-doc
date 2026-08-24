@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main, starting]
+  schedule:
+    # Rebuild once a day so the Downloads page picks up new/updated templates
+    # from evanalyzer/evanalyzer-templates without needing a doc-repo commit.
+    - cron: "17 3 * * *"
   workflow_dispatch:
 
 permissions:

@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 2,
+  "meta": {
+    "name": "Example Colocalization",
+    "shortDescription": "Ported from CellProfiler ExampleColocalization pipeline",
+    "description": "Two-channel spot colocalization (Cy3-like / Cy5-like nucleosome staining). Ported from the CellProfiler ExampleColocalization.cppipe example. Channel 0 = OrigStain1 (files *_N_R), Channel 1 = OrigStain2 (files *_N_G), merged into one 2-channel TIFF per site via Fiji. Object counts run ~10-15% off CP and coloc% ~5pt high, mainly because evanalyzer's watershed declumping (prominence-based) splits touching spots differently than CP's fixed-radius local-maxima method, and evanalyzer's illumination correction averages over blocks before fitting (more robust to bright spots) instead of fitting the raw pixels directly like CP does.",
+    "authors": ["Jeff Reifenberger","Brad Berstein's"],
+    "authorOrganization": "Massachusetts General Hospital",
+    "creationTime": "2026-08-23T00:00:00Z",
+    "category": "Colocalization",
+    "tags": [
+      "colocalization",
+      "spots",
+      "2-channel",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": {
+          "VALID": 0
+        },
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": {
+          "VALID": 1
+        },
+        "color": "#FF3333",
+        "name": "ch1@spot",
+        "notes": "Objects1 in CP pipeline (Stain1 / *_N_R channel)"
+      },
+      {
+        "id": {
+          "VALID": 2
+        },
+        "color": "#33CC33",
+        "name": "ch2@spot",
+        "notes": "Objects2 in CP pipeline (Stain2 / *_N_G channel)"
+      },
+      {
+        "id": {
+          "VALID": 3
+        },
+        "color": "#9933FF",
+        "name": "ch1-ch2@coloc",
+        "notes": "Overlap area between ch1@spot and ch2@spot"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "NO_GROUPING",
+    "groupingRegex": "",
+    "plateCols": 1,
+    "plateRows": 1,
+    "wellCols": 4,
+    "wellRows": 4,
+    "wellImageOrder": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "ch1 spots",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "applyMethod": "DIVIDE",
+            "blockSize": 60,
+            "method": "REGULAR",
+            "rescale": false,
+            "smoothing": {
+              "type": "FIT_POLYNOMIAL"
+            }
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "THREE",
+                    "middleClass": "BACKGROUND"
+                  }
+                },
+                "minThreshold": 100.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "objectClassId": 1,
+                "valueSource": "ACTUAL_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS"
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 9.0,
+            "maxArea": 177.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "ch2 spots",
+      "imageSource": {
+        "channel": 1
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "applyMethod": "DIVIDE",
+            "blockSize": 60,
+            "method": "REGULAR",
+            "rescale": false,
+            "smoothing": {
+              "type": "FIT_POLYNOMIAL"
+            }
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "THREE",
+                    "middleClass": "BACKGROUND"
+                  }
+                },
+                "minThreshold": 100.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "objectClassId": 2,
+                "valueSource": "ACTUAL_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS"
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 2
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 10.0,
+            "maxArea": 177.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Coloc",
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "COLOCALIZATION",
+            "classesToColoc": [
+              {
+                "VALID": 1
+              },
+              {
+                "VALID": 2
+              }
+            ],
+            "filterClasses": [],
+            "classForOverlappingAreas": {
+              "VALID": 3
+            },
+            "multiplicity": "ONE_TO_ONE",
+            "sizeUnit": "PIXELS",
+            "minColocArea": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

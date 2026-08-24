@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 2,
+  "meta": {
+    "name": "Example Comet Assay",
+    "shortDescription": "Ported from CellProfiler ExampleCometAssay pipeline",
+    "description": "Single-channel comet assay (DNA damage electrophoresis). Ported from the CellProfiler ExampleCometAssay.cppipe example. Comet = whole cell blob (head+tail), CometHead = dense head sub-region, CometTail = Comet minus CometHead. CP masks the image to Comet before re-thresholding for CometHead (MaskImage) and has no direct evanalyzer equivalent for image-level masking by object class; approximated here with an intersection filter (classifyObjects overlappingWith comet@whole) instead, applied after thresholding the full image. CP's 'Robust Background' threshold method also has no evanalyzer equivalent; approximated with Otsu. Illumination correction's median-smoothing radius needed a much larger value (20 block-grid units) than a naive unit conversion from CP's settings suggested, otherwise residual block-boundary noise fragmented each comet into many tiny pieces instead of one blob. Result: CometTails.tif matches CP exactly (6/6/6 whole/head/tail); NoTails.tif is close but not exact (5/5/5 vs CP's 6/4/6) - one faint comet isn't detected, and because head-detection here runs on the full image rather than a CP-style pre-masked one, all 5 found comets get a head where CP only assigned heads to 4 of its 6.",
+    "authors": ["Scott Floyd","Michael Pacold","Jorge Ernesto González"],
+    "authorOrganization": "Centro de Protección e Higiene de Las Radiaciones",
+    "creationTime": "2026-08-23T00:00:00Z",
+    "category": "Assay",
+    "tags": [
+      "assay",
+      "comet-assay",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": {
+          "VALID": 0
+        },
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": {
+          "VALID": 1
+        },
+        "color": "#33ccff",
+        "name": "comet@whole",
+        "notes": "Comet in CP pipeline (whole head+tail blob)"
+      },
+      {
+        "id": {
+          "VALID": 2
+        },
+        "color": "#ff3333",
+        "name": "comet@head",
+        "notes": "CometHead in CP pipeline (dense head sub-region)"
+      },
+      {
+        "id": {
+          "VALID": 3
+        },
+        "color": "#33ff66",
+        "name": "comet@tail",
+        "notes": "CometTail in CP pipeline (comet@whole minus comet@head)"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "NO_GROUPING",
+    "groupingRegex": "",
+    "plateCols": 1,
+    "plateRows": 1,
+    "wellCols": 4,
+    "wellRows": 4,
+    "wellImageOrder": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "comet",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "method": "BACKGROUND",
+            "blockSize": 5,
+            "smoothing": {
+              "type": "MEDIAN",
+              "radius": 20
+            },
+            "applyMethod": "SUBTRACT",
+            "rescale": false
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "ROBUST_BACKGROUND",
+                  "lowerOutlierFraction": 0.01,
+                  "upperOutlierFraction": 0.001,
+                  "averagingMethod": "MEAN",
+                  "deviationsAboveAverage": 0.75
+                },
+                "minThreshold": 1.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "objectClassId": 1,
+                "valueSource": "ACTUAL_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "MORPHOLOGICAL_COMMAND",
+            "op": "OPEN",
+            "kernelSize": 3,
+            "kernelShape": "ELLIPSE",
+            "useGrayscale": false
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 0
+          }
+        },
+        {
+          "enabled": false,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 21.0,
+            "smoothingSigma": 10.0,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 1500.0,
+            "maxArea": 9000.0,
+            "minCircularity": 0.25,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "comethead",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "method": "BACKGROUND",
+            "blockSize": 5,
+            "smoothing": {
+              "type": "MEDIAN",
+              "radius": 20
+            },
+            "applyMethod": "SUBTRACT",
+            "rescale": false
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "TWO"
+                  }
+                },
+                "minThreshold": 1.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "objectClassId": 2,
+                "valueSource": "ACTUAL_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "MORPHOLOGICAL_COMMAND",
+            "op": "OPEN",
+            "kernelSize": 3,
+            "kernelShape": "ELLIPSE",
+            "useGrayscale": false
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 0
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 2
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": {
+              "VALID": 1
+            },
+            "minIntersectionArea": 1.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 700.0,
+            "maxArea": 25000.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "comettail",
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "OBJECT_MATH",
+            "operation": "SUBTRACT",
+            "inputClass": {
+              "VALID": 1
+            },
+            "otherClass": {
+              "VALID": 2
+            },
+            "otherFilterClasses": [],
+            "sizeUnit": "PIXELS",
+            "minOverlapArea": 1.0,
+            "outputClass": {
+              "VALID": 3
+            },
+            "keepUnmatched": true
+          }
+        }
+      ]
+    }
+  ]
+}

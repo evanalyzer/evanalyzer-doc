@@ -9,7 +9,7 @@ const downloads = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      category: z.enum(['template', 'model']),
+      category: z.enum(['template', 'pipeline', 'model']),
       // Path to the plain download (just the template/model itself),
       // relative to `public/`, e.g.
       // "/downloads/templates/cell_uptake_2_channel_coloc.evapt".

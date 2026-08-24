@@ -96,6 +96,18 @@ header.header {
   }
 }
 
+/* Splash pages without a hero image (e.g. Downloads) don't need the huge
+   padding-block Starlight reserves to balance a side-by-side hero image -
+   it just reads as dead space above the title and below the tagline. */
+.hero:not(:has(> img, > .hero-html)) {
+  padding-block: 1rem;
+}
+@media (min-width: 50rem) {
+  .hero:not(:has(> img, > .hero-html)) {
+    padding-block: 2rem 1.5rem;
+  }
+}
+
 @media (min-width: 50rem) {
   site-search button[data-open-modal] {
     max-width: 12rem;

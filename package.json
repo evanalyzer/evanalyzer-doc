@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "prebuild": "node scripts/fetch-schema.mjs",
+    "prebuild": "node scripts/fetch-schema.mjs && node scripts/fetch-templates.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-schema": "node scripts/fetch-schema.mjs"
+    "fetch-schema": "node scripts/fetch-schema.mjs",
+    "fetch-templates": "node scripts/fetch-templates.mjs"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.41.3",
