@@ -147,6 +147,10 @@ export default defineConfig({
                   slug: "commands/image-processing/rolling-ball",
                 },
                 {
+                  label: "Illumination Correction",
+                  slug: "commands/image-processing/illumination-correction",
+                },
+                {
                   label: "Rank Filter",
                   slug: "commands/image-processing/rank-filter",
                 },

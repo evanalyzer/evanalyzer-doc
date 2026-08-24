@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+    .arrow { stroke: #4b5563; stroke-width: 2; fill: none; }
+    .tile { fill: none; stroke: #d8dce1; stroke-width: 1.5; stroke-dasharray: 5 4; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+
+<!-- Left panel: two tiles, one object split into two fragments at the seam -->
+<rect x="30" y="45" width="80" height="90" fill="#ffffff" stroke="#eceff3" stroke-width="1"/>
+<rect x="110" y="45" width="80" height="90" fill="#f0f2f5" stroke="#eceff3" stroke-width="1"/>
+<line class="tile" x1="110" y1="40" x2="110" y2="140"/>
+<text class="lbl-sm" x="70" y="150" text-anchor="middle" fill="#9ca3af">tile A</text>
+<text class="lbl-sm" x="150" y="150" text-anchor="middle" fill="#9ca3af">tile B</text>
+<!-- object clipped by the tile rects so it visibly stops at the seam -->
+<defs>
+  <clipPath id="tileA"><rect x="30" y="45" width="80" height="90"/></clipPath>
+  <clipPath id="tileB"><rect x="110" y="45" width="80" height="90"/></clipPath>
+</defs>
+<ellipse cx="110" cy="90" rx="42" ry="30" fill="#2563eb" clip-path="url(#tileA)"/>
+<ellipse cx="110" cy="90" rx="42" ry="30" fill="#38bdf8" clip-path="url(#tileB)"/>
+<line x1="110" y1="61" x2="110" y2="119" stroke="#f7f8fa" stroke-width="2"/>
+<text class="lbl-sm" x="90" y="94" text-anchor="middle" fill="#f7f8fa" font-weight="600">A</text>
+<text class="lbl-sm" x="130" y="94" text-anchor="middle" fill="#f7f8fa" font-weight="600">B</text>
+<text class="lbl-bold" x="110" y="180" text-anchor="middle">Before</text>
+<text class="lbl-sm" x="110" y="196" text-anchor="middle">split into two fragments</text>
+
+<path class="arrow" d="M205 90 L255 90" marker-end="url(#arrow)"/>
+<text class="lbl-sm" x="230" y="80" text-anchor="middle">merge</text>
+
+<!-- Right panel: one merged object spanning where the seam was -->
+<rect x="270" y="45" width="80" height="90" fill="#ffffff" stroke="#eceff3" stroke-width="1"/>
+<rect x="350" y="45" width="80" height="90" fill="#f0f2f5" stroke="#eceff3" stroke-width="1"/>
+<line class="tile" x1="350" y1="40" x2="350" y2="140"/>
+<ellipse cx="350" cy="90" rx="42" ry="30" fill="#2563eb"/>
+<text class="lbl-sm" x="350" y="94" text-anchor="middle" fill="#f7f8fa" font-weight="600">A</text>
+<text class="lbl-bold" x="350" y="180" text-anchor="middle">After</text>
+<text class="lbl-sm" x="350" y="196" text-anchor="middle">one object, geometry recomputed</text>
+
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#4b5563"/></marker></defs>
+</svg>

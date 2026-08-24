@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 34 pipeline commands grouped by category.
+description: All 35 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -29,6 +29,7 @@ Commands for reducing noise and enhancing signal before segmentation.
 | [Blur](/commands/image-processing/blur/)                               | Box/average blur to reduce noise                 |
 | [Gaussian Blur](/commands/image-processing/gaussian-blur/)             | Edge-preserving Gaussian blur                    |
 | [Rolling Ball](/commands/image-processing/rolling-ball/)               | Background subtraction                           |
+| [Illumination Correction](/commands/image-processing/illumination-correction/) | Remove uneven illumination (vignetting) across the whole image |
 | [Rank Filter](/commands/image-processing/rank-filter/)                 | Min / median / max neighbourhood filter          |
 | [Enhance Contrast](/commands/image-processing/enhance-contrast/)       | Histogram-based contrast enhancement             |
 | [Color Filter](/commands/image-processing/color-filter/)               | Retain pixels within an HSV colour range         |
@@ -100,7 +101,7 @@ Commands that operate on extracted objects.
 
 ```
 Image
-  └─ Preprocessing (Blur, Rolling Ball, …)
+  └─ Preprocessing (Blur, Rolling Ball, Illumination Correction, …)
        └─ Segmentation (Threshold → Connected Components → Watershed)
             └─ Fill Holes (optional mask cleanup)
                  └─ Extract Objects

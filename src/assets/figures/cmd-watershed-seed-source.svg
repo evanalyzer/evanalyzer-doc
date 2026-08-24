@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <radialGradient id="hotspot" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="100%" stop-color="#93c5fd" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="seed" markerWidth="10" markerHeight="10" refX="5" refY="5">
+      <circle cx="5" cy="5" r="3.5" fill="#ea580c" stroke="#f7f8fa" stroke-width="1"/>
+    </marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+
+<!-- Left panel: Distance map seeding - a "peanut" with a real neck -->
+<circle cx="90" cy="95" r="38" fill="#2563eb"/><circle cx="140" cy="95" r="38" fill="#2563eb"/>
+<circle cx="90" cy="95" r="3.5" fill="#f7f8fa" stroke="#ea580c" stroke-width="2"/>
+<circle cx="140" cy="95" r="3.5" fill="#f7f8fa" stroke="#ea580c" stroke-width="2"/>
+<text class="lbl-sm" x="115" y="160" text-anchor="middle" fill="#4b5563">outline has a dip (neck)</text>
+<text class="lbl-bold" x="115" y="182" text-anchor="middle">Distance map seeding</text>
+<text class="lbl-sm" x="115" y="198" text-anchor="middle">seeds = peaks of the shape's distance map</text>
+
+<!-- Divider -->
+<line x1="220" y1="30" x2="220" y2="204" stroke="#d8dce1" stroke-width="1"/>
+
+<!-- Right panel: Intensity seeding - one smooth round blob, two brightness peaks inside -->
+<circle cx="330" cy="90" r="48" fill="#2563eb"/>
+<circle cx="310" cy="85" r="26" fill="url(#hotspot)"/>
+<circle cx="350" cy="92" r="23" fill="url(#hotspot)"/>
+<circle cx="310" cy="85" r="3.5" fill="#f7f8fa" stroke="#ea580c" stroke-width="2"/>
+<circle cx="350" cy="92" r="3.5" fill="#f7f8fa" stroke="#ea580c" stroke-width="2"/>
+<text class="lbl-sm" x="330" y="160" text-anchor="middle" fill="#4b5563">smooth outline, no dip</text>
+<text class="lbl-bold" x="330" y="182" text-anchor="middle">Intensity seeding</text>
+<text class="lbl-sm" x="330" y="198" text-anchor="middle">seeds = brightness peaks inside the object</text>
+
+<text class="lbl-sm" x="220" y="220" text-anchor="middle" fill="#4b5563">both cases flood the same distance map - only where seeds come from differs</text>
+</svg>

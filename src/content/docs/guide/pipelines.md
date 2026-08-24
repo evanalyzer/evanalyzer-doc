@@ -88,6 +88,8 @@ Project templates use the `.evapt` extension.
 To create a new project from a template, click open the **File** menu and select **New from Template**.
 This pre-populates the class editor, plate settings, and all pipelines, so you can start a new experiment with a known-good configuration without rebuilding from scratch.
 
+You can also apply an `.evapt` file directly from the regular **Open** button/dialog - EVAnalyzer detects the project-template extension and applies it to the current project the same way **New from Template** does, so a template downloaded or shared with you doesn't need a separate import step.
+
 :::tip
 Use project templates to standardize analysis configurations across your lab — share a single `.evapt` file to ensure every team member starts from the same pipeline and class setup.
 :::

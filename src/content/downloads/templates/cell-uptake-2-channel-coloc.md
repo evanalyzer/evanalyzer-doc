@@ -12,4 +12,4 @@ Ready-made project template for measuring how much of a labelled compound (extra
 - **Channel 2** - the uptake marker, segmented into `spot` objects.
 - A [Colocalization](/commands/object/colocalization/) step assigns each spot to the cell it overlaps, so per-cell spot counts and intensities can be read directly from the results table.
 
-Import it via **File → New from Template**, then repoint the two pipelines at your own channels and adjust the threshold/size filters for your data. See [Saving a Project as a Template](/guide/pipelines/#saving-a-project-as-a-template) for how project templates work in general.
+Import it via the **Open** button (or **File → New from Template**), then repoint the two pipelines at your own channels and adjust the threshold/size filters for your data. See [Saving a Project as a Template](/guide/pipelines/#saving-a-project-as-a-template) for how project templates work in general.

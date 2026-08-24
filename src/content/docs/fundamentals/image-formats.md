@@ -68,6 +68,18 @@ The tile size used for analysis is 4096 × 4096 px.
 
 ![Tile splitting for big images](../../../assets/figures/tiles.drawio.svg)
 
+### Cross-tile object merging
+
+An object that straddles an internal tile boundary (for example a whole organ or tissue region on a whole-slide image) would otherwise be exported as two or more separate fragments, one per tile. EVAnalyzer reassembles these back into a single correct object once every tile of an image has finished processing, recomputing its geometry (area, perimeter, ellipse fit, …) from the true merged shape rather than from either fragment alone.
+
+![A tile-edge fragment in tile A and its counterpart in tile B are reassembled into a single object with recomputed geometry](../../../assets/figures/cmd-tile-merge.svg)
+
+This is **on by default** - most users have no reason to know or care about tiles, and just expect objects to be detected correctly regardless of where a tile boundary happens to fall. It's configurable in the project's Project Settings dialog:
+
+- **Merge objects split across tile boundaries** - disable to fully restore the old per-tile-only export behaviour.
+- **Exclude classes** - an opt-out list of object classes that should never be merged across tiles, for classes where you specifically want per-tile fragments kept separate. Every class merges by default.
+- **Connectivity** - whether two fragments from different tiles must be 4- or 8-connected across the shared seam to count as touching (default: 8-connected).
+
 :::note
 EVAnalyzer can generate a navigator minimap for big images only when the file contains a pyramid representation (reduced-resolution levels). Ensure pyramid support is enabled when saving whole-slide images.
 :::

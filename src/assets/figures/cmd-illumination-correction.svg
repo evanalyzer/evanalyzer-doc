@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+    .arrow { stroke: #4b5563; stroke-width: 2; fill: none; }
+  </style>
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="60%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </radialGradient>
+    <circle id="dot1" cx="90" cy="95" r="5" fill="#f7f8fa"/>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><rect x="45" y="45" width="130" height="110" rx="6" fill="url(#vignette)"/><circle cx="90" cy="90" r="5" fill="#f7f8fa" opacity="0.9"/><circle cx="130" cy="100" r="4" fill="#f7f8fa" opacity="0.75"/><circle cx="105" cy="120" r="4.5" fill="#f7f8fa" opacity="0.6"/><circle cx="145" cy="70" r="3.5" fill="#f7f8fa" opacity="0.45"/><text class="lbl-bold" x="110" y="180" text-anchor="middle">Before</text><text class="lbl-sm" x="110" y="196" text-anchor="middle">vignetting hides dim objects</text><path class="arrow" d="M195 100 L245 100" marker-end="url(#arrow)"/><text class="lbl-sm" x="220" y="90" text-anchor="middle">correct</text><rect x="265" y="45" width="130" height="110" rx="6" fill="#3b82f6"/><circle cx="305" cy="90" r="5" fill="#f7f8fa"/><circle cx="345" cy="100" r="4" fill="#f7f8fa"/><circle cx="320" cy="120" r="4.5" fill="#f7f8fa"/><circle cx="360" cy="70" r="3.5" fill="#f7f8fa"/><text class="lbl-bold" x="330" y="180" text-anchor="middle">After</text><text class="lbl-sm" x="330" y="196" text-anchor="middle">even field, objects equally visible</text><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#4b5563"/></marker></defs></svg>
