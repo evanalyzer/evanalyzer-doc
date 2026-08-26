@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 2,
+  "meta": {
+    "name": "",
+    "shortDescription": "",
+    "description": "",
+    "authors": [],
+    "authorOrganization": "",
+    "creationTime": "2026-08-26T06:25:00Z",
+    "category": "",
+    "tags": [],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": {
+          "VALID": 0
+        },
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": {
+          "VALID": 1
+        },
+        "color": "#ff0000",
+        "name": "CY7",
+        "notes": ""
+      },
+      {
+        "id": {
+          "VALID": 2
+        },
+        "color": "#ffff66cc",
+        "name": "CY5",
+        "notes": ""
+      },
+      {
+        "id": {
+          "VALID": 4
+        },
+        "color": "#ff9932cc",
+        "name": "coloc area",
+        "notes": ""
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "NO_GROUPING",
+    "groupingRegex": "",
+    "plateCols": 1,
+    "plateRows": 1,
+    "wellCols": 4,
+    "wellRows": 4,
+    "wellImageOrder": []
+  },
+  "tileMerge": {
+    "enabled": true,
+    "classesToNotMerge": [],
+    "connectivity": "EIGHT_CONNECTED",
+    "maxFragmentsPerGroup": 10000
+  },
+  "images": {
+    "root": "/path/to/your/images",
+    "list": {},
+    "settings": {
+      "selectedChannel": null,
+      "channels": {},
+      "pixelSizes": null,
+      "zStack": null,
+      "tStack": null
+    }
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "Pipeline 1",
+      "description": null,
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "ROLLING_BALL",
+            "radius": 4,
+            "ballType": "PARABOLOID",
+            "preSmooth": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "MANUAL"
+                },
+                "minThreshold": 50,
+                "maxThreshold": 65535,
+                "unit": "BIT",
+                "objectClassId": 1,
+                "valueSource": "ACTUAL_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 0
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": {
+              "VALID": 1
+            },
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0,
+            "sizeUnit": "PIXELS",
+            "minArea": 5,
+            "maxArea": 2147483600,
+            "minCircularity": 0,
+            "maxCircularity": 1,
+            "minSolidity": 0,
+            "maxSolidity": 1,
+            "minAspectRatio": 0,
+            "maxAspectRatio": 2147483600,
+            "minEccentricity": 0,
+            "maxEccentricity": 1,
+            "minFeret": 0,
+            "maxFeret": 2147483600,
+            "allowEdgeTouching": true
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Pipeline 2",
+      "description": null,
+      "imageSource": {
+        "channel": 1
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "ROLLING_BALL",
+            "radius": 4,
+            "ballType": "PARABOLOID",
+            "preSmooth": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "BLUR",
+            "kernelSize": 3
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "MANUAL"
+                },
+                "minThreshold": 200,
+                "maxThreshold": 65535,
+                "unit": "BIT",
+                "objectClassId": 2,
+                "valueSource": "ACTUAL_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 0
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 2
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0,
+            "sizeUnit": "PIXELS",
+            "minArea": 5,
+            "maxArea": 2147483600,
+            "minCircularity": 0,
+            "maxCircularity": 1,
+            "minSolidity": 0,
+            "maxSolidity": 1,
+            "minAspectRatio": 0,
+            "maxAspectRatio": 2147483600,
+            "minEccentricity": 0,
+            "maxEccentricity": 1,
+            "minFeret": 0,
+            "maxFeret": 2147483600,
+            "allowEdgeTouching": true
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Pipeline 3",
+      "description": null,
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
+        {
+          "enabled": true,
+          "command": {
+            "type": "COLOCALIZATION",
+            "classesToColoc": [
+              {
+                "VALID": 1
+              },
+              {
+                "VALID": 2
+              }
+            ],
+            "filterClasses": [],
+            "classForOverlappingAreas": {
+              "VALID": 4
+            },
+            "multiplicity": "ONE_TO_ONE",
+            "sizeUnit": "PIXELS",
+            "minColocArea": 0,
+            "excludeClasses": []
+          }
+        }
+      ]
+    }
+  ]
+}
