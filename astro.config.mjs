@@ -327,11 +327,11 @@ export default defineConfig({
           label: "Project",
           collapsed: true,
           items: [
-            { label: "About", slug: "about" },
-            { label: "Comparison", slug: "comparison" },
+            { label: "Features & Benchmarks", slug: "comparison" },
             { label: "Citation", slug: "citation" },
             { label: "FAQ", slug: "faq" },
             { label: "Support", slug: "support" },
+            { label: "About", slug: "about" },
           ],
         },
       ],

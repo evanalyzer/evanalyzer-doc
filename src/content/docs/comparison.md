@@ -1,35 +1,22 @@
 ---
-title: EVAnalyzer vs. CellProfiler vs. QuPath
-description: How EVAnalyzer compares to CellProfiler and QuPath, and when to choose one over the other.
+title: Features & Benchmarks
+description: Feature-by-feature comparison and performance benchmarks — EVAnalyzer vs. CellProfiler, ImageJ, and QuPath.
 ---
 
-**EVAnalyzer** relies on on a _branching pipeline_, **CellProfiler** on a _linear pipeline_, and **QuPath** on an **object-centric, map-based workflow**.
-It was originally created for massive whole-slide pathology images, but it handles high-throughput multiplex/multi-channel fluorescence data exceptionally well.
+## Feature matrix
 
----
+Support markings are a best-effort summary based on each project's public documentation: ✅ supported · ⚠️ partial/limited · - not supported or not documented.
+"ImageJ" covers the Fiji distribution (ImageJ2 plus its commonly bundled plugins, e.g. TrackMate, Coloc2, Trainable Weka Segmentation).
+Verify against each tool's current docs before relying on this for a migration decision.
 
-### At a glance: which tool fits your project?
+A checkmark alone can overstate real-world usability, for any tool here - see the "Its ceiling" column in the [at-a-glance table](#at-a-glance-which-tool-fits-your-project) below for what each one still falls short on.
+Rows where a checkmark hides a gap like this carry a footnote.
 
-| Tool              | Choose it when...                                                                                                                                 | Core strength                                                                                                           | Its ceiling                                                                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **EVAnalyzer**    | Multiplex/multi-channel fluorescence panels where every marker needs its own processing, especially at whole-slide scale.                         | Branching per-channel pipelines with built-in whole-slide tiling, live preview, and CLI batch/HPC execution.            | No time-lapse tracking, no true 3D volume rendering; a smaller measurement library than CellProfiler/ImageJ for classic single-channel quantification. |
-| **CellProfiler**  | Deep, classic single- or few-channel quantification - precise shape, texture, colocalization, or particle-tracking metrics for a methods section. | The broadest, most mature measurement library here (Haralick texture, LAP tracking, Pearson's/Manders' colocalization). | One linear pipeline per run; per-channel branching and real multi-threaded throughput on large images both need manual workarounds.                    |
-| **ImageJ / Fiji** | You need a specific plugin, a quick one-off manual measurement, or maximum flexibility via scripting (macros/Jython/Groovy).                      | The largest plugin ecosystem of any tool here - most niche bio-imaging algorithms exist as an ImageJ plugin.            | No structured no-code pipeline model; a reproducible pipeline means writing or recording macros yourself.                                              |
-| **QuPath**        | Whole-slide digital pathology - parent/child object hierarchies (tissue → cell → sub-cell), TMA cores, point-and-click classifier training.       | Best-in-class whole-slide viewer/pyramid handling, plus a native object hierarchy no other tool here has.               | Not built for time-lapse/live-cell tracking, correlation-based colocalization, or independent per-channel preprocessing.                               |
-
----
-
-### Detailed feature matrix
-
-Support markings are a best-effort summary based on each project's public documentation: ✅ supported · ⚠️ partial/limited · - not supported or not documented. "ImageJ" covers the Fiji distribution (ImageJ2 plus its commonly bundled plugins, e.g. TrackMate, Coloc2, Trainable Weka Segmentation). Verify against each tool's current docs before relying on this for a purchasing or migration decision.
-
-A checkmark alone can overstate real-world usability, for any tool here - see the "Its ceiling" column above for what each one still falls short on. One concrete example: CellProfiler's multi-threading (Section 7) technically exists, but scaling it to large images in practice typically means manually splitting images into tiles and launching multiple CellProfiler instances yourself. Its pipeline editor (Section 2, Live Preview) also has no continuous preview: you step through modules in Test Mode and wait for each run to complete, which gets slow on large images. Rows where a checkmark hides a gap like this carry a footnote.
-
-### 1. File Import, I/O & Microscopic Data Handling
+### File Import, I/O & Microscopic Data Handling
 
 | Feature Name                      | Detailed Functionality                                                                                                                                                                                             | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | ------------ | ------ | ------ |
-| **Bio-Formats Integration**       | Native reader for vendor raw formats (`.czi`, `.nd2`, `.lif`, `.oib`, `.ome.tif`, `.svs`) using Bio-Formats or OME libraries. Avoids time-consuming pre-conversion to 8-bit TIFF and proprietary software lock-in. | ✅         | ✅           | ✅     | ✅     |
+| **Bio-Formats Integration**       | Native reader for vendor raw formats (`.czi`, `.nd2`, `.lif`, `.oib`, `.ome.tif`, `.svs`) using Bio-Formats or OME libraries. Avoids time-consuming pre-conversion to 8-bit TIFF and proprietary software lock-in. | ✅†        | ✅           | ✅     | ✅     |
 | **Metadata Parsing**              | Extracts spatial calibration ($\mu m/\text{pixel}$, Z-spacing), time intervals, channel names, emission wavelength, and objective info. Ensures accurate physical measurements without manual entry.               | ✅         | ✅           | ✅     | ✅     |
 | **Automatic Channel Access**      | Individual channels of a multi-channel image are directly addressable right after import, without a separate per-channel mapping step.                                                                             | ✅         | ⚠️\*         | ✅     | ✅     |
 | **Multidimensional (ND) Support** | Seamless display and navigation of 5D hyperstacks ($X, Y, Z, \text{Channel}, \text{Time/T}$).                                                                                                                      | ✅         | ⚠️           | ✅     | ✅     |
@@ -40,9 +27,11 @@ A checkmark alone can overstate real-world usability, for any tool here - see th
 
 \*CellProfiler does not split channels automatically. You configure a **NamesAndTypes** module with filename regex/metadata rules (separate-file channels) or a channel-index mapping (single multi-channel file) to name and access each channel - get the mapping wrong and channels silently mismatch or drop.
 
+†EVAnalyzer's is using a Rust port of the original Java written BioFormats library. This port may be unstable for some not widly used image formats right now.
+
 ---
 
-### 2. GUI, Interactive UX & Daily Quality-of-Life
+### GUI, Interactive UX & Daily Quality-of-Life
 
 | Feature Name                      | Detailed Functionality                                                                                                                                                                    | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
@@ -59,7 +48,7 @@ A checkmark alone can overstate real-world usability, for any tool here - see th
 
 ---
 
-### 3. Image Preprocessing, Filtering & Restoration
+### Image Preprocessing, Filtering & Restoration
 
 | Feature Name                   | Detailed Functionality                                                                                        | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
@@ -72,22 +61,24 @@ A checkmark alone can overstate real-world usability, for any tool here - see th
 
 ---
 
-### 4. Segmentation, Object Detection & AI Tools
+### Segmentation, Object Detection & AI Tools
 
 | Feature Name                           | Detailed Functionality                                                                                                                          | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
 | **Global & Local Thresholding**        | Classic automated thresholding (Otsu, Li, Yen, Maximum Entropy, Niblack, Bernsen, Sauvola).                                                     | ✅         | ✅           | ✅     | ✅     |
 | **Morphological Operations**           | Erosion, Dilation, Opening, Closing, Hole Filling, Skeletonization, Distance Transform.                                                         | ✅         | ✅           | ✅     | ⚠️     |
 | **Watershed Clustered Object Split**   | Marker-controlled watershed segmentation to separate touching or overlapping cells.                                                             | ✅         | ✅           | ✅     | ✅     |
-| **Deep Learning AI Models**            | Native or plugin access to pretrained deep learning models (Cellpose, StarDist, Segment Anything / SAM).                                        | ⚠️         | ⚠️           | ✅     | ✅     |
+| **Deep Learning AI Models**            | Native or plugin access to pretrained deep learning models (Cellpose, StarDist, Segment Anything / SAM).                                        | ⚠️         | ⚠️           | ✅     | ✅\*   |
 | **bioimage.io Model Import**           | Import community-trained segmentation/classification models published in the bioimage.io model zoo format directly into a pipeline.             | ✅         | -            | ⚠️     | -      |
 | **Machine Learning Pixel Classifiers** | Interactive scribble-based pixel classification (e.g., Trainable Weka Segmentation, Ilastik integration).                                       | ✅         | ⚠️           | ✅     | ✅     |
 | **ROI Manager & Editing Tools**        | Store, group, rename, filter, dilate, measure, and export collections of vector ROIs.                                                           | ✅         | ⚠️           | ✅     | ✅     |
 | **Object Math (Boolean Set Ops)**      | AND / OR / XOR / Subtract operations between object classes to combine, exclude, or reshape detected objects (e.g., a rim around an organelle). | ✅         | ⚠️           | ⚠️     | ⚠️     |
 
+\*QuPath's Cellpose/StarDist support ships as separately installed extensions, not bundled by default.
+
 ---
 
-### 5. Quantification, Feature Extraction & Spatial Analysis
+### Quantification, Feature Extraction & Spatial Analysis
 
 | Feature Name                      | Detailed Functionality                                                                                                  | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
@@ -102,7 +93,7 @@ A checkmark alone can overstate real-world usability, for any tool here - see th
 
 ---
 
-### 6. Particle Tracking, Time-Lapse & Lineage Analysis
+### Particle Tracking, Time-Lapse & Lineage Analysis
 
 | Feature Name                      | Detailed Functionality                                                                                     | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
@@ -113,7 +104,7 @@ A checkmark alone can overstate real-world usability, for any tool here - see th
 
 ---
 
-### 7. Automation, Batch Processing & Reproducibility
+### Automation, Batch Processing & Reproducibility
 
 | Feature Name                          | Detailed Functionality                                                                                                                                                                                                                                                    | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
@@ -129,43 +120,61 @@ A checkmark alone can overstate real-world usability, for any tool here - see th
 
 ---
 
-### 8. Data Export, Visualization & Ecosystem
+### Data Export, Visualization & Ecosystem
 
 | Feature Name                       | Detailed Functionality                                                                                                                                                | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
-| **Open Format Data Export**        | Export measurements to standard tabular formats (`.csv`, `.tsv`, `.xlsx`, HDF5, Parquet).                                                                             | ✅         | ✅           | ✅     | ✅     |
+| **Open Format Data Export**        | Export measurements to standard tabular formats (`.csv`, `.tsv`, `.xlsx`, HDF5, Parquet).                                                                             | ✅\*       | ✅           | ✅     | ✅     |
 | **SQL-Queryable Results Database** | Query results directly via SQL against a bundled analysis database, instead of only flat export files.                                                                | ✅         | ⚠️           | -      | -      |
 | **Interactive Plotting & Gating**  | Scatter plots, histograms, and boxplots linked back to image views (click point -> highlight cell). Enables flow-cytometry-style gating directly from the data plots. | ✅         | ✅           | ⚠️     | -      |
 | **3D Volume Rendering**            | Hardware-accelerated (OpenGL/Vulkan) 3D volume rendering, ISO-surface rendering, and orthoviewers.                                                                    | -          | -            | ✅     | -      |
 | **Active Plugin Ecosystem**        | Centralized plugin repository/updater and active user community support.                                                                                              | -          | ✅           | ✅     | ✅     |
 
+\*HDF5 and Parquet export aren't supported rihght now by EVAnalyzer.
+
 ---
 
-### Performance benchmark
+## At a glance: which tool fits your project?
 
-A controlled benchmark ran the same reference pipeline (rolling-ball background subtraction → double blur → threshold → connected components → area filter → colocalization) against the same 81 Olympus `.vsi` microscopy images (2048×2048, 3 channels) across five tool configurations. QuPath is not included as a separate measurement - its viewer and processing core are built on ImageJ/Bio-Formats internals, so its performance is expected to track the plain Fiji macro figures below rather than differ meaningfully from them.
+| Tool              | Choose it when...                                                                                                                                 | Core strength                                                                                                                                                               | Its ceiling                                                                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **EVAnalyzer**    | Multiplex/multi-channel fluorescence panels where every marker needs its own processing, especially at whole-slide scale.                         | Very fast and also runs on lower performance computers smooth. Branching per-channel pipelines with built-in whole-slide tiling, live preview, and CLI batch/HPC execution. | No time-lapse tracking, no true 3D volume rendering; a smaller measurement library than CellProfiler/ImageJ for classic single-channel quantification. |
+| **CellProfiler**  | Deep, classic single- or few-channel quantification - precise shape, texture, colocalization, or particle-tracking metrics for a methods section. | The broadest, most mature measurement library here (Haralick texture, LAP tracking, Pearson's/Manders' colocalization).                                                     | One linear pipeline per run; per-channel branching and real multi-threaded throughput on large images both need manual workarounds.                    |
+| **ImageJ / Fiji** | You need a specific plugin, a quick one-off manual measurement, or maximum flexibility via scripting (macros/Jython/Groovy).                      | The largest plugin ecosystem of any tool here - most niche bio-imaging algorithms exist as an ImageJ plugin.                                                                | No structured no-code pipeline model; a reproducible pipeline means writing or recording macros yourself.                                              |
+| **QuPath**        | Whole-slide digital pathology - parent/child object hierarchies (tissue → cell → sub-cell), TMA cores, point-and-click classifier training.       | Best-in-class whole-slide viewer/pyramid handling, plus a native object hierarchy no other tool here has.                                                                   | Not built for time-lapse/live-cell tracking, correlation-based colocalization, or independent per-channel preprocessing.                               |
+
+**EVAnalyzer** relies on a _branching pipeline_ with a focus on speed and usability, **CellProfiler** on a _linear pipeline_ with a focus on comprehensive quantitative measurement, and **QuPath** on an **object-centric, map-based workflow** with a focus on pathology images. **ImageJ**, by contrast, is a feature-rich, plugin-based, all-around image editing tool rather than a fixed pipeline paradigm.
+
+---
+
+## Benchmark
+
+A controlled benchmark ran the same reference pipeline (rolling-ball background subtraction → double blur → threshold → connected components → area filter → colocalization) against the same 81 Olympus `.vsi` microscopy images (2048×2048, 2 channels) across five tool configurations. QuPath is not included as a separate measurement - its viewer and processing core are built on ImageJ/Bio-Formats internals, so its performance is expected to track the plain Fiji macro figures below rather than differ meaningfully from them.
 
 **Test system:** Intel Core Ultra 9 185H (16 cores / 22 threads), 62 GB RAM, Ubuntu 24.04.
 
 Full per-image counts and per-step timing live in the project's own benchmark reports; this is a summary.
 
-#### Wall-clock time
+### Wall-clock time
 
 | Tool                              | Wall-clock | Avg cores used | Peak RAM (aggregate) | RAM per core (avg) | Speed vs. fastest | RAM per core vs. lowest | Peak RAM vs. lowest |
 | --------------------------------- | ---------: | -------------: | -------------------: | -----------------: | ----------------: | ----------------------: | ------------------: |
-| evanalyzer core CLI               | **14.2 s** |          15.65 |              3.75 GB |        **0.24 GB** |         **1.00x** |               **1.00x** |               1.54x |
-| EVAnalyzer Fiji plugin            |     35.2 s |          11.54 |             19.90 GB |            1.72 GB |             2.48x |                   7.17x |               2.81x |
+| EVAnalyzer core CLI               | **14.2 s** |          15.65 |              3.75 GB |        **0.24 GB** |         **1.00x** |               **1.00x** |               3.26x |
+| EVAnalyzer Fiji plugin            |     35.2 s |          11.54 |             19.90 GB |            1.72 GB |             2.48x |                   7.17x |              17.30x |
 | Plain Fiji macro                  |    126.5 s |            1.0 |              1.15 GB |            1.15 GB |             8.91x |                   4.79x |           **1.00x** |
-| CellProfiler, parallel (14 procs) |    192.9 s |          16.86 |             45.70 GB |            2.72 GB |            13.58x |                  11.33x |              22.47x |
-| CellProfiler, single-process      |    528.2 s |            1.0 |              4.08 GB |            4.08 GB |            37.20x |                  17.00x |               8.19x |
+| CellProfiler, parallel (14 procs) |    192.9 s |          16.86 |             45.70 GB |            2.72 GB |            13.58x |                  11.33x |              39.74x |
+| CellProfiler, single-process      |    528.2 s |            1.0 |              4.08 GB |            4.08 GB |            37.20x |                  17.00x |               3.55x |
 
-#### Accuracy note
+**EVAnalyzer**'s core CLI more than doubles the execution speed of its predecessor Fiji plugin (2.5x) and uses roughly a fifth of the peak RAM (5.3x less).
+Compared to CellProfiler running in its parallel (multi-process) mode, it is 13.6x faster and uses 12.2x less peak RAM.
+
+### Accuracy note
 
 Object counts weren't identical across tools, which matters for reading the speed numbers as "same job, different cost" rather than "different jobs."
 The EVAnalyzer Fiji plugin's counts were used as the reference; CellProfiler needed a calibration pass (swapping an auto-threshold for a fixed one, tuning per-channel background-fit tightness) to get within roughly 3–6% of that reference, since it has no direct equivalent to the rolling-ball algorithm the other tools share.
 EVAnalyzer's own project settings matched the reference without changes.
 
-#### A note on setup
+### A note on setup
 
 Getting a valid CellProfiler number took real debugging effort on this system - a sandboxed-CLI deadlock that required a conda reinstall, and a CLI flag that silently doubled the effective image count by recursing into sidecar files - on top of the threshold/background calibration above.
 The other configurations needed no comparable troubleshooting.

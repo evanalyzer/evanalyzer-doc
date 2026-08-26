@@ -75,6 +75,38 @@ Bins object centroids into a grid across the image (or plate) and colors each ce
 
 Hover any bar, point, or cell for its exact value. Use the export icon in the chart toolbar to save the current plot as a PNG.
 
+## Matrix View
+
+Switch **View** to **Matrix** to lay results out as a physical plate/well grid instead of a table or chart - useful for spotting spatial patterns across a multi-well high-content screening plate at a glance.
+
+### Plate View
+
+Each cell is one well, colored by an aggregated metric (or by object count) across everything grouped into it. Wells are placed by decoding their group label into a row/column coordinate: a label shaped like `<row-letter(s)><column-number>` (e.g. `A14`, or `AA7` for plates with more than 26 rows) lands at that exact position; anything that doesn't decode that way - a plain folder name, for instance - fills the remaining empty cells in order instead.
+
+![Plate view](../../../assets/screenshots/screenshot-results-matrix-plate-view.png)
+
+Configure:
+
+- **Group by** - **Folder** or **Regex**. Regex mode uses the same expression as [Grouping and Aggregation](#grouping-and-aggregation) - click **Auto-detect** to derive one from your filenames if you haven't already.
+- **Value** - any plottable numeric column, or the synthetic **Number of Objects** option to color by count instead of an aggregate.
+- **Aggregation** - **Min**, **Max**, **Average**, **Median**, **Std. dev.**, or **Sum**.
+- **Color scheme** - **Viridis**, **Magma**, **Plasma**, or **Grayscale**, with an automatic or manually set value range.
+- **Plate size** - pick from 13 standard presets (6-, 8-, 12-, 24-, 48-, 96-, 384-, 1536-, and 3456-well layouts, among others) or set custom row/column counts.
+
+If your well labels don't fit the configured plate size, the view reports the smallest size that would cover them and offers to resize to it automatically.
+
+A well renders in one of three states: colored (it has surviving data), an empty-but-occupied placeholder (a real well whose objects were filtered out, or had none to begin with), or a blank gap (no well ever landed at that position). A well containing at least one [disabled](#results-table) image gets a small dot indicator, so it stays visually distinct from a well where every image is included.
+
+### Well View
+
+Drill into a single well to see its individual fields of view arranged as their own grid, in acquisition order - each field's position comes from the plate's configured acquisition-order preset, matched against a fourth regex capture group (the sub-position number) alongside the well-id groups used above. A field with no surviving objects still occupies its acquisition-order slot as an empty placeholder; a disabled field is shown crossed out, the same convention as the main results table.
+
+![Well view](../../../assets/screenshots/screenshot-matrix-well-view.png)
+
+### Exporting the Matrix
+
+Matrix is also available as its own **Export style** in the [export dialog](#exporting-results): queue it like any other combination to write out either the whole plate grid, or every well's own grid as a separate file (CSV) or sheet (XLSX), colored to match what you see live.
+
 ## Exporting Results
 
 Click the export icon in the toolbar to open the **Export results** dialog. Unlike the table itself, exporting is built around a **queue of one or more export combinations** ("batches") that all get written out together.
@@ -83,7 +115,7 @@ Click the export icon in the toolbar to open the **Export results** dialog. Unli
 
 ### 1. Configure a combination
 
-- **Export style** — **Table** or **Coloc details**.
+- **Export style** — **Table**, **Coloc details**, or **Matrix** (writes the [plate or well grid](#matrix-view) instead of a flat row-per-object table, using the Matrix view's own metric/aggregation/color-scheme settings).
 - **Group by** — **No Grouping**, **Image**, or **Regex** (table style only; the aggregation functions from the main table apply here too). Folder grouping isn't available in the batch queue — use **Export as Displayed** below for that. When **Regex** is selected, click **Auto-detect** to derive a grouping pattern from the loaded image filenames instead of writing one by hand — a hint below the field reports how many filenames matched (e.g. _"Matched 24/24 filenames"_), or that no consistent pattern was found. The detected pattern is also saved to the project's plate settings, so Matrix grouping picks it up too.
 - **Images to export** — pick at least one image. Images [disabled](#results-table) in the table's Image filter start out unchecked here, so they're left out unless you check them back in. Enable **Export each checked image as its own file** to write one file per checked image (the filename gets the image name) instead of a single combined file.
 - **Classes to include** — pick at least one class.

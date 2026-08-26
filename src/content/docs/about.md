@@ -54,6 +54,7 @@ EVAnalyzer draws inspiration from scientific publications and uses components fr
 - The [kornia-rs](https://github.com/kornia/kornia-rs) open-source project, a Rust computer-vision library that forms the basis of most of the implemented image-processing algorithms.
 - The developers of [Slint](https://slint.dev/), whose libraries are used to build EVAnalyzer's graphical user interface.
 - The [Bio-Formats](https://www.openmicroscopy.org/bio-formats/) project, used to decode and open the many supported image formats.
+- To [Johan Henriksson](https://github.com/henriksson-lab/bioformats-rs) for his port of bioformats to Rust.
 - The developers of [DuckDB](https://duckdb.org/), the fast, feature-rich database used in the background for data storage, whose excellent documentation was also an inspiration.
 
 Last but not least, the biggest thanks go to the team of [AG Meisner-Kober](https://www.plus.ac.at/biosciences/the-department/research-groups/meisner-kober/?lang=en) at the [Paris Lodron University of Salzburg](https://www.plus.ac.at/) and the [Ludwig Boltzmann Institute for Nanovesicular Precision Medicine](https://nvpm.lbg.ac.at/), who made this project possible, driven by their own research needs, and actively supported its realization and testing.
