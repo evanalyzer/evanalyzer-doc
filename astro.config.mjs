@@ -105,6 +105,10 @@ export default defineConfig({
               label: "Project File Schema",
               slug: "fundamentals/project-schema",
             },
+            {
+              label: "Keyboard Shortcuts",
+              slug: "fundamentals/keyboard-shortcuts",
+            },
           ],
         },
         {

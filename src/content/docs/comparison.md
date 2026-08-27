@@ -21,9 +21,9 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | **Automatic Channel Access**      | Individual channels of a multi-channel image are directly addressable right after import, without a separate per-channel mapping step.                                                                             | ✅         | ⚠️\*         | ✅     | ✅     |
 | **Multidimensional (ND) Support** | Seamless display and navigation of 5D hyperstacks ($X, Y, Z, \text{Channel}, \text{Time/T}$).                                                                                                                      | ✅         | ⚠️           | ✅     | ✅     |
 | **Microplate Grid Layouts**       | Automatic layout parsing for 96/384-well microplates with row/column coordinate mapping and tile stitching. Useful for high-throughput screening (HTS) workflows that group images by well/condition.              | ✅         | ✅           | ⚠️     | -      |
-| **Lazy Loading & Virtual Stacks** | Streams image slices into RAM on demand instead of loading multi-gigabyte files entirely into memory.                                                                                                              | ✅         | ⚠️           | ✅     | ✅     |
-| **Pyramidal / BigDataViewer**     | Supports multi-resolution image pyramids for rapid zooming and pan on terabyte-scale datasets.                                                                                                                     | ✅         | -            | ✅     | ✅     |
-| **Whole-Slide Navigator Viewer**  | Dedicated interactive viewer with a pyramid-based navigator minimap for panning and zooming across gigapixel whole-slide scans.                                                                                    | ✅         | -            | ✅     | ✅     |
+| **Lazy Loading & Virtual Stacks** | Streams image slices into RAM on demand instead of loading multi-gigabyte files entirely into memory.                                                                                                              | ✅         | -            | ⚠️     | ✅     |
+| **Pyramidal / BigDataViewer**     | Supports multi-resolution image pyramids for rapid zooming and pan on terabyte-scale datasets.                                                                                                                     | ✅         | -            | -      | ✅     |
+| **Whole-Slide Navigator Viewer**  | Dedicated interactive viewer with a pyramid-based navigator minimap for panning and zooming across gigapixel whole-slide scans.                                                                                    | ✅         | -            | -      | ✅     |
 
 \*CellProfiler does not split channels automatically. You configure a **NamesAndTypes** module with filename regex/metadata rules (separate-file channels) or a channel-index mapping (single multi-channel file) to name and access each channel - get the mapping wrong and channels silently mismatch or drop.
 
@@ -36,12 +36,12 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | Feature Name                      | Detailed Functionality                                                                                                                                                                    | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
 | **Flexible Contrast & LUTs**      | Per-channel histogram brightness/contrast tuning, non-destructive LUT application (HiLo, Fire, RGB, custom color maps). HiLo-style LUTs flag saturated and zero-value pixels at a glance. | ✅         | ⚠️           | ✅     | ✅     |
-| **Keyboard Shortcuts & Commands** | Comprehensive keyboard hotkeys and searchable command palette (e.g., ImageJ Quick Search "Ctrl+L").                                                                                       | -          | ⚠️           | ✅     | ⚠️     |
+| **Keyboard Shortcuts & Commands** | Comprehensive keyboard hotkeys and searchable command palette.                                                                                                                            | ✅         | ⚠️           | ✅     | ⚠️     |
 | **Multi-Window Synchronization**  | Synchronized panning, zooming, and slice/time stepping across multiple image windows.                                                                                                     | -          | -            | ✅     | ⚠️     |
 | **Undo / Redo Buffer**            | Multi-step history buffer for destructive pixel operations and ROI edits.                                                                                                                 | ✅         | ⚠️           | ⚠️     | ✅     |
 | **Scale Bar & Dynamic Overlay**   | Burned-in or dynamic vector scale bars, timestamps, Z-depth indicators, and channel legends.                                                                                              | ✅         | ⚠️           | ✅     | ✅     |
 | **Dark Mode / Theme UI**          | High-contrast dark theme option for interface components.                                                                                                                                 | ✅         | -            | ⚠️     | ✅     |
-| **Image Viewer**                  | Built-in multi-channel viewer with per-channel visibility, colour, contrast, and Z/T navigation.                                                                                          | ✅         | ⚠️           | ✅     | ✅     |
+| **Image Viewer**                  | Built-in multi-channel viewer with per-channel visibility, colour, contrast, and Z/T navigation.                                                                                          | ✅         | -            | ✅     | ✅     |
 | **Live Preview**                  | Immediate viewport update and live object count while editing a pipeline step, without re-running the full pipeline.                                                                      | ✅         | -\*          | ⚠️     | ✅     |
 
 \*Test Mode lets you step through modules and inspect output windows, but there is no continuous, reactive preview while adjusting a setting - you re-run the step and wait, which is slow on large images.
@@ -68,13 +68,14 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | **Global & Local Thresholding**        | Classic automated thresholding (Otsu, Li, Yen, Maximum Entropy, Niblack, Bernsen, Sauvola).                                                     | ✅         | ✅           | ✅     | ✅     |
 | **Morphological Operations**           | Erosion, Dilation, Opening, Closing, Hole Filling, Skeletonization, Distance Transform.                                                         | ✅         | ✅           | ✅     | ⚠️     |
 | **Watershed Clustered Object Split**   | Marker-controlled watershed segmentation to separate touching or overlapping cells.                                                             | ✅         | ✅           | ✅     | ✅     |
-| **Deep Learning AI Models**            | Native or plugin access to pretrained deep learning models (Cellpose, StarDist, Segment Anything / SAM).                                        | ⚠️         | ⚠️           | ✅     | ✅\*   |
-| **bioimage.io Model Import**           | Import community-trained segmentation/classification models published in the bioimage.io model zoo format directly into a pipeline.             | ✅         | -            | ⚠️     | -      |
-| **Machine Learning Pixel Classifiers** | Interactive scribble-based pixel classification (e.g., Trainable Weka Segmentation, Ilastik integration).                                       | ✅         | ⚠️           | ✅     | ✅     |
+| **Deep Learning AI Models**            | Native or plugin access to pretrained deep learning models (Cellpose, StarDist, Segment Anything / SAM).                                        | ✅†        | ⚠️           | ✅     | ✅\*   |
+| **Machine Learning Pixel Classifiers** | Interactive scribble-based pixel classification (e.g., Trainable Weka Segmentation, Ilastik integration).                                       | ✅         | -            | -      | ✅     |
 | **ROI Manager & Editing Tools**        | Store, group, rename, filter, dilate, measure, and export collections of vector ROIs.                                                           | ✅         | ⚠️           | ✅     | ✅     |
 | **Object Math (Boolean Set Ops)**      | AND / OR / XOR / Subtract operations between object classes to combine, exclude, or reshape detected objects (e.g., a rim around an organelle). | ✅         | ⚠️           | ⚠️     | ⚠️     |
 
 \*QuPath's Cellpose/StarDist support ships as separately installed extensions, not bundled by default.
+
+† EVAnalyzer actually only supports models stored either in ONNX or torchscript. Tensorflow models are not supported.
 
 ---
 
@@ -83,13 +84,17 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | Feature Name                      | Detailed Functionality                                                                                                  | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
 | **Morphometric Measurements**     | Area, perimeter, bounding box, major/minor axis, circularity, aspect ratio, roundness, solidity, 3D volume.             | ✅\*       | ✅           | ✅     | ✅     |
-| **Densitometry & Intensity**      | Mean, min/max, median, integrated density, standard deviation of pixel values across channels.                          | ⚠️         | ✅           | ✅     | ✅     |
-| **Colocalization Analysis**       | Pearson's correlation coefficient, Manders' overlap coefficients ($M_1/M_2$), Costes' thresholding, 2D cytofluorograms. | ⚠️         | ✅           | ✅     | -      |
-| **Spatial Distance & Clustering** | Nearest neighbor distance, Delaunay triangulation, Voronoi tessellation, object-to-boundary distance.                   | ⚠️         | ⚠️           | ⚠️     | ✅     |
+| **Densitometry & Intensity**      | Mean, min/max, median, integrated density, standard deviation of pixel values across channels.                          | ✅         | ✅           | ✅     | ✅     |
+| **Colocalization Analysis**       | Pearson's correlation coefficient, Manders' overlap coefficients ($M_1/M_2$), Costes' thresholding, 2D cytofluorograms. | ✅†        | ✅           | ✅     | -      |
+| **Spatial Distance & Clustering** | Nearest neighbor distance, Delaunay triangulation, Voronoi tessellation, object-to-boundary distance.                   | ⚠️\*\*     | ⚠️           | ⚠️     | ✅     |
 | **Texture Analysis (Haralick)**   | Grey-Level Co-occurrence Matrix (GLCM): contrast, correlation, energy, entropy, and local heterogeneity.                | -          | ✅           | ✅     | ✅     |
 | **Filament & Skeleton Analysis**  | Branch point detection, filament length, segment classification, network connectivity metrics.                          | -          | ✅           | ✅     | -      |
 
 \*No 3D volume support
+
+† Object based colocalization calculation, actually no Pearson's correlation supported
+
+\*\* Support for voronoi grid
 
 ---
 
@@ -108,13 +113,14 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 | Feature Name                          | Detailed Functionality                                                                                                                                                                                                                                                    | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
-| **No-Code Pipeline Builder**          | Compose a full analysis pipeline by adding and configuring pre-built commands, without writing scripts or macros.                                                                                                                                                         | ✅         | ✅           | ⚠️     | ⚠️     |
-| **Multi-Channel Branching Pipelines** | Routes different channels or object classes down independent, custom-filtered processing branches within one project, instead of one linear sequence applied to everything. Lets each fluorescence marker get its own background correction, thresholding, or classifier. | ✅         | -            | ⚠️     | -      |
+| **No-Code Pipeline Builder**          | Compose a full analysis pipeline by adding and configuring pre-built commands, without writing scripts or macros.                                                                                                                                                         | ✅         | ✅           | -      | ⚠️     |
+| **Multi-Channel Branching Pipelines** | Routes different channels or object classes down independent, custom-filtered processing branches within one project, instead of one linear sequence applied to everything. Lets each fluorescence marker get its own background correction, thresholding, or classifier. | ✅         | -            | -      | -      |
 | **Macro / Action Recorder**           | GUI click recorder that generates executable script code based on user interactive steps.                                                                                                                                                                                 | -          | -            | ✅     | ✅     |
 | **Batch Folder Processing**           | Applies saved macro/pipeline across entire directories without user intervention.                                                                                                                                                                                         | ✅         | ✅           | ✅     | ✅     |
 | **Multi-Threading Support**           | Parallelizes image or tile processing across CPU cores during analysis runs.                                                                                                                                                                                              | ✅         | ⚠️\*         | ⚠️     | ✅     |
 | **Headless / CLI Execution**          | Run pipeline from command line prompt without rendering GUI windows (Docker, HPC cluster support).                                                                                                                                                                        | ✅         | ✅           | ✅     | ✅     |
 | **Audit Log & Pipeline Export**       | Saves pipeline parameters as JSON/XML and logs exact algorithm versions and numerical seeds.                                                                                                                                                                              | ✅         | ✅           | ⚠️     | ✅     |
+| **Pipeline Cite Export**              | One-click export (File → Export → Cite Project) of a step-by-step flow diagram for every enabled pipeline, each step tagged with its algorithm's citation, followed by a consolidated, publication-ready bibliography for every cited algorithm used.                     | ✅         | -            | -      | -      |
 
 \*CellProfiler parallelizes across images within a single run, but real throughput on large images in practice means manually tiling images and orchestrating multiple CellProfiler instances yourself.
 

@@ -3,9 +3,10 @@ title: AI Cellpose Segmentation
 description: Instance segmentation using a pretrained Cellpose model.
 ---
 
-The **AI Cellpose Segmentation** command runs instance segmentation using a pretrained [Cellpose](https://github.com/MouseLand/cellpose) model exported as TorchScript. Like [Stardist](/commands/ai-segmentation/stardist/), it recovers individual object instances directly - no [Connected Components](/commands/segmentation/connected-components/) or [Watershed](/commands/segmentation/watershed/) step is needed afterward.
+The **AI Cellpose Segmentation** command runs instance segmentation using a pretrained [Cellpose](https://github.com/MouseLand/cellpose) model exported as TorchScript.
+Like [Stardist](/commands/ai-segmentation/stardist/), it recovers individual object instances directly - no [Connected Components](/commands/segmentation/connected-components/) or [Watershed](/commands/segmentation/watershed/) step is needed afterward.
 
-Rather than predicting a shape directly, the model predicts a vector field: at every pixel, "which direction is the centre of my cell?" Simulating each pixel's short walk along that field causes every pixel belonging to the same cell to converge on the same point - so instances fall out of *where pixels end up*, which handles irregular and overlapping shapes that a fixed polygon representation (like Stardist's) can't.
+Rather than predicting a shape directly, the model predicts a vector field: at every pixel, "which direction is the centre of my cell?" Simulating each pixel's short walk along that field causes every pixel belonging to the same cell to converge on the same point - so instances fall out of _where pixels end up_, which handles irregular and overlapping shapes that a fixed polygon representation (like Stardist's) can't.
 
 ![Every foreground pixel is pushed along the predicted flow field toward its cell's centre; shared destinations become one instance](../../../../assets/figures/cmd-cellpose.svg)
 
@@ -50,4 +51,4 @@ Cellpose's flow-based approach handles irregular, elongated, and overlapping-but
 
 ## Background
 
-Carsen Stringer, Tim Wang, Michalis Michaelos, and Marius Pachitariu, "Cellpose: A Generalist Algorithm for Cellular Segmentation," *Nature Methods*, vol. 18, pp. 100-106, 2021.
+Carsen Stringer, Tim Wang, Michalis Michaelos, and Marius Pachitariu, "Cellpose: A Generalist Algorithm for Cellular Segmentation," _Nature Methods_, vol. 18, pp. 100-106, 2021.
