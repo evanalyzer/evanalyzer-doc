@@ -90,7 +90,7 @@ Results are saved to:
 
 Switch to the **Results** tab. EVAnalyzer scans the `evanalyzer/` subfolder inside your image directory and lists every `results.evadb` file it finds. Click any entry to open it.
 
-![Results view](../../../assets/screenshots/screenshot-results.png)
+![Results view](../../../assets/screenshots/screenshot-results-list.png)
 
 See the [Results](/guide/results/) guide for full details.
 

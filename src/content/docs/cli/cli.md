@@ -142,11 +142,14 @@ Prints a database summary (image/class counts, T/Z-stack ranges) followed by a p
 | `--json`                      | Emit machine-readable JSON instead of human-readable text |
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
-| `--colocalized <true\|false>` | Restrict to colocalizing or non-colocalizing objects only |
+
+:::note
+`--colocalized <true|false>` is accepted by `view` and `export` but always errors today - row-level colocalization filtering has no equivalent in the current results backend yet.
+:::
 
 ## columns
 
-Lists every column id available in a results database - including per-channel intensity columns and per-partner-class colocalization columns - along with whether each is numeric (and therefore usable for `--group-by`, chart axes, or `--metric`/`--agg`).
+Lists every column id available in a results database - including per-channel intensity columns and per-partner-class colocalization counts - grouped the same way as the GUI's Columns picker (General, Geometry, Shape, Coloc, Intensity).
 
 ```sh
 ./evanalyzer cli columns --db results.evadb
@@ -158,33 +161,33 @@ Lists every column id available in a results database - including per-channel in
 | `--json`      | Emit machine-readable JSON instead of the formatted table   |
 
 ```
-ID                                   LABEL                            NUMERIC
-object_id                            Object ID
-image                                Image
-class                                Class
-area_px                              Area (px²)                      yes
-area_nm2                             Area (nm²)                      yes
-circularity                          Circularity                     yes
-colocalized                          Colocalized
-ch0_min_bit                          Ch0 Min (bit)                   yes
-ch0_max_bit                          Ch0 Max (bit)                   yes
-ch0_avg_bit                          Ch0 Avg (bit)                   yes
-coloc_partner__cy7@spot__count       Coloc w/ cy7@spot (#)           yes
-coloc_partner__cy7@spot__ids         Coloc w/ cy7@spot (IDs)
+ID                             LABEL                          GROUP
+object_id                      Object ID                      General
+image_name                     Image                          General
+object_class_name              Class                          General
+count                          Count                           General
+area_px                        Area [px]                      Geometry
+area_nm2                       Area [nm²]                     Geometry
+circularity                    Circularity                    Shape
+solidity                       Solidity                       Shape
+eccentricity                   Eccentricity                   Shape
+n_colocalized_class_ch2@spot   Coloc with ch2@spot             Coloc
+mean_scaled_ch0                Avg Intensity (Ch 0)           intensity
+sum_scaled_ch0                 Sum Intensity (Ch 0)           intensity
 ```
 
-Run this first when scripting `export` - column ids are the values to pass to `--column`, `--x`/`--y`, and `--metric`.
+Run this first when scripting `export` - column ids are the values to pass to `--group-by`-adjacent tooling and to `duckdb` queries against the same file.
 
 ## export
 
-Exports a results database to a table file or a chart image, with the same filtering, grouping/aggregation, and charting logic as the GUI's [Results](/guide/results/) view.
+Exports a results database to CSV, XLSX, or Parquet, with the same filtering and (for `image` grouping) aggregation logic as the GUI's [Results List view](/guide/results/#list-view). Chart image export (histogram/scatter/boxplot PNGs) isn't wired up in the CLI yet - use the GUI's [Charts](/guide/results/#charts) tab for those.
 
 ### export csv / export xlsx
 
 ```sh
 ./evanalyzer cli export csv --db results.evadb --out results.csv
 ./evanalyzer cli export xlsx --db results.evadb --out results.xlsx \
-  --group-by regex --group-regex '^([A-Z]\d+)_' --agg avg,median --group-by-class
+  --group-by image --agg avg,median
 ```
 
 | Argument       | Description                               |
@@ -194,40 +197,18 @@ Exports a results database to a table file or a chart image, with the same filte
 | _filter args_  | See [Filter Arguments](#filter-arguments) |
 | _group args_   | See [Group Arguments](#group-arguments)   |
 
-### export chart histogram / scatter / heatmap
+### export parquet
 
-Renders a chart straight to a PNG file - the CLI equivalent of the GUI's [Charts panel](/guide/results/#charts).
+Writes the database's raw `objects` table straight to a Parquet file via DuckDB's own `COPY ... TO ... (FORMAT parquet)` - every column, completely unfiltered. There's no column selection, image/class filtering, or grouping to apply (that's the GUI's [Parquet export](/guide/results/#exporting-results) behavior too), so it takes a plainer set of arguments than `csv`/`xlsx`:
 
 ```sh
-# Histogram of object area, log-scaled
-./evanalyzer cli export chart histogram --db results.evadb --out area.png \
-  --column area_px --buckets 30 --log-scale
-
-# Circularity vs. area, colored by class
-./evanalyzer cli export chart scatter --db results.evadb --out scatter.png \
-  --x area_px --y circularity --color-by class
-
-# Spatial density heatmap (objects per 256px cell)
-./evanalyzer cli export chart heatmap --db results.evadb --out heatmap.png \
-  --metric count --cell-size 256
+./evanalyzer cli export parquet --db results.evadb --out objects.parquet
 ```
 
-| Argument                                                 | Histogram  | Scatter    | Heatmap    |
-| -------------------------------------------------------- | ---------- | ---------- | ---------- |
-| `--db <path>`                                            | ✓ required | ✓ required | ✓ required |
-| `--out <path>`                                           | ✓ required | ✓ required | ✓ required |
-| `--column <id>`                                          | ✓ required | -          | -          |
-| `--x <id>` / `--y <id>`                                  | -          | ✓ required | -          |
-| `--metric <count\|column-id>`                            | -          | -          | ✓ required |
-| `--buckets <n>` (default `20`)                           | ✓          | -          | -          |
-| `--log-scale`                                            | ✓          | -          | -          |
-| `--color-by <none\|class\|colocalized>` (default `none`) | -          | ✓          | -          |
-| `--max-points <n>` (default `5000`, `0` = no cap)        | -          | ✓          | -          |
-| `--cell-size <px>` (default `256`)                       | -          | -          | ✓          |
-| `--width <px>` / `--height <px>` (default `1000`×`700`)  | ✓          | ✓          | ✓          |
-| _filter args_                                            | ✓          | ✓          | ✓          |
-
-Column ids (`--column`, `--x`/`--y`, `--metric`) come from [`columns`](#columns).
+| Argument       | Description                            |
+| -------------- | --------------------------------------- |
+| `--db <path>`  | Results database to export (required)  |
+| `--out <path>` | Output file path (required)            |
 
 ### Filter Arguments
 
@@ -237,7 +218,6 @@ Shared by `view` and every `export` subcommand:
 | ----------------------------- | --------------------------------------------------------- |
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
-| `--colocalized <true\|false>` | Restrict to colocalizing or non-colocalizing objects only |
 
 ### Group Arguments
 
@@ -245,11 +225,10 @@ Shared by `export csv` and `export xlsx` - mirrors the GUI's [Grouping and Aggre
 
 | Argument                            | Description                                                                                                                    |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `--group-by <image\|folder\|regex>` | Aggregate rows instead of exporting one row per object                                                                         |
-| `--group-regex <pattern>`           | Regex used when `--group-by regex`; the first capture group (or the whole match if none) becomes the group key                 |
-| `--agg <list>`                      | Comma-separated aggregate function(s) applied to every numeric column: `min`, `max`, `avg` (default), `median`, `stdev`, `sum` |
-| `--split-colocalized`               | Additionally split each group into a colocalizing / non-colocalizing row                                                       |
-| `--group-by-class`                  | Additionally split each group by object class                                                                                  |
+| `--group-by <image\|folder\|regex>` | Aggregate rows instead of exporting one row per object. Only `image` has a matching query today - `folder`/`regex` are recognized but currently rejected |
+| `--agg <list>`                      | Comma-separated aggregate function(s) applied to every numeric column when grouping: `min`, `max`, `avg` (default), `median`, `stdev`, `sum` |
+| `--split-colocalized`               | Accepted but currently rejected - no row-level "is this object colocalized at all" split exists in the current backend        |
+| `--group-by-class`                  | No-op when grouping by image - `image` grouping always splits by class already                                                |
 
 ## Project File
 

@@ -13,140 +13,88 @@ Open an existing results file from the toolbar: click the **arrow** beside the *
 
 ![Results list](../../../assets/screenshots/screenshot-results-list.png)
 
-## Results Table
+## The Results Window
 
-By default, results open in the **Table** view: one row per detected object, with columns for **Object ID**, **Image**, **Class**, **Area (px²)**, **Area (nm²)**, **Circularity**, **Colocalized**, and one **Min / Max / Avg / Sum** column per measured channel (Ch0, Ch1, …).
+The results window has a left icon rail for switching between the three ways of looking at your data - **List**, **Plate**, and **Charts** - plus an **Export** shortcut pinned to the bottom. A breadcrumb bar sits above the active view; when your dataset has Z-stacks or time-lapse frames, a **Z/T** stepper is docked on the right of that same bar and applies to whichever view is currently open.
 
-Click a column header to sort by it; click again to reverse the direction. The **Image**, **Class**, and **Colocalized** headers each have a filter icon that opens a searchable checklist of values, so you can narrow the table to specific images or classes without leaving the results window.
+## List View
 
-In the **Image** filter's checklist, each row also has a disable icon next to it. Toggling it marks that image as disabled: its label turns red wherever the image appears (including the Matrix view, where the image is shown crossed out), and it's excluded from exports by default - though it can still be checked back in for an individual export in the [export dialog](#exporting-results). This state is saved into the `.evadb` results file, so it persists the next time the file is opened.
+The **List** view (the default) shows one row per detected object: **Object ID**, **Image**, **Class**, geometry columns like **Area** and **Circularity**, and one **Min/Max/Avg/Sum** column per measured channel.
 
-Results load in pages as you scroll, so even large result sets with hundreds of thousands of objects stay responsive.
+The filter bar above the table has three dropdowns - **Images**, **Class**, and **Columns** - each a searchable, multi-select checklist with a **X of Y** summary (e.g. _"19 of 22 Classes"_) and select-all/none shortcuts. **Columns** groups per-channel intensity metrics so you can toggle a whole channel at once instead of column by column. The object count for the current filters is shown at the top-right.
 
-![Results table](../../../assets/screenshots/screenshot-results-table-view.png)
+![Results table](../../../assets/screenshots/screenshot-results-light.png)
 
-### Columns
+Results are paginated - use **‹ Prev** / **Next ›** at the bottom of the table rather than scrolling through everything at once. Click any row to jump straight to that object: EVAnalyzer opens the image it belongs to and highlights it, so you don't have to hunt for it manually.
 
-Click **Columns** in the toolbar to show or hide individual columns, including per-channel intensity metrics, without changing what was measured.
+### Grouping and Aggregating Rows
 
-![Column picker](../../../assets/screenshots/screenshot-results-table-view-group-by-image-column-filter.png)
-
-### Grouping and Aggregation
-
-Click **Group by** to collapse the per-object table into one row per **image name**, **folder name**, or a **regex** extracted from the image name. Choose one or more aggregation functions — **Min**, **Max**, **Average**, **Median**, **Std. dev.**, **Sum** — then click **Apply**.
-
-![Group by](../../../assets/screenshots/screenshot-results-group-by.png)
-
-Each numeric column is duplicated per selected aggregation (for example **Area (px²) [avg]** and **Area (px²) [sum]**), so you can compare, say, average object size against total covered area per image.
+Use the **View** dropdown to switch the table from **Objects** (flat, one row per object) to **Images** (one row per image/class combination). Switching to **Images** reveals an **Aggregate** dropdown - a multi-select of **Average**, **Min**, **Max**, **Std. dev.**, **Sum**, **Median**, and **Skewness**. Every numeric column is duplicated per selected aggregation (for example **Area (px²) \[avg\]** and **Area (px²) \[sum\]**), so you can compare, say, average object size against total covered area per image.
 
 ![Grouped results table](../../../assets/screenshots/screenshot-results-table-view-group-by-image.png)
 
-With grouped results, the **Columns** picker nests per-channel metrics under an **Intensity** group so you can toggle a whole channel's aggregates at once instead of one column at a time.
-
-![Column picker for grouped results](../../../assets/screenshots/screenshot-results-table-view-group-by-image-column-filter.png)
-
 ### Colocalization Details
 
-If a pipeline includes a [Colocalization](/commands/object/colocalization/) step, switch to the **Coloc details** view to flatten each object's matched partners into their own columns — one set of measurement columns per partner class, with a dash where no partner was found. This is the same underlying data as the **Colocalized** column in the main table, broken out partner by partner.
+While viewing **Objects**, the **Coloc Details** dropdown switches between **Flat** (the default) and **Details**. **Details** flattens each object's matched partners into their own columns - one set of measurement columns per partner class, with a dash where no partner was found.
 
 ![Colocalization details view](../../../assets/screenshots/screenshot-results-coloc-details-view.png)
 
 ## Charts
 
-Switch **View** to **Chart** to visualize the currently filtered/grouped rows instead of reading them as a table. Three chart types are available; all three respect the active column filters and grouping, shown as removable chips (e.g. **filtered**) beneath the toolbar, with the plotted row count in the bottom-left corner.
+The **Charts** section (marked **Alpha** in the rail - expect rough edges) plots the currently filtered rows instead of listing them. Three chart types are available as tabs along the top: **Histogram**, **Scatter**, and **Boxplot**.
 
-### Histogram
-
-Pick a numeric **Column**, the number of **Buckets**, and optionally enable **Log scale** for right-skewed distributions (like object area). **Color by** **Class** or **Colocalized** to overlay multiple distributions using shared bucket edges, making them directly comparable.
+**Histogram** bins a chosen numeric **Property**, optionally restricted to one **Class**, and shows the object count plus the distribution across bins with the value range labelled below.
 
 ![Histogram view](../../../assets/screenshots/screenshot-results-histogram.png)
 
-### Scatter
-
-Choose numeric **X** and **Y** columns and optionally **Color by** class or colocalization status. Very large datasets are downsampled deterministically (not randomly) for rendering — a note like _"Showing 5000 of 273725 points (sampled)"_ appears above the plot when this happens, and the legend shows the object count behind each color.
+**Scatter** plots two numeric columns (**X** and **Y**), optionally restricted to one **Class**. Large datasets are downsampled for rendering - a note like _"218 of 622833 objects plotted"_ appears above the plot when this happens.
 
 ![Scatter view](../../../assets/screenshots/screenshot-results-scatter.png)
 
-### Spatial Heatmap
+**Boxplot** draws one box (quartile box, median line, whiskers, and outlier dots) per class for a chosen **Property**, with the object count for each class labelled underneath - useful for comparing a metric's spread across classes at a glance.
 
-Bins object centroids into a grid across the image (or plate) and colors each cell by object **Count** or the **Average** of a chosen metric. Configure the **Cell size (px)** and a **Colors** scheme (Viridis, Magma, Plasma, or Grayscale). This is particularly useful for spotting spatial trends across a whole-slide image or across wells in a plate.
+## Plate View
 
-![Spatial heatmap view](../../../assets/screenshots/screenshot-results-heatmap.png)
+Switch to **Plate** in the rail to lay results out as a physical plate/well grid instead of a table or chart - useful for spotting spatial patterns across a multi-well high-content screening plate. It drills down through three levels, tracked by the breadcrumb at the top: **Plate → Well → Image**.
 
-Hover any bar, point, or cell for its exact value. Use the export icon in the chart toolbar to save the current plot as a PNG.
+A shared toolbar runs across all three levels: **Class**, **Column** (the metric to color by), **Aggregate**, **Color Schema** (Excel, Viridis, Plasma, Inferno, Cividis, Coolwarm, Red-Blue, YlGnBu, Haline, Algae, or Thermal), and a **Group By (regex)** field for decoding well/field identifiers out of filenames. A legend on the right shows the active color range - click it to switch between **Auto** and a **Manual** min/max.
 
-## Matrix View
+### Plate
 
-Switch **View** to **Matrix** to lay results out as a physical plate/well grid instead of a table or chart - useful for spotting spatial patterns across a multi-well high-content screening plate at a glance.
-
-### Plate View
-
-Each cell is one well, colored by an aggregated metric (or by object count) across everything grouped into it. Wells are placed by decoding their group label into a row/column coordinate: a label shaped like `<row-letter(s)><column-number>` (e.g. `A14`, or `AA7` for plates with more than 26 rows) lands at that exact position; anything that doesn't decode that way - a plain folder name, for instance - fills the remaining empty cells in order instead.
+Each cell is one well, colored by the aggregated metric across everything grouped into it. Wells are placed by decoding their group label into a row/column coordinate (e.g. `A14`). Pick a **Plate Size** - **Auto** (picks the smallest standard layout that fits your data) or a fixed 6-, 12-, 24-, 48-, 96-, 384-, or 1536-well layout. Click a well to select it and see its value in the side panel, then **Open well ›** to drill in.
 
 ![Plate view](../../../assets/screenshots/screenshot-results-matrix-plate-view.png)
 
-Configure:
+### Well
 
-- **Group by** - **Folder** or **Regex**. Regex mode uses the same expression as [Grouping and Aggregation](#grouping-and-aggregation) - click **Auto-detect** to derive one from your filenames if you haven't already.
-- **Value** - any plottable numeric column, or the synthetic **Number of Objects** option to color by count instead of an aggregate.
-- **Aggregation** - **Min**, **Max**, **Average**, **Median**, **Std. dev.**, or **Sum**.
-- **Color scheme** - **Viridis**, **Magma**, **Plasma**, or **Grayscale**, with an automatic or manually set value range.
-- **Plate size** - pick from 13 standard presets (6-, 8-, 12-, 24-, 48-, 96-, 384-, 1536-, and 3456-well layouts, among others) or set custom row/column counts.
-
-If your well labels don't fit the configured plate size, the view reports the smallest size that would cover them and offers to resize to it automatically.
-
-A well renders in one of three states: colored (it has surviving data), an empty-but-occupied placeholder (a real well whose objects were filtered out, or had none to begin with), or a blank gap (no well ever landed at that position). A well containing at least one [disabled](#results-table) image gets a small dot indicator, so it stays visually distinct from a well where every image is included.
-
-### Well View
-
-Drill into a single well to see its individual fields of view arranged as their own grid, in acquisition order - each field's position comes from the plate's configured acquisition-order preset, matched against a fourth regex capture group (the sub-position number) alongside the well-id groups used above. A field with no surviving objects still occupies its acquisition-order slot as an empty placeholder; a disabled field is shown crossed out, the same convention as the main results table.
+Drill into a well to see its individual fields laid out as their own grid (configurable **Rows**/**Cols** in the side panel). Click a field to select it, then **Open Image ›** to drill into its spatial heatmap.
 
 ![Well view](../../../assets/screenshots/screenshot-matrix-well-view.png)
 
-### Exporting the Matrix
+### Image Heatmap
 
-Matrix is also available as its own **Export style** in the [export dialog](#exporting-results): queue it like any other combination to write out either the whole plate grid, or every well's own grid as a separate file (CSV) or sheet (XLSX), colored to match what you see live.
+The innermost level bins a single image's objects into square tiles - configure the **Square Size** (36, 48, 64, 128, 256, or 1024 px) - colored by the same metric/aggregate as the levels above. Click a tile to jump to that region of the image in the editor, highlighted with a rectangle.
+
+![Image heatmap view](../../../assets/screenshots/screenshot-results-heatmap.png)
 
 ## Exporting Results
 
-Click the export icon in the toolbar to open the **Export results** dialog. Unlike the table itself, exporting is built around a **queue of one or more export combinations** ("batches") that all get written out together.
+Click **Export** at the bottom of the rail to open the **Export Results** dialog. Every checked option is written out together in one run - there's no separate queue to build up.
 
 ![Export dialog](../../../assets/screenshots/screenshot-results-export-dialog.png)
 
-### 1. Configure a combination
+- **Output Folder** - pick a destination with **Browse…**.
+- **Format** - **XLSX** (default), **CSV**, or **Parquet**.
+- **Images/Objects (ungrouped)** - **Object list** (with optional **With coloc details** and **Each image in a separate file**), **Image list** (the same aggregated-by-image data as [grouping the List view](#grouping-and-aggregating-rows)), and **Image heatmap** (the per-image spatial heatmap grid, with its own **Squares sizes** setting).
+- **Plates/Wells (group by regex)** - **Plate and Wells as list** and **Plate and Wells as heatmap**, both using the **Grouping regex** field below them (leave it blank to use the default well/field pattern).
+- **Z/T Range** - restrict the export to a Z and/or T plane range.
+- **Filters** - **Images**, **Classes**, and **Columns**, the same multi-select dropdowns as the List view.
+- **Plate/Wells Options** - **Aggregations** (multi-select), **Color Schema**, **Plate Size**, and **Well rows/cols**, applied to any checked Plate/Well export.
 
-- **Export style** — **Table**, **Coloc details**, or **Matrix** (writes the [plate or well grid](#matrix-view) instead of a flat row-per-object table, using the Matrix view's own metric/aggregation/color-scheme settings).
-- **Group by** — **No Grouping**, **Image**, or **Regex** (table style only; the aggregation functions from the main table apply here too). Folder grouping isn't available in the batch queue — use **Export as Displayed** below for that. When **Regex** is selected, click **Auto-detect** to derive a grouping pattern from the loaded image filenames instead of writing one by hand — a hint below the field reports how many filenames matched (e.g. _"Matched 24/24 filenames"_), or that no consistent pattern was found. The detected pattern is also saved to the project's plate settings, so Matrix grouping picks it up too.
-- **Images to export** — pick at least one image. Images [disabled](#results-table) in the table's Image filter start out unchecked here, so they're left out unless you check them back in. Enable **Export each checked image as its own file** to write one file per checked image (the filename gets the image name) instead of a single combined file.
-- **Classes to include** — pick at least one class.
-- **Columns to export** — pick which columns to include, with **None** / **Avg+Sum** / **All** presets for intensity columns.
-- **Name** and **Format** (CSV or XLSX) for the resulting file(s). If **Name** is left blank, it's generated from the selected classes.
+**Image heatmap** and both **Plates/Wells** options are XLSX-only - they're disabled whenever **CSV** or **Parquet** is selected. **Parquet** goes further: picking it ignores every other setting on this page (filters, columns, grouping, checkboxes) and writes a single `objects.parquet` file - a raw, unfiltered dump of every column in the results database, meant for downstream tools that read Parquet natively rather than for a human to open.
 
-### 2. Queue it
-
-- Click **+ Add** to snapshot the current dialog settings above as a batch and add it to the **Combinations to export** list below. The checklists then stay open so you can change them and add another, different combination.
-- Click **Add from table** instead to queue a batch that mirrors exactly what the results table is *currently* showing — its live filters, grouping, and visible columns — reusing whichever Name/Format you've typed.
-
-Repeat as many times as needed; each queued combination appears as its own row (name, classes, images, style/grouping, format) and can be removed individually with its **X**.
-
-### 3. Export
-
-Click **Export All** to choose a single destination **folder**, then every queued combination is written as its own file into it (or one file per image, for batches with "export each image as its own file" enabled) — all in one background run, with a progress bar and a status message, cancellable partway through. If you never clicked **+ Add**, the dialog's current settings are exported as a single one-off batch, so a lone export doesn't require the extra step.
-
-Filenames are de-duplicated automatically if two combinations would otherwise collide.
-
-Separately, **Export as Displayed** (bottom-left of the dialog) skips the queue entirely: it immediately exports a single file matching the results table's live state — including folder grouping, which only works here — and prompts for one output file rather than a folder.
-
-Both CSV and XLSX exports stream rows to disk rather than holding the whole result set in memory, so exporting very large projects doesn't require large amounts of RAM.
+Click **Start Export** once an output folder is chosen; a progress bar tracks the run and a status message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`).
 
 :::tip
-For colocalization exports, partner lookups are resolved in batches of 5,000 source objects at a time — large colocalization datasets export reliably without needing to load everything at once.
+For colocalization exports, partner lookups are resolved in batches of 5,000 source objects at a time - large colocalization datasets export reliably without needing to load everything at once.
 :::
-
-## Copying to the Clipboard
-
-Click the clipboard icon in the toolbar to copy the currently visible rows — respecting active filters and sorting — as tab-separated values, ready to paste directly into a spreadsheet.
-
-## Filtering by Frame
-
-For time-lapse or Z-stack acquisitions, use the **T** and **Z** frame steppers in the toolbar to restrict the table and charts to a single time point or depth slice.

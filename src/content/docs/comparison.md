@@ -130,13 +130,11 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 | Feature Name                       | Detailed Functionality                                                                                                                                                | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
-| **Open Format Data Export**        | Export measurements to standard tabular formats (`.csv`, `.tsv`, `.xlsx`, HDF5, Parquet).                                                                             | ✅\*       | ✅           | ✅     | ✅     |
+| **Open Format Data Export**        | Export measurements to standard tabular formats (`.csv`, `.xlsx`, Parquet).                                                                                           | ✅\*       | ✅           | ✅     | ✅     |
 | **SQL-Queryable Results Database** | Query results directly via SQL against a bundled analysis database, instead of only flat export files.                                                                | ✅         | ⚠️           | -      | -      |
 | **Interactive Plotting & Gating**  | Scatter plots, histograms, and boxplots linked back to image views (click point -> highlight cell). Enables flow-cytometry-style gating directly from the data plots. | ✅         | ✅           | ⚠️     | -      |
 | **3D Volume Rendering**            | Hardware-accelerated (OpenGL/Vulkan) 3D volume rendering, ISO-surface rendering, and orthoviewers.                                                                    | -          | -            | ✅     | -      |
 | **Active Plugin Ecosystem**        | Centralized plugin repository/updater and active user community support.                                                                                              | -          | ✅           | ✅     | ✅     |
-
-\*HDF5 and Parquet export aren't supported rihght now by EVAnalyzer.
 
 ---
 
