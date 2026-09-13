@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .panel-title { font: 600 13px sans-serif; fill: #1f2937; }
+    .panel-sub { font: 11px sans-serif; fill: #6b7280; }
+    .lbl-sm { font: 10px sans-serif; fill: #6b7280; }
+    .lbl-tiny { font: 9px sans-serif; fill: #9ca3af; }
+    .tile { fill: #ffffff; stroke: #eceff3; stroke-width: 1; }
+    .seam { stroke: #d8dce1; stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .band { fill: #fde68a; fill-opacity: 0.45; }
+    .bandline { stroke: #d97706; stroke-width: 1.5; stroke-dasharray: 3 3; }
+    .join { fill: #ffffff; stroke: #2563eb; stroke-width: 1.5; }
+    .brace { stroke: #9ca3af; stroke-width: 1.2; fill: none; }
+  </style>
+
+  <rect class="bg" x="0.5" y="0.5" width="639" height="469" rx="12"/>
+
+  <!-- ===================== Panel 1: fixed-overlap stitching ===================== -->
+  <text class="panel-title" x="320" y="28" text-anchor="middle">Fixed-overlap stitching (other tools)</text>
+  <text class="panel-sub" x="320" y="44" text-anchor="middle">only works while the object fits entirely inside the shared overlap band</text>
+
+  <!-- tiles -->
+  <rect class="tile" x="140" y="66" width="160" height="120"/>
+  <rect class="tile" x="300" y="66" width="160" height="120" fill="#f0f2f5"/>
+  <line class="seam" x1="300" y1="60" x2="300" y2="192"/>
+  <text class="lbl-tiny" x="220" y="200" text-anchor="middle">tile A</text>
+  <text class="lbl-tiny" x="380" y="200" text-anchor="middle">tile B</text>
+
+  <!-- overlap band -->
+  <rect class="band" x="260" y="66" width="80" height="120"/>
+  <line class="bandline" x1="260" y1="60" x2="260" y2="192"/>
+  <line class="bandline" x1="340" y1="60" x2="340" y2="192"/>
+  <text class="lbl-sm" x="300" y="56" text-anchor="middle" fill="#b45309">overlap window (fixed width)</text>
+
+  <!-- object: wider than the band, split-clipped so it visibly reads as two fragments -->
+  <defs>
+    <clipPath id="panelATile"><rect x="140" y="66" width="160" height="120"/></clipPath>
+    <clipPath id="panelBTile"><rect x="300" y="66" width="160" height="120"/></clipPath>
+  </defs>
+  <rect x="150" y="106" width="300" height="40" rx="20" fill="#2563eb" clip-path="url(#panelATile)"/>
+  <rect x="150" y="106" width="300" height="40" rx="20" fill="#38bdf8" clip-path="url(#panelBTile)"/>
+  <line x1="300" y1="106" x2="300" y2="146" stroke="#f7f8fa" stroke-width="2"/>
+
+  <!-- callouts on the parts sticking out past the band -->
+  <text class="lbl-sm" x="180" y="176" text-anchor="middle" fill="#b91c1c">✕ not seen by the band</text>
+  <text class="lbl-sm" x="420" y="176" text-anchor="middle" fill="#b91c1c">✕ not seen by the band</text>
+
+  <text class="lbl-sm" x="320" y="216" text-anchor="middle" fill="#4b5563">Object is wider than the band → each side's copy stays incomplete →</text>
+  <text class="lbl-sm" x="320" y="230" text-anchor="middle" fill="#4b5563">fragments are never reconciled, no matter how wide the band is</text>
+
+  <line x1="20" y1="245" x2="620" y2="245" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- ===================== Panel 2: adjacency + union-find ===================== -->
+  <text class="panel-title" x="320" y="270" text-anchor="middle">EVAnalyzer: merge by adjacency + union-find</text>
+  <text class="panel-sub" x="320" y="286" text-anchor="middle">any two touching fragments are unioned - the join chains across any number of tiles</text>
+
+  <!-- 4 tiles in a row -->
+  <rect class="tile" x="140" y="310" width="100" height="120"/>
+  <rect class="tile" x="240" y="310" width="100" height="120" fill="#f0f2f5"/>
+  <rect class="tile" x="340" y="310" width="100" height="120"/>
+  <rect class="tile" x="440" y="310" width="100" height="120" fill="#f0f2f5"/>
+  <line class="seam" x1="240" y1="304" x2="240" y2="436"/>
+  <line class="seam" x1="340" y1="304" x2="340" y2="436"/>
+  <line class="seam" x1="440" y1="304" x2="440" y2="436"/>
+  <text class="lbl-tiny" x="190" y="444" text-anchor="middle">tile 1</text>
+  <text class="lbl-tiny" x="290" y="444" text-anchor="middle">tile 2</text>
+  <text class="lbl-tiny" x="390" y="444" text-anchor="middle">tile 3</text>
+  <text class="lbl-tiny" x="490" y="444" text-anchor="middle">tile 4</text>
+
+  <!-- one merged object, single uniform color, spanning all 4 tiles -->
+  <rect x="150" y="350" width="380" height="40" rx="20" fill="#2563eb"/>
+
+  <!-- union markers at each seam crossing -->
+  <circle class="join" cx="240" cy="370" r="8"/>
+  <circle class="join" cx="340" cy="370" r="8"/>
+  <circle class="join" cx="440" cy="370" r="8"/>
+  <text x="240" y="374" text-anchor="middle" font="700 10px sans-serif" fill="#2563eb">∪</text>
+  <text x="340" y="374" text-anchor="middle" font="700 10px sans-serif" fill="#2563eb">∪</text>
+  <text x="440" y="374" text-anchor="middle" font="700 10px sans-serif" fill="#2563eb">∪</text>
+
+  <path class="brace" d="M245 335 q-5 -8 5 -8 h30 q10 0 5 8"/>
+  <text class="lbl-tiny" x="285" y="315" text-anchor="middle">touch → union</text>
+  <line x1="285" y1="317" x2="270" y2="332" stroke="#9ca3af" stroke-width="1"/>
+
+  <!-- brace under the whole object -->
+  <path class="brace" d="M150 400 v8 h380 v-8"/>
+  <text class="lbl-sm" x="340" y="422" text-anchor="middle" fill="#1f2937" font-weight="600">one object · one ID</text>
+
+  <text class="lbl-sm" x="320" y="458" text-anchor="middle" fill="#4b5563">Union is transitive: A touching B and B touching C puts A and C in the same object, even four tiles later</text>
+</svg>

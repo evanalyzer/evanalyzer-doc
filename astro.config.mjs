@@ -99,6 +99,10 @@ export default defineConfig({
           collapsed: true,
           items: [
             { label: "Image Formats", slug: "fundamentals/image-formats" },
+            {
+              label: "Cross-Tile Object Merging",
+              slug: "fundamentals/cross-tile-merging",
+            },
             { label: "Object Classes", slug: "fundamentals/classes" },
             { label: "Objects & Metrics", slug: "fundamentals/metrics" },
             {
