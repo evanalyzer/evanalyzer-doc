@@ -3,7 +3,7 @@ title: Extract Objects
 description: Convert labelled binary regions into segmentation-class objects.
 ---
 
-The **Extract Objects** command reads the labelled image produced by [Connected Components](/commands/segmentation/connected-components/) (or [Watershed](/commands/segmentation/watershed/)) and creates one segmentation-class object per labelled region. These objects are the raw candidates passed to [Classify Objects](/commands/object/classify-objects/) for final filtering and class assignment.
+The **Extract Objects** command reads a labelled instance map and creates one segmentation-class object per labelled region. That map can come from [Connected Components](/commands/segmentation/connected-components/) (or [Watershed](/commands/segmentation/watershed/)), or directly from an instance-segmentation command such as [AI Cellpose Segmentation](/commands/ai-segmentation/cellpose/) or [AI Stardist Segmentation](/commands/ai-segmentation/stardist/), which already separate touching objects on their own. These objects are the raw candidates passed to [Classify Objects](/commands/object/classify-objects/) for final filtering and class assignment.
 
 This is the boundary between "pixels" and "objects" in the pipeline: everything before this step operates on whole images, and everything after operates on individually addressable regions with their own [metrics](/fundamentals/metrics/), mask, and object ID.
 
@@ -18,7 +18,9 @@ This is the boundary between "pixels" and "objects" in the pipeline: everything 
 ## Pipeline position
 
 ```
-Threshold → Connected Components → [Watershed] → Extract Objects → Classify Objects
+Threshold → Connected Components → [Watershed] ─┐
+                                                  ├─→ Extract Objects → Classify Objects
+      AI Cellpose Segmentation / AI Stardist ────┘
 ```
 
 Extract Objects is always followed by [Classify Objects](/commands/object/classify-objects/). The segmentation class assigned here is the intermediate class used internally; the final named object class is assigned by Classify Objects.

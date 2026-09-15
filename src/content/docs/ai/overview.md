@@ -17,7 +17,7 @@ Three architectures are currently implemented as pipeline commands:
 | ----------------------------------------------- | ----------------------------------------- | --------------------------------- |
 | [Stardist](/commands/ai-segmentation/stardist/) | Star-convex polygon per object instance   | Yes, directly                     |
 | [UNet](/commands/ai-segmentation/unet/)         | Per-pixel foreground/background mask      | No - requires a follow-up step    |
-| [Cellpose](/commands/ai-segmentation/cellpose/) | Flow field (dY/dX) + cell-probability map | Yes, directly (via flow dynamics) |
+| [Cellpose](/commands/ai-segmentation/cellpose/) | Flow field (dY/dX) + cell-probability map, via a Cellpose-SAM model | Yes, directly (via flow dynamics) |
 
 ---
 
@@ -46,11 +46,11 @@ See the [UNet command reference](/commands/ai-segmentation/unet/) for the full p
 
 ## Cellpose
 
-[Cellpose](https://github.com/MouseLand/cellpose) predicts a **flow field**: a vector at every pixel pointing toward the centre of the object it belongs to, plus a cell-probability map. EVAnalyzer's [Cellpose](/commands/ai-segmentation/cellpose/) command follows these flows pixel by pixel until they converge to a sink, then groups pixels that converge to the same sink into one instance - recovering individual objects directly, including ones with irregular or overlapping shapes that defeat star-convex polygons.
+[Cellpose-SAM](https://github.com/MouseLand/cellpose) predicts a **flow field**: a vector at every pixel pointing toward the centre of the object it belongs to, plus a cell-probability map. It pairs Cellpose's original flow-field dynamics with a transformer image encoder from Meta's Segment Anything Model (SAM) for improved generalization over earlier, convolutional Cellpose versions. EVAnalyzer's [Cellpose](/commands/ai-segmentation/cellpose/) command follows these flows pixel by pixel until they converge to a sink, then groups pixels that converge to the same sink into one instance - recovering individual objects directly, including ones with irregular or overlapping shapes that defeat star-convex polygons. Ready-made model exports are on the [Downloads page](/downloads/#ai-models).
 
 **When to use it:** whole cells (cytoplasm), irregular morphology, or any case where objects aren't well approximated by convex polygons.
 
-See the [Cellpose command reference](/commands/ai-segmentation/cellpose/) for parameters and model output requirements.
+See the [Cellpose command reference](/commands/ai-segmentation/cellpose/) for parameters, the download/setup workflow, and model output requirements.
 
 ---
 
