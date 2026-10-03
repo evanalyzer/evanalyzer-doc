@@ -223,6 +223,28 @@ See [About](/about/) for the full history.
   </p>
 </div>
 
+## Remote Control: Work on a Server, From Anywhere
+
+Keep your images where they are - on the GPU workstation or analysis server - and run EVAnalyzer from your own laptop.
+With [remote control](/remote/remote-control/), the GUI and the CLI run on your computer while images are read, pipelines are computed and results are written on the server.
+Only the image tiles you are looking at, previews and pages of the results table travel over the network - no copying of terabytes of raw data.
+
+- **Same app, same workflow** - the GUI and every CLI command work exactly as they do locally; a badge in the status bar shows where you are working.
+- **One worker per user** - each user logs in and gets their own compute instance on the server. Log in again later, or from another computer, and you continue in the same session.
+- **Built for shared hardware** - put one powerful machine to work for a whole lab.
+
+```sh
+# On the server
+./evanalyzer server --listen 0.0.0.0:7400
+
+# On your computer
+./evanalyzer --remote ws://server-name:7400 --user alice
+```
+
+![Clients on your computer log in on the evanalyzer server, which starts one worker per user; the worker reads images and writes results on the server](../../assets/figures/remote-control.svg)
+
+[Set up remote control →](/remote/remote-control/)
+
 ## Key Features
 
 <CardGrid>
@@ -261,6 +283,11 @@ See [About](/about/) for the full history.
     stored in a queryable local database, ready for grouping, filtering, and
     [export](/guide/results/#exporting-results) to XLSX, CSV, or Parquet.
   </Card>
+  <Card title="Remote control" icon="laptop">
+    Run the GUI or CLI on your laptop while images stay and pipelines run on a
+    GPU workstation or server - one worker per user, sessions survive
+    reconnects. [How it works →](/remote/remote-control/)
+  </Card>
   <Card title="Batch processing at scale" icon="rocket">
     Queue and process thousands of images unattended - the same pipeline runs
     consistently across an entire dataset, storing results as it goes.
@@ -271,7 +298,7 @@ See [About](/about/) for the full history.
   </Card>
   <Card title="Classical & AI segmentation" icon="cloud-download">
     Combine classical algorithms (Threshold, Watershed, Edge Detection) with
-    AI-based object detection (Stardist, UNet, Cellpose) in the same pipeline -
+    AI-based object detection (Stardist, UNet, Cellpose, YOLOv5) in the same pipeline -
     or [import a published bioimage.io model](/ai/bioimageio-import/) to
     auto-configure one.
   </Card>
