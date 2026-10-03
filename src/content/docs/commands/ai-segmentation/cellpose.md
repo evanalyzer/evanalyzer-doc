@@ -18,7 +18,8 @@ AI segmentation commands are only available in builds with the `ai` Cargo featur
 
 1. **Download the model.** Ready-to-use Cellpose-SAM TorchScript exports are on the [Downloads page](/downloads/#ai-models) - download `cpsam_v2.zip` and unzip it; it contains a single `cpsam_v2.pt` file. See [Getting a model](#getting-a-model) below if you need a different checkpoint.
 2. **Add AI Cellpose Segmentation to the pipeline.** Point **Model path** at the extracted `.pt` file and tune the parameters below. Normalize the image first (e.g. with [Enhance Contrast](/commands/image-processing/enhance-contrast/)) - see the tip in [How it works](#how-it-works).
-3. **Follow with Extract Objects.** Append [Extract Objects](/commands/object/extract-objects/) directly after this command - AI Cellpose Segmentation already writes a per-instance label map, so Extract Objects can turn it straight into object records without a Connected Components/Watershed step in between. From there, [Classify Objects](/commands/object/classify-objects/) assigns the final object class.
+3. **Fill the holes (optional).** Cellpose fills the holes inside every object as the last post-processing step. Add [Fill Object Holes](/commands/object/fill-object-holes/) directly after this command to get the same result.
+4. **Follow with Extract Objects.** Append [Extract Objects](/commands/object/extract-objects/) after this command (or after Fill Object Holes) - AI Cellpose Segmentation already writes a per-instance label map, so Extract Objects can turn it straight into object records without a Connected Components/Watershed step in between. From there, [Classify Objects](/commands/object/classify-objects/) assigns the final object class.
 
 ## Parameters
 
@@ -26,10 +27,14 @@ AI segmentation commands are only available in builds with the `ai` Cargo featur
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Model path**             | Path to a TorchScript-exported Cellpose-SAM model (`.pt` / `.pth`, via `torch.jit.script` or `torch.jit.trace`).                                                                                                |
 | **Object class**           | The segmentation class assigned to every detected object's pixels.                                                                                                                                              |
-| **Input channels**         | Number of input channels the model expects. The grayscale image goes in channel 0; any further channels are zero-filled. `2` (cytoplasm + optional nucleus) is standard; `1` is for single-channel exports. Range: 1–3 (default 2), matching Cellpose-SAM's patch-embedding convolution, which only has weights for up to 3 input channels. |
+| **Input channels**         | Number of input channels the model expects. The grayscale image goes in channel 0; any further channels are zero-filled (or filled with copies of the image, see **Replicate gray channel**). `2` (cytoplasm + optional nucleus) is standard; `1` is for single-channel exports. Range: 1–3 (default 2), matching Cellpose-SAM's patch-embedding convolution, which only has weights for up to 3 input channels. |
 | **Probability threshold**  | Cell probability above which a pixel takes part in the flow dynamics and can be assigned to an object. Range: 0.0–1.0 (default 0.5 - corresponds to Cellpose's default logit threshold of `0`).                |
 | **Flow iterations**        | Number of Euler integration steps used to follow the flow field. Higher values let pixels in large cells reach their sink, at the cost of runtime. Range: 1–1000 (default 200, matching Cellpose's own default). |
 | **Minimum object size**    | Minimum instance size in pixels; smaller instances are discarded after the dynamics. `0` disables the filter. Default 15.                                                                                       |
+| **Max resize**             | Longest image side, in pixels, the image is scaled down to before segmentation; the masks are scaled back up to the original size afterwards. Smaller values make large cells look like the cell sizes the model was trained on, and are faster. The scale is taken from the full image, so every tile is scaled the same. `0` (default) keeps the full resolution - the Cellpose web demo uses `1000`. |
+| **Flow threshold**         | Flow error threshold: an object whose shape doesn't match the flows the model predicted (mean squared error above this value) is removed. Increase to keep more objects, decrease to keep only clean ones. `0` disables the check. Range: 0–10 (default 0.4, matching Cellpose). |
+| **Cellpose postprocessing** | Build the objects from the flows exactly like Cellpose does: pixels follow the interpolated flows, an object only starts where more than 10 pixels end up together, and pixels that reach no such spot become background. Off, every spot any pixel ends up at starts an object, which can join touching cells. Default: on. |
+| **Replicate gray channel** | Copy the gray image into every input channel instead of filling the extra channels with zeros. With **Input channels** = 3 this matches Cellpose run on an RGB image whose channels are (nearly) equal. Default: on. |
 
 ## Getting a model
 
@@ -58,10 +63,12 @@ Cellpose-SAM's ViT (SAM) encoder bakes its positional embeddings for a fixed 256
 
 This is a Rust port of Cellpose's own _dynamics_ step, with tiling added for Cellpose-SAM's fixed input size:
 
-1. The image (with any extra **Input channels** zero-filled) is padded and split into overlapping 256×256 tiles - Cellpose-SAM's ViT encoder only accepts that fixed size. Each tile is run through the model, and the per-tile flow/probability outputs are blended back into one image-sized tensor with a feathered (sigmoid taper) weight per tile, matching Cellpose's own `transforms.average_tiles`, so a segmentation spanning a tile boundary doesn't show a seam.
-2. Pixels whose cell probability reaches **Probability threshold** are advected along the flow field for **Flow iterations** Euler steps (the predicted flow is divided by Cellpose's training scale factor of 5 to keep each step near one pixel), converging toward the centre ("sink") of their object.
-3. Pixels that converge to the same sink are grouped into one instance, found via 8-connected connected components over the density of final pixel positions.
-4. Instances smaller than **Minimum object size** are discarded; survivors are renumbered to contiguous instance IDs and written to the segmentation and instance maps.
+1. If **Max resize** is set and the image is larger, it is scaled down so its longest side matches that value.
+2. The image (with any extra **Input channels** zero-filled, or filled with copies of the image) is padded and split into overlapping 256×256 tiles - Cellpose-SAM's ViT encoder only accepts that fixed size. Each tile is run through the model, and the per-tile flow/probability outputs are blended back into one image-sized tensor with a feathered (sigmoid taper) weight per tile, matching Cellpose's own `transforms.average_tiles`, so a segmentation spanning a tile boundary doesn't show a seam.
+3. Pixels whose cell probability reaches **Probability threshold** are advected along the flow field for **Flow iterations** Euler steps (the predicted flow is divided by Cellpose's training scale factor of 5 to keep each step near one pixel), converging toward the centre ("sink") of their object.
+4. Pixels that converge to the same sink are grouped into one instance. With **Cellpose postprocessing** on, pixels follow the interpolated flow field and an instance only starts where more than 10 pixels end up together, exactly as Cellpose does; pixels reaching no such spot become background.
+5. Instances whose shape doesn't match the predicted flows (error above **Flow threshold**) and instances smaller than **Minimum object size** are discarded; survivors are renumbered to contiguous instance IDs.
+6. If the image was scaled down, the masks are scaled back up to the original size and written to the segmentation and instance maps.
 
 Runs on GPU automatically if CUDA is available in the linked libtorch build, otherwise falls back to CPU.
 

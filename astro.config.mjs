@@ -251,6 +251,10 @@ export default defineConfig({
                   slug: "commands/ai-segmentation/cellpose",
                 },
                 {
+                  label: "YOLOv5",
+                  slug: "commands/ai-segmentation/yolov5",
+                },
+                {
                   label: "AI Pixel Classifier",
                   slug: "commands/ai-segmentation/pixel-classifier",
                 },
@@ -263,6 +267,14 @@ export default defineConfig({
                 {
                   label: "Fill Holes",
                   slug: "commands/object/fill-holes",
+                },
+                {
+                  label: "Fill Object Holes",
+                  slug: "commands/object/fill-object-holes",
+                },
+                {
+                  label: "Load Annotated Objects",
+                  slug: "commands/object/load-annotated-objects",
                 },
                 {
                   label: "Extract Objects",
@@ -302,6 +314,11 @@ export default defineConfig({
           label: "CLI",
           collapsed: true,
           items: [{ label: "Command Line Interface", slug: "cli/cli" }],
+        },
+        {
+          label: "Remote Control",
+          collapsed: true,
+          items: [{ label: "Working on a Server", slug: "remote/remote-control" }],
         },
         {
           label: "VS Code Extension",

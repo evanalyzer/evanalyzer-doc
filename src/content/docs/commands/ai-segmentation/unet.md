@@ -32,6 +32,8 @@ The model must accept a `[1, 1, H, W]` single-channel float tensor and return ei
 - a `[1, 1, H, W]` tensor of per-pixel foreground probabilities (the model already applies its final sigmoid), or
 - a `[1, C, H, W]` tensor with more than one channel, in which case **Output mode** and **Foreground channel** decide how the foreground probability is extracted.
 
+Any tile size works. U-Nets halve the image four times and fail on sizes that aren't a multiple of 16, so EVAnalyzer mirror-pads each tile to a multiple of 16 plus a 16 px border - context for the pixels at the tile edge, like the "halo" bioimage.io models declare - and crops the prediction back to the tile.
+
 ## Output mode
 
 | Mode                    | Use for                                                                                                                                                                                                        |

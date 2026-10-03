@@ -13,11 +13,16 @@ Fill Holes has no configurable parameters - drop it into the pipeline and it run
 
 ## How it works
 
-The mask is treated as strictly binary, the same way ImageJ's own command does:
+Which pixels count as a hole is decided the same way ImageJ's own command does:
 
-- Every non-background pixel counts as foreground, regardless of its actual class/label value.
-- A filled hole is stamped with a single fixed value rather than inheriting the label of the region that encloses it. If the segmentation map carries several distinct labels, a hole is not attributed back to the specific object surrounding it.
+- Every non-background pixel counts as foreground, regardless of its actual class/label value - so a background pocket enclosed by *any* mix of labels is still a hole.
 - Connectivity is 4-connected (up/down/left/right), not 8-connected: a background region that only touches the outside diagonally through a corner still counts as enclosed and gets filled. This matches ImageJ's `FloodFiller` exactly.
+
+Unlike ImageJ, each hole is then filled with the label that encloses it: every enclosed background region is filled with the label most common among its bordering pixels. A hole inside a class-2 region is therefore filled with class 2, which keeps multi-class segmentation maps correct.
+
+:::tip[Fill Holes vs. Fill Object Holes]
+Fill Holes works on the segmentation map, so a gap enclosed by several touching objects is filled too. To fill holes per object - for example after [AI Cellpose Segmentation](/commands/ai-segmentation/cellpose/) or [Watershed](/commands/segmentation/watershed/) - use [Fill Object Holes](/commands/object/fill-object-holes/).
+:::
 
 ## When to use
 

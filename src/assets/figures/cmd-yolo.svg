@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-xs { font: 10px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="yolo-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+
+<!-- Left: tile split into overlapping 640x640 windows -->
+<rect x="20" y="30" width="200" height="130" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<rect x="24" y="34" width="120" height="122" fill="#2563eb" fill-opacity="0.06" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="5 3"/>
+<rect x="96" y="34" width="120" height="122" fill="#ea580c" fill-opacity="0.06" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text class="lbl-xs" x="30" y="150" fill="#2563eb">window 1</text>
+<text class="lbl-xs" x="210" y="150" text-anchor="end" fill="#ea580c">window 2</text>
+<text class="lbl-xs" x="120" y="48" text-anchor="middle">overlap</text>
+<!-- object lying in the overlap, seen by both windows -->
+<path d="M 106 82 C 112 70, 134 70, 138 84 C 142 98, 130 112, 118 110 C 104 108, 100 94, 106 82 Z" fill="#6b7280" fill-opacity="0.45"/>
+<rect x="101" y="70" width="40" height="42" fill="none" stroke="#2563eb" stroke-width="1.8"/>
+<text class="lbl-xs" x="101" y="67" fill="#2563eb">0.91</text>
+<rect x="99" y="72" width="44" height="40" fill="none" stroke="#ea580c" stroke-width="1.8"/>
+<text class="lbl-xs" x="143" y="122" text-anchor="end" fill="#ea580c">0.84</text>
+<!-- a second object, only in window 1 -->
+<ellipse cx="55" cy="112" rx="14" ry="11" fill="#6b7280" fill-opacity="0.45"/>
+<rect x="40" y="100" width="30" height="24" fill="none" stroke="#2563eb" stroke-width="1.8"/>
+<text class="lbl-xs" x="40" y="97" fill="#2563eb">0.77</text>
+
+<!-- Arrow -->
+<path d="M 228 95 H 262" fill="none" stroke="#4b5563" stroke-width="1.6" marker-end="url(#yolo-head)"/>
+<text class="lbl-xs" x="245" y="86" text-anchor="middle">NMS</text>
+
+<!-- Right: one box + mask per object -->
+<rect x="270" y="30" width="150" height="130" fill="#ffffff" stroke="#9ca3af" stroke-width="1"/>
+<path d="M 356 82 C 362 70, 384 70, 388 84 C 392 98, 380 112, 368 110 C 354 108, 350 94, 356 82 Z" fill="#16a34a" fill-opacity="0.5" stroke="#16a34a" stroke-width="1.5"/>
+<rect x="351" y="70" width="40" height="42" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3 2"/>
+<ellipse cx="305" cy="112" rx="14" ry="11" fill="#16a34a" fill-opacity="0.5" stroke="#16a34a" stroke-width="1.5"/>
+<rect x="290" y="100" width="30" height="24" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3 2"/>
+<text class="lbl-xs" x="345" y="150" text-anchor="middle">one mask per object</text>
+
+<text class="lbl-bold" x="220" y="190" text-anchor="middle">YOLOv5</text>
+<text class="lbl-sm" x="220" y="208" text-anchor="middle">boxes + masks per object in overlapping 640×640 windows,</text>
+<text class="lbl-sm" x="220" y="222" text-anchor="middle">duplicates from the overlap merged by confidence</text>
+</svg>

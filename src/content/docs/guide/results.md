@@ -33,6 +33,17 @@ Use the **View** dropdown to switch the table from **Objects** (flat, one row pe
 
 ![Grouped results table](../../../assets/screenshots/screenshot-results-table-view-group-by-image.png)
 
+### Side-by-Side Layout (Transposed Table)
+
+The **Layout** dropdown switches between **Rows** (the default) and **Side by side**. **Side by side** transposes the table so that the classes are placed next to each other instead of below each other - handy when you want to compare classes per image, or paste the table into a spreadsheet that expects one column block per class.
+
+- With **View** set to **Images**, the table has **one row per image**, and for every class one block of columns (one column per measurement and aggregation). The `(image, class)` rows of the normal view are simply placed side by side.
+- With **View** set to **Objects**, the n-th object of each class in an image shares row n, with one block of columns per class. A class with fewer objects in that image leaves its block empty in the extra rows. The image name is the first column, the class is given by the block.
+
+The **Class** filter decides which classes become column blocks; with no filter, every class is shown.
+
+![Results list in the Side by side layout: one row per image, one column block per class](../../../assets/screenshots/screenshot-results-side-by-side.png)
+
 ### Colocalization Details
 
 While viewing **Objects**, the **Coloc Details** dropdown switches between **Flat** (the default) and **Details**. **Details** flattens each object's matched partners into their own columns - one set of measurement columns per partner class, with a dash where no partner was found.
@@ -83,9 +94,9 @@ Click **Export** at the bottom of the rail to open the **Export Results** dialog
 
 ![Export dialog](../../../assets/screenshots/screenshot-results-export-dialog.png)
 
-- **Output Folder** - pick a destination with **Browse…**.
+- **Output Folder** - pick a destination with **Browse…**. The optional **filename prefix** field next to it is put in front of every output file name as `{prefix}_{name}` (e.g. `exp1_list.xlsx`), so exports of several experiments can share one folder. Characters that aren't allowed in file names are replaced by `_`.
 - **Format** - **XLSX** (default), **CSV**, or **Parquet**.
-- **Images/Objects (ungrouped)** - **Object list** (with optional **With coloc details** and **Each image in a separate file**), **Image list** (the same aggregated-by-image data as [grouping the List view](#grouping-and-aggregating-rows)), and **Image heatmap** (the per-image spatial heatmap grid, with its own **Squares sizes** setting).
+- **Images/Objects (ungrouped)** - **Object list** (with optional **With coloc details** and **Each image in a separate file**), **Image list** (the same aggregated-by-image data as [grouping the List view](#grouping-and-aggregating-rows)), and **Image heatmap** (the per-image spatial heatmap grid, with its own **Squares sizes** setting). **Transpond output table** writes the object and image lists in the [side-by-side layout](#side-by-side-layout-transposed-table), with the classes next to each other.
 - **Plates/Wells (group by regex)** - **Plate and Wells as list** and **Plate and Wells as heatmap**, both using the **Grouping regex** field below them (leave it blank to use the default well/field pattern).
 - **Z/T Range** - restrict the export to a Z and/or T plane range.
 - **Filters** - **Images**, **Classes**, and **Columns**, the same multi-select dropdowns as the List view.
@@ -93,7 +104,7 @@ Click **Export** at the bottom of the rail to open the **Export Results** dialog
 
 **Image heatmap** and both **Plates/Wells** options are XLSX-only - they're disabled whenever **CSV** or **Parquet** is selected. **Parquet** goes further: picking it ignores every other setting on this page (filters, columns, grouping, checkboxes) and writes a single `objects.parquet` file - a raw, unfiltered dump of every column in the results database, meant for downstream tools that read Parquet natively rather than for a human to open.
 
-Click **Start Export** once an output folder is chosen; a progress bar tracks the run and a status message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`).
+Click **Start Export** once an output folder is chosen; a progress bar tracks the run and a status message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`), each preceded by the filename prefix if one is set.
 
 :::tip
 For colocalization exports, partner lookups are resolved in batches of 5,000 source objects at a time - large colocalization datasets export reliably without needing to load everything at once.

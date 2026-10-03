@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 35 pipeline commands grouped by category.
+description: All 38 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -78,6 +78,7 @@ Commands that run a pretrained deep-learning model for segmentation. Only availa
 | [Stardist](/commands/ai-segmentation/stardist/)                    | Instance segmentation via star-convex polygons - separates touching objects directly                      |
 | [UNet](/commands/ai-segmentation/unet/)                            | Semantic foreground/background mask - pair with Connected Components (+ Watershed) to separate instances  |
 | [Cellpose](/commands/ai-segmentation/cellpose/)                    | Instance segmentation via flow-field dynamics - handles irregular and overlapping shapes                  |
+| [YOLOv5](/commands/ai-segmentation/yolov5/)                        | Instance segmentation or detection with boxes + masks - supports several object classes in one model     |
 | [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) | Semantic mask from a Random Forest/k-NN/MLP model you [train yourself](/ai/training/) on painted examples |
 
 ## Object Processing
@@ -87,6 +88,8 @@ Commands that operate on extracted objects.
 | Command                                                        | Purpose                                                                                                      |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | [Fill Holes](/commands/object/fill-holes/)                     | Close enclosed background holes in the segmentation map                                                      |
+| [Fill Object Holes](/commands/object/fill-object-holes/)       | Fill the holes inside every object, one object at a time                                                     |
+| [Load Annotated Objects](/commands/object/load-annotated-objects/) | Bring hand-annotated objects into the pipeline as regular objects                                        |
 | [Extract Objects](/commands/object/extract-objects/)           | Convert binary mask regions to segmentation-class objects                                                    |
 | [Classify Objects](/commands/object/classify-objects/)         | Filter and assign final object classes                                                                       |
 | [AI Object Classifier](/commands/object/ai-object-classifier/) | Classify objects with a Random Forest/k-NN/MLP model you [train yourself](/ai/training/) on painted examples |
@@ -103,7 +106,7 @@ Commands that operate on extracted objects.
 Image
   └─ Preprocessing (Blur, Rolling Ball, Illumination Correction, …)
        └─ Segmentation (Threshold → Connected Components → Watershed)
-            └─ Fill Holes (optional mask cleanup)
+            └─ Fill Holes / Fill Object Holes (optional cleanup)
                  └─ Extract Objects
                       └─ Classify Objects
                            └─ Object Processing (Colocalization, Distance, …)

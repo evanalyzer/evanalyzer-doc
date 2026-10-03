@@ -24,7 +24,7 @@ Available presets include:
 
 ## Pipeline Editor
 
-Click a pipeline name to open the pipeline editor.
+Click a pipeline name to open the pipeline editor. Double-click a pipeline (or use its **…** button) to edit its name and image source.
 
 ![Edit Pipeline dialog](../../../assets/screenshots/screenshot-add-pipeline-dialog.png)
 
@@ -67,13 +67,33 @@ Use the **zoom** controls to inspect segmentation quality, and the **side-by-sid
 
 Click the **eye** icon in the toolbar to force a preview refresh on demand - useful for re-running the preview after switching images or when automatic live updates are off. The status bar also shows the name of the currently selected image next to the preview status message.
 
+## Focus Mode
+
+A project with several pipelines quickly fills the viewer with channels and object classes that have nothing to do with the pipeline you are working on. **Focus mode** shows only what belongs to the selected pipeline:
+
+- only the pipeline's **image channel** (all channels if the pipeline reads from a scratchpad or memory source), and
+- only the **object classes** the pipeline creates, reads or filters on.
+
+While a pipeline is focused, a banner **Focused on "…"** appears above the channel and class lists, so hidden channels and classes never look like a bug. Click **Show all** in the banner to leave the focus.
+
+There are two ways to use it:
+
+| Action                                              | Effect                                                                                                    |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Focus** button (crosshair) in the Pipelines header | Switches focus mode on or off. While on, selecting another pipeline moves the focus to it. EVAnalyzer remembers this setting. |
+| `Alt`+click on a pipeline, or `F`                    | Focuses this pipeline right away (`F` uses the selected one). Doing it again on the focused pipeline shows everything again.  |
+
+Focus mode only changes what is displayed. Your own visibility settings for channels and classes are not touched - leaving the focus restores them exactly.
+
+![Focus mode on: the Focus button in the Pipelines header is highlighted and only the CY7 channel of the selected pipeline is shown](../../../assets/screenshots/screenshot-pipeline-focus.png)
+
 ## Saving a Pipeline as a Template
 
 Click the **Save** button at the button of the pipelines panel, to store the current pipeline (all steps and parameters) for reuse in other projects.
 
 ![Save Pipeline as Template dialog](../../../assets/screenshots/screenshot-save-pipeline-as-template.png)
 
-Fill in **Name**, **Short description**, **Description**, **Author**, and **Organization**, then click **Next…** to choose a save location in the native file dialog. Pipeline templates use the `.evapipe` extension.
+Fill in **Name**, **Short description**, **Description**, **Author**, and **Organization**, then click **Next…** to choose a save location in the file browser. Pipeline templates use the `.evapipe` extension.
 
 Templates saved to the default location (`~/evanalyzer/templates/`) automatically appear in the preset drop-down next to **New pipeline** the next time you create a pipeline, alongside the built-in presets (EV channel, Cell brightfield, Nucleus, EV in cell).
 

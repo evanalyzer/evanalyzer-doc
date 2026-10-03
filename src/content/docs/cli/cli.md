@@ -25,7 +25,8 @@ evanalyzer.exe cli <command> [options...]
 | [`validate`](#validate)         | Check that every image referenced by a project can be found on disk                |
 | [`view`](#view)                 | Print a quick summary and a page of rows from a results database                   |
 | [`columns`](#columns)           | List the column ids available for grouping/chart axes in a results database        |
-| [`export`](#export)             | Export a results database to CSV, XLSX, or a chart image                           |
+| [`export`](#export)             | Export a results database to CSV, XLSX, or Parquet                                 |
+| [`train-classifier`](#train-classifier) | Train a pixel or object classifier from a project's labeled objects        |
 
 Every command supports `--help`:
 
@@ -33,12 +34,23 @@ Every command supports `--help`:
 ./evanalyzer cli analyze --help
 ```
 
+## Running on a Server
+
+Every command can also run on another machine - for example a GPU workstation that holds the images. Add the [remote options](/remote/remote-control/#client-options):
+
+```sh
+./evanalyzer cli --remote ws://server-name:7400 --user alice \
+  analyze --project /data/experiment-12/experiment.evaproj
+```
+
+All paths (`--project`, `--images`, `--db`, `--out`, `--settings`) then refer to the server, and output files are written there. See [Remote Control](/remote/remote-control/) for setting up the server.
+
 ## analyze
 
 Runs a project's enabled [pipelines](/guide/pipelines/) over its images and writes a new [results database](#results-database).
 
 ```sh
-./evanalyzer cli analyze --project settings.improj
+./evanalyzer cli analyze --project experiment.evaproj
 ```
 
 | Argument           | Description                                                                                                                                 |
@@ -52,7 +64,7 @@ The parallelism is automatically capped to whichever is lower — the number of 
 The command prints a progress line per image as it completes, then a summary:
 
 ```
-Project:   settings.improj
+Project:   experiment.evaproj
 Images:    48
 Pipelines: 1 enabled
 Output:    ./evanalyzer/EV Detection
@@ -72,7 +84,7 @@ Press **Ctrl+C** to request a graceful stop; in-flight images will finish before
 Prints a project's image count, classes, and pipelines without running anything - useful for sanity-checking a project file before kicking off a long batch run.
 
 ```sh
-./evanalyzer cli project-info --project settings.improj
+./evanalyzer cli project-info --project experiment.evaproj
 ```
 
 | Argument           | Description                              |
@@ -81,7 +93,7 @@ Prints a project's image count, classes, and pipelines without running anything 
 | `--json`           | Emit machine-readable JSON instead of human-readable text |
 
 ```
-Project:    settings.improj
+Project:    experiment.evaproj
 Name:       EV detection screen
 Image root: /data/plate1
 Images:     48
@@ -103,7 +115,7 @@ If the configured image root can't be found on disk, **Reachable** reports why i
 Checks that every image referenced by a project can be found on disk. Useful as a pre-flight step before starting a long headless run.
 
 ```sh
-./evanalyzer cli validate --project settings.improj
+./evanalyzer cli validate --project experiment.evaproj
 ```
 
 | Argument           | Description                        |
@@ -113,8 +125,8 @@ Checks that every image referenced by a project can be found on disk. Useful as 
 The command exits with a non-zero status code if any images are missing, making it suitable for use in CI scripts:
 
 ```sh
-./evanalyzer cli validate --project settings.improj && \
-  ./evanalyzer cli analyze --project settings.improj
+./evanalyzer cli validate --project experiment.evaproj && \
+  ./evanalyzer cli analyze --project experiment.evaproj
 ```
 
 ## Results Database
@@ -142,6 +154,7 @@ Prints a database summary (image/class counts, T/Z-stack ranges) followed by a p
 | `--json`                      | Emit machine-readable JSON instead of human-readable text |
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
+| `--transpond <true\|false>`   | Show the classes side by side, see [Filter Arguments](#filter-arguments) |
 
 :::note
 `--colocalized <true|false>` is accepted by `view` and `export` but always errors today - row-level colocalization filtering has no equivalent in the current results backend yet.
@@ -218,6 +231,11 @@ Shared by `view` and every `export` subcommand:
 | ----------------------------- | --------------------------------------------------------- |
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
+| `--transpond <true\|false>`   | Place the classes side by side instead of below each other - the CLI twin of the GUI's [Side by side layout](/guide/results/#side-by-side-layout-transposed-table). Default `false` |
+
+:::note
+`--transpond` is currently only applied by `view`; `export csv`/`export xlsx` accept it but still write the normal row layout. Use the GUI's **Transpond output table** export option for a transposed file.
+:::
 
 ### Group Arguments
 
@@ -230,9 +248,26 @@ Shared by `export csv` and `export xlsx` - mirrors the GUI's [Grouping and Aggre
 | `--split-colocalized`               | Accepted but currently rejected - no row-level "is this object colocalized at all" split exists in the current backend        |
 | `--group-by-class`                  | No-op when grouping by image - `image` grouping always splits by class already                                                |
 
+## train-classifier
+
+Trains a pixel or object classifier from a project's labeled objects and saves it under `<project-dir>/models/` - the headless counterpart of the GUI's [training dialog](/ai/training/). Every object with an assigned class, across every image of the project, is used as training data.
+
+```sh
+./evanalyzer cli train-classifier --project experiment.evaproj --settings model.json
+```
+
+| Argument                     | Description                                                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--project <path>`           | Project file to train from (required)                                                                                                             |
+| `--settings <path>`          | JSON file describing the model: metadata, backend hyperparameters (Random Forest / KNN / MLP), feature spec and class labels (required)          |
+| `--model-name <name>`        | Name of the saved model file. Defaults to the name in the `--settings` metadata                                                                   |
+| `--channel <n>`              | Image channel to read (pixel classifiers only, default `0`)                                                                                       |
+| `--t-stack <n>`              | Time frame to read (pixel classifiers only, default `0`)                                                                                          |
+| `--z-stack-handling <mode>`  | How to handle Z-stacks (pixel classifiers only): `single-stack` (default), `all-stacks`, `max-intensity`, `min-intensity`, `avg-intensity`, `sum-intensity`, `take-the-middle` |
+
 ## Project File
 
-The CLI operates on an EVAnalyzer project file (`.improj`). Create and configure the project using the GUI, save it, and then use the saved file for headless runs.
+The CLI operates on an EVAnalyzer project file (`.evaproj`). Create and configure the project using the GUI, save it, and then use the saved file for headless runs.
 
 The project file is a JSON document - it can be modified programmatically using any scripting language.
 
@@ -265,8 +300,8 @@ def run_analysis(project_file):
     )
 
 for size in [3, 5, 7, 9]:
-    set_blur_kernel("settings.improj", size)
-    run_analysis("settings.improj")
+    set_blur_kernel("experiment.evaproj", size)
+    run_analysis("experiment.evaproj")
     print(f"Finished kernel_size={size}")
 ```
 
@@ -302,6 +337,7 @@ The project file is a JSON document following the EVAnalyzer schema. Key top-lev
 
 | Extension | Description                      |
 | --------- | -------------------------------- |
-| `.improj` | EVAnalyzer project file          |
-| `.impt`   | Project template file            |
+| `.evaproj` | EVAnalyzer project file         |
+| `.evapt`   | Project template file           |
+| `.evapipe` | Pipeline template file          |
 | `.evadb`  | Results database (DuckDB format) |

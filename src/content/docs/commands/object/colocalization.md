@@ -18,11 +18,23 @@ Unlike [Object Math](/commands/object/object-math/), which *derives a new shape*
 | **Class for overlapping areas**       | A class assigned to a new object representing the actual overlap area                                           |
 | **Exclude classes**                   | Objects that also overlap one of these classes are dropped entirely, even if they'd otherwise match - see below |
 | **Min colocalization area**           | Minimum overlap area in the selected unit                                                                       |
-| **Size unit**                         | Unit for the min area threshold                                                                                 |
+| **Size unit**                         | Unit for the min area threshold: **Pixels** (default), **Nanometer**, or **Percent** - see below                |
 
 :::note
 **Filter classes**, an older secondary-overlap filter, still exists in the underlying project schema for compatibility with older projects, but is hidden from the command picker in favor of **Exclude classes** below.
 :::
+
+## Minimum overlap
+
+**Min colocalization area** decides how much two objects must overlap to count as colocalizing. Its meaning depends on **Size unit**:
+
+| Size unit     | Two objects colocalize when …                                                       |
+| ------------- | ----------------------------------------------------------------------------------- |
+| **Pixels**    | they share at least this many pixels                                                |
+| **Nanometer** | their overlap area is at least this large in physical units (uses the pixel size)   |
+| **Percent**   | the overlap covers at least this percentage of the **smaller** of the two objects   |
+
+**Percent** makes the threshold independent of object size: a spot lying completely inside a cell overlaps it by 100 %, whatever the size of the cell. For example, with 50 %, a 100 px spot that overlaps a 400 px cell by 50 px colocalizes (50 % of the spot), even though the overlap is only 12.5 % of the cell. The same threshold is applied to [Exclude classes](#exclude-classes).
 
 ## Multiplicity
 

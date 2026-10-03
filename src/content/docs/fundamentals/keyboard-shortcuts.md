@@ -25,11 +25,16 @@ Press **F1**, or go to **Help → Shortcuts** in the menu bar, to open this same
 
 ## Pipeline
 
-| Shortcut | Action              |
-| -------- | -------------------- |
-| `F5`     | Refresh the preview  |
+| Shortcut       | Action                                           |
+| -------------- | ------------------------------------------------ |
+| `F5`           | Refresh the preview                              |
+| `F`            | Focus on the selected pipeline (again: show all) |
+| `Alt`+click    | Focus on a pipeline (again: show all)            |
+| Double-click   | Edit a pipeline's name and image source          |
 
-Re-runs the pipeline preview once - the same as the toolbar's "eye" button or the Pipelines panel's **Preview** action - a single dry-run, distinct from toggling Auto Preview on or off.
+`F5` re-runs the pipeline preview once - the same as the toolbar's "eye" button or the Pipelines panel's **Preview** action - a single dry-run, distinct from toggling Auto Preview on or off.
+
+`F` and `Alt`+click are the quick way into [Focus Mode](/guide/pipelines/#focus-mode): they show only the channel and classes of one pipeline. Plain `F` is used because `Ctrl+F` is the image search.
 
 ## Canvas Tools
 

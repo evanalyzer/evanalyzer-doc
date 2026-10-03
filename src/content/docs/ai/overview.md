@@ -11,13 +11,14 @@ Rather than configuring a model's parameters by hand, you can import a [bioimage
 
 Looking for the opposite direction - a model built from your own annotations rather than one you supply? See [Training a Classifier](/ai/training/), which trains a Random Forest, k-Nearest Neighbors, or neural-network pixel/object classifier from examples you paint directly on your images.
 
-Three architectures are currently implemented as pipeline commands:
+Four architectures are currently implemented as pipeline commands:
 
 | Model                                           | Predicts                                  | Separates touching objects?       |
 | ----------------------------------------------- | ----------------------------------------- | --------------------------------- |
 | [Stardist](/commands/ai-segmentation/stardist/) | Star-convex polygon per object instance   | Yes, directly                     |
 | [UNet](/commands/ai-segmentation/unet/)         | Per-pixel foreground/background mask      | No - requires a follow-up step    |
 | [Cellpose](/commands/ai-segmentation/cellpose/) | Flow field (dY/dX) + cell-probability map, via a Cellpose-SAM model | Yes, directly (via flow dynamics) |
+| [YOLOv5](/commands/ai-segmentation/yolov5/)     | Box, class and (for `-seg` models) mask per object | Yes, directly                     |
 
 ---
 
@@ -54,12 +55,23 @@ See the [Cellpose command reference](/commands/ai-segmentation/cellpose/) for pa
 
 ---
 
+## YOLOv5
+
+[YOLOv5](https://github.com/ultralytics/yolov5) is a fast single-pass object detector. For every object it predicts a bounding box, a confidence and a class; segmentation models (`yolov5*-seg`) additionally predict the object's mask. EVAnalyzer's [YOLOv5](/commands/ai-segmentation/yolov5/) command runs the model in overlapping 640×640 windows, merges duplicates with non-maximum suppression and maps each model class to a project segmentation class.
+
+**When to use it:** models trained with the YOLOv5 tooling, objects of several types that one model should tell apart, or when only bounding-box detection is needed.
+
+See the [YOLOv5 command reference](/commands/ai-segmentation/yolov5/) for parameters and export instructions.
+
+---
+
 ## Choosing a Model
 
 ```
 Does the model predict individual object instances directly?
   ├─ Star-convex polygon export (probability + ray distances) → Stardist
   ├─ Flow field + cell-probability export (dY, dX, cellprob)   → Cellpose
+  ├─ YOLOv5 export (boxes + classes, optionally masks)         → YOLOv5
   └─ No, it's a semantic mask (foreground vs. background, optionally + boundary)
               └─ UNet, with Connected Components (+ Watershed or boundary carving)
 ```

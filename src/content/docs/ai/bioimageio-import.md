@@ -5,7 +5,7 @@ description: Import a pretrained model from bioimage.io and auto-configure an AI
 
 [bioimage.io](https://bioimage.io) is a community repository of pretrained deep-learning models for bioimage analysis, each published with a **Resource Description File** (`rdf.yaml`) describing its architecture, inputs/outputs, and (optionally) pre/post-processing requirements.
 
-Instead of manually filling in a [Stardist](/commands/ai-segmentation/stardist/), [UNet](/commands/ai-segmentation/unet/), or [Cellpose](/commands/ai-segmentation/cellpose/) command by hand, you can point EVAnalyzer at a downloaded model's `rdf.yaml` and have it pre-fill an AI Segmentation step for you.
+Instead of manually filling in a [Stardist](/commands/ai-segmentation/stardist/), [UNet](/commands/ai-segmentation/unet/), [Cellpose](/commands/ai-segmentation/cellpose/), or [YOLOv5](/commands/ai-segmentation/yolov5/) command by hand, you can point EVAnalyzer at a downloaded model's `rdf.yaml` and have it pre-fill an AI Segmentation step for you.
 
 ## Importing a Model
 
@@ -20,6 +20,7 @@ EVAnalyzer parses the file, detects the model architecture, and inserts a pre-co
 
 | Model                                           | Detected when…                                                                          |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [YOLOv5](/commands/ai-segmentation/yolov5/)     | The RDF's name, description, or tags mention "yolo" - checked first, since a YOLO model card may also mention or cite Cellpose |
 | [Cellpose](/commands/ai-segmentation/cellpose/) | The RDF's name, description, or tags mention "cellpose"                                 |
 | [Stardist](/commands/ai-segmentation/stardist/) | The RDF's name/description/tags mention "stardist", or it has a `config.stardist` block |
 | [UNet](/commands/ai-segmentation/unet/)         | Fallback for any other segmentation model                                               |
@@ -28,6 +29,7 @@ Whatever is detected from the model card is filled in automatically:
 
 - **Cellpose** - model path, and **Input channels** read from the RDF's input tensor shape (defaults to 2 if it can't be determined).
 - **Stardist** - model path, plus **Probability threshold** / **NMS threshold** if present in the RDF's `config.stardist.thresholds` block.
+- **YOLOv5** - model path. Every model class `i` is written as segmentation class `i + 1`; set **Class mapping** to choose. If the model was trained on downscaled images (YOLOv5 shrinks them to 640 px by default), set **Image scale** to `640 / training image size`, e.g. `0.3125` for 2048 px images - the import notes remind you of both.
 - **UNet** - model path, and the output layout: a 2-channel mask+boundary output is mapped to **Independent Channels** (foreground = channel 0, boundary = channel 1); a multi-class softmax output assumes the foreground is the last channel.
 
 After the step is inserted, a dialog lists any caveats about what was assumed - review these and adjust the step's parameters if they don't match your model:
@@ -40,8 +42,9 @@ After the step is inserted, a dialog lists any caveats about what was assumed - 
 ## Requirements
 
 - The RDF must describe a `model` resource (not a dataset or notebook) and ship **TorchScript** weights (`weights.torchscript`, or the deprecated `weights.pytorch_script` key). A model that only provides raw `pytorch_state_dict` weights cannot be imported directly - convert it to TorchScript first.
-- Both RDF spec versions 0.4 and 0.5 are supported.
-- Only the three segmentation architectures above are recognised. Classification, detection, or other model types will not be configured correctly.
+- Both RDF spec versions 0.4 and 0.5 are supported, including RDF 0.4 output shapes given relative to an input tensor (`reference_tensor` + `scale`/`offset`), which some boundary U-Nets such as `joyful-pig` use.
+- A model that only lists **ONNX** weights can't be run - the import tells you so. Add a TorchScript export to the RDF (for YOLOv5: `export.py --include torchscript`).
+- Only the four segmentation architectures above are recognised. Classification or other model types will not be configured correctly.
 - Importing a model does not require AI/CUDA support to be installed - it only writes pipeline configuration. Running the resulting step still requires a build with the `ai` feature enabled (see [AI Models](/ai/overview/)).
 
 :::tip

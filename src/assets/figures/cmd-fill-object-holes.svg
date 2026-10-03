@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="foh-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+<text class="lbl-bold" x="220" y="24" text-anchor="middle">Fill Object Holes</text>
+
+<!-- Before -->
+<text class="lbl-sm" x="110" y="48" text-anchor="middle">before</text>
+<path d="M 65 68 a 37 37 0 1 0 0.01 0 Z M 65 88 a 17 17 0 1 1 -0.01 0 Z" fill="#2563eb" fill-opacity="0.35" fill-rule="evenodd" stroke="#2563eb" stroke-width="2"/>
+<circle cx="65" cy="105" r="6" fill="#7c3aed" fill-opacity="0.5" stroke="#7c3aed" stroke-width="1.5"/>
+<path d="M 118 70 H 150 V 95 H 140 V 115 H 150 V 140 H 118 Z" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/>
+<path d="M 150 70 H 182 V 140 H 150 V 115 H 160 V 95 H 150 Z" fill="#16a34a" fill-opacity="0.35" stroke="#16a34a" stroke-width="2"/>
+
+<!-- Arrow -->
+<path d="M 200 105 H 236" fill="none" stroke="#4b5563" stroke-width="1.6" marker-end="url(#foh-head)"/>
+
+<!-- After -->
+<text class="lbl-sm" x="330" y="48" text-anchor="middle">after</text>
+<circle cx="285" cy="105" r="37" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+<path d="M 338 70 H 370 V 95 H 360 V 115 H 370 V 140 H 338 Z" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/>
+<path d="M 370 70 H 402 V 140 H 370 V 115 H 380 V 95 H 370 Z" fill="#16a34a" fill-opacity="0.35" stroke="#16a34a" stroke-width="2"/>
+
+<!-- Notes -->
+<text class="lbl-sm" x="20" y="172">&#8226; A hole enclosed by one object is filled with that object</text>
+<text class="lbl-sm" x="20" y="190">&#8226; An object inside the hole (purple) becomes part of the enclosing one</text>
+<text class="lbl-sm" x="20" y="208">&#8226; A gap enclosed by several touching objects (orange + green) stays</text>
+</svg>
