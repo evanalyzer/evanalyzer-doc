@@ -58,6 +58,7 @@ For multi-channel images, each channel can be independently configured:
 - **Colour assignment** - map a greyscale channel to a display colour (e.g. blue for DAPI, red for Cy5), see [Channel colour](#channel-colour).
 - **Brightness / contrast** - per-channel min/max input range.
 - **Auto-adjust** - automatically set min/max from the image histogram.
+- **Grayscale** - the **Grayscale** button above the channel list shows the channels in white instead of their colours. Because overlaid gray channels can't be told apart, only one channel is visible at a time: switching grayscale on keeps the selected channel (or the first visible one), and switching another channel on hides the previous one. Click **Grayscale** again to return to the coloured composite. The setting is saved in the project.
 
 ### Z-stack navigation
 
@@ -111,8 +112,11 @@ To measure annotated regions and use them in an analysis - for example to count 
 
 ## Series Selection
 
-Some image formats (e.g. LIF, CZI) store multiple image series in a single file.
-Select the desired series index in the properties panel to analyze a specific sub-image.
+Some image formats (e.g. LIF, CZI, VSI) store multiple image series in a single file - for example a full-resolution image and downscaled overviews.
+The series selector in the image panel (**SERIES N OF M**, each series listed with its resolution) chooses which series is shown and analyzed.
+
+The selected series is a **project-wide setting**: it applies to every image of the project - viewer, live preview, AI training and analysis all use the same series.
+If some images of the project don't have the selected series, the analysis refuses to start instead of measuring those images on a different series.
 
 ## Supported Formats
 

@@ -95,6 +95,7 @@ A few rules of thumb (the same approach ilastik's pixel classification is built 
 - **Combine a few filter types across several scales**, rather than many filter types at one scale. Use **Quick add scales** to add the same Gaussian Blur at several σ values at once (e.g. `1, 2, 4, 8`) - small σ picks up fine detail, larger σ adds regional context.
 - **Pair Laplacian/Hessian with pre-blurring.** Both are second-derivative filters and amplify noise; enabling their **Pre-blur** option (Laplacian-/Hessian-of-Gaussian) smooths the image first.
 - **Pixel classifiers train on a single image channel.** If the discriminating signal is spread across channels, you'll need to pick the most informative one or train separate models.
+- **Colour (RGB) images are supported.** On an RGB image every feature channel is computed separately on the red, green and blue planes, so the classifier sees the colour information. A model trained on colour images can only be applied to colour images, and one trained on grayscale images only to grayscale images - EVAnalyzer refuses to apply it to the other kind. All training images of one model must therefore be of the same kind; a mixed set is refused before training starts.
 - More features cost more inference time (every pixel of every image needs every feature computed) without necessarily improving accuracy - start small and add features only where the classifier is actually confusing two classes.
 
 ## Choosing Object Metrics (Object Classifier)

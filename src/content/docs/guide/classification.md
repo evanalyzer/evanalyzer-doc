@@ -4,7 +4,7 @@ description: Define object classes before building analysis pipelines.
 ---
 
 The **Classification** tab is where you define the object populations that your pipelines will detect and measure.
-Every detected object is assigned to one ore more classes class.
+Every detected object is assigned to one or more classes.
 
 ## What is a Class?
 
@@ -60,8 +60,15 @@ Selecting an object expands a detail panel showing:
 
 The panel's footer toolbar, enabled once an object is selected:
 
-- **+ Class** - assigns the class currently selected above to the selected object.
-- **Delete** (trash icon) - removes the object, after a confirmation dialog warning the action can't be undone.
+- **Set class** - opens the **Select class** dialog with the class list. Pick a class, then:
+  - **Add class** adds it to the object's classes, keeping the ones it already has;
+  - **Set class** replaces all of the object's classes with the picked one.
+- **Delete** (trash icon) - removes the selected object, after a confirmation dialog warning the action can't be undone.
+- **Delete all manual annotated objects** (red backspace icon) - removes every object you painted by hand on this image, after a confirmation. Objects found by pipelines are not affected.
+
+### Painting objects
+
+The paint tools in the toolbar (see [Region Annotation](/guide/images/#region-annotation)) need a class to paint into: select a class in the class list first. While no class is selected, the paint tools are disabled.
 
 ### Hiding Unclassified Objects
 

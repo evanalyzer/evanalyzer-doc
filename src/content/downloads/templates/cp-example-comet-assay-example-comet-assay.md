@@ -3,7 +3,7 @@ title: "Example Comet Assay"
 description: "Ported from CellProfiler ExampleCometAssay pipeline"
 category: template
 file: /downloads/templates/project_templates/cp_example_comet_assay/example_comet_assay.evapt
-fileSize: "9.1 KB"
+fileSize: "9.4 KB"
 bundleFile: /downloads/templates/project_templates/cp_example_comet_assay/example_comet_assay-with-images.zip
 bundleSize: "359 KB"
 tags: ["assay", "comet-assay", "cellprofiler"]
@@ -15,6 +15,6 @@ Single-channel comet assay (DNA damage electrophoresis). Ported from the CellPro
 
 ## About the example data
 
-The fluorescent comet images were donated by Scott Floyd and Michael Pacold. 
+The fluorescent comet images were donated by Scott Floyd and Michael Pacold.
 
 The silver-stained comets were contributed by Jorge Ernesto González from the Centro de Protección e Higiene de Las Radiaciones (CPHR).

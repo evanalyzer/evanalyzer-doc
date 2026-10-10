@@ -68,19 +68,59 @@ The **Charts** section (marked **Alpha** in the rail - expect rough edges) plots
 
 Switch to **Plate** in the rail to lay results out as a physical plate/well grid instead of a table or chart - useful for spotting spatial patterns across a multi-well high-content screening plate. It drills down through three levels, tracked by the breadcrumb at the top: **Plate → Well → Image**.
 
-A shared toolbar runs across all three levels: **Class**, **Column** (the metric to color by), **Aggregate**, **Color Schema** (Excel, Viridis, Plasma, Inferno, Cividis, Coolwarm, Red-Blue, YlGnBu, Haline, Algae, or Thermal), and a **Group By (regex)** field for decoding well/field identifiers out of filenames. A legend on the right shows the active color range - click it to switch between **Auto** and a **Manual** min/max.
+A shared toolbar runs across all three levels: **Class**, **Column** (the metric to color by), **Aggregate**, **Color Schema** (Excel, Viridis, Plasma, Inferno, Cividis, Coolwarm, Red-Blue, YlGnBu, Haline, Algae, or Thermal) and **Group By**. A legend on the right shows the active color range - click it to switch between **Auto** and a **Manual** min/max.
+
+Click a tile to select it and see its value in the side panel, then **Open well ›** / **Open Image ›** to drill in - or simply double-click the tile.
+
+### Grouping images into wells
+
+**Group By** decides how images are assigned to wells:
+
+| Mode             | How the well is found                                                                                                                                  |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Auto**         | The well is detected from the image name, e.g. `A01_01.tif` or `Exp_B3_s2.tif`.                                                                        |
+| **Custom regex** | Your own regular expression on the image name. Group 1 is the well (`B03`), group 2 the plate row (`B`), group 3 the plate column (`03`), group 4 the image number inside the well (`01`) - e.g. `^(([A-H])([0-9]+))_([0-9]+)`. |
+| **Folder**       | One well per image folder, placed on the plate when the folder is named like a well (`B03/image_01.tif`).                                               |
+
+Next to the dropdown, the regex in use is shown - for **Auto** and **Folder** read-only, so you can see what was detected.
+
+Grouping, plate size and well size are **project settings**: they are stored in the project file, are the same values as in the **Plate** section of the **Project Settings** dialog, and are used by the [Plates/Wells export](#exporting-results). Changing them in either place changes them in both.
 
 ### Plate
 
-Each cell is one well, colored by the aggregated metric across everything grouped into it. Wells are placed by decoding their group label into a row/column coordinate (e.g. `A14`). Pick a **Plate Size** - **Auto** (picks the smallest standard layout that fits your data) or a fixed 6-, 12-, 24-, 48-, 96-, 384-, or 1536-well layout. Click a well to select it and see its value in the side panel, then **Open well ›** to drill in.
+Each cell is one well, colored by the aggregated metric across everything grouped into it. Wells are placed by decoding their group label into a row/column coordinate (e.g. `A14`). Pick a **Plate Size** - **Auto** (picks the smallest standard layout that fits your data) or a fixed layout from 1 to 3456 wells (e.g. **96 Well (8 x 12)**, **384 Well (16 x 24)**).
 
 ![Plate view](../../../assets/screenshots/screenshot-results-matrix-plate-view.png)
 
 ### Well
 
-Drill into a well to see its individual fields laid out as their own grid (configurable **Rows**/**Cols** in the side panel). Click a field to select it, then **Open Image ›** to drill into its spatial heatmap.
+Drill into a well to see its individual images (fields) laid out as their own grid. **Well Size** sets that grid:
+
+- **Auto** - the smallest square-ish grid that holds the highest image number in the well, images placed in number order.
+- **Custom** - a fixed grid of **Rows** × **Cols**, with a free choice of which image goes where.
+
+**Rearranging images by drag and drop.** If the images were not acquired in the order the grid shows them (e.g. a meander scan), drag an image tile onto another position - the two images swap places. The new order is stored in the project's plate settings and applies to every well of the plate. If **Well Size** was **Auto**, the grid shown becomes a **Custom** grid of the same size first. The same order can also be edited number by number under **Images in well** in the Project Settings dialog.
 
 ![Well view](../../../assets/screenshots/screenshot-matrix-well-view.png)
+
+### Disabling images
+
+An image can be excluded from the statistics, for example because it is out of focus or contains an artifact. In the **Well** level, select the image's tile and click **Disable Image** in the side panel; **Enable Image** brings it back.
+
+A disabled image:
+
+- is left out of every aggregated value - the well's value in the plate view, and the plate/well exports;
+- is shown as a gray, struck-through tile in the well view, and the well containing it gets a small corner badge in the plate view;
+- is shown struck through and dimmed in the [List view](#list-view);
+- is skipped by exports that cover all images. If you select it explicitly in the export's image filter, it is exported anyway.
+
+The setting is stored in the results database, so it is kept when the results are opened again.
+
+### Failed images and incomplete runs
+
+An image whose analysis stopped with an error only holds the objects found before the error. Such an image is marked with a warning badge in the plate and well views (and in its well), drawn in the warning color in the List view, and - like a disabled image - left out of aggregated well values.
+
+If the whole analysis did not finish (cancelled, failed or interrupted, e.g. by a crash), the results window shows a warning banner at the top: the results are incomplete.
 
 ### Image Heatmap
 
@@ -96,13 +136,14 @@ Click **Export** at the bottom of the rail to open the **Export Results** dialog
 
 - **Output Folder** - pick a destination with **Browse…**. The optional **filename prefix** field next to it is put in front of every output file name as `{prefix}_{name}` (e.g. `exp1_list.xlsx`), so exports of several experiments can share one folder. Characters that aren't allowed in file names are replaced by `_`.
 - **Format** - **XLSX** (default), **CSV**, or **Parquet**.
-- **Images/Objects (ungrouped)** - **Object list** (with optional **With coloc details** and **Each image in a separate file**), **Image list** (the same aggregated-by-image data as [grouping the List view](#grouping-and-aggregating-rows)), and **Image heatmap** (the per-image spatial heatmap grid, with its own **Squares sizes** setting). **Transpond output table** writes the object and image lists in the [side-by-side layout](#side-by-side-layout-transposed-table), with the classes next to each other.
-- **Plates/Wells (group by regex)** - **Plate and Wells as list** and **Plate and Wells as heatmap**, both using the **Grouping regex** field below them (leave it blank to use the default well/field pattern).
+- **Images/Objects (ungrouped)** - **Image list** (the same aggregated-by-image data as [grouping the List view](#grouping-and-aggregating-rows)), **Object list** with an image selector next to it (all images by default; [disabled images](#disabling-images) are skipped unless you select them explicitly), with optional **With coloc details** and **Each image in a separate file**, and **Image heatmap** (the per-image spatial heatmap grid, with its own square size). **Transpond output table** writes the object and image lists in the [side-by-side layout](#side-by-side-layout-transposed-table), with the classes next to each other.
+- **Plates/Wells** - **Plate as heatmap**, **Plate as list**, **Wells as heatmap** and **Wells as list**, plus a **Color Schema** for the heatmaps. Grouping, plate size and well size are taken from the project settings - the same ones the [Plate view](#grouping-images-into-wells) uses.
 - **Z/T Range** - restrict the export to a Z and/or T plane range.
-- **Filters** - **Images**, **Classes**, and **Columns**, the same multi-select dropdowns as the List view.
-- **Plate/Wells Options** - **Aggregations** (multi-select), **Color Schema**, **Plate Size**, and **Well rows/cols**, applied to any checked Plate/Well export.
+- **Filters** - **Classes**, **Columns** and **Aggregations** (multi-select).
 
-**Image heatmap** and both **Plates/Wells** options are XLSX-only - they're disabled whenever **CSV** or **Parquet** is selected. **Parquet** goes further: picking it ignores every other setting on this page (filters, columns, grouping, checkboxes) and writes a single `objects.parquet` file - a raw, unfiltered dump of every column in the results database, meant for downstream tools that read Parquet natively rather than for a human to open.
+**Image heatmap** and all **Plates/Wells** options are XLSX-only - they're disabled whenever **CSV** or **Parquet** is selected. **Parquet** goes further: picking it ignores every other setting on this page (filters, columns, grouping, checkboxes) and writes a single `objects.parquet` file - a raw, unfiltered dump of every column in the results database, meant for downstream tools that read Parquet natively rather than for a human to open.
+
+In XLSX exports, values that come from (or, for a well/plate, are affected by) a disabled image are grayed out and struck through.
 
 Click **Start Export** once an output folder is chosen; a progress bar tracks the run and a status message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`), each preceded by the filename prefix if one is set.
 

@@ -60,6 +60,18 @@ A minimal single-step pipeline looks like:
 }
 ```
 
+## Plate Layout
+
+The `plate` object (`PlateSettings`) holds the settings of the [Plate view](/guide/results/#plate-view) and the Plates/Wells export:
+
+- `groupingMode` - how images are assigned to wells: `"AUTO"` (well detected from the image name), `"CUSTOM"` (`groupingRegex` on the image name) or `"FOLDER"` (one well per image folder).
+- `groupingRegex` - the regex for `"CUSTOM"`; its groups are the well (`B03`), the plate row (`B`), the plate column (`03`) and the image number in the well (`01`).
+- `plateSize` - `"AUTO"` or a fixed size such as `"PLATE8X12"` (96 wells).
+- `wellLayout` - `"AUTO"` or a fixed grid `{"FIXED": {"rows": 2, "cols": 3}}`.
+- `wellImageOrder` - for a fixed well grid: the image number shown at each grid position, row by row (`[1, 2, 3, 4]` = number order). Rearranging images by drag and drop in the well view writes this list.
+
+Project files with the older plate format are migrated automatically when opened.
+
 ## Versioning
 
 The schema is fetched from a specific release tag of the app repository (currently `0.1.0-alpha.16`), not the floating `main` branch, so it always describes a real released version rather than in-progress changes. If the fetch fails during a docs build (for example, a GitHub outage), the previously published copy is kept rather than the build failing.

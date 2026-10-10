@@ -53,6 +53,12 @@ A typical pipeline flow:
 
 ![Pipeline editor with steps](../../../assets/screenshots/screenshot-pipeline.png)
 
+### Advanced settings
+
+To keep the step cards short, each command shows only its essential parameters. Settings that rarely need changing - fine-tuning options of the AI models, filters and object commands - are collapsed in a row **Advanced settings (n)** at the bottom of the step card, where _n_ is the number of advanced settings. Click the row to expand or collapse them for that step.
+
+If you changed any advanced setting from its default, the row says so (**· 2 changed**), so modified settings are never hidden unnoticed. Tick **Always show** in the row to expand the advanced settings of every step; EVAnalyzer remembers this preference.
+
 ### Pipeline templates
 
 The command selection dialog also provides a **Template** section.

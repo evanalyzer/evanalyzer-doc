@@ -26,12 +26,12 @@
 
   <rect class="box" x="32" y="90" width="176" height="78" rx="6" stroke="#2563eb"/>
   <text class="lbl-bold" x="120" y="112" text-anchor="middle">EVAnalyzer GUI</text>
-  <text class="lbl-mono" x="120" y="132" text-anchor="middle">--remote ws://srv:7400</text>
+  <text class="lbl-mono" x="120" y="132" text-anchor="middle">--remote wss://srv:7400</text>
   <text class="lbl-mono" x="120" y="148" text-anchor="middle">--user alice</text>
 
   <rect class="box" x="32" y="214" width="176" height="78" rx="6" stroke="#2563eb"/>
   <text class="lbl-bold" x="120" y="236" text-anchor="middle">evanalyzer cli …</text>
-  <text class="lbl-mono" x="120" y="256" text-anchor="middle">--remote ws://srv:7400</text>
+  <text class="lbl-mono" x="120" y="256" text-anchor="middle">--remote wss://srv:7400</text>
   <text class="lbl-mono" x="120" y="272" text-anchor="middle">--user bob</text>
 
   <text class="lbl-sm" x="120" y="318" text-anchor="middle">Only the user interface runs here -</text>

@@ -3,13 +3,13 @@ title: "Example Colocalization"
 description: "Ported from CellProfiler ExampleColocalization pipeline"
 category: template
 file: /downloads/templates/project_templates/cp_example_colocalization/example_colocalization.evapt
-fileSize: "8.1 KB"
+fileSize: "8.2 KB"
 bundleFile: /downloads/templates/project_templates/cp_example_colocalization/example_colocalization-with-images.zip
 bundleSize: "3.67 MB"
 tags: ["colocalization", "spots", "2-channel", "cellprofiler"]
 ---
 
-Two-channel spot colocalization (Cy3-like / Cy5-like nucleosome staining). Ported from the CellProfiler ExampleColocalization.cppipe example. Channel 0 = OrigStain1 (files *_N_R), Channel 1 = OrigStain2 (files *_N_G), merged into one 2-channel TIFF per site via Fiji. Object counts run ~10-15% off CP and coloc% ~5pt high, mainly because evanalyzer's watershed declumping (prominence-based) splits touching spots differently than CP's fixed-radius local-maxima method, and evanalyzer's illumination correction averages over blocks before fitting (more robust to bright spots) instead of fitting the raw pixels directly like CP does.
+Two-channel spot colocalization (Cy3-like / Cy5-like nucleosome staining). Ported from the CellProfiler ExampleColocalization.cppipe example. Channel 0 = OrigStain1 (files _\_N_R), Channel 1 = OrigStain2 (files _\_N_G), merged into one 2-channel TIFF per site via Fiji. Object counts run ~10-15% off CP and coloc% ~5pt high, mainly because evanalyzer's watershed declumping (prominence-based) splits touching spots differently than CP's fixed-radius local-maxima method, and evanalyzer's illumination correction averages over blocks before fitting (more robust to bright spots) instead of fitting the raw pixels directly like CP does.
 
 **Contributed by:** Jeff Reifenberger, Brad Berstein's (Massachusetts General Hospital)
 

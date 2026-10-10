@@ -5,9 +5,11 @@
     "shortDescription": "Methods of Cell Biology course",
     "description": "Methods of Cell Biology course",
     "authors": [
-      "Melanie Schuerz"
+      {
+        "fullName": "Melanie Schuerz",
+        "organization": "University of Salzburg"
+      }
     ],
-    "authorOrganization": "LBI NVPM",
     "creationTime": "2026-06-11T00:00:00Z",
     "category": "Assay",
     "tags": [

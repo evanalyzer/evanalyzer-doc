@@ -27,6 +27,8 @@ evanalyzer.exe cli <command> [options...]
 | [`columns`](#columns)           | List the column ids available for grouping/chart axes in a results database        |
 | [`export`](#export)             | Export a results database to CSV, XLSX, or Parquet                                 |
 | [`train-classifier`](#train-classifier) | Train a pixel or object classifier from a project's labeled objects        |
+| [`jobs`](#jobs-and-attach)      | List the analyses on the `--remote` server: the running one and recently finished ones |
+| [`attach`](#jobs-and-attach)    | Follow an analysis on the `--remote` server again, e.g. after the connection dropped |
 
 Every command supports `--help`:
 
@@ -39,11 +41,25 @@ Every command supports `--help`:
 Every command can also run on another machine - for example a GPU workstation that holds the images. Add the [remote options](/remote/remote-control/#client-options):
 
 ```sh
-./evanalyzer cli --remote ws://server-name:7400 --user alice \
+./evanalyzer cli --remote wss://server-name:7400 --user alice --remote-fingerprint <SHA256> \
   analyze --project /data/experiment-12/experiment.evaproj
 ```
 
 All paths (`--project`, `--images`, `--db`, `--out`, `--settings`) then refer to the server, and output files are written there. See [Remote Control](/remote/remote-control/) for setting up the server.
+
+### jobs and attach
+
+An analysis started on a server keeps running there if the connection drops - `analyze` then exits with a message naming the analysis id. Use the same `--remote` and `--user` options to find and follow it again:
+
+```sh
+# List the running analysis and recently finished ones
+./evanalyzer cli --remote wss://server-name:7400 --user alice jobs
+
+# Follow the running analysis (or a specific one with --job <id>)
+./evanalyzer cli --remote wss://server-name:7400 --user alice attach
+```
+
+`attach` prints the progress like `analyze` does; `Ctrl+C` cancels the analysis. Both commands only work with `--remote`.
 
 ## analyze
 
