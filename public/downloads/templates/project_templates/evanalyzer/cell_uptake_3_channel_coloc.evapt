@@ -412,12 +412,15 @@
     ]
   },
   "plate": {
-    "groupingMode": "NO_GROUPING",
+    "groupingMode": "AUTO",
     "groupingRegex": "",
-    "plateCols": 1,
-    "plateRows": 1,
-    "wellCols": 4,
-    "wellRows": 4,
+    "plateSize": "PLATE1X1",
+    "wellLayout": {
+      "FIXED": {
+        "rows": 4,
+        "cols": 4
+      }
+    },
     "wellImageOrder": [
       1,
       2,
@@ -490,16 +493,16 @@
         {
           "enabled": true,
           "command": {
-            "type": "WATERSHED",
-            "maximumFinderTolerance": 0.5,
-            "smoothingSigma": 0.0,
-            "minObjectSize": 0
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "CONNECTED_COMPONENTS"
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0
           }
         },
         {
@@ -523,19 +526,19 @@
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minArea": 1000.0,
-            "maxArea": 2147483648.0,
+            "maxArea": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
             "minAspectRatio": 0.0,
-            "maxAspectRatio": 2147483648,
+            "maxAspectRatio": 2147483600.0,
             "minEccentricity": 0.0,
             "maxEccentricity": 1.0,
             "minFeret": 0.0,
-            "maxFeret": 2147483648,
+            "maxFeret": 2147483600.0,
             "allowEdgeTouching": true
           }
         }
@@ -643,19 +646,19 @@
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minArea": 2000.0,
-            "maxArea": 2147483648.0,
+            "maxArea": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
             "minAspectRatio": 0.0,
-            "maxAspectRatio": 2147483648,
+            "maxAspectRatio": 2147483600.0,
             "minEccentricity": 0.0,
             "maxEccentricity": 1.0,
             "minFeret": 0.0,
-            "maxFeret": 2147483648,
+            "maxFeret": 2147483600.0,
             "allowEdgeTouching": true
           }
         }
@@ -694,7 +697,7 @@
     {
       "id": 4,
       "name": "spot ch1",
-      "description": "1. Select EV image channel\n2. Adapt manual threshold\n\n Approximation notes: $reclassify was approximated via Colocalization",
+      "description": "1. Select EV image channel\n2. Adapt manual threshold",
       "imageSource": {
         "channel": 2
       },
@@ -741,16 +744,16 @@
         {
           "enabled": true,
           "command": {
-            "type": "WATERSHED",
-            "maximumFinderTolerance": 0.5,
-            "smoothingSigma": 0.0,
-            "minObjectSize": 0
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "CONNECTED_COMPONENTS"
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0
           }
         },
         {
@@ -774,19 +777,19 @@
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minArea": 5.0,
-            "maxArea": 2147483648.0,
+            "maxArea": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
             "minAspectRatio": 0.0,
-            "maxAspectRatio": 2147483648,
+            "maxAspectRatio": 2147483600.0,
             "minEccentricity": 0.0,
             "maxEccentricity": 1.0,
             "minFeret": 0.0,
-            "maxFeret": 2147483648,
+            "maxFeret": 2147483600.0,
             "allowEdgeTouching": true
           }
         },
@@ -807,7 +810,7 @@
               "VALID": 13
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         }
@@ -816,7 +819,7 @@
     {
       "id": 5,
       "name": "spot ch2",
-      "description": "1. Select EV image channel\n2. Adapt manual threshold\n\n Approximation notes: $reclassify was approximated via Colocalization",
+      "description": "1. Select EV image channel\n2. Adapt manual threshold",
       "imageSource": {
         "channel": 3
       },
@@ -863,16 +866,16 @@
         {
           "enabled": true,
           "command": {
-            "type": "WATERSHED",
-            "maximumFinderTolerance": 0.5,
-            "smoothingSigma": 0.0,
-            "minObjectSize": 0
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "CONNECTED_COMPONENTS"
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0
           }
         },
         {
@@ -896,19 +899,19 @@
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minArea": 5.0,
-            "maxArea": 2147483648.0,
+            "maxArea": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
             "minAspectRatio": 0.0,
-            "maxAspectRatio": 2147483648,
+            "maxAspectRatio": 2147483600.0,
             "minEccentricity": 0.0,
             "maxEccentricity": 1.0,
             "minFeret": 0.0,
-            "maxFeret": 2147483648,
+            "maxFeret": 2147483600.0,
             "allowEdgeTouching": true
           }
         },
@@ -929,7 +932,7 @@
               "VALID": 3
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         }
@@ -938,7 +941,7 @@
     {
       "id": 6,
       "name": "spot ch3",
-      "description": "1. Select EV image channel\n2. Adapt manual threshold\n\n Approximation notes: $reclassify was approximated via Colocalization",
+      "description": "1. Select EV image channel\n2. Adapt manual threshold",
       "imageSource": {
         "channel": 4
       },
@@ -985,16 +988,16 @@
         {
           "enabled": true,
           "command": {
-            "type": "WATERSHED",
-            "maximumFinderTolerance": 0.5,
-            "smoothingSigma": 0.0,
-            "minObjectSize": 0
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "CONNECTED_COMPONENTS"
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0
           }
         },
         {
@@ -1018,19 +1021,19 @@
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minArea": 5.0,
-            "maxArea": 2147483648.0,
+            "maxArea": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
             "minAspectRatio": 0.0,
-            "maxAspectRatio": 2147483648,
+            "maxAspectRatio": 2147483600.0,
             "minEccentricity": 0.0,
             "maxEccentricity": 1.0,
             "minFeret": 0.0,
-            "maxFeret": 2147483648,
+            "maxFeret": 2147483600.0,
             "allowEdgeTouching": true
           }
         },
@@ -1051,7 +1054,7 @@
               "VALID": 5
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         }
@@ -1060,7 +1063,7 @@
     {
       "id": 7,
       "name": "Coloc",
-      "description": "Colocalisation is set to 0.1 (0.1-1) as default and may be changed.\n\nWith these settings you will find the following groups:\n- @spots: contains spots outside the cells\n- @in-cell-spots: includes all spots that are within the cell(coloc and non-coloc spots)\n- @ in-cell-spot non coloc: spots only detected in the one respective channel\n- 2 channel coloc spots (e.g. ch1@in-cell-spots coloc ch2) includes all spots in cell that have channel 1 and 2 and also includes spots that might have ch3\n- 3 channel coloc spots: in-cell-spots recognized in ch1, 2 and 3\n Approximation notes: $colocalization N-way matrix approximated as pairwise Colocalization steps (each non-Undefined entry paired with the first other non-Undefined entry) $colocalization N-way matrix approximated as pairwise Colocalization steps (each non-Undefined entry paired with the first other non-Undefined entry) $colocalization N-way matrix approximated as pairwise Colocalization steps (each non-Undefined entry paired with the first other non-Undefined entry) $colocalization N-way matrix approximated as pairwise Colocalization steps (each non-Undefined entry paired with the first other non-Undefined entry)",
+      "description": "Colocalisation is set to 0.1 (0.1-1) as default and may be changed.\n\nWith these settings you will find the following groups:\n- @spots: contains spots outside the cells\n- @in-cell-spots: includes all spots that are within the cell(coloc and non-coloc spots)\n- @ in-cell-spot non coloc: spots only detected in the one respective channel\n- 2 channel coloc spots (e.g. ch1@in-cell-spots coloc ch2) includes all spots in cell that have channel 1 and 2 and also includes spots that might have ch3\n- 3 channel coloc spots: in-cell-spots recognized in ch1, 2 and 3",
       "imageSource": "SCRATCHPAD",
       "enabled": true,
       "steps": [
@@ -1081,7 +1084,7 @@
               "VALID": 6
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1102,7 +1105,7 @@
               "VALID": 8
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1123,7 +1126,7 @@
               "VALID": 14
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1144,7 +1147,7 @@
               "VALID": 15
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1165,7 +1168,7 @@
               "VALID": 9
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1186,7 +1189,7 @@
               "VALID": 16
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1200,6 +1203,9 @@
               },
               {
                 "VALID": 3
+              },
+              {
+                "VALID": 5
               }
             ],
             "filterClasses": [],
@@ -1207,7 +1213,7 @@
               "VALID": 7
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1221,6 +1227,9 @@
               },
               {
                 "VALID": 13
+              },
+              {
+                "VALID": 5
               }
             ],
             "filterClasses": [],
@@ -1228,7 +1237,7 @@
               "VALID": 10
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
           }
         },
@@ -1242,6 +1251,9 @@
               },
               {
                 "VALID": 13
+              },
+              {
+                "VALID": 3
               }
             ],
             "filterClasses": [],
@@ -1249,8 +1261,212 @@
               "VALID": 17
             },
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minColocArea": 0.0
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 13
+              }
+            ],
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
+            "outputClass": {
+              "VALID": 18
+            },
+            "overlappingWith": {
+              "VALID": 3
+            },
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 18
+              }
+            ],
+            "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
+            "outputClass": {
+              "VALID": 18
+            },
+            "overlappingWith": {
+              "VALID": 5
+            },
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 3
+              }
+            ],
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
+            "outputClass": {
+              "VALID": 19
+            },
+            "overlappingWith": {
+              "VALID": 13
+            },
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 19
+              }
+            ],
+            "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
+            "outputClass": {
+              "VALID": 19
+            },
+            "overlappingWith": {
+              "VALID": 5
+            },
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 5
+              }
+            ],
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
+            "outputClass": {
+              "VALID": 20
+            },
+            "overlappingWith": {
+              "VALID": 13
+            },
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 20
+              }
+            ],
+            "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
+            "outputClass": {
+              "VALID": 20
+            },
+            "overlappingWith": {
+              "VALID": 3
+            },
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true
           }
         }
       ]

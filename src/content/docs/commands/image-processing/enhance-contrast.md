@@ -13,7 +13,7 @@ Many raw microscopy images only use a narrow slice of the available intensity ra
 
 | Parameter | Description |
 |---|---|
-| **Saturated pixels** | Fraction of pixels (%) to clip at each end of the histogram when stretching |
+| **Saturated pixels** | Percentage of pixels (0-100) to clip when stretching, split evenly between the darkest and the brightest pixels like in ImageJ: `0.35` (ImageJ's default) clips 0.175 % at each end |
 | **Normalize** | Rescale the histogram so the full intensity range is used |
 | **Equalize histogram** | Redistribute intensities to flatten the histogram, maximising local contrast |
 

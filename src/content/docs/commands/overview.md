@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 38 pipeline commands grouped by category.
+description: All 39 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -37,6 +37,7 @@ Commands for reducing noise and enhancing signal before segmentation.
 | [Median Subtract](/commands/image-processing/median-subtract/)         | Subtract the local median for background removal |
 | [Image Math](/commands/image-processing/image-math/)                   | Combine two images mathematically                |
 | [Image Cache](/commands/image-processing/image-cache/)                 | Store or retrieve an image from cache slots      |
+| [Script](/commands/image-processing/script/)                           | Run your own Rhai script, using the other commands |
 
 ## Edge & Feature Detection
 

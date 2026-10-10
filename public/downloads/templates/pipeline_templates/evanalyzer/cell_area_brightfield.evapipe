@@ -115,19 +115,19 @@
         "outputClass": "UNSET",
         "overlappingWith": "UNSET",
         "minIntersectionArea": 0.0,
-        "sizeUnit": "px",
+        "sizeUnit": "PIXELS",
         "minArea": 53.2,
-        "maxArea": 2147483648.0,
+        "maxArea": 2147483600.0,
         "minCircularity": 0.0,
         "maxCircularity": 1.0,
         "minSolidity": 0.0,
         "maxSolidity": 1.0,
         "minAspectRatio": 0.0,
-        "maxAspectRatio": 2147483648,
+        "maxAspectRatio": 2147483600.0,
         "minEccentricity": 0.0,
         "maxEccentricity": 1.0,
         "minFeret": 0.0,
-        "maxFeret": 2147483648,
+        "maxFeret": 2147483600.0,
         "allowEdgeTouching": true
       }
     }

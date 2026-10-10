@@ -51,6 +51,8 @@ A typical pipeline flow:
 4. **Classify Objects** applies size/circularity filters and assigns an object class.
 5. **Object processing** commands perform further analysis (Colocalization, Distance Transform, …).
 
+When a fixed sequence of steps isn't enough - for example to retry a step with other settings depending on the image - use a [Script](/commands/image-processing/script/) step: a small program that runs the same commands with loops and conditions.
+
 ![Pipeline editor with steps](../../../assets/screenshots/screenshot-pipeline.png)
 
 ### Advanced settings

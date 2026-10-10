@@ -32,7 +32,7 @@ This is why defining classes in the Classification tab *before* wiring up pipeli
 
 Object classes are stored as a **set**, not a single value - an object can carry several classes at once (for example, tagged by one Classify Objects step and again by another, without either removing the first). This is what makes **Add class on match** in Classify Objects useful: it layers a class on top of whatever the object already carries, rather than replacing it.
 
-This also affects **Input Classes** in Classify Objects: an object is only selected if it carries **every** class listed there, not just one of them - so listing more than one class narrows the input population (a logical AND), it doesn't widen it. Leaving it empty is the only way to select every object regardless of class.
+This also affects **Input Classes** in Classify Objects and the AI Object Classifier: an object is selected if it carries **at least one** of the classes listed there - so listing more than one class widens the input population (a logical OR). Leaving it empty selects every object regardless of class.
 
 ## Reserved values
 

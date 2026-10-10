@@ -37,7 +37,9 @@ On the server machine:
 ./evanalyzer server --listen 0.0.0.0:7400
 ```
 
-Without `--listen` the server only accepts connections from the machine itself (`127.0.0.1:7400`). On first start the server creates a self-signed TLS certificate and logs its fingerprint - at every start:
+Without `--listen` the server only accepts connections from the machine itself (`127.0.0.1:7400`). When listening on every network (`0.0.0.0`), the log lists the addresses clients can use - the host name and every IP address of the machine.
+
+On first start the server creates a self-signed TLS certificate and logs its fingerprint - at every start:
 
 ```
 Clients connect with wss:// - certificate fingerprint 1E:0F:D0:…:23:5D
@@ -45,7 +47,13 @@ Clients connect with wss:// - certificate fingerprint 1E:0F:D0:…:23:5D
 
 Give that fingerprint to your users - see [Encryption](#encryption-tls).
 
-Out of the box the server knows a single account, **admin** with password **1234**, and warns at startup while it is in use. Set up real accounts in a [configuration file](#server-configuration) before you open the server to the network.
+Out of the box the server knows a single account, **admin**. Unless you configure a password for it, the server makes up a random one at every start and prints it to the console (only there, not in the log):
+
+```
+  Log in as 'admin' with password: …
+```
+
+That password is valid until the server stops. To keep a fixed password, or to set up several accounts, use a [configuration file](#server-configuration). The admin's worker is confined to a folder of its own (see [Users](#users)), so it can't reach anything else on the machine until you add [allowed folders](#allowed-folders).
 
 ### 2. Connect the GUI
 
@@ -136,8 +144,10 @@ default_allowed_dirs = ["{home}"]
 [users.single]
 username = "admin"
 # Hashed password, create one with `evanalyzer hash-password`.
-# The default is the hash of 1234 - change it.
-password = "$6$evadflt1$…"
+# Default: none - a random password is made up at every start and
+# printed to the console.
+# password = "$argon2id$v=19$m=19456,t=2,p=1$…"
+# Default: a folder of its own, created on start (see Users below).
 # home = "/srv/evanalyzer/admin"
 # allowed_dirs = ["{home}", "/data/microscopy"]
 
@@ -173,7 +183,7 @@ idle_timeout_minutes = 120
 
 | `source`           | Accounts                                                                                                       | Home folder                                                     | Worker runs as                                       |
 | ------------------ | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------- |
-| `single` (default) | One account in `[users.single]`: `admin` / `1234` until you change it (the server warns until you do)          | `users.single.home`, default: the server account's home        | the server's account                                 |
+| `single` (default) | One account in `[users.single]`: `admin`, with a random password made up at every start and printed to the console unless `users.single.password` is set | `users.single.home`, default: a folder of its own - `/var/lib/evanalyzer/single-user` as a system service, otherwise `evanalyzer/single-user` in the server account's data folder (`~/.local/share` on Linux, `%LOCALAPPDATA%` on Windows, `~/Library/Application Support` on macOS) | the server's account |
 | `linux`            | This machine's system users, checked against `/etc/shadow`. The server needs root or membership in the `shadow` group. | from `/etc/passwd`                                              | the user's own account, if the server runs as root |
 | `file`             | The `[[user]]` entries of a separate users file, `[users.file] path`. No system accounts needed.                | `home` of each entry                                            | the server's account                                 |
 
@@ -376,7 +386,7 @@ Prints an Argon2id hash of a password for the server's config or users file. Ask
 ## Security
 
 - A logged-in user's worker can read and write only the user's [allowed folders](#allowed-folders). Keep them as narrow as your users need.
-- Change the default **admin** / **1234** account, or switch to `linux` or `file` users, before the server listens on the network.
+- Set a password for the **admin** account (or switch to `linux` or `file` users) when the server should run permanently - the random password changes at every restart.
 - Distribute the certificate fingerprint over a channel you trust, and don't use `--no-tls-verification` outside of tests.
 - Make the config and users files readable only by the server's account.
 - Treat worker tokens like passwords, and use `--root` on a hand-started worker.

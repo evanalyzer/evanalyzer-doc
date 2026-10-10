@@ -186,6 +186,10 @@ export default defineConfig({
                   label: "Image Cache",
                   slug: "commands/image-processing/image-cache",
                 },
+                {
+                  label: "Script",
+                  slug: "commands/image-processing/script",
+                },
               ],
             },
             {

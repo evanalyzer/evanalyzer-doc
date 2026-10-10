@@ -1,9 +1,9 @@
 ---
 title: Classify Objects
-description: Evaluate objects against shape and intersection criteria, then add, remove, or reassign their object classes based on the match result.
+description: Evaluate objects against shape, intensity and intersection criteria, then add, remove, or reassign their object classes based on the match result.
 ---
 
-The **Classify Objects** command evaluates every object against a set of shape criteria and, optionally, an intersection criterion. Each object either **matches** (passes every enabled criterion) or does not, and the selected **match handling** mode decides what happens to the object's class labels in each case - add a class, strip a class, or reclassify entirely.
+The **Classify Objects** command evaluates every object against a set of shape criteria and, optionally, intensity criteria and an intersection criterion. Each object either **matches** (passes every enabled criterion) or does not, and the selected **match handling** mode decides what happens to the object's class labels in each case - add a class, strip a class, or reclassify entirely.
 
 This is where raw segmentation output ("every connected group of bright pixels") turns into biological meaning ("this is a nucleus, this is an EV - that speck isn't") - the criteria exist because segmentation almost always over-detects, picking up noise, debris, and imaging artifacts alongside genuine objects. Because match handling is itself configurable, the same command also covers narrowing an already-named population and reclassifying objects based on what they overlap.
 
@@ -11,15 +11,20 @@ This is where raw segmentation output ("every connected group of bright pixels")
 
 ## Input Selection
 
-| Parameter         | Description                                                                                                                                           |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Input Classes** | Restrict evaluation to objects that already carry **every** one of these classes. Leave empty to evaluate every object regardless of its current class |
+| Parameter               | Description                                                                                                                                                       |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Input Classes**       | Restrict evaluation to objects that already carry **at least one** of these classes. Leave empty to evaluate every object regardless of its current class          |
+| **Origin Segmentation** | _(advanced)_ Restrict evaluation to objects that came from one of these segmentation classes (the class a Threshold, pixel classifier or AI model assigned). Leave empty for all |
 
-Objects created by [Extract Objects](/commands/object/extract-objects/) carry their segmentation class as an object class from the start, so a fresh, unfiltered population can be selected here the same way as an already-named class from an earlier Classify Objects step. See [Object Classes](/fundamentals/classes/) for how that numbering works and why listing more than one class here narrows the population rather than widening it.
+Objects created by [Extract Objects](/commands/object/extract-objects/) carry their segmentation class as an object class from the start, so a fresh, unfiltered population can be selected here the same way as an already-named class from an earlier Classify Objects step. Listing several classes widens the selection (a logical OR): an object that carries any one of them is evaluated. See [Object Classes](/fundamentals/classes/) for how that numbering works.
+
+:::note[Changed behaviour]
+Earlier versions selected only objects carrying **every** listed input class (a logical AND). Check projects that list more than one input class: they now select more objects than before.
+:::
 
 ## Shape Criteria
 
-An object matches only if it satisfies every criterion below - they combine as a logical AND, not a choice of one.
+An object matches only if it satisfies every criterion below - and every [intensity](#intensity-criteria) and [intersection](#intersection-criterion) criterion - they combine as a logical AND, not a choice of one.
 
 All shape-based criteria accept the field's maximum representable value as "no limit" for the upper bound and `0` for "no lower limit" - there is no dedicated "disabled" sentinel, so leaving a bound at its default effectively disables it.
 
@@ -40,11 +45,25 @@ Shape criteria that depend on physical size (area, Feret) use a single **Size un
 - **Pixels (px)** - absolute pixel count
 - **Nanometres (nm)** - converted using the pixel size from image metadata
 
-There is no separate intensity filter in Classify Objects - mean/min/max/sum intensity per channel are recorded as [metrics](/fundamentals/metrics/#intensity-metrics) on every object, but they aren't part of the match criteria here.
+## Intensity Criteria
+
+**Intensity Filters** is a list of intensity criteria, e.g. _"average intensity in channel 1 brighter than 1200"_. Click **+** to add an entry; each entry has:
+
+| Field          | Description                                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Channel**    | Image channel whose intensity is compared                                                                                           |
+| **Metric**     | **Average**, **Sum**, **Minimum** or **Maximum** of the object's pixel intensities in that channel                                  |
+| **Comparison** | **Brighter than** or **Darker than** the threshold. Both are strict: an object exactly at the threshold matches neither              |
+| **Threshold**  | The intensity to compare with, in **Unit**                                                                                          |
+| **Unit**       | _(advanced)_ **bit** - gray value 0-255 / 0-65535, as in ImageJ/Fiji (default); **%** - 0-100 of the bit range; **rel** - 0-1.0      |
+
+Like the shape criteria, every intensity filter must match (logical AND). Combine a **Brighter than** and a **Darker than** filter on the same channel and metric to select an intensity range. An empty list means no intensity criterion.
+
+The intensities are the [intensity metrics](/fundamentals/metrics/#intensity-metrics) measured on the raw image channel when the objects were extracted - the same values as in the results table. **Sum** is the summed intensity of all object pixels, so its threshold scales with the object's area. An object without a measurement for the chosen channel (the image has no such channel) never matches.
 
 ## Intersection Criterion
 
-An optional, additional criterion evaluated alongside the shape criteria above - an object must satisfy this too, not instead.
+An optional, additional criterion evaluated alongside the shape and intensity criteria above - an object must satisfy this too, not instead.
 
 | Criterion                 | Description                                                                                                                                                            |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -55,7 +74,7 @@ Unlike the shape criteria, this one is disabled entirely by leaving **Intersecti
 
 ## Match Handling
 
-Every object is evaluated once against the criteria above to get a single **match** / **no match** result. **Match Handling** then decides what that result does to the object's classes:
+Every object is evaluated once against the shape, intensity and intersection criteria above to get a single **match** / **no match** result. **Match Handling** then decides what that result does to the object's classes:
 
 | Mode (GUI label)                                   | On match                                            | On non-match                                        |
 | --------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
@@ -90,6 +109,18 @@ Output Tag:      ch1@spot
 ```
 
 Objects larger than 3 px² with any circularity are reclassified as `ch1@spot`; everything else keeps only its segmentation class and is dropped from all named-class results.
+
+## Example: Marker-positive cells
+
+```
+Input Classes:   dapi@cell
+Intensity Filters:
+  Channel 2 · Average · Brighter than · 1200 bit
+Match Handling:  Add class on match
+Output Tag:      cy5@positive
+```
+
+Every `dapi@cell` object whose average intensity in channel 2 is above 1200 additionally gets the class `cy5@positive`; all cells keep their `dapi@cell` class.
 
 ## Example: Reclassify by overlap
 

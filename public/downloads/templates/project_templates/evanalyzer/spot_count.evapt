@@ -61,12 +61,15 @@
     ]
   },
   "plate": {
-    "groupingMode": "NO_GROUPING",
+    "groupingMode": "AUTO",
     "groupingRegex": "",
-    "plateCols": 1,
-    "plateRows": 1,
-    "wellCols": 4,
-    "wellRows": 4,
+    "plateSize": "PLATE1X1",
+    "wellLayout": {
+      "FIXED": {
+        "rows": 4,
+        "cols": 4
+      }
+    },
     "wellImageOrder": [
       1,
       2,
@@ -131,9 +134,15 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 1
+                "objectClassId": 21
               }
             ]
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
@@ -143,12 +152,6 @@
             "maximumFinderTolerance": 0.5,
             "smoothingSigma": 0.0,
             "minObjectSize": 0
-          }
-        },
-        {
-          "enabled": true,
-          "command": {
-            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
@@ -165,26 +168,26 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "VALID": 21
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minArea": 3.0,
-            "maxArea": 2147483648.0,
+            "maxArea": 2147483600.0,
             "minCircularity": 0.10000000149011612,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
             "minAspectRatio": 0.0,
-            "maxAspectRatio": 2147483648,
+            "maxAspectRatio": 2147483600.0,
             "minEccentricity": 0.0,
             "maxEccentricity": 1.0,
             "minFeret": 0.0,
-            "maxFeret": 2147483648,
+            "maxFeret": 2147483600.0,
             "allowEdgeTouching": true
           }
         }
@@ -193,11 +196,11 @@
     {
       "id": 2,
       "name": "Tetraspeck",
-      "description": "This pipeline steps enables the removal of calibration beads (e.g. tetraspeck) that are fluorescent in all channels. \n1. Enable pipeline\n2. Select Tetraspeck image channel (channel showing only tetraspecks)\n3. Adapt (manual) threshold \n4. Within the *Reclassify* command select the channels where tetraspeck need to be removed.",
+      "description": "This pipeline enables the removal of calibration beads (e.g. tetraspeck) that are fluorescent in all channels.\n1. Enable pipeline\n2. Select Tetraspeck image channel (channel showing only tetraspecks)\n3. Adapt (manual) threshold\n4. The *Classify objects* steps at the end remove every spot overlapping a tetraspeck - add or remove steps for the channels where tetraspecks need to be removed.",
       "imageSource": {
         "channel": 1
       },
-      "enabled": true,
+      "enabled": false,
       "steps": [
         {
           "enabled": true,
@@ -242,16 +245,16 @@
         {
           "enabled": true,
           "command": {
-            "type": "WATERSHED",
-            "maximumFinderTolerance": 0.5,
-            "smoothingSigma": 0.0,
-            "minObjectSize": 0
+            "type": "CONNECTED_COMPONENTS"
           }
         },
         {
           "enabled": true,
           "command": {
-            "type": "CONNECTED_COMPONENTS"
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0
           }
         },
         {
@@ -275,19 +278,51 @@
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "minIntersectionArea": 0.0,
-            "sizeUnit": "px",
+            "sizeUnit": "PIXELS",
             "minArea": 5.0,
-            "maxArea": 2147483648.0,
+            "maxArea": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
             "minAspectRatio": 0.0,
-            "maxAspectRatio": 2147483648,
+            "maxAspectRatio": 2147483600.0,
             "minEccentricity": 0.0,
             "maxEccentricity": 1.0,
             "minFeret": 0.0,
-            "maxFeret": 2147483648,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true
+          }
+        },
+        {
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "VALID": 21
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": {
+              "VALID": 5
+            },
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
             "allowEdgeTouching": true
           }
         }

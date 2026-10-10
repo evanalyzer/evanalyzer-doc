@@ -15,7 +15,7 @@ Available in builds with the `ai` Cargo feature enabled - see [AI Models](/ai/ov
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Model Path** | Path to a trained object classifier `.evamodel` file, saved from the [Train Classifier](/ai/training/) dialog |
 | **Segmentation Mapping** | Maps each of the model's predicted classes to one of this project's object classes (despite the name, this maps *object* classes, not segmentation classes - a naming quirk carried over from the pixel classifier's equivalent field) |
-| **Input Classes** | Restrict scoring to objects that already carry **every** one of these classes. Leave empty to evaluate every object regardless of its current class - same AND semantics as Classify Objects' Input Classes (see [Object Classes](/fundamentals/classes/)) |
+| **Input Classes** | Restrict scoring to objects that already carry **at least one** of these classes. Leave empty to evaluate every object regardless of its current class - same OR semantics as Classify Objects' Input Classes (see [Object Classes](/fundamentals/classes/)) |
 | **Match Handling** | What to do with an object's classes once a mapped prediction is applied - see below |
 
 ### Match Handling

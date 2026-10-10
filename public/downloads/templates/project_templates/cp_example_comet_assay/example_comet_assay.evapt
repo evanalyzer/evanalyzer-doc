@@ -64,12 +64,15 @@
     ]
   },
   "plate": {
-    "groupingMode": "NO_GROUPING",
+    "groupingMode": "AUTO",
     "groupingRegex": "",
-    "plateCols": 1,
-    "plateRows": 1,
-    "wellCols": 4,
-    "wellRows": 4,
+    "plateSize": "PLATE1X1",
+    "wellLayout": {
+      "FIXED": {
+        "rows": 4,
+        "cols": 4
+      }
+    },
     "wellImageOrder": [
       1,
       2,
@@ -155,14 +158,14 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
           "enabled": false,
           "command": {
             "type": "WATERSHED",
-            "maximumFinderTolerance": 21.0,
+            "maximumFinderTolerance": 20.0,
             "smoothingSigma": 10.0,
             "minObjectSize": 0,
             "seedSource": "INTENSITY"
@@ -271,7 +274,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
