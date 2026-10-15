@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "EV uptake in cells",
     "shortDescription": "Methods of Cell Biology course",
@@ -22,82 +22,52 @@
   "classification": {
     "classes": [
       {
-        "id": {
-          "VALID": 0
-        },
+        "id": 0,
         "color": "#97978f",
         "name": "Background",
         "notes": ""
       },
       {
-        "id": {
-          "VALID": 4
-        },
+        "id": 4,
         "color": "#3399FF",
         "name": "dapi@nucleus",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 11
-        },
+        "id": 11,
         "color": "#FFCC33",
         "name": "brightfield@cell-area",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 12
-        },
+        "id": 12,
         "color": "#FF8C33",
         "name": "brightfield@cells",
-        "notes": "",
-        "measure": {
-          "intensityAvg": [
-            "AVG"
-          ],
-          "intersecting": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 21
-        },
+        "id": 21,
         "color": "#BFBFBF",
         "name": "cy7@spot",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 1
-        },
+        "id": 1,
         "color": "#640000",
         "name": "cy5@spot",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 13
-        },
+        "id": 13,
         "color": "#FF33FF",
         "name": "cy7@in-cell-spots",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 3
-        },
+        "id": 3,
         "color": "#FF3333",
         "name": "cy5@in-cell-spots",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       }
     ]
   },
@@ -175,7 +145,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 4
+                "segmentationClass": 4
               }
             ]
           }
@@ -208,7 +178,7 @@
             "type": "CLASSIFY_OBJECTS",
             "inputClasses": [
               {
-                "VALID": 4
+                "GLOBAL": 4
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -304,7 +274,7 @@
                 "minThreshold": 0.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 11
+                "segmentationClass": 11
               }
             ]
           }
@@ -328,7 +298,7 @@
             "type": "CLASSIFY_OBJECTS",
             "inputClasses": [
               {
-                "VALID": 11
+                "GLOBAL": 11
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -366,15 +336,15 @@
           "command": {
             "type": "VORONOI",
             "centers": {
-              "VALID": 4
+              "GLOBAL": 4
             },
             "centerFilterClasses": [],
             "mask": {
-              "VALID": 11
+              "GLOBAL": 11
             },
             "maskFilterClasses": [],
             "outputClass": {
-              "VALID": 12
+              "GLOBAL": 12
             },
             "unit": "PIXELS",
             "maxRadius": 0.0,
@@ -419,7 +389,7 @@
                 "minThreshold": 40.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 21
+                "segmentationClass": 21
               }
             ]
           }
@@ -453,7 +423,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 21
+                "GLOBAL": 21
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -482,15 +452,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 21
+                "GLOBAL": 21
               },
               {
-                "VALID": 12
+                "GLOBAL": 12
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 13
+              "GLOBAL": 13
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -534,7 +504,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 1
+                "segmentationClass": 1
               }
             ]
           }
@@ -568,7 +538,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "matchHandling": "REMOVE_INPUT_CLASS_IF_NOT_MATCH",
@@ -597,15 +567,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               },
               {
-                "VALID": 12
+                "GLOBAL": 12
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 3
+              "GLOBAL": 3
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",

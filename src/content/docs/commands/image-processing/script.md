@@ -61,6 +61,32 @@ Images are values: keeping one in a variable is free, and a later command never 
 
 The script sees the current tile as read-only constants: `image_width`, `image_height`, `tile_x`, `tile_y` (the tile's offset in the image) and `image_bits` (bit depth). `print(...)` writes to the log.
 
+### Settings: `param`
+
+A `param` line declares a value the script gets from the **step's settings** instead of from its code - so the same script can be used with other values without editing it:
+
+```rust
+param nuclei_channel: channel = 0;   // an image channel
+param min_size = 20;                 // type from the value: a number
+param use_watershed = true;          // a yes/no setting
+
+let raw = channel(nuclei_channel);
+// ...
+```
+
+Every `param` shows up as a setting on the step card, with its name and the default from the script. The step stores only values that differ from the default. In a [command group](/guide/command-groups/), a `param` can be exposed as a group parameter like any other setting.
+
+| Type      | Value                         |
+| --------- | ----------------------------- |
+| `number`  | A whole number, e.g. `10`     |
+| `decimal` | A decimal number, e.g. `2.5`  |
+| `bool`    | `true` or `false`             |
+| `text`    | A text, e.g. `"otsu"`         |
+| `class`   | An object class (a number in the script) |
+| `channel` | An image channel (a number in the script) |
+
+Without `: type`, the type follows from the default. The default must be a plain value (a number, a decimal, `true`/`false` or a text), not an expression. Each name may be declared once and can't be one of the built-in constants below.
+
 ## Script editor
 
 Click **Edit script** on the step card to open the editor:

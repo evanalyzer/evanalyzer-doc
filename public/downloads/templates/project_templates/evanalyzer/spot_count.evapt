@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Spot count",
     "shortDescription": "Count the number of spots in an image channel.",
@@ -20,43 +20,22 @@
   "classification": {
     "classes": [
       {
-        "id": {
-          "VALID": 0
-        },
+        "id": 0,
         "color": "#97978f",
         "name": "Background",
         "notes": ""
       },
       {
-        "id": {
-          "VALID": 21
-        },
+        "id": 21,
         "color": "#33CFFF",
         "name": "ch1@spot",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 5
-        },
+        "id": 5,
         "color": "#66FF33",
         "name": "tetraspeck@spot",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       }
     ]
   },
@@ -134,7 +113,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 21
+                "segmentationClass": 21
               }
             ]
           }
@@ -168,7 +147,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 21
+                "GLOBAL": 21
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -237,7 +216,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 5
+                "segmentationClass": 5
               }
             ]
           }
@@ -271,7 +250,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -301,13 +280,13 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 21
+                "GLOBAL": 21
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": {
-              "VALID": 5
+              "GLOBAL": 5
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",

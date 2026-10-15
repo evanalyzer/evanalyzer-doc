@@ -14,6 +14,15 @@ This is the boundary between "pixels" and "objects" in the pipeline: everything 
 | Parameter | Description |
 |---|---|
 | **Max objects before fail** | Hard upper limit on the number of regions extracted. If more regions are found the pipeline step fails, preventing runaway processing on misconfigured segmentation (default: –1 = unlimited) |
+| **Class Mapping** | Which object class the objects of a segmentation class get - see [Class mapping](#class-mapping). Empty by default |
+
+## Class mapping
+
+Without a mapping, the objects of a segmentation class get the project class with the **same number** - that's what the class choice in [Threshold](/commands/segmentation/threshold/) means.
+
+**Class Mapping** is a list of entries, each with a **Segmentation Class** and the **Object Class** its objects get. Segmentation classes without an entry keep the default. Inside a [command group](/guide/command-groups/), map to one of the group's own classes to keep the objects [internal](/guide/command-groups/#internal-classes) to the group - this is what **Group…** sets up automatically when a segmentation class is only used by the grouped steps.
+
+A mapping to a project class that doesn't exist is shown as a warning.
 
 ## Pipeline position
 

@@ -19,7 +19,7 @@ The results window has a left icon rail for switching between the three ways of 
 
 ## List View
 
-The **List** view (the default) shows one row per detected object: **Object ID**, **Image**, **Class**, geometry columns like **Area** and **Circularity**, and one **Min/Max/Avg/Sum** column per measured channel.
+The **List** view (the default) shows one row per detected object: **Object ID**, **Image**, **Class**, geometry columns like **Area** and **Circularity**, and one **Min/Max/Avg/Sum** column per measured channel. For tracked objects (see [Simple Tracker](/commands/dataset/simple-tracker/)), the **Track ID** column (under **General** in the **Columns** filter) shows the track each object belongs to; it is empty for objects that aren't part of a track.
 
 The filter bar above the table has three dropdowns - **Images**, **Class**, and **Columns** - each a searchable, multi-select checklist with a **X of Y** summary (e.g. _"19 of 22 Classes"_) and select-all/none shortcuts. **Columns** groups per-channel intensity metrics so you can toggle a whole channel at once instead of column by column. The object count for the current filters is shown at the top-right.
 
@@ -84,7 +84,7 @@ Click a tile to select it and see its value in the side panel, then **Open well 
 
 Next to the dropdown, the regex in use is shown - for **Auto** and **Folder** read-only, so you can see what was detected.
 
-Grouping, plate size and well size are **project settings**: they are stored in the project file, are the same values as in the **Plate** section of the **Project Settings** dialog, and are used by the [Plates/Wells export](#exporting-results). Changing them in either place changes them in both.
+Grouping, plate size and well size are **project settings**: they are stored in the project file, are the same values as in the **Plate & grouping** section of **File › [Settings…](/guide/settings/)**, and are used by the [Plates/Wells export](#exporting-results). Changing them in either place changes them in both.
 
 ### Plate
 
@@ -99,7 +99,7 @@ Drill into a well to see its individual images (fields) laid out as their own gr
 - **Auto** - the smallest square-ish grid that holds the highest image number in the well, images placed in number order.
 - **Custom** - a fixed grid of **Rows** × **Cols**, with a free choice of which image goes where.
 
-**Rearranging images by drag and drop.** If the images were not acquired in the order the grid shows them (e.g. a meander scan), drag an image tile onto another position - the two images swap places. The new order is stored in the project's plate settings and applies to every well of the plate. If **Well Size** was **Auto**, the grid shown becomes a **Custom** grid of the same size first. The same order can also be edited number by number under **Images in well** in the Project Settings dialog.
+**Rearranging images by drag and drop.** If the images were not acquired in the order the grid shows them (e.g. a meander scan), drag an image tile onto another position - the two images swap places. The new order is stored in the project's plate settings and applies to every well of the plate. If **Well Size** was **Auto**, the grid shown becomes a **Custom** grid of the same size first. The same order can also be edited number by number under **Images in well** in the Settings dialog (**Plate & grouping**).
 
 ![Well view](../../../assets/screenshots/screenshot-matrix-well-view.png)
 

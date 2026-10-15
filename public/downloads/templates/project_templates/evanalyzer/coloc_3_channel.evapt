@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Coloc 3 channels",
     "shortDescription": "Spot colocalization with three image channels.",
@@ -21,260 +21,106 @@
   "classification": {
     "classes": [
       {
-        "id": {
-          "VALID": 0
-        },
+        "id": 0,
         "color": "#97978f",
         "name": "Background",
         "notes": ""
       },
       {
-        "id": {
-          "VALID": 15
-        },
+        "id": 15,
         "color": "#5EFF00",
         "name": "ch1@allspots",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 1
-        },
+        "id": 1,
         "color": "#FF3333",
         "name": "ch2@allspots",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 5
-        },
+        "id": 5,
         "color": "#3399FF",
         "name": "ch3@all spots",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 16
-        },
+        "id": 16,
         "color": "#D2FF00",
         "name": "tetraspeck@spot",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 7
-        },
+        "id": 7,
         "color": "#FFD200",
         "name": "ch1@coloc_ch2",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 8
-        },
+        "id": 8,
         "color": "#FFFF33",
         "name": "ch1@coloc_ch3",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG",
-            "SUM"
-          ],
-          "intensitySum": [
-            "AVG",
-            "SUM"
-          ],
-          "intensityAvg": [
-            "AVG",
-            "SUM"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 4
-        },
+        "id": 4,
         "color": "#F6FF00",
         "name": "ch1@coloc_ch2and3",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 11
-        },
+        "id": 11,
         "color": "#FF33C4",
         "name": "ch2@coloc_ch1",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 2
-        },
+        "id": 2,
         "color": "#FF33FF",
         "name": "ch2@coloc_ch3",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 3
-        },
+        "id": 3,
         "color": "#9933FF",
         "name": "ch2@coloc_ch1and3",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "circularity": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 6
-        },
+        "id": 6,
         "color": "#33FFD1",
         "name": "ch3@coloc_ch1",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 9
-        },
+        "id": 9,
         "color": "#33FFCC",
         "name": "ch3@coloc_ch2",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 10
-        },
+        "id": 10,
         "color": "#33FF99",
         "name": "ch3@coloc_ch1and2",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 12
-        },
+        "id": 12,
         "color": "#33FF57",
         "name": "ch1@noncoloc",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 13
-        },
+        "id": 13,
         "color": "#FF3380",
         "name": "ch2@noncoloc",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 14
-        },
+        "id": 14,
         "color": "#33CFFF",
         "name": "ch3@noncoloc",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       }
     ]
   },
@@ -352,7 +198,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 15
+                "segmentationClass": 15
               }
             ]
           }
@@ -386,7 +232,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 15
+                "GLOBAL": 15
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -455,7 +301,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 1
+                "segmentationClass": 1
               }
             ]
           }
@@ -489,7 +335,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -558,7 +404,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 5
+                "segmentationClass": 5
               }
             ]
           }
@@ -592,7 +438,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -661,7 +507,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 16
+                "segmentationClass": 16
               }
             ]
           }
@@ -695,7 +541,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 16
+                "GLOBAL": 16
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -725,13 +571,13 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 15
+                "GLOBAL": 15
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": {
-              "VALID": 16
+              "GLOBAL": 16
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -757,13 +603,13 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": {
-              "VALID": 16
+              "GLOBAL": 16
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -789,13 +635,13 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": {
-              "VALID": 16
+              "GLOBAL": 16
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -829,18 +675,18 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 15
+                "GLOBAL": 15
               },
               {
-                "VALID": 1
+                "GLOBAL": 1
               },
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 4
+              "GLOBAL": 4
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -853,18 +699,18 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               },
               {
-                "VALID": 15
+                "GLOBAL": 15
               },
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 3
+              "GLOBAL": 3
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -877,18 +723,18 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 5
+                "GLOBAL": 5
               },
               {
-                "VALID": 15
+                "GLOBAL": 15
               },
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 10
+              "GLOBAL": 10
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -901,15 +747,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 15
+                "GLOBAL": 15
               },
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 7
+              "GLOBAL": 7
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -922,15 +768,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               },
               {
-                "VALID": 15
+                "GLOBAL": 15
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 11
+              "GLOBAL": 11
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -943,15 +789,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 15
+                "GLOBAL": 15
               },
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 8
+              "GLOBAL": 8
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -964,15 +810,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 5
+                "GLOBAL": 5
               },
               {
-                "VALID": 15
+                "GLOBAL": 15
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 6
+              "GLOBAL": 6
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -985,15 +831,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               },
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 2
+              "GLOBAL": 2
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -1006,15 +852,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 5
+                "GLOBAL": 5
               },
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 9
+              "GLOBAL": 9
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -1028,15 +874,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 15
+                "GLOBAL": 15
               }
             ],
             "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
             "outputClass": {
-              "VALID": 12
+              "GLOBAL": 12
             },
             "overlappingWith": {
-              "VALID": 1
+              "GLOBAL": 1
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -1062,15 +908,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 12
+                "GLOBAL": 12
               }
             ],
             "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
-              "VALID": 12
+              "GLOBAL": 12
             },
             "overlappingWith": {
-              "VALID": 5
+              "GLOBAL": 5
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -1096,15 +942,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
             "outputClass": {
-              "VALID": 13
+              "GLOBAL": 13
             },
             "overlappingWith": {
-              "VALID": 15
+              "GLOBAL": 15
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -1130,15 +976,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 13
+                "GLOBAL": 13
               }
             ],
             "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
-              "VALID": 13
+              "GLOBAL": 13
             },
             "overlappingWith": {
-              "VALID": 5
+              "GLOBAL": 5
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -1164,15 +1010,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 5
+                "GLOBAL": 5
               }
             ],
             "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
             "outputClass": {
-              "VALID": 14
+              "GLOBAL": 14
             },
             "overlappingWith": {
-              "VALID": 15
+              "GLOBAL": 15
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -1198,15 +1044,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 14
+                "GLOBAL": 14
               }
             ],
             "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
-              "VALID": 14
+              "GLOBAL": 14
             },
             "overlappingWith": {
-              "VALID": 1
+              "GLOBAL": 1
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",

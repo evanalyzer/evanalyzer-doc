@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Yeast cells brightfield",
     "shortDescription": "Yeast cells brightfield",
@@ -51,7 +51,7 @@
             "minThreshold": 4000.0,
             "maxThreshold": 65535.0,
             "unit": "BIT",
-            "objectClassId": 1
+            "segmentationClass": 1
           }
         ]
       }
@@ -74,13 +74,13 @@
       "command": {
         "type": "VORONOI",
         "centers": {
-          "VALID": 1
+          "GLOBAL": 1
         },
         "centerFilterClasses": [],
         "mask": "UNSET",
         "maskFilterClasses": [],
         "outputClass": {
-          "VALID": 4
+          "GLOBAL": 4
         },
         "unit": "PIXELS",
         "maxRadius": 30.0,

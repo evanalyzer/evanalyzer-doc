@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Nuclei detection",
     "shortDescription": "Nuclei detection",
@@ -48,7 +48,7 @@
             "minThreshold": 0.0,
             "maxThreshold": 65535.0,
             "unit": "BIT",
-            "objectClassId": 2
+            "segmentationClass": 2
           }
         ]
       }
@@ -81,7 +81,7 @@
         "type": "CLASSIFY_OBJECTS",
         "inputClasses": [
           {
-            "VALID": 2
+            "GLOBAL": 2
           }
         ],
         "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",

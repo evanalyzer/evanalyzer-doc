@@ -91,6 +91,7 @@ export default defineConfig({
             { label: "Images", slug: "guide/images" },
             { label: "Classification", slug: "guide/classification" },
             { label: "Pipelines", slug: "guide/pipelines" },
+            { label: "Command Groups", slug: "guide/command-groups" },
             { label: "Results", slug: "guide/results" },
           ],
         },
@@ -185,6 +186,10 @@ export default defineConfig({
                 {
                   label: "Image Cache",
                   slug: "commands/image-processing/image-cache",
+                },
+                {
+                  label: "Load Image Channel",
+                  slug: "commands/image-processing/load-image-channel",
                 },
                 {
                   label: "Script",
@@ -310,6 +315,15 @@ export default defineConfig({
                   slug: "commands/object/object-math",
                 },
                 { label: "Save Image", slug: "commands/object/save-image" },
+              ],
+            },
+            {
+              label: "Dataset",
+              items: [
+                {
+                  label: "Simple Tracker",
+                  slug: "commands/dataset/simple-tracker",
+                },
               ],
             },
           ],

@@ -28,10 +28,15 @@ Selecting an image fills the **Image Meta** panel with detailed meta information
 | **Channels**    | Per-channel name, display colour and emission wavelength (nm) - colour editable, see below |
 | **Dimensions**  | Width × Height, storage size                                             |
 | **Calibration** | Pixel X / Y / Z size (nm) - editable via **Edit** / **Done** / **Reset** |
+| **Time**        | Frame interval (s) of time-lapse images - editable via **Edit** / **Done** / **Reset**, see below |
 
 ![Image Meta panel](../../../assets/screenshots/screenshot-image-meta.png)
 
 Use the **Calibration** section to correct pixel size if it was not embedded correctly in the source file - this affects the scale bar and all physical-unit measurements (area, distance) calculated during analysis.
+
+### Frame interval
+
+The **Time** section shows the time between two frames of a time-lapse, in seconds, as read from the image metadata (**-** if the metadata has none). Click **Edit** to enter it, **Done** to confirm (only a positive number is accepted), or **Reset** to go back to the value stored in the image. Like a channel colour, an edited frame interval applies to the whole project and is marked **edited**.
 
 ### Channel colour
 
@@ -81,6 +86,12 @@ The units are nm, µm or mm based on the actual zoom level.
 Pixel sizes are read from the image metadata.
 
 If the image does not contain pixel size information use the **Calibration** section to define it manually.
+
+### Panning and zooming large images
+
+Panning and zooming move the image that is already on screen right away; the sharp version is rendered once the movement stops. For whole slide images, EVAnalyzer can keep earlier high-resolution renders, so panning back or zooming out shows them instead of a blurry overview. How much memory the viewer uses for this - and for its tile and overview caches - is set in the [Settings](/guide/settings/#this-computer) dialog.
+
+Large images that come with pyramid levels (SVS, NDPI, MRXS, CZI, OME-TIFF) are read at the level that fits the zoom. Large images without pyramid levels are read in blocks and subsampled, so they don't need more memory than the screen shows - but every zoom step reads the image again, which can take a few seconds.
 
 ### Navigator minimap
 

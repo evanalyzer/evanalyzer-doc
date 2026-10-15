@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Cell brightfield",
     "shortDescription": "Cell brightfield",
@@ -65,15 +65,6 @@
     {
       "enabled": true,
       "command": {
-        "type": "ROLLING_BALL",
-        "ballType": "BALL",
-        "preSmooth": true,
-        "radius": 4
-      }
-    },
-    {
-      "enabled": true,
-      "command": {
         "type": "THRESHOLD",
         "thresholds": [
           {
@@ -83,7 +74,7 @@
             "minThreshold": 0.0,
             "maxThreshold": 65535.0,
             "unit": "BIT",
-            "objectClassId": 1
+            "segmentationClass": 1
           }
         ]
       }
@@ -107,7 +98,7 @@
         "type": "CLASSIFY_OBJECTS",
         "inputClasses": [
           {
-            "VALID": 1
+            "GLOBAL": 1
           }
         ],
         "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",

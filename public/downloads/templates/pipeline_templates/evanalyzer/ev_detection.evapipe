@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "EV detection",
     "shortDescription": "EV detection",
@@ -48,7 +48,7 @@
             "minThreshold": 0.0,
             "maxThreshold": 65535.0,
             "unit": "BIT",
-            "objectClassId": 1
+            "segmentationClass": 1
           }
         ]
       }
@@ -73,12 +73,12 @@
         "originSegmentation": [],
         "inputClasses": [
           {
-            "VALID": 1
+            "GLOBAL": 1
           }
         ],
         "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
         "outputClass": {
-          "VALID": 1
+          "GLOBAL": 1
         },
         "overlappingWith": "UNSET",
         "minIntersectionArea": 0.0,

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Example Colocalization",
     "shortDescription": "Ported from CellProfiler ExampleColocalization pipeline",
@@ -27,33 +27,25 @@
   "classification": {
     "classes": [
       {
-        "id": {
-          "VALID": 0
-        },
+        "id": 0,
         "color": "#97978f",
         "name": "Background",
         "notes": ""
       },
       {
-        "id": {
-          "VALID": 1
-        },
+        "id": 1,
         "color": "#FF3333",
         "name": "ch1@spot",
         "notes": "Objects1 in CP pipeline (Stain1 / *_N_R channel)"
       },
       {
-        "id": {
-          "VALID": 2
-        },
+        "id": 2,
         "color": "#33CC33",
         "name": "ch2@spot",
         "notes": "Objects2 in CP pipeline (Stain2 / *_N_G channel)"
       },
       {
-        "id": {
-          "VALID": 3
-        },
+        "id": 3,
         "color": "#9933FF",
         "name": "ch1-ch2@coloc",
         "notes": "Overlap area between ch1@spot and ch2@spot"
@@ -134,7 +126,7 @@
                 "minThreshold": 100.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 1,
+                "segmentationClass": 1,
                 "valueSource": "ACTUAL_IMAGE"
               }
             ]
@@ -169,7 +161,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -238,7 +230,7 @@
                 "minThreshold": 100.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 2,
+                "segmentationClass": 2,
                 "valueSource": "ACTUAL_IMAGE"
               }
             ]
@@ -273,7 +265,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 2
+                "GLOBAL": 2
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -310,15 +302,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               },
               {
-                "VALID": 2
+                "GLOBAL": 2
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 3
+              "GLOBAL": 3
             },
             "multiplicity": "ONE_TO_ONE",
             "sizeUnit": "PIXELS",

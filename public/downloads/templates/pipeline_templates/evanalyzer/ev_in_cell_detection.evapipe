@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "EV in Cell",
     "shortDescription": "EV in cell detection",
@@ -39,7 +39,7 @@
             "minThreshold": 0.0,
             "maxThreshold": 65535.0,
             "unit": "BIT",
-            "objectClassId": 3
+            "segmentationClass": 3
           }
         ]
       }
@@ -72,7 +72,7 @@
         "type": "CLASSIFY_OBJECTS",
         "inputClasses": [
           {
-            "VALID": 3
+            "GLOBAL": 3
           }
         ],
         "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",

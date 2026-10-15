@@ -3,7 +3,7 @@ title: Image Cache
 description: Store the current image in a named cache slot for retrieval in a later step.
 ---
 
-The **Image Cache** command saves or loads an intermediate image to/from a named cache slot. Cache slots are shared across all pipelines within a single image analysis run.
+The **Image Cache** command saves or loads an intermediate image to/from a numbered memory slot.
 
 Pipelines in EVAnalyzer normally run independently, each seeing only its own image data - Image Cache is the one mechanism that lets one pipeline hand a processed image to another, so a channel-specific preprocessing result (a background estimate, a mask) can be reused elsewhere instead of being recomputed.
 
@@ -14,7 +14,15 @@ Pipelines in EVAnalyzer normally run independently, each seeing only its own ima
 | Parameter   | Description                                                                                           |
 | ----------- | ----------------------------------------------------------------------------------------------------- |
 | **Mode**    | _Store_ - save the current image to the cache; _Load_ - replace the current image with a cached image |
-| **Address** | The cache slot identifier                                                                             |
+| **Address** | The slot - see [Kinds of slots](#kinds-of-slots)                                                      |
+
+## Kinds of slots
+
+| Kind             | Readable by                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Memory**       | The steps of this pipeline.                                                                                                       |
+| **Shared**       | This pipeline and every pipeline after it - also as a pipeline's [image source](/guide/pipelines/#image-source) (**Shared memory slot**). |
+| **Group memory** | Only inside a [command group](/guide/command-groups/#memory-slots-in-groups): the slots of one use of the group.                  |
 
 ## When to use
 
@@ -25,9 +33,9 @@ Use Image Cache when you need to:
 
 ### Example: background-subtracted signal available for measurement
 
-1. Pipeline A: process the DAPI channel → **Store** to cache slot `dapi_bg`.
-2. Pipeline B: after thresholding the Cy5 channel, use **Image Math** with the `dapi_bg` cache to create a masked image.
+1. Pipeline A: process the DAPI channel → **Store** to **Shared** slot 1.
+2. Pipeline B (after A): after thresholding the Cy5 channel, use **Image Math** with **Shared** slot 1 to create a masked image.
 
 ## Notes
 
-Cache contents are discarded at the end of each image's processing. They do not persist between images.
+**Memory** slots are freed at the end of their pipeline, **Shared** slots once every pipeline has run on the image (tile), **Group memory** when the group ends. Nothing persists between images.

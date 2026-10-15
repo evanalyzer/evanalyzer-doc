@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 39 pipeline commands grouped by category.
+description: All 41 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -15,6 +15,7 @@ Pipeline commands are the building blocks of an analysis. Each command takes eit
 | **Morphology**               | White  | Binary/greyscale image | Image                          |
 | **AI segmentation**          | White  | Image                  | Binary mask / object instances |
 | **Object processing**        | Green  | Objects                | Objects / measurements         |
+| **Dataset**                  | -      | Objects of all images  | Objects / measurements         |
 
 :::note
 Not every command sequence is valid. The command picker shows only those commands compatible with the current pipeline state.
@@ -37,6 +38,7 @@ Commands for reducing noise and enhancing signal before segmentation.
 | [Median Subtract](/commands/image-processing/median-subtract/)         | Subtract the local median for background removal |
 | [Image Math](/commands/image-processing/image-math/)                   | Combine two images mathematically                |
 | [Image Cache](/commands/image-processing/image-cache/)                 | Store or retrieve an image from cache slots      |
+| [Load Image Channel](/commands/image-processing/load-image-channel/)   | Load another channel as the current image        |
 | [Script](/commands/image-processing/script/)                           | Run your own Rhai script, using the other commands |
 
 ## Edge & Feature Detection
@@ -99,7 +101,19 @@ Commands that operate on extracted objects.
 | [Object Transform](/commands/object/transform-objects/)        | Scale, snap, expand, shrink, or fit an ellipse to objects                                                    |
 | [Object Math](/commands/object/object-math/)                   | Boolean set operations (AND, OR, XOR, Subtract) between two object classes                                   |
 | [Distance Transform](/commands/object/distance-transform/)     | Measure distances between object pairs                                                                       |
-| [Save Image](/commands/object/save-image/)                     | Write a control image to disk                                                                                |
+| [Save Image](/commands/object/save-image/)                     | Write a control image to disk, optionally with selected classes drawn on top                                 |
+
+## Dataset
+
+[Dataset steps](/guide/pipelines/#dataset-steps) run once after every image has been analysed, on the stored objects of all images, frames and wells.
+
+| Command                                              | Purpose                                                         |
+| ---------------------------------------------------- | --------------------------------------------------------------- |
+| [Simple Tracker](/commands/dataset/simple-tracker/)  | Link objects of a time-lapse into tracks (nearest neighbour)    |
+
+## Command Groups
+
+Several steps can be bundled into one reusable step with its own parameters - see [Command Groups](/guide/command-groups/).
 
 ## Typical Pipeline Order
 

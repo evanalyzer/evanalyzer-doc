@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Example Comet Assay",
     "shortDescription": "Ported from CellProfiler ExampleCometAssay pipeline",
@@ -30,33 +30,25 @@
   "classification": {
     "classes": [
       {
-        "id": {
-          "VALID": 0
-        },
+        "id": 0,
         "color": "#97978f",
         "name": "Background",
         "notes": ""
       },
       {
-        "id": {
-          "VALID": 1
-        },
+        "id": 1,
         "color": "#33ccff",
         "name": "comet@whole",
         "notes": "Comet in CP pipeline (whole head+tail blob)"
       },
       {
-        "id": {
-          "VALID": 2
-        },
+        "id": 2,
         "color": "#ff3333",
         "name": "comet@head",
         "notes": "CometHead in CP pipeline (dense head sub-region)"
       },
       {
-        "id": {
-          "VALID": 3
-        },
+        "id": 3,
         "color": "#33ff66",
         "name": "comet@tail",
         "notes": "CometTail in CP pipeline (comet@whole minus comet@head)"
@@ -138,7 +130,7 @@
                 "minThreshold": 1.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 1,
+                "segmentationClass": 1,
                 "valueSource": "ACTUAL_IMAGE"
               }
             ]
@@ -185,7 +177,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -254,7 +246,7 @@
                 "minThreshold": 1.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 2,
+                "segmentationClass": 2,
                 "valueSource": "ACTUAL_IMAGE"
               }
             ]
@@ -291,13 +283,13 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 2
+                "GLOBAL": 2
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": {
-              "VALID": 1
+              "GLOBAL": 1
             },
             "minIntersectionArea": 1.0,
             "sizeUnit": "PIXELS",
@@ -330,16 +322,16 @@
             "type": "OBJECT_MATH",
             "operation": "SUBTRACT",
             "inputClass": {
-              "VALID": 1
+              "GLOBAL": 1
             },
             "otherClass": {
-              "VALID": 2
+              "GLOBAL": 2
             },
             "otherFilterClasses": [],
             "sizeUnit": "PIXELS",
             "minOverlapArea": 1.0,
             "outputClass": {
-              "VALID": 3
+              "GLOBAL": 3
             },
             "keepUnmatched": true
           }

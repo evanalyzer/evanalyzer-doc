@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Cellpose-SAM (Cellpose defaults)",
     "shortDescription": "Cell segmentation with Cellpose-SAM, set up to match the Cellpose Python package",
@@ -27,7 +27,7 @@
       "command": {
         "type": "CELLPOSE",
         "modelPath": "",
-        "objectClassId": 1,
+        "segmentationClass": 1,
         "inputChannels": 3,
         "probabilityThreshold": 0.4,
         "flowIterations": 250,

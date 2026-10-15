@@ -35,16 +35,18 @@ Because the merge decision is "do these two fragments touch, however far apart t
 
 ## Settings
 
-Cross-tile object merging is configured in the project's **Project Settings** dialog, under **Cross-tile object merging**:
+Cross-tile object merging is configured under **File › [Settings…](/guide/settings/)**, section **Object merging**:
 
 ![Cross-tile object merging settings in the Project Settings dialog](../../../assets/screenshots/screenshot-project-settings-cross-tile-merging.png)
 
 | Setting                                       | Description                                                                                                                                                                                          |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Merge objects split across tile boundaries** | Master on/off switch. **On by default.** Disable to fully restore the old per-tile-only export behaviour, where every fragment is kept and exported separately.                                    |
+| **Merge objects across tiles**                 | Master on/off switch. **On by default.** Disable to fully restore the old per-tile-only export behaviour, where every fragment is kept and exported separately.                                    |
 | **Exclude classes**                            | An opt-out list of object classes that should never be merged across tiles, for [classes](/fundamentals/classes/) where per-tile fragments should stay separate. Every class merges by default.    |
 | **Connectivity**                               | Whether two fragments from opposite sides of a seam must be 4- or 8-connected to count as touching. Default: **8-connected**.                                                                       |
-| **Max fragments/group**                        | A safety limit (default `10000`) on how many edge-touching fragments of one class/plane group may be considered together before matching even starts. Exceeding it fails the analysis with an explicit error instead of silently building a pathological merge - the fix is to add the offending class to **Exclude classes**, not to raise the limit. |
+| **Max fragments per group**                    | A safety limit (default `10000`) on how many edge-touching fragments of one class/plane group may be considered together before matching even starts. Exceeding it fails the analysis with an explicit error instead of silently building a pathological merge - the fix is to add the offending class to **Exclude classes**, not to raise the limit. |
+
+Objects of a [command group's internal classes](/guide/command-groups/#internal-classes) are always merged, separately for each use of the group - **Exclude classes** only lists project classes.
 
 Most users never need to touch these - merging is on by default precisely because objects should be detected correctly regardless of where a tile boundary happens to fall, without anyone having to know or care that tiles exist at all.
 

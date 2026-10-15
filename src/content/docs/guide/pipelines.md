@@ -28,7 +28,18 @@ Click a pipeline name to open the pipeline editor. Double-click a pipeline (or u
 
 ![Edit Pipeline dialog](../../../assets/screenshots/screenshot-add-pipeline-dialog.png)
 
-+### Pipeline steps
+### Image source
+
+The image source is the image the pipeline's first step works on:
+
+| Source                 | The pipeline starts with                                                                                                                                  |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Channel**            | An image channel - the usual choice. The picker shows each channel's name and color.                                                                      |
+| **None**               | No image. The first step loads one with [Load Image Channel](/commands/image-processing/load-image-channel/) - useful when a pipeline reads several channels. |
+| **Scratchpad**         | An empty image - for pipelines that only work on objects.                                                                                                 |
+| **Shared memory slot** | The image an earlier pipeline stored with [Image Cache](/commands/image-processing/image-cache/) in a **Shared** slot.                                       |
+
+### Pipeline steps
 
 Steps are listed top-to-bottom and executed in that order.
 Click **+ Add step** (the `- + -` button) to open the command picker, which shows only commands compatible with the current pipeline state.
@@ -42,6 +53,8 @@ Commands fall into categories indicated by colour:
 - **Orange** - connected-component operations (input: segmentation mask, output: labelled mask) e.g. Connected Components, Watershed, ...
 - **Yellow** - object extraction (input: labelled mask, output: objects) e.g. Extract Objects
 - **Green** - classify (input: objects, output: objects) e.g. Classify Objects, Object Math, Object Transform, Voronoi, Colocalization
+- **Dataset** - steps that run after all images, on the objects of all of them, e.g. [Simple Tracker](/commands/dataset/simple-tracker/) - see [Dataset steps](#dataset-steps)
+- **◆ Group** - a [command group](/guide/command-groups/): several steps bundled into one, with its own parameters
 
 A typical pipeline flow:
 
@@ -53,19 +66,30 @@ A typical pipeline flow:
 
 When a fixed sequence of steps isn't enough - for example to retry a step with other settings depending on the image - use a [Script](/commands/image-processing/script/) step: a small program that runs the same commands with loops and conditions.
 
+To reuse a sequence of steps, bundle it into a [command group](/guide/command-groups/) with **Group…** on a step card.
+
+Every step card has a **?** that shows what the step does.
+
 ![Pipeline editor with steps](../../../assets/screenshots/screenshot-pipeline.png)
 
 ### Advanced settings
 
-To keep the step cards short, each command shows only its essential parameters. Settings that rarely need changing - fine-tuning options of the AI models, filters and object commands - are collapsed in a row **Advanced settings (n)** at the bottom of the step card, where _n_ is the number of advanced settings. Click the row to expand or collapse them for that step.
+To keep the step cards short, each command shows only its essential parameters. Settings that rarely need changing - fine-tuning options of the AI models, filters and object commands - are collapsed in a row **Advanced (n)** at the bottom of the step card, where _n_ is the number of advanced settings. Click the row to expand or collapse them for that step.
 
-If you changed any advanced setting from its default, the row says so (**· 2 changed**), so modified settings are never hidden unnoticed. Tick **Always show** in the row to expand the advanced settings of every step; EVAnalyzer remembers this preference.
+If you changed any advanced setting from its default, the row says so (**· 2 changed**), so modified settings are never hidden unnoticed. Tick **Always** in the row to expand the advanced settings of every step; EVAnalyzer remembers this preference.
 
 ### Pipeline templates
 
-The command selection dialog also provides a **Template** section.
-This section contain predefined command sequences which can be used inside your pipeline.
+The command picker also provides a **★ Templates** section.
+It contains predefined command sequences which can be used inside your pipeline.
 By selecting a template the template commands are added in defined order at your selected position.
+If the template uses [command groups](/guide/command-groups/), they are added to the project too.
+
+### Dataset steps
+
+Most steps work on one image (or one tile of it) at a time. **Dataset steps** - category **Dataset** in the command picker - run **once after every image has been analysed**, on the stored objects of all images, frames and wells, without pixels. Tracking objects through a time-lapse is the first example: [Simple Tracker](/commands/dataset/simple-tracker/).
+
+Add dataset steps at the end of a pipeline, after the objects they use are classified. They only work on project classes, and they don't run in the live preview - only in an analysis.
 
 ### Live preview
 
@@ -124,7 +148,9 @@ Use project templates to standardize analysis configurations across your lab —
 
 ## Running the Analysis
 
-Once all pipelines are configured, click **Run** in the toolbar to start the analysis.
+Once all pipelines are configured, click **Run** in the toolbar to start the analysis. The **Run Analysis** dialog asks for an optional **Job name** (left blank, a name is generated).
+
+If the pipelines have dataset steps, the dialog offers **Only run the dataset steps**: no image is analysed again - the dataset steps run on a copy of an earlier analysis (chosen from the list), saved under the new job name. Use it to try other tracking settings without re-analysing every image.
 
 - A progress dialog shows per-image and per-pipeline progress.
 - Click **Stop** to interrupt; in-progress tasks will finish before halting.

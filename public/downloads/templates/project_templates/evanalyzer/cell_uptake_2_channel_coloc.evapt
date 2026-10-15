@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "meta": {
     "name": "Cell uptake 2 channels coloc",
     "shortDescription": "Uptake assay with two spot channels and brightfield cell.",
@@ -23,201 +23,76 @@
   "classification": {
     "classes": [
       {
-        "id": {
-          "VALID": 0
-        },
+        "id": 0,
         "color": "#97978f",
         "name": "Background",
         "notes": ""
       },
       {
-        "id": {
-          "VALID": 4
-        },
+        "id": 4,
         "color": "#3399FF",
         "name": "dapi@nucleus",
-        "notes": "",
-        "measure": {}
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 11
-        },
+        "id": 11,
         "color": "#33FF99",
         "name": "brightfield@cell-area",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG",
-            "SUM"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 12
-        },
+        "id": 12,
         "color": "#66FF33",
         "name": "brightfield@cells",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG",
-            "SUM"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 21
-        },
+        "id": 21,
         "color": "#33CFFF",
         "name": "ch1@spot",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 1
-        },
+        "id": 1,
         "color": "#D2FF00",
         "name": "ch2@spot",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 13
-        },
+        "id": 13,
         "color": "#33CFFF",
         "name": "ch1@in-cell-spots",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 3
-        },
+        "id": 3,
         "color": "#33CFFF",
         "name": "ch2@in-cell-spots",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 8
-        },
+        "id": 8,
         "color": "#9933FF",
         "name": "ch1@ in-cell-spots coloc ",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 9
-        },
+        "id": 9,
         "color": "#9933FF",
         "name": "ch2@ in-cell-spots coloc ",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 18
-        },
+        "id": 18,
         "color": "#9933FF",
         "name": "ch1@ in-cell-spots non coloc",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       },
       {
-        "id": {
-          "VALID": 19
-        },
+        "id": 19,
         "color": "#9933FF",
         "name": "ch2@ in-cell-spots non coloc",
-        "notes": "",
-        "measure": {
-          "areaSize": [
-            "AVG"
-          ],
-          "intensitySum": [
-            "AVG"
-          ],
-          "intensityAvg": [
-            "AVG"
-          ]
-        }
+        "notes": ""
       }
     ]
   },
@@ -295,7 +170,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 4
+                "segmentationClass": 4
               }
             ]
           }
@@ -328,7 +203,7 @@
             "type": "CLASSIFY_OBJECTS",
             "inputClasses": [
               {
-                "VALID": 4
+                "GLOBAL": 4
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -424,7 +299,7 @@
                 "minThreshold": 0.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 11
+                "segmentationClass": 11
               }
             ]
           }
@@ -448,7 +323,7 @@
             "type": "CLASSIFY_OBJECTS",
             "inputClasses": [
               {
-                "VALID": 11
+                "GLOBAL": 11
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -486,15 +361,15 @@
           "command": {
             "type": "VORONOI",
             "centers": {
-              "VALID": 4
+              "GLOBAL": 4
             },
             "centerFilterClasses": [],
             "mask": {
-              "VALID": 11
+              "GLOBAL": 11
             },
             "maskFilterClasses": [],
             "outputClass": {
-              "VALID": 12
+              "GLOBAL": 12
             },
             "unit": "PIXELS",
             "maxRadius": 0.0,
@@ -539,7 +414,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 21
+                "segmentationClass": 21
               }
             ]
           }
@@ -573,7 +448,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 21
+                "GLOBAL": 21
               }
             ],
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
@@ -602,15 +477,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 21
+                "GLOBAL": 21
               },
               {
-                "VALID": 12
+                "GLOBAL": 12
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 13
+              "GLOBAL": 13
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -654,7 +529,7 @@
                 "minThreshold": 200.0,
                 "maxThreshold": 65535.0,
                 "unit": "BIT",
-                "objectClassId": 1
+                "segmentationClass": 1
               }
             ]
           }
@@ -688,7 +563,7 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               }
             ],
             "matchHandling": "REMOVE_INPUT_CLASS_IF_NOT_MATCH",
@@ -717,15 +592,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 1
+                "GLOBAL": 1
               },
               {
-                "VALID": 12
+                "GLOBAL": 12
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 3
+              "GLOBAL": 3
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -747,15 +622,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 13
+                "GLOBAL": 13
               },
               {
-                "VALID": 3
+                "GLOBAL": 3
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 8
+              "GLOBAL": 8
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -768,15 +643,15 @@
             "type": "COLOCALIZATION",
             "classesToColoc": [
               {
-                "VALID": 3
+                "GLOBAL": 3
               },
               {
-                "VALID": 13
+                "GLOBAL": 13
               }
             ],
             "filterClasses": [],
             "classForOverlappingAreas": {
-              "VALID": 9
+              "GLOBAL": 9
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
@@ -790,15 +665,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 13
+                "GLOBAL": 13
               }
             ],
             "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
             "outputClass": {
-              "VALID": 18
+              "GLOBAL": 18
             },
             "overlappingWith": {
-              "VALID": 3
+              "GLOBAL": 3
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",
@@ -824,15 +699,15 @@
             "originSegmentation": [],
             "inputClasses": [
               {
-                "VALID": 3
+                "GLOBAL": 3
               }
             ],
             "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
             "outputClass": {
-              "VALID": 19
+              "GLOBAL": 19
             },
             "overlappingWith": {
-              "VALID": 13
+              "GLOBAL": 13
             },
             "minIntersectionArea": 0.0,
             "sizeUnit": "PIXELS",

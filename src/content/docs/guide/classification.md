@@ -26,11 +26,16 @@ Select an existing class and click the **Edit** button to open the **Class Edito
 
 ![Class Settings dialog](../../../assets/screenshots/screenhsot-add-classs-dialog.png)
 
-| Field      | Description                                            |
-| ---------- | ------------------------------------------------------ |
-| **Name**   | Class label, e.g. `cy5@spot`                           |
-| **Colour** | Display colour used for detected objects in the viewer |
-| **Notes**  | Optional free-text description                         |
+| Field        | Description                                            |
+| ------------ | ------------------------------------------------------ |
+| **Name**     | Class label, e.g. `cy5@spot`                           |
+| **Notes**    | Optional free-text description                         |
+| **Class ID** | The class's number - see below                         |
+| **Colour**   | Display colour used for detected objects in the viewer |
+
+Every class has a number, its **Class ID** - the number a [Threshold](/commands/segmentation/threshold/) entry's segmentation class must match (see [Object Classes](/fundamentals/classes/)). **Auto** gives a new class the number above the highest one, so the number of a deleted class isn't reused by accident (old pipelines and results may still refer to it). Pick a number from the list to choose a free one yourself.
+
+Changing the ID of an existing class moves every reference with it: pipelines, [command groups](/guide/command-groups/) and annotated objects that use the class switch to the new ID. Results of earlier runs keep the old one. The background keeps its ID 0.
 
 ## Auto-populate from Image Metadata
 

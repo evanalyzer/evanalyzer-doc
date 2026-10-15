@@ -356,4 +356,5 @@ The project file is a JSON document following the EVAnalyzer schema. Key top-lev
 | `.evaproj` | EVAnalyzer project file         |
 | `.evapt`   | Project template file           |
 | `.evapipe` | Pipeline template file          |
+| `.evagroup` | Command group library file    |
 | `.evadb`  | Results database (DuckDB format) |
