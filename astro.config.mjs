@@ -39,12 +39,32 @@ export default defineConfig({
           // HTML (with inline <style>/<script>) injected via Starlight's
           // hero.title/hero.image, since that's the only way to customize
           // them - strip those tags so they don't dump as tag soup here.
-          customSelectors: { all: ["style", "script"] },
+          // Screenshot placeholders (.evx-shot-todo) are notes for the
+          // redesign's screenshot pass, not documentation.
+          customSelectors: { all: ["style", "script", ".evx-shot-todo"] },
         }),
       ],
       title: "EVAnalyzer",
-      favicon: "/favicon.png",
+      favicon: "/favicon.svg",
+      // The app's own type, IBM Plex Sans and Mono (crates/gui/ui/fonts),
+      // and its rounded, flat code frames (Ink: radius-lg 10px, 1px border).
+      expressiveCode: {
+        styleOverrides: {
+          codeFontFamily:
+            "'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+          uiFontFamily: "'IBM Plex Sans', system-ui, sans-serif",
+          borderRadius: "10px",
+          borderColor: "var(--ink-border)",
+          frames: {
+            shadowColor: "transparent",
+          },
+        },
+      },
       head: [
+        {
+          tag: "link",
+          attrs: { rel: "icon", href: "/favicon.png", type: "image/png" },
+        },
         {
           tag: "link",
           attrs: { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -61,7 +81,7 @@ export default defineConfig({
           tag: "link",
           attrs: {
             rel: "stylesheet",
-            href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+            href: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap",
           },
         },
       ],
@@ -88,11 +108,13 @@ export default defineConfig({
           label: "User Guide",
           collapsed: true,
           items: [
+            { label: "The Workspace", slug: "guide/workspace" },
             { label: "Images", slug: "guide/images" },
-            { label: "Classification", slug: "guide/classification" },
+            { label: "Classes & Objects", slug: "guide/classification" },
             { label: "Pipelines", slug: "guide/pipelines" },
-            { label: "Command Groups", slug: "guide/command-groups" },
+            { label: "Components", slug: "guide/command-groups" },
             { label: "Results", slug: "guide/results" },
+            { label: "Settings", slug: "guide/settings" },
           ],
         },
         {

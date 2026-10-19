@@ -35,9 +35,13 @@ Because the merge decision is "do these two fragments touch, however far apart t
 
 ## Settings
 
-Cross-tile object merging is configured under **File › [Settings…](/guide/settings/)**, section **Object merging**:
+Cross-tile object merging is configured under **EVA › [Project settings…](/guide/settings/)**, section **Object merging**:
 
-![Cross-tile object merging settings in the Project Settings dialog](../../../assets/screenshots/screenshot-project-settings-cross-tile-merging.png)
+<div class="evx-shot-todo">
+<strong>Object merging settings</strong>
+<span>The settings sheet searched for "merge": Merge objects across tiles, Exclude classes, Connectivity, Max fragments per group.</span>
+<code>src/assets/screenshots/screenshot-project-settings-cross-tile-merging.png</code>
+</div>
 
 | Setting                                       | Description                                                                                                                                                                                          |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -46,7 +50,7 @@ Cross-tile object merging is configured under **File › [Settings…](/guide/se
 | **Connectivity**                               | Whether two fragments from opposite sides of a seam must be 4- or 8-connected to count as touching. Default: **8-connected**.                                                                       |
 | **Max fragments per group**                    | A safety limit (default `10000`) on how many edge-touching fragments of one class/plane group may be considered together before matching even starts. Exceeding it fails the analysis with an explicit error instead of silently building a pathological merge - the fix is to add the offending class to **Exclude classes**, not to raise the limit. |
 
-Objects of a [command group's internal classes](/guide/command-groups/#internal-classes) are always merged, separately for each use of the group - **Exclude classes** only lists project classes.
+Objects of a [component's internal classes](/guide/command-groups/#internal-classes) are always merged, separately for each use of the component - **Exclude classes** only lists project classes.
 
 Most users never need to touch these - merging is on by default precisely because objects should be detected correctly regardless of where a tile boundary happens to fall, without anyone having to know or care that tiles exist at all.
 

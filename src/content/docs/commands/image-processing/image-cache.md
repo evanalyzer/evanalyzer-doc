@@ -22,7 +22,7 @@ Pipelines in EVAnalyzer normally run independently, each seeing only its own ima
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | **Memory**       | The steps of this pipeline.                                                                                                       |
 | **Shared**       | This pipeline and every pipeline after it - also as a pipeline's [image source](/guide/pipelines/#image-source) (**Shared memory slot**). |
-| **Group memory** | Only inside a [command group](/guide/command-groups/#memory-slots-in-groups): the slots of one use of the group.                  |
+| **Component memory** | Only inside a [component](/guide/command-groups/#memory-slots-in-components): the slots of one use of the component.          |
 
 ## When to use
 
@@ -38,4 +38,4 @@ Use Image Cache when you need to:
 
 ## Notes
 
-**Memory** slots are freed at the end of their pipeline, **Shared** slots once every pipeline has run on the image (tile), **Group memory** when the group ends. Nothing persists between images.
+**Memory** slots are freed at the end of their pipeline, **Shared** slots once every pipeline has run on the image (tile), **Component memory** when the component ends. Nothing persists between images.

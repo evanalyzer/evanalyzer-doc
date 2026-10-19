@@ -163,20 +163,20 @@ const allTags = [...new Set(cards.flatMap(({ entry }) => entry.data.tags ?? []))
     padding: 0.3rem 0.75rem;
     border-radius: 999px;
     border: 1px solid var(--sl-color-gray-5);
-    background: var(--sl-color-bg-sidebar);
+    background: var(--ink-panel);
     color: var(--sl-color-gray-2);
     cursor: pointer;
   }
 
   .tag-filter-btn:hover {
-    border-color: var(--sl-color-accent);
+    background: var(--ink-hover);
     color: var(--sl-color-text);
   }
 
   .tag-filter-btn.is-active {
-    background: var(--sl-color-accent);
-    border-color: var(--sl-color-accent);
-    color: var(--sl-color-white);
+    background: var(--ink-primary);
+    border-color: var(--ink-primary);
+    color: var(--ink-on-primary);
   }
 
   .gallery-no-matches {
@@ -187,8 +187,8 @@ const allTags = [...new Set(cards.flatMap(({ entry }) => entry.data.tags ?? []))
     display: flex;
     flex-direction: column;
     border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.5rem;
-    background: var(--sl-color-bg-sidebar);
+    border-radius: var(--ink-radius-lg);
+    background: var(--ink-panel);
     overflow: hidden;
   }
 
@@ -250,7 +250,7 @@ const allTags = [...new Set(cards.flatMap(({ entry }) => entry.data.tags ?? []))
   .card-more summary {
     cursor: pointer;
     font-size: var(--sl-text-sm);
-    color: var(--sl-color-accent);
+    color: var(--ink-link);
   }
 
   .card-more-body {
@@ -273,16 +273,16 @@ const allTags = [...new Set(cards.flatMap(({ entry }) => entry.data.tags ?? []))
     display: inline-block;
     text-align: center;
     padding: 0.55rem 1rem;
-    border-radius: 0.4rem;
-    background: var(--sl-color-accent);
-    color: var(--sl-color-white);
+    border-radius: var(--ink-radius-md);
+    background: var(--ink-primary);
+    color: var(--ink-on-primary);
     text-decoration: none;
     font-weight: 600;
     font-size: var(--sl-text-sm);
   }
 
   .card-download:hover {
-    background: var(--sl-color-accent-high);
+    background: var(--ink-primary-hover);
   }
 
   .card-download-secondary {

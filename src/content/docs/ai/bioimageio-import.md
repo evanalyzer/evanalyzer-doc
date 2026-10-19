@@ -10,8 +10,8 @@ Instead of manually filling in a [Stardist](/commands/ai-segmentation/stardist/)
 ## Importing a Model
 
 1. Download a model package from [bioimage.io](https://bioimage.io) and extract it to a local folder. The folder must contain an `rdf.yaml` (or `rdf.yml`) file.
-2. In the **Pipelines** panel, click **+ Add step** at the position where the segmentation step should go.
-3. In the command picker's **Segment** section, click **Import bioimage.io model…**.
+2. In the steps panel, click **Add step** - or **+** between two steps where the segmentation step should go.
+3. In the command picker, click **Import bioimage.io model…**.
 4. Select the model's `rdf.yaml` file in the file picker.
 
 EVAnalyzer parses the file, detects the model architecture, and inserts a pre-configured pipeline step at that position - no separate download step is needed for the RDF metadata itself.

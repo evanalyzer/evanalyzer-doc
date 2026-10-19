@@ -57,11 +57,11 @@ That password is valid until the server stops. To keep a fixed password, or to s
 
 ### 2. Connect the GUI
 
-Open **File › Connect to server…**, enter the **Server** (e.g. `wss://workstation:7400`), **User** and **Password**, and click **Connect**. Servers used before are listed under **Recent servers** - click one to fill in the address and user.
+Open **EVA › Connect to server…** (or **Connect to a server…** on the Start page), enter the **Server** (e.g. `wss://workstation:7400`), **User** and **Password**, and click **Connect**. Servers used before are listed under **Recent servers** - click one to fill in the address and user.
 
 On the first connection to a server, EVAnalyzer shows the fingerprint of its certificate (**Is this your server?**). Compare it with the fingerprint your administrator gave you and click **They match - connect** only if they do. The certificate is then remembered on this computer. If the server later presents a different certificate, EVAnalyzer warns (**The server's certificate has changed**) and shows the old and new fingerprints: either the administrator replaced the certificate - or someone is intercepting the connection, in which case don't connect.
 
-The window then switches to the server. **File › Connect to other server…** switches to another one, **File › Disconnect** returns to this computer.
+The window then switches to the server. **EVA › Connect to other server…** switches to another one, **EVA › Disconnect** returns to this computer. The bottom bar always shows where you work.
 
 You can also connect when starting EVAnalyzer:
 

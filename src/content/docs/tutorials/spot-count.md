@@ -23,7 +23,7 @@ The workflow uses two pipelines:
 
 ## Step 2: Define Classes
 
-In the **Classification** tab, add:
+In the **Classes** panel, add:
 
 - `ch1@spot` - the EV/spot class (adjust the prefix to match your fluorophore)
 - `tetraspeck@spot` - the calibration bead class (only if using the Tetraspeck pipeline)
@@ -64,9 +64,9 @@ If you have a dedicated calibration-bead channel, create a second pipeline named
 
 ## Step 5: Run and Inspect
 
-Click **Play** to run the analysis. When complete:
+Click **Run** at the top right to run the analysis. When complete:
 
-- Open the results viewer and check the `ch1@spot` count per image.
+- Switch to **Results** (`Ctrl+3`) and check the `ch1@spot` count per image.
 - Open control images in the `images/` subfolder to visually verify segmentation.
 - Adjust the threshold and rerun if objects appear over- or under-segmented.
 

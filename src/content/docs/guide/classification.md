@@ -1,10 +1,10 @@
 ---
-title: Classification
-description: Define object classes before building analysis pipelines.
+title: Classes & Objects
+description: Define the object classes your pipelines detect, and inspect, filter and edit the objects of an image.
 ---
 
-The **Classification** tab is where you define the object populations that your pipelines will detect and measure.
-Every detected object is assigned to one or more classes.
+The **Classes** panel on the right is where you define the object populations that your pipelines detect and measure.
+Every detected object is assigned to one or more classes. The **Objects** panel below it lists the objects of the current image.
 
 ## What is a Class?
 
@@ -19,66 +19,101 @@ A class represents a distinct object population in your experiment. Examples:
 Use `<prefix>@<type>` where the prefix (typically the fluorophore) is used for sorting in selection drop-downs.
 :::
 
-## Adding and Editing Classes
+## Classes panel
 
-Click the **+** button to add a new class.
-Select an existing class and click the **Edit** button to open the **Class Editor**, which lets you set:
+Each class is a row with its color, its name, its number of objects on the current image and an eye that shows or hides its objects. Click a class to select it.
 
-![Class Settings dialog](../../../assets/screenshots/screenhsot-add-classs-dialog.png)
+- **+** (**New class**) adds a class and opens its settings.
+- **⋯ › Edit name, color, id…** of a class opens its settings.
+- The same menu has **Copy**, **Move up** / **Move down** and **Delete class…**.
+
+<div class="evx-shot-todo">
+<strong>Class settings</strong>
+<span>The Class settings dialog left of the right-hand panels: Name, Notes, Class ID with Auto, the color grid (7 a row).</span>
+<code>src/assets/screenshots/screenshot-class-settings.png</code>
+</div>
+
+**Class settings**:
 
 | Field        | Description                                            |
 | ------------ | ------------------------------------------------------ |
 | **Name**     | Class label, e.g. `cy5@spot`                           |
 | **Notes**    | Optional free-text description                         |
 | **Class ID** | The class's number - see below                         |
-| **Colour**   | Display colour used for detected objects in the viewer |
+| **Color**    | Display color used for the class's objects in the viewer |
 
 Every class has a number, its **Class ID** - the number a [Threshold](/commands/segmentation/threshold/) entry's segmentation class must match (see [Object Classes](/fundamentals/classes/)). **Auto** gives a new class the number above the highest one, so the number of a deleted class isn't reused by accident (old pipelines and results may still refer to it). Pick a number from the list to choose a free one yourself.
 
-Changing the ID of an existing class moves every reference with it: pipelines, [command groups](/guide/command-groups/) and annotated objects that use the class switch to the new ID. Results of earlier runs keep the old one. The background keeps its ID 0.
+Changing the ID of an existing class moves every reference with it: pipelines, [components](/guide/command-groups/) and annotated objects that use the class switch to the new ID. Results of earlier runs keep the old one. The background keeps its ID 0.
 
-## Auto-populate from Image Metadata
+You can also create a class where you need it: the class pickers of the steps and the annotate bar's **Paint as** have **+ New class…** - the new class is picked at once.
 
-Click the **Auto** button to have EVAnalyzer automatically create classes based on the channel information read from the current image.
-This creates one class per image channel as a starting point.
+### Add classes from the image
 
-## Object List
+**⋯ › Add classes from the image** creates one class per channel of the current image, as a starting point, in the channels' colors. It can add the classes found in all images, merged, or replace the list with them.
 
-Every image has an **Object list** panel - labeled "Objects", with a live count ("N ROIs") - that lists every object on the current image: both live-preview objects from a pipeline still being edited and objects you've added by hand (see [Region Annotation](/guide/images/#region-annotation)).
+### Hiding unclassified objects
 
-![Object list](../../../assets/screenshots/screenshot-roi-list.png)
+**⋯ › Hide unclassified objects** hides objects that have no class yet - on by default, so a large unfiltered detection doesn't drown out the objects you've actually classified.
 
-Each row shows the object's segmentation label, a chip counting how many other objects share that same label, and up to four stacked color swatches for its assigned classes (a single fallback swatch if it has none yet).
+## Objects panel
 
-Click a row to select it - the object highlights on the image, and selecting an object directly on the image scrolls the list to match. Click the selected row again to deselect it.
+The **Objects** panel lists every object on the current image: the live-preview objects of the pipelines and the objects you [drew by hand](/guide/images/#annotating-the-image).
 
-### Selected Object Detail
+Click a row to select it - the object is highlighted on the image, and selecting an object on the image selects its row. Click it again to unselect it.
 
-Selecting an object expands a detail panel showing:
+### Filtering
 
-- Its assigned classes, each with a small **×** button to remove that class from the object.
-- **Area**, in both pixels² and the physical unit (nm²) derived from the image's pixel calibration.
-- **Circularity**.
-- Per-channel **intensity**: sum (Σ) and average (μ), with each channel's name and color shown where available.
+Above the list are a **class filter** (**All classes** or one class) and a **search**. The search takes an object id, a class name, or a condition on a measurement - `area > 50`, `circ < 0.6` - and several terms separated by commas.
 
-### Managing Objects
+### Objects as a table
 
-The panel's footer toolbar, enabled once an object is selected:
+**⋯ › Show as a table** moves the objects to a table at the bottom of the window, between the left and right panels: one line per object with its **ID**, **classes**, **area**, **circularity** and the **mean** of each channel. **⋯ › Columns** picks the columns. The class filter and the search sit in the table's head. **Show as a list** brings back the list.
 
-- **Set class** - opens the **Select class** dialog with the class list. Pick a class, then:
-  - **Add class** adds it to the object's classes, keeping the ones it already has;
-  - **Set class** replaces all of the object's classes with the picked one.
-- **Delete** (trash icon) - removes the selected object, after a confirmation dialog warning the action can't be undone.
-- **Delete all manual annotated objects** (red backspace icon) - removes every object you painted by hand on this image, after a confirmation. Objects found by pipelines are not affected.
+Whether an image opens with the list or the table is set in **EVA › Project settings… › Viewport › Objects as a table**.
 
-### Painting objects
+<div class="evx-shot-todo" data-kind="new">
+<strong>Objects as a table</strong>
+<span>The objects table at the bottom of the window, a class chip and "area > 50" in its head, one row selected with its buttons.</span>
+<code>src/assets/screenshots/screenshot-objects-table.png</code>
+</div>
 
-The paint tools in the toolbar (see [Region Annotation](/guide/images/#region-annotation)) need a class to paint into: select a class in the class list first. While no class is selected, the paint tools are disabled.
+### The selected object
 
-### Hiding Unclassified Objects
+The selected object's details are shown in a card beside the panel:
 
-The eye icon next to the class count, in this panel's own header, toggles whether objects with no class assigned are shown in the Object list at all - hidden by default, so a large unfiltered detection result doesn't drown out the objects you've actually classified.
+- its classes,
+- **Area** in pixels² and in the physical unit (nm²) from the image's pixel size,
+- **Circularity**,
+- the **mean** intensity of each channel,
+- **Coloc with** - each class it colocalizes with, and how many of that class's objects.
+
+An object found by a pipeline is read-only (**From the pipeline · read-only**). An object drawn by hand can be changed.
+
+<div class="evx-shot-todo">
+<strong>Objects panel with a selected object</strong>
+<span>The Objects list on the right, one object selected; its card beside it with classes, area, circularity, means, Coloc with.</span>
+<code>src/assets/screenshots/screenshot-roi-list.png</code>
+</div>
+
+### Managing objects
+
+For the selected object:
+
+- **Set class…** - pick a class, then **Add class** adds it to the object's classes, keeping the ones it has, or **Set class** replaces them.
+- **Copy to manual** - copies a pipeline object into the hand-drawn annotations, where it can be edited.
+- **Delete object** (or `Delete`) - removes a hand-drawn object, after a confirmation.
+
+The panel's **⋯** menu, for all objects of the image:
+
+| Item | What it does |
+| --- | --- |
+| **Copy pipeline objects to manual…** | Copies the pipeline's objects into the hand-drawn annotations. |
+| **Export annotations (GeoJSON)…** <span class="evx-new">NEW</span> | Writes the hand-drawn annotations of every image to a folder, one `<image>.geojson` file per image - the layout QuPath uses. |
+| **Import annotations (GeoJSON)…** <span class="evx-new">NEW</span> | Reads the `.geojson` files of a folder into the matching images - added to their hand-drawn annotations, or replacing them. |
+| **Re-measure manual annotations** | Measures the hand-drawn objects again. |
+| **Delete manual annotations…** | Removes every object drawn by hand on this image, after a confirmation. Objects found by pipelines are not affected. |
 
 ## How Classes Relate to Pipelines
 
-Classes defined here aren't just labels - they're what every object-processing pipeline step selects, filters, and reassigns by. See [Object Classes](/fundamentals/classes/) for the full lifecycle, from a `Threshold` entry's raw segmentation class through to a named class assigned by [Classify Objects](/commands/object/classify-objects/).
+Classes aren't just labels - they're what every object-processing pipeline step selects, filters, and reassigns by. See [Object Classes](/fundamentals/classes/) for the full lifecycle, from a `Threshold` entry's raw segmentation class through to a named class assigned by [Classify Objects](/commands/object/classify-objects/).

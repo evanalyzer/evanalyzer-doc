@@ -1,112 +1,126 @@
 ---
-title: Command Groups
-description: Bundle several pipeline steps into one reusable step with its own parameters - in a project, or shared as a library file.
+title: Components
+description: Bundle several pipeline steps into one reusable step with its own parameters - in a project, or shared through the component library.
 ---
 
-A **command group** is a step made of other steps. A group such as _"Cell reconstruction"_ (blur, threshold, connected components, watershed, Voronoi, …) sits in a pipeline like any other command, can be inserted, moved and duplicated, and shows only the few settings that matter - typically an image channel and the classes it writes. Everything else stays as the group's author set it, but can still be looked at and changed.
+A **component** is a step made of other steps. A component such as _"Cell reconstruction"_ (blur, threshold, connected components, watershed, Voronoi, …) sits in a pipeline like any other command, can be inserted, moved and duplicated, and shows only the few settings that matter - typically an image channel and the classes it writes. Everything else stays as the component's author set it, but can still be looked at and changed.
 
-Groups are useful to
+Components are useful to
 
 - **reuse** a proven sequence of steps in several pipelines or projects, with one place to change it;
 - **hand over** an analysis to colleagues who don't want to build pipelines: they set two or three parameters and run;
-- **keep intermediate results internal**: classes the group only needs on the way (seeds, candidates, rejected objects) don't clutter the class list or the results.
+- **keep intermediate results internal**: classes the component only needs on the way (seeds, candidates, rejected objects) don't clutter the class list or the results.
 
-Groups and their steps are colored in the group accent color and marked with **◆**, both in the pipeline and in the command picker.
+Components and their steps carry the component color - pink - and are marked with **◆**, both in the pipeline and in the command picker.
 
-## Creating a group
+## Creating a component
 
-1. On the step card of the first step you want to group, click **Group…**.
-2. In the **Group steps** dialog, enter a **Group name** and choose the range of steps (from / to).
+1. Select the first step you want to bundle and choose **Bundle into a component…** in its **⋯** menu.
+2. In the **Create component** dialog, enter a **Component name** and choose the range of steps (**From** / **To**).
 3. EVAnalyzer lists the project classes the steps use under **Classes** and suggests a role for each:
 
    | Role                      | Meaning                                                                                                                                       | Suggested when                                                                                    |
    | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-   | **Group parameter**       | The class becomes a setting on the group card - every use of the group picks its own class.                                                   | The class is also used outside the selected steps (other steps or pipelines, hand annotations, tile merging). |
-   | **Internal (group only)** | The class becomes the group's own. Each use of the group has its own copy, and its objects **don't reach the results**.                       | The class is only used by the selected steps.                                                      |
+   | **Component parameter**   | The class becomes a setting on the component step - every use of the component picks its own class.                                                   | The class is also used outside the selected steps (other steps or pipelines, hand annotations, tile merging). |
+   | **Internal (component only)** | The class becomes the component's own. Each use of the component has its own copy, and its objects **don't reach the results**.                       | The class is only used by the selected steps.                                                      |
    | **Fixed**                 | The class stays as it is.                                                                                                                     | Only a segmentation class without an Extract Objects among the steps.                              |
 
-   Change a role with its dropdown. Image channels of [Load Image Channel](/commands/image-processing/load-image-channel/) steps become group parameters too, and memory slots only the selected steps use become [group memory](#memory-slots-in-groups).
-4. Click **Create group**. The steps are replaced by one group step - what runs doesn't change.
+   Change a role with its dropdown. Image channels of [Load Image Channel](/commands/image-processing/load-image-channel/) steps become component parameters too, and memory slots only the selected steps use become [component memory](#memory-slots-in-components).
+4. Click **Create component**. The steps are replaced by one component step - what runs doesn't change.
 
-## The group card
+<div class="evx-shot-todo">
+<strong>Create component</strong>
+<span>The Create component dialog next to the steps panel: Component name, From / To, the classes with their roles.</span>
+<code>src/assets/screenshots/screenshot-create-component.png</code>
+</div>
 
-A group step shows the group's **parameters** - each with the same control (dropdown, number field, class picker, …) as the setting it controls, and a **?** with its help text. Every use of a group has its own parameter values.
+## The component step
 
-The buttons of the card:
+A component step shows the component's **parameters** - each with the same control (dropdown, number field, class picker, …) as the setting it controls, and a **?** with its help text. Every use of a component has its own parameter values.
 
-| Button              | Action                                                                                                                         |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **View**            | Opens the group read-only, to see what it does.                                                                                |
-| **Edit**            | Opens the group for editing - see [Editing a group](#editing-a-group).                                                         |
-| **Ungroup**         | Puts the steps back into the pipeline, with this step's parameter values. The group's own classes become new project classes, its memory slots pipeline slots. |
-| **Update to v_N_**  | Shown when the [library](#group-library) has a newer version of the group.                                                     |
-| **Duplicate**       | Adds a second use of the same group.                                                                                           |
-| **Save as**         | Saves the group as a library file (`.evagroup`).                                                                               |
-| **Remove**          | Removes the step from the pipeline. The group itself stays in the project.                                                     |
+What you can do with it:
 
-The **?** on any step card - group or command - shows what the step does: a command's summary and description, a group's short and long description.
+| Action                          | Where       | What it does                                                                                                                   |
+| ------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **View**                        | on the step | Opens the component read-only, to see what it does.                                                                            |
+| **Edit**                        | on the step | Opens the component for editing - see [Editing a component](#editing-a-component).                                             |
+| **Update to v_N_**              | on the step | Shown when the [library](#component-library) has a newer version of the component.                                             |
+| **Expand into its steps**       | ⋯           | Puts the steps back into the pipeline, with this step's parameter values. The component's own classes become new project classes, its memory slots pipeline slots. |
+| **Duplicate**                   | ⋯           | Adds a second use of the same component.                                                                                       |
+| **Save to the library…**        | ⋯           | Saves the component as a library file (`.evacomp`).                                                                            |
+| **Remove step**                 | ⋯           | Removes the step from the pipeline. The component itself stays in the project.                                                 |
 
-## Editing a group
+The **?** on any step - component or command - shows what the step does: a command's summary and description, a component's short and long description.
 
-**Edit** opens the group's steps in the pipeline panel, with a bar on top: **‹ Back · Pipeline › ◆ Group**. Inside, you work as in a normal pipeline - add, remove, move steps and change settings.
+## Editing a component
 
-Changes to a group **apply to every use of it**. If the group is used by more than one step, EVAnalyzer asks first:
+**Edit** opens the component's steps in the pipeline panel, with a bar on top: **‹ Back · Pipeline › ◆ Component**. Inside, you work as in a normal pipeline - add, remove, move steps and change settings.
 
-- **Edit for all** - change the group; every step using it follows.
+Changes to a component **apply to every use of it**. If the component is used by more than one step, EVAnalyzer asks first:
+
+- **Edit for all** - change the component; every step using it follows.
 - **Only this step** - make a copy (_"Name (2)"_) just for this step, and edit the copy.
 
 ### Exposing settings as parameters
 
-Next to every setting of an opened group is a **◇**. Click it to **expose** the setting as a group parameter - it then shows on the group card, with its current value as default. An exposed setting is marked **◆**; clicking it again hides it.
+Next to every setting of an opened component is a **◇**. Click it to **expose** the setting as a component parameter - it then shows on the component step, with its current value as default. An exposed setting is marked **◆**; clicking it again hides it.
 
 One parameter can set several settings at once - for example the same class in a Threshold, a Classify Objects and a Voronoi step. When you expose a setting that an existing parameter of the same kind could set, EVAnalyzer asks whether to create a **new parameter** or **add it to** the existing one.
 
-A setting controlled by a parameter always runs with the parameter's value. Editing it inside the opened group changes the parameter's default, and every setting the parameter controls follows.
+A setting controlled by a parameter always runs with the parameter's value. Editing it inside the opened component changes the parameter's default, and every setting the parameter controls follows.
 
-### Group settings
+### Component settings
 
-**Settings…** in the bar of an opened group (or **✎** next to a **◆**) opens the **Group settings** dialog:
+**Settings…** in the bar of an opened component (or **✎** next to a **◆**) opens the **component settings** next to the steps panel, with two tabs:
 
-- the group's **Name**, **Short description** (shown in the command picker), **Author**, **Organization** and **Description** (shown behind the group card's **?**);
-- per parameter: its name on the group card, its help text (empty shows the controlled setting's own help; **Reset to the setting's own help** goes back to it), its default, which settings it **sets**, **↑ / ↓** for the order on the group card, and **✕** to stop exposing it.
+- **General** - the component's **Name**, **Short description** (one line, shown in the command picker), **Author**, **Organization** and **Description** (shown behind the component's **?**).
+- **Parameters** - the parameters as a list by section; the chosen one's form beside it: its **name** on the component step, its **section**, its **help** text (shown as **?** next to the parameter; empty shows the controlled setting's own help), its **default**, the settings it **Sets** (as chips; **Also set…** adds one), **↑ / ↓** for the order, and **Remove parameter**.
+
+Changes apply to every use of the component. **Apply** keeps them; **Cancel** (or **✕**, `Esc`) undoes everything changed while the dialog was open.
+
+<div class="evx-shot-todo">
+<strong>Component settings, Parameters</strong>
+<span>The Parameters tab: the list by section on the left, one parameter's form with Sets chips on the right.</span>
+<code>src/assets/screenshots/screenshot-component-settings.png</code>
+</div>
 
 ### Checks
 
-EVAnalyzer checks groups when a project is loaded and while editing - for example a parameter that controls settings of different kinds, a setting that no longer exists, or a [mixing of internal and project classes](#internal-classes). Problems are shown as **⚠** on the step card, the group card and in the bar of the opened group, so they are found before an analysis starts.
+EVAnalyzer checks components when a project is loaded and while editing - for example a parameter that controls settings of different kinds, a setting that no longer exists, or a [mixing of internal and project classes](#internal-classes). Problems are shown as **⚠** on the component step, in the [Problems](/guide/pipelines/#problems) panel and in the bar of the opened component, so they are found before an analysis starts.
 
 ## Internal classes
 
-An internal class belongs to the group: every use of the group has its own copy, so two uses of _"Cell reconstruction"_ never see each other's seeds. When a use of the group has run its last step, its internal objects are deleted - they **never reach the results database**, and the memory they took is freed right away.
+An internal class belongs to the component: every use of the component has its own copy, so two uses of _"Cell reconstruction"_ never see each other's seeds. When a use of the component has run its last step, its internal objects are deleted - they **never reach the results database**, and the memory they took is freed right away.
 
 The rules that follow from this:
 
-- **Moving objects into a project class.** An object never carries an internal and a project class at the same time. [Classify Objects](/commands/object/classify-objects/) (and the AI Object Classifier) may _reclassify_ internal objects into a project class - a typical "filter" group: internal candidates in, project-class hits out. _Adding_ a project class to an internal object (or the other way round) is an error.
+- **Moving objects into a project class.** An object never carries an internal and a project class at the same time. [Classify Objects](/commands/object/classify-objects/) (and the AI Object Classifier) may _reclassify_ internal objects into a project class - a typical "filter" component: internal candidates in, project-class hits out. _Adding_ a project class to an internal object (or the other way round) is an error.
 - **Commands that create new objects** are always fine: the new objects belong to the class they are written to. A Voronoi of internal seeds can write project-class cells.
-- **Colocalization links to internal objects** are removed when the group ends. If you want the numbers that come from them (e.g. a spot count per cell), the spot class must be a project class - a group parameter.
-- **Extract Objects** inside a group can map a segmentation class to one of the group's classes with its [class mapping](/commands/object/extract-objects/#class-mapping).
+- **Colocalization links to internal objects** are removed when the component ends. If you want the numbers that come from them (e.g. a spot count per cell), the spot class must be a project class - a component parameter.
+- **Extract Objects** inside a component can map a segmentation class to one of the component's classes with its [class mapping](/commands/object/extract-objects/#class-mapping).
 - **Dataset steps** such as the [Simple Tracker](/commands/dataset/simple-tracker/) only work on project classes.
-- [Cross-tile merging](/fundamentals/cross-tile-merging/) merges internal objects of each use of a group separately.
+- [Cross-tile merging](/fundamentals/cross-tile-merging/) merges internal objects of each use of a component separately.
 
-## Memory slots in groups
+## Memory slots in components
 
-The slot picker of [Image Cache](/commands/image-processing/image-cache/) (and other steps that read a stored image) offers inside a group an additional kind, **Group memory**: slots that belong to one use of the group, so a group's intermediate image never overwrites a slot of the surrounding pipeline - or of a second use of the same group. They are freed when the group ends.
+The slot picker of [Image Cache](/commands/image-processing/image-cache/) (and other steps that read a stored image) offers inside a component an additional kind, **Component memory**: slots that belong to one use of the component, so a component's intermediate image never overwrites a slot of the surrounding pipeline - or of a second use of the same component. They are freed when the component ends.
 
-## Groups in the command picker
+## Components in the command picker
 
-The **◆ Groups** chip of the command picker lists the groups of the project (with **used N×**) and, under **LIBRARY**, the groups from library files that aren't in the project yet. A search also finds groups. The detail panel shows the group's parameters with their defaults and where it comes from (e.g. _"this project · Segment → Object"_ - the category of its first and last step).
+The **Component** chip of the command picker lists the components **IN THIS PROJECT** (with **used N×**) and, under **LIBRARY**, the components from library files that aren't in the project yet. A search also finds components. The description pane shows the component's parameters with their defaults and where it comes from (e.g. _"this project · Segment → Object"_ - the category of its first and last step).
 
-Groups no pipeline uses any more can be removed with **Remove from project** in their detail panel, or all at once with **N groups no pipeline uses · Remove**.
+Components no pipeline uses any more can be removed with **Remove from project** in their description pane, or all at once with **Remove N unused**.
 
-## Group library
+## Component library
 
-**Save as** on a group card saves the group as a library file (`.evagroup`) through the template dialog. Group files in the templates folder (`~/evanalyzer/templates/`) appear in the picker's **LIBRARY** section in every project.
+**Save to the library…** in a component step's ⋯ saves the component as a library file (`.evacomp`) through the template dialog. **Save as component…** in a pipeline's ⋯ does the same for a whole pipeline. Component files in the templates folder (`~/evanalyzer/templates/`) appear in the picker's **LIBRARY** section in every project.
 
-- **Inserting** a library group copies it into the project, together with the groups it uses. From then on the project has its own copy: changes affect only the project, never the file, and the project stays complete without it.
-- **Updates:** the project remembers which file and version a group came from. When the library has a newer version, the group card shows **Update to v_N_**. Updating keeps every step's parameter values; if the project changed the group since inserting it, EVAnalyzer warns that updating replaces those changes.
-- **Pipeline templates** carry the groups their steps use, so a saved pipeline with group steps works in other projects too.
+- **Inserting** a library component copies it into the project, together with the components it uses. From then on the project has its own copy: changes affect only the project, never the file, and the project stays complete without it.
+- **Updates:** the project remembers which file and version a component came from. When the library has a newer version, the component step shows **Update to v_N_**. Updating keeps every step's parameter values; if the project changed the component since inserting it, EVAnalyzer warns that updating replaces those changes.
+- **Pipeline templates** carry the components their steps use, so a saved pipeline with component steps works in other projects too.
 
 ## Limitations
 
-- Groups inside groups can only be created by inserting a group into an opened group, not with **Group…** inside an opened group.
-- Breakpoints can't be set on steps inside a group.
-- Steps are selected for grouping as a range (from / to), not by Shift-click.
+- Components inside components can only be created by inserting a component into an opened component, not with **Bundle into a component…** inside an opened component.
+- Breakpoints can't be set on steps inside a component.
+- Steps are selected for bundling as a range (**From** / **To**), not by Shift-click.

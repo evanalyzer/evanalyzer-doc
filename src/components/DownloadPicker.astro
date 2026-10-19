@@ -219,7 +219,7 @@ const REPO = "evanalyzer/evanalyzer";
     gap: 0.15rem;
     padding: 0.65rem 1.1rem;
     border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.5rem;
+    border-radius: var(--ink-radius-lg);
     background: var(--sl-color-bg);
     color: var(--sl-color-text);
     cursor: pointer;
@@ -228,12 +228,13 @@ const REPO = "evanalyzer/evanalyzer";
   }
 
   .picker-btn:hover:not(:disabled) {
-    border-color: var(--sl-color-accent);
+    background: var(--ink-hover);
   }
 
   .picker-btn.is-selected {
-    border-color: var(--sl-color-accent);
-    background: var(--sl-color-accent-low);
+    border-color: var(--ink-focus);
+    background: var(--ink-selection);
+    box-shadow: 0 0 0 3px var(--ink-focus-ring);
   }
 
   .picker-btn:disabled {
@@ -259,8 +260,8 @@ const REPO = "evanalyzer/evanalyzer";
   .picker-result {
     padding: 1rem 1.25rem;
     border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.5rem;
-    background: var(--sl-color-bg-sidebar);
+    border-radius: var(--ink-radius-lg);
+    background: var(--ink-panel);
   }
 
   .picker-placeholder {
@@ -288,15 +289,15 @@ const REPO = "evanalyzer/evanalyzer";
     justify-content: space-between;
     align-items: center;
     padding: 0.6rem 1rem;
-    border-radius: 0.4rem;
-    background: var(--sl-color-accent);
-    color: var(--sl-color-white);
+    border-radius: var(--ink-radius-md);
+    background: var(--ink-primary);
+    color: var(--ink-on-primary);
     text-decoration: none;
     font-weight: 600;
   }
 
   .picker-download:hover {
-    background: var(--sl-color-accent-high);
+    background: var(--ink-primary-hover);
   }
 
   .picker-download-size {

@@ -3,70 +3,105 @@ title: Keyboard Shortcuts
 description: Every keyboard shortcut in EVAnalyzer, grouped by context.
 ---
 
-Press **F1**, or go to **Help → Shortcuts** in the menu bar, to open this same reference inside the app at any time.
+Press **F1**, or choose **EVA › Shortcuts**, to open this same reference inside the app at any time.
 
 ## File
 
-| Shortcut       | Action  |
-| -------------- | ------- |
-| `Ctrl+S`       | Save    |
-| `Ctrl+Shift+S` | Save As |
-| `Ctrl+O`       | Open    |
+| Shortcut       | Action                |
+| -------------- | --------------------- |
+| `Ctrl+S`       | Save                  |
+| `Ctrl+Shift+S` | Save As               |
+| `Ctrl+O`       | Open                  |
+| `Ctrl+Shift+O` | Open an images folder |
 
 ## Edit
 
-| Shortcut               | Action                         |
-| ----------------------- | ------------------------------- |
-| `Ctrl+Z`                | Undo                            |
-| `Ctrl+Y` / `Ctrl+Shift+Z` | Redo                          |
-| `Delete`                | Delete the selected object/ROI |
+| Shortcut                  | Action                         |
+| ------------------------- | ------------------------------ |
+| `Ctrl+Z`                  | Undo                           |
+| `Ctrl+Y` / `Ctrl+Shift+Z` | Redo                           |
+| `Delete`                  | Delete the selected object/ROI |
 
-`Delete` opens the same confirmation dialog as the trash-can button in the [Object List](/guide/classification/#managing-objects) panel's footer, rather than deleting immediately, and only does anything while an object is actually selected.
+`Delete` opens the same confirmation as **Delete object** in the [Objects](/guide/classification/#managing-objects) panel, rather than deleting immediately. With no object selected, it removes the selected step instead (see below).
+
+Every brush stroke and every drawn shape is an undo step of its own.
 
 ## Pipeline
 
-| Shortcut       | Action                                           |
-| -------------- | ------------------------------------------------ |
-| `F5`           | Refresh the preview                              |
-| `F`            | Focus on the selected pipeline (again: show all) |
-| `Alt`+click    | Focus on a pipeline (again: show all)            |
-| Double-click   | Edit a pipeline's name and image source          |
+| Shortcut          | Action                                             |
+| ----------------- | -------------------------------------------------- |
+| `F5`              | Refresh the preview                                |
+| `F`               | Focus on the selected pipeline (again: show all)   |
+| `Alt`+click       | Focus on a pipeline (again: show all)              |
+| Double-click      | Edit a pipeline's name and image source            |
+| `Enter`           | The selected step's settings                       |
+| `Ctrl+/`          | Disable / enable the selected step                 |
+| `F9`              | Breakpoint on the selected step                    |
+| `Ctrl+D`          | Duplicate the selected step                        |
+| `Alt+↑` / `Alt+↓` | Move the selected step                             |
+| `Delete`          | Remove the selected step (no object selected)      |
 
-`F5` re-runs the pipeline preview once - the same as the toolbar's "eye" button or the Pipelines panel's **Preview** action - a single dry-run, distinct from toggling Auto Preview on or off.
+`F5` re-runs the pipeline preview once - the same as **Refresh preview** in the top bar - a single dry-run, distinct from switching **Auto preview** on or off.
 
 `F` and `Alt`+click are the quick way into [Focus Mode](/guide/pipelines/#focus-mode): they show only the channel and classes of one pipeline. Plain `F` is used because `Ctrl+F` is the image search.
 
-## Canvas Tools
+`F9` steps through the [breakpoint](/guide/pipelines/#breakpoints) states: stop, snapshot, off.
 
-| Shortcut     | Action              |
-| ------------- | -------------------- |
-| `M` / `Escape` | Move                |
-| `S`           | Select              |
-| `K`           | Paint marker        |
-| `R`           | Paint rectangle     |
-| `O`           | Paint oval          |
-| `P`           | Paint polygon       |
-| `#`           | Show/Hide objects   |
+**Number fields** also take `↑` / `↓`, `Ctrl` + mouse wheel, and a sideways drag over the number.
 
-These are unmodified single-letter mnemonics, so they only fire when the viewport (not a text field) has keyboard focus - typing into a search box or name field types the letter normally instead of switching tools.
+## Canvas tools
+
+| Shortcut       | Action            |
+| -------------- | ----------------- |
+| `M` / `Escape` | Move              |
+| `S`            | Select            |
+| `K`            | Paint marker      |
+| `R`            | Paint rectangle   |
+| `O`            | Paint oval        |
+| `P`            | Paint polygon     |
+| `#`            | Show/Hide objects |
+
+These are unmodified single-letter mnemonics, so they only fire when the image (not a text field) has keyboard focus - typing into a search box or name field types the letter normally instead of switching tools.
+
+While [comparing](/guide/pipelines/#compare-with-the-original) a breakpoint image with the original, hold `Space` to see the whole original.
+
+## Z stack and time series
+
+| Shortcut                | Action                      |
+| ----------------------- | --------------------------- |
+| `Page Up` / `Page Down` | The previous / next Z slice |
+| `,` / `.`               | The previous / next frame   |
 
 ## Navigation
 
-| Shortcut | Action                          |
-| -------- | -------------------------------- |
-| `Ctrl+1` | Images tab                       |
-| `Ctrl+2` | Meta tab                         |
-| `Ctrl+3` | Pipelines tab                    |
-| `Ctrl+4` | Results tab                      |
-| `Ctrl+F` | Jump to the image search field   |
+| Shortcut | Action                                              |
+| -------- | --------------------------------------------------- |
+| `Ctrl+K` | Command palette: find an action, a step, a command  |
+| `Ctrl+1` | Images                                              |
+| `Ctrl+2` | Pipelines                                           |
+| `Ctrl+3` | Results                                             |
+| `Ctrl+F` | Jump to the image search field                      |
 
-`Ctrl+1`..`4` follows the same convention as switching between browser tabs. `Ctrl+F` switches to the Images tab first if it isn't already active, then focuses its search field.
+`Ctrl+1`..`3` switch the [modes](/guide/workspace/#bottom-bar-and-modes) in the bottom bar. `Ctrl+F` switches to Images first if it isn't already active, then focuses its search field.
+
+In the [command palette](/guide/workspace/#command-palette), `↑` / `↓` choose, `Enter` runs and `Escape` closes.
+
+## Results, split with the image
+
+| Shortcut  | Action                       |
+| --------- | ---------------------------- |
+| `↑` / `↓` | The previous / next object   |
+| `Escape`  | Clear the selected object    |
+
+See [Split with the image](/guide/results/#split-with-the-image).
 
 ## Dialogs
 
 | Shortcut | Action                |
-| -------- | ---------------------- |
-| `Escape` | Close the open dialog  |
-| `F1`     | Show this help         |
+| -------- | --------------------- |
+| `Escape` | Close the open dialog |
+| `F1`     | Show this help        |
 
-`Escape` is deliberately disabled while a pipeline analysis or preview render is actively running: since cancelling a background job only *requests* cancellation rather than closing the dialog immediately, a reflexive Escape there would look like it silently did nothing while killing a possibly multi-minute run. Use the dialog's own **Cancel** button instead - the distinction is intentional.
+Dialogs don't block the window, so `Escape` closes the open dialog even after you clicked into the image. In a dialog that edits something - like the component settings - `Escape` works like **Cancel** and undoes the changes made while it was open.
+
+`Tab` moves between buttons, switches, list rows and steps; `Space` or `Enter` presses the focused one. The focus ring only shows when you use the keyboard.

@@ -29,4 +29,4 @@ Track IDs start at 1 and are unique across tracking steps: a second Simple Track
 
 - No gap closing: an object missing in one frame ends its track, and its reappearance starts a new one.
 - No divisions or merges: each object continues at most one track.
-- Only project classes can be tracked, not the internal classes of a [command group](/guide/command-groups/#internal-classes).
+- Only project classes can be tracked, not the internal classes of a [component](/guide/command-groups/#internal-classes).

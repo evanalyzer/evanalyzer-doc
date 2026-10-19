@@ -3,7 +3,7 @@ title: Load Annotated Objects
 description: Bring the objects you drew by hand on an image into the pipeline, so they are measured and processed like segmented objects.
 ---
 
-The **Load Annotated Objects** command brings the objects you annotated by hand on an image (see [Region Annotation](/guide/images/#region-annotation)) into the pipeline. From there on they are handled exactly like segmented objects: they are measured, can be classified, colocalized, used as parents for in-cell counting and appear in the [results](/guide/results/).
+The **Load Annotated Objects** command brings the objects you annotated by hand on an image (see [Annotating the image](/guide/images/#annotating-the-image)) into the pipeline. From there on they are handled exactly like segmented objects: they are measured, can be classified, colocalized, used as parents for in-cell counting and appear in the [results](/guide/results/).
 
 ![Regions drawn by hand on the image become pipeline objects with a new ID, the output class and freshly measured intensities](../../../../assets/figures/cmd-load-annotated-objects.svg)
 
@@ -25,7 +25,7 @@ For every image the pipeline runs on, the command takes the annotations stored f
 - Its **intensities are measured** on every channel of the image being analyzed - values stored with the annotation are not reused, since they may be outdated or were never measured for a hand-drawn shape.
 - Links the annotation may carry to other objects (colocalization partners, parent/child relations, tracking IDs) are dropped, because they refer to the stored IDs.
 
-The command runs once per image and plane on the whole image, so an annotation crossing a tile border stays one object. Only the annotations of the plane being processed are loaded; with a [Z-projection](/guide/images/#z-stack-navigation) the annotations of the projected time frame are used.
+The command runs once per image and plane on the whole image, so an annotation crossing a tile border stays one object. Only the annotations of the plane being processed are loaded; with a [Z-projection](/guide/images/#z-stack) the annotations of the projected time frame are used.
 
 ## Example: count spots inside hand-drawn regions
 

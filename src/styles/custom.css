@@ -1,90 +1,238 @@
+/*
+ * The docs in the look of the app: the Ink design system
+ * (evanalyzer crates/gui/ui/ink/palette.slint).
+ *
+ * Ink tokens first (--ink-*, the same names and values as the app), then
+ * Starlight's variables bound to them. Starlight's default scheme is dark,
+ * light is :root[data-theme="light"].
+ */
+
+/* -- Ink, dark ---------------------------------------------------------- */
 :root {
-  --sl-color-accent-low: #172554;
-  --sl-color-accent: #60a5fa;
-  --sl-color-accent-high: #bfdbfe;
+  --ink-ground: #0b0b0d;
+  --ink-panel: #18181b;
+  --ink-raised: #27272a;
+  --ink-field: #1f1f23;
+  --ink-hover: #232327;
+  --ink-selection: #26262b;
+  --ink-border: #2e2e33;
+  --ink-border-soft: #232327;
+  --ink-text: #f4f4f5;
+  --ink-text-dim: #a1a1aa;
+  --ink-text-mute: #71717a;
+  --ink-text-faint: #52525b;
+  --ink-primary: #fafafa;
+  --ink-on-primary: #18181b;
+  --ink-primary-hover: #e4e4e7;
+  --ink-focus: #8b8bf0;
+  --ink-focus-ring: #8b8bf040;
+  --ink-link: #a5a5f5;
+  --ink-err: #f87171;
+  --ink-err-tint: #3a1d1f;
+  --ink-warn: #fbbf24;
+  --ink-warn-tint: #3a2e14;
+  --ink-ok: #4ade80;
+  --ink-ok-tint: #16301f;
+  --ink-info: #8b8bf0;
+  --ink-info-tint: #26264a;
+  --ink-new: #fbbf24;
+  --ink-on-new: #18181b;
+  --ink-cat-preprocess: #22c3d6;
+  --ink-cat-segment: #d77ae6;
+  --ink-cat-object: #f08c3c;
+  --ink-cat-measure: #e0be3a;
+  --ink-cat-classify: #3fbf92;
+  --ink-cat-dataset: #8b8bf0;
+  --ink-cat-component: #e8849f;
+  --ink-shadow: 0 8px 24px #0000008c;
+  --ink-glass: #18181bf0;
+  --ink-radius-xs: 3px;
+  --ink-radius-sm: 4px;
+  --ink-radius-md: 6px;
+  --ink-radius-lg: 10px;
+}
+
+/* -- Ink, light --------------------------------------------------------- */
+:root[data-theme="light"] {
+  --ink-ground: #f4f4f5;
+  --ink-panel: #ffffff;
+  --ink-raised: #f1f1f3;
+  --ink-field: #fafafa;
+  --ink-hover: #f4f4f5;
+  --ink-selection: #f1f1f3;
+  --ink-border: #e4e4e7;
+  --ink-border-soft: #f0f0f2;
+  --ink-text: #18181b;
+  --ink-text-dim: #52525b;
+  --ink-text-mute: #71717a;
+  --ink-text-faint: #a1a1aa;
+  --ink-primary: #18181b;
+  --ink-on-primary: #ffffff;
+  --ink-primary-hover: #27272a;
+  --ink-focus: #5b5bd6;
+  --ink-focus-ring: #5b5bd62e;
+  /* The focus indigo, a step darker for running text (5.6 : 1 on white). */
+  --ink-link: #4a4ac4;
+  --ink-err: #dc2626;
+  --ink-err-tint: #fdf2f2;
+  --ink-warn: #d97706;
+  --ink-warn-tint: #fff6e5;
+  --ink-ok: #16a34a;
+  --ink-ok-tint: #effaf3;
+  --ink-info: #5b5bd6;
+  --ink-info-tint: #eef0ff;
+  --ink-new: #d97706;
+  --ink-on-new: #ffffff;
+  --ink-cat-preprocess: #0ea5b7;
+  --ink-cat-segment: #c04bd6;
+  --ink-cat-object: #e0761f;
+  --ink-cat-measure: #c9a313;
+  --ink-cat-classify: #2fa37c;
+  --ink-cat-dataset: #6366f1;
+  --ink-cat-component: #e06c8b;
+  --ink-shadow: 0 8px 24px #0e0f1229;
+  --ink-glass: #fffffff2;
+}
+
+/* -- Starlight, bound to Ink ------------------------------------------- */
+:root {
+  --sl-color-white: #fafafa;
+  --sl-color-gray-1: var(--ink-text);
+  --sl-color-gray-2: #e4e4e7;
+  --sl-color-gray-3: var(--ink-text-dim);
+  --sl-color-gray-4: var(--ink-text-mute);
+  --sl-color-gray-5: var(--ink-border);
+  --sl-color-gray-6: var(--ink-panel);
+  --sl-color-black: var(--ink-ground);
+
+  --sl-color-accent-low: var(--ink-info-tint);
+  --sl-color-accent: var(--ink-focus);
+  --sl-color-accent-high: var(--ink-link);
+  --sl-color-text-accent: var(--ink-link);
+
+  --sl-color-bg-nav: var(--ink-panel);
+  --sl-color-bg-sidebar: var(--ink-panel);
+  --sl-color-bg-inline-code: var(--ink-raised);
+  --sl-color-hairline-light: var(--ink-border);
+  --sl-color-hairline: var(--ink-border);
+  --sl-color-hairline-shade: var(--ink-border);
+
+  --sl-font: "IBM Plex Sans";
+  --sl-font-mono: "IBM Plex Mono";
+  --sl-line-height-headings: 1.25;
 }
 
 :root[data-theme="light"] {
-  --sl-color-accent-low: #eff6ff;
-  --sl-color-accent: #2563eb;
-  --sl-color-accent-high: #1e3a8a;
+  --sl-color-white: var(--ink-text);
+  --sl-color-gray-1: var(--ink-text);
+  --sl-color-gray-2: #27272a;
+  --sl-color-gray-3: var(--ink-text-dim);
+  --sl-color-gray-4: var(--ink-text-mute);
+  --sl-color-gray-5: var(--ink-border);
+  --sl-color-gray-6: var(--ink-ground);
+  --sl-color-gray-7: var(--ink-field);
+  --sl-color-black: var(--ink-panel);
+  --sl-color-bg-nav: var(--ink-panel);
+  --sl-color-bg-sidebar: var(--ink-panel);
+  --sl-color-backdrop-overlay: #0e0f1266;
 }
 
-:root {
-  --sl-hue-blue: 258;
-  --sl-hue-purple: 142;
-  --sl-hue-orange: 21;
-  --sl-hue-red: 0;
-  --sl-hue-green: 142;
+/* -- Type: IBM Plex, headings tight like the app's display style -------- */
+.sl-markdown-content :is(h1, h2, h3, h4, h5),
+h1#_top {
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
-
-.starlight-aside--note {
-  --sl-color-asides-text-accent: #ddd6fe;
-  --sl-color-asides-border: #a78bfa;
-  background-color: #2e1065;
-}
-:root[data-theme="light"] .starlight-aside--note {
-  --sl-color-asides-text-accent: #6d28d9;
-  --sl-color-asides-border: #8b5cf6;
-  background-color: #f5f3ff;
-}
-
-:root {
-  --sl-font: "Inter";
-}
-
-@font-face {
-  font-family: "JetBrainsMono";
-  src:
-    url("/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2") format("woff2"),
-    url("/fonts/JetBrainsMono/JetBrainsMonoNL-Regular.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "JetBrainsMono";
-  src:
-    url("/fonts/JetBrainsMono/JetBrainsMono-Bold.woff2") format("woff2"),
-    url("/fonts/JetBrainsMono/JetBrainsMonoNL-Bold.woff") format("woff");
+h1#_top {
   font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "JetBrainsMono";
-  src:
-    url("/fonts/JetBrainsMono/JetBrainsMono-Italic.woff2") format("woff2"),
-    url("/fonts/JetBrainsMono/JetBrainsMonoNL-Italic.woff") format("woff");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "JetBrainsMono";
-  src:
-    url("/fonts/JetBrainsMono/JetBrainsMono-Bold-Italic.woff2") format("woff2"),
-    url("/fonts/JetBrainsMono/JetBrainsMonoNL-BoldItalic.woff") format("woff");
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
+  letter-spacing: -0.02em;
 }
 
-:root {
-  --sl-font-mono: "JetBrainsMono";
+/* Ink's caption: uppercase, 11px, semibold, tracked - section labels and
+   column heads. */
+.sl-markdown-content th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-text-mute);
+}
+.sl-markdown-content table {
+  border-radius: var(--ink-radius-lg);
 }
 
+.sl-markdown-content a:not(:where(.not-content *)) {
+  color: var(--ink-link);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+/* Inline code and keys: the app's raised chips and InkKbd. */
+.sl-markdown-content :not(pre) > code {
+  border-radius: var(--ink-radius-sm);
+  border: 1px solid var(--ink-border);
+  padding: 0.05em 0.35em;
+  font-size: 0.875em;
+}
+kbd {
+  font-family: var(--sl-font-mono);
+  font-size: 0.8125em;
+  padding: 0.05em 0.4em;
+  border-radius: var(--ink-radius-sm);
+  border: 1px solid var(--ink-border);
+  border-bottom-width: 2px;
+  background: var(--ink-raised);
+  color: var(--ink-text);
+}
+
+/* -- Header: the app's top bar - flat panel, one hairline --------------- */
 header.header {
-  background-color: hsla(0, 0%, 98%, 0.6);
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
-}
-:root:not([data-theme="light"]) header.header {
-  background-color: hsla(224, 10%, 10%, 0.6);
+  background-color: var(--ink-panel);
+  border-bottom: 1px solid var(--ink-border);
 }
 
+/* -- Sidebar: rows like the app's lists - grey selection, indigo edge --- */
+nav.sidebar a[aria-current="page"],
+nav.sidebar a[aria-current="page"]:hover,
+nav.sidebar a[aria-current="page"]:focus {
+  background-color: var(--ink-selection);
+  color: var(--ink-text);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--ink-focus);
+}
+nav.sidebar a {
+  border-radius: var(--ink-radius-md);
+}
+nav.sidebar a:not([aria-current="page"]):hover {
+  background-color: var(--ink-hover);
+}
+/* Top-level groups read as the app's captions. */
+nav.sidebar .top-level > li > details > summary .group-label .large {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-text-mute);
+}
+
+/* -- Buttons: Ink's primary is black on light, white on dark ------------ */
 .sl-link-button {
-  border-radius: 10px !important;
+  border-radius: var(--ink-radius-md) !important;
+  font-weight: 600;
+}
+.sl-link-button.primary {
+  background: var(--ink-primary);
+  border-color: var(--ink-primary);
+  color: var(--ink-on-primary);
+}
+.sl-link-button.primary:hover {
+  background: var(--ink-primary-hover);
+  border-color: var(--ink-primary-hover);
+  color: var(--ink-on-primary);
+}
+.sl-link-button.secondary {
+  border-color: var(--ink-border);
+  background: var(--ink-panel);
 }
 
 .hero .sl-link-button {
@@ -108,31 +256,98 @@ header.header {
   }
 }
 
+/* -- Search ------------------------------------------------------------- */
 @media (min-width: 50rem) {
   site-search button[data-open-modal] {
     max-width: 12rem;
     margin-inline-start: auto;
-    border-color: var(--sl-color-hairline-shade);
-    background-color: transparent !important;
+    border-color: var(--ink-border);
+    border-radius: var(--ink-radius-md);
+    background-color: var(--ink-field) !important;
   }
 }
-
-:root[data-theme="light"] {
-  --sl-color-backdrop-overlay: hsla(0, 0%, 100%, 0.7);
+site-search dialog {
+  border-radius: var(--ink-radius-lg);
+  border: 1px solid var(--ink-border);
+  box-shadow: var(--ink-shadow);
 }
 site-search dialog::backdrop {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 :root[data-theme="light"] site-search dialog {
-  background-color: var(--sl-color-bg);
+  background-color: var(--ink-panel);
 }
 
+/* -- Cards: the app's panels; the icon takes a step-category color ------ */
 .card {
-  --sl-card-border: var(--sl-color-accent) !important;
-  --sl-card-bg: var(--sl-color-accent-low) !important;
+  border-radius: var(--ink-radius-lg);
+  border-color: var(--ink-border) !important;
+  background-color: var(--ink-panel) !important;
+  --sl-card-border: var(--ink-cat-preprocess) !important;
+  --sl-card-bg: transparent !important;
+}
+.card .icon {
+  border: 0 !important;
+  border-radius: var(--ink-radius-md) !important;
+  color: var(--sl-card-border);
+  background: color-mix(in srgb, var(--sl-card-border) 14%, transparent) !important;
+}
+.card:nth-child(6n + 2) {
+  --sl-card-border: var(--ink-cat-segment) !important;
+}
+.card:nth-child(6n + 3) {
+  --sl-card-border: var(--ink-cat-object) !important;
+}
+.card:nth-child(6n + 4) {
+  --sl-card-border: var(--ink-cat-classify) !important;
+}
+.card:nth-child(6n + 5) {
+  --sl-card-border: var(--ink-cat-dataset) !important;
+}
+.card:nth-child(6n + 6) {
+  --sl-card-border: var(--ink-cat-component) !important;
 }
 
+/* -- Asides: InkBanner - tinted, a full hairline, radius-md ------------- */
+.starlight-aside {
+  border: 1px solid var(--sl-color-asides-border);
+  border-radius: var(--ink-radius-lg);
+}
+.starlight-aside--note {
+  --sl-color-asides-text-accent: var(--ink-info);
+  --sl-color-asides-border: color-mix(in srgb, var(--ink-info) 35%, transparent);
+  background-color: var(--ink-info-tint);
+}
+.starlight-aside--tip {
+  --sl-color-asides-text-accent: var(--ink-ok);
+  --sl-color-asides-border: color-mix(in srgb, var(--ink-ok) 35%, transparent);
+  background-color: var(--ink-ok-tint);
+}
+.starlight-aside--caution {
+  --sl-color-asides-text-accent: var(--ink-warn);
+  --sl-color-asides-border: color-mix(in srgb, var(--ink-warn) 40%, transparent);
+  background-color: var(--ink-warn-tint);
+}
+.starlight-aside--danger {
+  --sl-color-asides-text-accent: var(--ink-err);
+  --sl-color-asides-border: color-mix(in srgb, var(--ink-err) 35%, transparent);
+  background-color: var(--ink-err-tint);
+}
+
+/* -- Badges ------------------------------------------------------------- */
+.sl-badge {
+  border-radius: var(--ink-radius-sm);
+  font-family: var(--sl-font);
+  font-weight: 600;
+}
+
+/* -- Images in the docs: framed like a window --------------------------- */
+.sl-markdown-content img:not(.not-content *) {
+  border-radius: var(--ink-radius-lg);
+}
+
+/* -- Homepage: file format chips (InkChip) ------------------------------ */
 .evx-formats {
   display: flex;
   flex-wrap: wrap;
@@ -146,9 +361,9 @@ site-search dialog::backdrop {
   line-height: 1;
   padding: 0.4rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid var(--sl-color-hairline);
-  color: var(--sl-color-gray-2);
-  background: var(--sl-color-bg-nav);
+  border: 1px solid var(--ink-border);
+  color: var(--ink-text-dim);
+  background: var(--ink-raised);
 }
 
 .evx-screenshot {
@@ -158,5 +373,97 @@ site-search dialog::backdrop {
   margin-top: 0.75rem;
   text-align: center;
   font-size: var(--sl-text-sm);
-  color: var(--sl-color-gray-3);
+  color: var(--ink-text-mute);
+}
+
+/* -- The step categories, as the stripe on a step line ------------------ */
+.evx-cat {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  border-radius: 2px;
+  vertical-align: -0.12em;
+  margin-inline-end: 0.45em;
+  background: var(--evx-cat, var(--ink-text-mute));
+}
+.evx-cat-preprocess { --evx-cat: var(--ink-cat-preprocess); }
+.evx-cat-segment { --evx-cat: var(--ink-cat-segment); }
+.evx-cat-object { --evx-cat: var(--ink-cat-object); }
+.evx-cat-measure { --evx-cat: var(--ink-cat-measure); }
+.evx-cat-classify { --evx-cat: var(--ink-cat-classify); }
+.evx-cat-dataset { --evx-cat: var(--ink-cat-dataset); }
+.evx-cat-component { --evx-cat: var(--ink-cat-component); }
+
+/* -- "NEW" tag, as in the app (InkNewTag) ------------------------------- */
+.evx-new {
+  display: inline-block;
+  font-family: var(--sl-font);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  padding: 0 0.35em;
+  border-radius: var(--ink-radius-sm);
+  background: var(--ink-new);
+  color: var(--ink-on-new);
+  vertical-align: 0.35em;
+  margin-inline-start: 0.35em;
+}
+
+/* -- Screenshot placeholders -------------------------------------------
+   Stand-ins until the screenshots of the redesigned UI are taken. Each one
+   names what to capture and the file it goes to; `data-kind="new"` marks a
+   screenshot that doesn't exist yet. Left out of llms.txt (astro.config). */
+.evx-shot-todo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 14rem;
+  margin-block: 1.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1.5px dashed var(--ink-border);
+  border-radius: var(--ink-radius-lg);
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 12px,
+      color-mix(in srgb, var(--ink-raised) 60%, transparent) 12px 13px
+    ),
+    var(--ink-field);
+  color: var(--ink-text-dim);
+  font-size: var(--sl-text-sm);
+  line-height: 1.5;
+}
+.evx-shot-todo::before {
+  content: "Screenshot · to update";
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--ink-info-tint);
+  color: var(--ink-info);
+}
+.evx-shot-todo[data-kind="new"]::before {
+  content: "Screenshot · new";
+  background: var(--ink-warn-tint);
+  color: var(--ink-warn);
+}
+.evx-shot-todo strong {
+  color: var(--ink-text);
+  font-size: var(--sl-text-base);
+  font-weight: 600;
+}
+.evx-shot-todo code {
+  font-size: var(--sl-text-2xs);
+  color: var(--ink-text-mute);
+  background: transparent;
+  border: 0;
+}
+.sl-markdown-content .evx-shot-todo > * {
+  margin: 0;
 }

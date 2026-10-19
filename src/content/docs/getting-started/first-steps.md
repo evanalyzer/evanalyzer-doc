@@ -3,54 +3,59 @@ title: First Steps
 description: Create your first EVAnalyzer project and run your first analysis.
 ---
 
-This guide walks you through the essential workflow: open a set of images, configure object classes and pipelines, run the analysis, and inspect the results.
+This guide walks you through the essential workflow: open a folder of images, define object classes, build a pipeline, run the analysis, and inspect the results.
+For a tour of the window itself, see [The Workspace](/guide/workspace/).
 
-## 1. Open EVAnalyzer
+## 1. Open your images
 
 Start EVAnalyzer as described in [Installation](/getting-started/installation/).
-The application opens showing the project configuration panel on the left, an empty image viewport in the middle and the image control panel to the right.
+It opens on the **Start** page.
 
-![Start page](../../../assets/getting-started/screenshot-start-page.png)
+<div class="evx-shot-todo">
+<strong>Start page</strong>
+<span>Open image folder…, Open project…, Empty project, New project from a template…, Connect to a server…, and the recent projects.</span>
+<code>src/assets/getting-started/screenshot-start-page.png</code>
+</div>
 
-## 2. Set Up Your Project
+Click **Open image folder…** (`Ctrl+Shift+O`) and choose the folder with your images.
+EVAnalyzer creates a new project for them and switches to **Images**: the images are listed on the left - or laid out on a plate, if their names carry well positions.
+Click an image to show it; its channels, size and pixel size appear in the image info.
 
-The navigation panels contain four tabs that must be configured in order to set up a project properly.: <br>
-**Images → Classification → Pipelines → Results**.
+The three modes of the window are in the bottom bar: **Images → Pipelines → Results** (`Ctrl+1`, `Ctrl+2`, `Ctrl+3`).
 
-### Images tab
+## 2. Define the classes
 
-Use the **Select folder** button to select the folder where the images to analyze are stored in.
+Before building pipelines, define the **object classes** you want to detect - for example `CY7`, `CY5`, `DAPI`.
+The classes are in the **Classes** panel on the right.
 
-Once the directory is set, EVAnalyzer lists all found image files.
-Click an image to preview it and inspect its metadata (channels, pixel sizes, Z/T dimensions).
+- Click **+** to add a class, then give it a name and a color.
+- Or use **⋯ › Add classes from the image** to create one class per image channel as a starting point.
 
-### Classification tab
+<div class="evx-shot-todo">
+<strong>Classes panel</strong>
+<span>The Classes panel on the right with a few classes, its ⋯ menu open on "Add classes from the image".</span>
+<code>src/assets/screenshots/screenshot-classification.png</code>
+</div>
 
-Before building pipelines, define the **object classes** you want to detect - for example, `CY7`, `CY5`, `DAPI`.
-The classification tab is the second tab in the right side panel.
+See [Classes & Objects](/guide/classification/) for details.
 
-- Click the **+** button to add a class.
-- Assign a name and a display color.
-
-:::tip[Auto classes]
-Use the **Auto** button to extract the classes automatically from the image channels.
-:::
-
-![Classification](../../../assets/screenshots/screenshot-classification.png)
-
-### Pipelines tab
+## 3. Build a pipeline
 
 Pipelines extract objects from image channels.
-Click **New pipeline** which opens the pipeline edit dialog.
-Enter a pipeline name and select the image source the pipeline should start.
+Switch to **Pipelines** (`Ctrl+2`) and click **New pipeline** in the steps panel on the left.
+Enter a **Pipeline name** and pick the **Image source** the pipeline starts with:
 
-- **Channel** - the default value is to start with a specific image channel the pipeline should work on.
-- **Scratchpad** - starts with an empty image, this option is used if the pipeline should work on already extracted objects
-- **Memory slot** - images can be stored to a temporary memory using the `ImageCache` command, start with an image from this cache
+- **Channel** - an image channel; the usual choice.
+- **Scratchpad** - an empty image, for a pipeline that only works on objects other pipelines found.
+- **Shared memory slot** - an image an earlier pipeline stored with [Image Cache](/commands/image-processing/image-cache/).
 
-![Pipeline edit](../../../assets/getting-started/screenshot-pipeline-edit.png)
+<div class="evx-shot-todo">
+<strong>Edit pipeline dialog</strong>
+<span>The dialog next to the steps panel: Pipeline name, Image source (Channel picked, the channel picker open).</span>
+<code>src/assets/getting-started/screenshot-pipeline-edit.png</code>
+</div>
 
-Now the **+ Add step** and **+** buttons can be used to add pipeline steps. A minimal spot-detection pipeline looks like:
+Now click **Add step** to open the command picker. It stays open, so you can add one step after another; each goes in after the one you added before. A minimal spot-detection pipeline looks like:
 
 1. **Rolling Ball** - remove uneven background
 2. **Gaussian Blur** - reduce noise
@@ -60,25 +65,27 @@ Now the **+ Add step** and **+** buttons can be used to add pipeline steps. A mi
 6. **Extract Objects** - create objects to work on from the segmented regions
 7. **Classify Objects** - filter by size/circularity and assign an object class
 
-See [Pipelines](/guide/pipelines/) for the general command-category flow and what each category color means.
+See [Pipelines](/guide/pipelines/) for how steps work and what the colored stripe on each step means.
 
-Before the preview can be shown or the analysis can be started, the project must be saved using the **Save** button in the toolbar.
+### Preview
 
-To update the live preview in the middle press the **Preview** button at bottom.
-Using the **Auto** button enables auto preview, which automatically refreshes the preview if any parameter has been changed.
+The image shows the result of the pipeline on the current image.
+Switch on **Auto preview** in the top bar to refresh it whenever a setting changes, or click **Refresh preview** (`F5`) to refresh it once.
+Save the project with **Save** (`Ctrl+S`) in the top bar.
 
-## 3. Run the Analysis
+## 4. Run the analysis
 
-Click the **Run** button in the pipelines panel or the **Run** in the toolbar.
+Click **Run** at the top right.
+The **Run analysis** dialog opens below it and shows what will run - the number of pipelines and images.
+Enter a **Job name** under which the result is stored, or leave it blank to get a generated one.
 
-A run dialog appears which allows to set a custom job name under which the result is stored.
-If no job name is specified, EVAnalyzer will generate a random name for this job.
+<div class="evx-shot-todo">
+<strong>Run analysis dialog</strong>
+<span>The dialog below the Run button: "N pipelines · M images", the job name field, Run.</span>
+<code>src/assets/screenshots/screenshot-start-analysis.png</code>
+</div>
 
-![Pipeline edit](../../../assets/screenshots/screenshot-start-analysis.png)
-
-Once **Run** is pressed a progress dialog appears.
-
-When complete, switch to the **Results** tab to open the results of the analysis.
+While the analysis runs, its progress is shown in a card at the bottom right - you can keep working on your pipelines in the meantime.
 
 Results are saved to:
 
@@ -86,16 +93,21 @@ Results are saved to:
 <image_directory>/evanalyzer/<job_name>/results.evadb
 ```
 
-## 4. View Results
+## 5. View the results
 
-Switch to the **Results** tab. EVAnalyzer scans the `evanalyzer/` subfolder inside your image directory and lists every `results.evadb` file it finds. Click any entry to open it.
+Switch to **Results** (`Ctrl+3`). The analysis you just ran opens; the analysis menu in the top bar lists every analysis of the project's images.
 
-![Results view](../../../assets/screenshots/screenshot-results-list.png)
+<div class="evx-shot-todo">
+<strong>Results, list view</strong>
+<span>Results mode with a fresh analysis open: the list's settings on the left, the table of objects beside them.</span>
+<code>src/assets/screenshots/screenshot-results-list.png</code>
+</div>
 
 See the [Results](/guide/results/) guide for full details.
 
 ## Next Steps
 
+- Read [The Workspace](/guide/workspace/) for the EVA menu, the panels and the command palette.
 - Read [Pipelines](/guide/pipelines/) for a detailed explanation of every pipeline option.
 - Browse the [Commands](/commands/overview/) reference to learn what each pipeline step does.
 - Follow a [Tutorial](/tutorials/spot-count/) for a complete worked example.

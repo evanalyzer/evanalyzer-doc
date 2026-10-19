@@ -247,7 +247,7 @@ Shared by `view` and every `export` subcommand:
 | ----------------------------- | --------------------------------------------------------- |
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
-| `--transpond <true\|false>`   | Place the classes side by side instead of below each other - the CLI twin of the GUI's [Side by side layout](/guide/results/#side-by-side-layout-transposed-table). Default `false` |
+| `--transpond <true\|false>`   | Place the classes side by side instead of below each other - the CLI twin of the GUI's [Transpose](/guide/results/#transpose). Default `false` |
 
 :::note
 `--transpond` is currently only applied by `view`; `export csv`/`export xlsx` accept it but still write the normal row layout. Use the GUI's **Transpond output table** export option for a transposed file.

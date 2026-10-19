@@ -9,7 +9,7 @@ If you use EVAnalyzer in your research, please don't forget to cite us!
 
 Beyond citing EVAnalyzer itself, many individual pipeline commands (Watershed, Voronoi, Rolling Ball, Morphological Transform, and others) wrap a published algorithm with its own citation - shown in the **Background** section of each command's documentation page.
 
-To generate a ready-made bibliography for the specific pipelines in your project, open **Export → Cite project** from the menu bar and choose where to save it. EVAnalyzer writes a Markdown file containing:
+To generate a ready-made bibliography for the specific pipelines in your project, choose **EVA › Cite project** and choose where to save it. EVAnalyzer writes a Markdown file containing:
 
 - A tree of every enabled pipeline and its enabled steps, each step marked with a `[@citation-key]` reference (or `(Uncited)` for commands with no associated publication).
 - A **Citations** section listing the full reference - authors, year, title, journal/container, and a DOI or URL - for every distinct cited algorithm actually used in the project.

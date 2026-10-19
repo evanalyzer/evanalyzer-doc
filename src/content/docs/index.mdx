@@ -159,9 +159,6 @@ hero:
 ---
 
 import { Card, CardGrid, Aside } from "@astrojs/starlight/components";
-import CompareSlider from "../../components/CompareSlider.astro";
-import screenshotPipeline from "../../assets/screenshots/screenshot-pipeline-zoom.png";
-import screenshotPipelineDark from "../../assets/screenshots/screenshot-pipeline-dark-zoom.png";
 
 ## What is EVAnalyzer?
 
@@ -208,19 +205,12 @@ See [About](/about/) for the full history.
   </Card>
 </CardGrid>
 
-<div class="evx-screenshot">
-  <CompareSlider
-    beforeSrc={screenshotPipeline}
-    afterSrc={screenshotPipelineDark}
-    beforeAlt="EVAnalyzer's pipeline editor in light mode, zoomed in on detected nuclei with segmentation overlays over a multi-channel fluorescence microscopy image"
-    afterAlt="The same zoomed-in pipeline preview and segmentation overlays in dark mode"
-    beforeLabel="Light"
-    afterLabel="Dark"
-  />
-  <p class="evx-caption">
-    Configure multi-step pipelines and preview segmentation results live against
-    your raw image data - in light or dark mode.
-  </p>
+{/* Back to the light/dark CompareSlider once the new screenshots exist:
+    import CompareSlider and the two images, as before the redesign. */}
+<div class="evx-shot-todo">
+  <strong>Pipeline preview, light and dark</strong>
+  <span>The same zoomed-in pipeline preview - nuclei with segmentation overlays - in Light and in Dark, for the compare slider.</span>
+  <code>src/assets/screenshots/screenshot-pipeline-zoom.png · screenshot-pipeline-dark-zoom.png</code>
 </div>
 
 ## Remote Control: Work on a Server, From Anywhere
@@ -239,7 +229,7 @@ Only the image tiles you are looking at, previews and pages of the results table
 # On the server
 ./evanalyzer server --listen 0.0.0.0:7400
 
-# On your computer - or use File › Connect to server… in the GUI
+# On your computer - or use EVA › Connect to server… in the GUI
 ./evanalyzer --remote wss://server-name:7400 --user alice
 ```
 
@@ -277,7 +267,14 @@ Only the image tiles you are looking at, previews and pages of the results table
   </Card>
   <Card title="Live multi-channel viewer" icon="magnifier">
     Per-channel brightness/contrast, visibility toggles, and colour assignment,
-    with a live pipeline preview that updates as you tune each step.
+    with a live pipeline preview that updates as you tune each step - pin the
+    settings that matter to the [Tuning panel](/guide/pipelines/#tuning-panel),
+    and set [breakpoints](/guide/pipelines/#breakpoints) to see any step's image.
+  </Card>
+  <Card title="Results beside the image" icon="seti:image">
+    Click a row of the results and the image [flies to that
+    object](/guide/results/#split-with-the-image) - check every measurement
+    against the pixels it came from.
   </Card>
   <Card title="Interactive charts & results database" icon="star">
     [Histogram, scatter, and boxplot](/guide/results/#charts) charts, plus a
