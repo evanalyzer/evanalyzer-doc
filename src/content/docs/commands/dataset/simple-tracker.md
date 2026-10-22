@@ -5,6 +5,8 @@ description: Link the objects of a time-lapse into tracks by nearest-neighbour m
 
 The **Simple Tracker** links the objects of a time-lapse into **tracks**: each object in frame _t_ + 1 continues the track of the nearest object in frame _t_, if that one is close enough and not claimed by an even closer object. Every tracked object gets a **Track ID**, shown as a column in the [results](/guide/results/#list-view).
 
+![Objects of frame t (filled) and frame t + 1 (rings): each ring continues the track of the nearest filled object within Max Distance; a ring with no object close enough starts a new track, an object without a partner ends its track](../../../../assets/figures/cmd-simple-tracker.svg)
+
 It is a [dataset step](/guide/pipelines/#dataset-steps): it runs once after every image has been analysed, on the stored objects of all frames.
 
 The tracks it makes are shown in [Results › Tracks](/guide/results/#tracks): a row per track with its time points, speed and straightness, and its trail on the image.

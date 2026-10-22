@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+<!-- legend -->
+<circle cx="22" cy="22" r="6" fill="#4b5563" fill-opacity="0.35" stroke="#4b5563" stroke-width="1.5"/><text class="lbl-sm" x="33" y="26">frame t</text>
+<circle cx="92" cy="22" r="6" fill="none" stroke="#4b5563" stroke-width="2"/><text class="lbl-sm" x="103" y="26">frame t + 1</text>
+<!-- max distance around track 1 -->
+<circle cx="80" cy="95" r="48" fill="none" stroke="#2563eb" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="lbl-sm" style="fill:#2563eb" x="80" y="157" text-anchor="middle">Max Distance</text>
+<!-- track 1 -->
+<circle cx="80" cy="95" r="11" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+<line x1="91" y1="98" x2="104" y2="102" stroke="#2563eb" stroke-width="2" marker-end="url(#a1)"/>
+<circle cx="116" cy="105" r="11" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<text class="lbl-bold" style="fill:#2563eb" x="116" y="80" text-anchor="middle">1</text>
+<!-- track 2 -->
+<circle cx="190" cy="68" r="11" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/>
+<line x1="194" y1="79" x2="203" y2="95" stroke="#ea580c" stroke-width="2" marker-end="url(#a2)"/>
+<circle cx="208" cy="106" r="11" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<text class="lbl-bold" style="fill:#ea580c" x="170" y="62" text-anchor="middle">2</text>
+<!-- track 3 -->
+<circle cx="285" cy="95" r="11" fill="#16a34a" fill-opacity="0.35" stroke="#16a34a" stroke-width="2"/>
+<line x1="296" y1="90" x2="311" y2="83" stroke="#16a34a" stroke-width="2" marker-end="url(#a3)"/>
+<circle cx="322" cy="78" r="11" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<text class="lbl-bold" style="fill:#16a34a" x="322" y="58" text-anchor="middle">3</text>
+<!-- new track: nothing close enough in frame t -->
+<circle cx="392" cy="140" r="11" fill="none" stroke="#9333ea" stroke-width="2.5"/>
+<text class="lbl-bold" style="fill:#9333ea" x="392" y="120" text-anchor="middle">4</text>
+<text class="lbl-sm" x="392" y="167" text-anchor="middle">new track</text>
+<!-- track ends: no partner in frame t + 1 -->
+<circle cx="250" cy="150" r="11" fill="#6b7280" fill-opacity="0.3" stroke="#6b7280" stroke-width="2"/>
+<text class="lbl-sm" x="250" y="177" text-anchor="middle">track ends</text>
+<text class="lbl-bold" x="220" y="200" text-anchor="middle">Simple Tracker</text>
+<text class="lbl-sm" x="220" y="216" text-anchor="middle">each object continues the nearest track within Max Distance</text>
+</svg>
