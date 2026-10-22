@@ -26,7 +26,10 @@ python3 scripts/screenshots/take.py pipeline compare   # only these
    charts and colocalization classes have something to show.
    `make_project.py` writes `ev_plate.evaproj` (three spot pipelines and a
    colocalization pipeline, display ranges per image), and the CLI runs one
-   analysis, `dilution_series`.
+   analysis, `dilution_series`. `make_tracks.py` writes a small time-lapse to
+   `/data/ev_tracks` (two fields, 15 frames 30 s apart, moving vesicles) with
+   a Simple Tracker project; its analysis `tracking` feeds the Tracks and
+   Over time screenshots.
 3. **Scenes.** Each scene restarts the app, clicks to one screen and saves
    one or more PNGs. The scenes are plain Python functions in `take.py`.
 
@@ -44,6 +47,7 @@ stay as they are.
 | --- | --- | --- |
 | `EVA_APP` | `tools/evanalyzer-linux-x86_64/evanalyzer` | The app to photograph |
 | `EVA_DATA` | `/data/ev_plate` | Where the demo plate goes - its path shows in the screenshots |
+| `EVA_TRACKS` | `/data/ev_tracks` | Where the time-lapse for the tracking screenshots goes |
 | `EVA_SERIES_IMAGE` | - | A file with several image series (the app repo's `tests/Slide1_distal_zoom_40x.vsi`) for `screenshot-series.png`; without it that scene is skipped |
 | `EVA_DISPLAY` | `:99` | The virtual display |
 
@@ -63,7 +67,7 @@ shows the wrong screen. Then:
    top of `take.py` (`EVA`, `RUN`, `STEP_Y`, `RESULTS_VIEW` …) - fix them once
    there.
 
-The app's log is in `.cache/screenshots/app.log`.
+The app's log is in `.cache/screenshots/app.log`. A run first closes EVAnalyzer windows an aborted run left on the virtual display - a second window on top would take the clicks.
 
 ## Not scripted
 

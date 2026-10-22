@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 4,
+  "key": "EV_DETECTION",
+  "meta": {
+    "name": "EV detection",
+    "shortDescription": "EV detection",
+    "description": "Detects extracellular vesicles (EVs) in a fluorescence channel using rolling ball background subtraction, blurring and Li thresholding. The class the objects get is the module's \"EVs\" parameter.",
+    "authors": [
+      {
+        "fullName": "Melanie Schuerz",
+        "organization": "University of Salzburg"
+      }
+    ],
+    "creationTime": "2026-10-20T17:24:19.175336003Z",
+    "version": 2,
+    "category": "Spot Detection",
+    "tags": [
+      "spot"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classes": [],
+  "steps": [
+    {
+      "id": 1,
+      "enabled": true,
+      "command": {
+        "type": "ROLLING_BALL",
+        "radius": 4.0,
+        "ballType": "PARABOLOID",
+        "preSmooth": true
+      }
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 4,
+      "enabled": true,
+      "command": {
+        "type": "THRESHOLD",
+        "thresholds": [
+          {
+            "method": {
+              "type": "LI"
+            },
+            "minThreshold": 0.0,
+            "maxThreshold": 65535.0,
+            "unit": "BIT",
+            "segmentationClass": 1,
+            "valueSource": "ACTUAL_IMAGE"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "enabled": true,
+      "command": {
+        "type": "CONNECTED_COMPONENTS",
+        "minSize": 0
+      }
+    },
+    {
+      "id": 6,
+      "enabled": true,
+      "command": {
+        "type": "EXTRACT_OBJECTS",
+        "maxObjectsBeforeFail": 100000,
+        "classMapping": [
+          {
+            "segmentationClass": 1,
+            "objectClass": {
+              "GLOBAL": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "enabled": true,
+      "command": {
+        "type": "CLASSIFY_OBJECTS",
+        "originSegmentation": [],
+        "inputClasses": [
+          {
+            "GLOBAL": 1
+          }
+        ],
+        "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+        "outputClass": {
+          "GLOBAL": 1
+        },
+        "overlappingWith": "UNSET",
+        "minIntersectionArea": 0.0,
+        "sizeUnit": "PIXELS",
+        "minArea": 4.0,
+        "maxArea": 2147483600.0,
+        "minCircularity": 0.0,
+        "maxCircularity": 1.0,
+        "minSolidity": 0.0,
+        "maxSolidity": 1.0,
+        "minAspectRatio": 0.0,
+        "maxAspectRatio": 2147483600.0,
+        "minEccentricity": 0.0,
+        "maxEccentricity": 1.0,
+        "minFeret": 0.0,
+        "maxFeret": 2147483600.0,
+        "allowEdgeTouching": true,
+        "intensityFilters": []
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "key": "evs",
+      "label": "EVs",
+      "description": "",
+      "section": "Classes",
+      "default": "1",
+      "bindings": [
+        {
+          "step": 6,
+          "param": "class_mapping.0.object_class"
+        },
+        {
+          "step": 7,
+          "param": "output_class"
+        },
+        {
+          "step": 7,
+          "param": "input_classes"
+        }
+      ]
+    },
+    {
+      "key": "threshold_method",
+      "label": "Threshold method",
+      "description": "",
+      "section": "Detection",
+      "default": "Li",
+      "bindings": [
+        {
+          "step": 4,
+          "param": "thresholds.0.method"
+        }
+      ]
+    },
+    {
+      "key": "min_threshold",
+      "label": "Min threshold",
+      "description": "",
+      "section": "Detection",
+      "default": 0,
+      "bindings": [
+        {
+          "step": 4,
+          "param": "thresholds.0.min_threshold"
+        }
+      ]
+    },
+    {
+      "key": "min_area",
+      "label": "Min area",
+      "description": "",
+      "section": "Filter",
+      "default": 4,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "min_area"
+        }
+      ]
+    },
+    {
+      "key": "size_unit",
+      "label": "Size unit",
+      "description": "",
+      "section": "Filter",
+      "default": "px",
+      "bindings": [
+        {
+          "step": 7,
+          "param": "size_unit"
+        }
+      ]
+    }
+  ],
+  "uses": []
+}

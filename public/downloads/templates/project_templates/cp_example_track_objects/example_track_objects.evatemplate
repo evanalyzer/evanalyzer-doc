@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 4,
+  "meta": {
+    "name": "Example Track Objects",
+    "shortDescription": "Ported from CellProfiler ExampleTrackObjects pipeline",
+    "description": "Drosophila embryo GFP-histone time-lapse: segment embryos per frame and track them. Ported from the CellProfiler ExampleTrackObjects.cppipe example. Input: images/SequenceN.tif, one gray 21-frame time stack per sequence, built with Fiji from the RGB frames as (R+G+B)/3 (= CP ColorToGray 'Combine', equal weights); each sequence is its own image, which replaces CP's per-folder grouping. Embryos = CP IdentifyPrimaryObjects: Gaussian sigma 1 (CP threshold smoothing scale 1.3488), 2-class Otsu computed on the raw image (lower bound 0.01), fill holes, intensity-seeded watershed with CP's automatic declumping values (seed smoothing sigma 7.14, maxima suppression 16.7 px; CP's low-resolution speed-up is not reproduced), minimum equivalent diameter 25 px (area >= 491 px), border objects discarded. Tracking: SIMPLE_TRACKER (nearest neighbour, max 50 px) instead of CP's Overlap method. Result vs CP: objects 63/120/115 vs 65/119/109 per sequence, every CP object matched within 15 px in Seq1/Seq3 and 116/119 in Seq2, median per-object area ratio 0.99-1.00. Tracks: Seq1 3 vs 4 (CP's extra one is a one-frame object), Seq3 7 vs 7; Seq2 10 vs 6 because CP's Overlap gives both daughters of a dividing embryo the parent's label, whereas nearest-neighbour tracking continues the parent in one daughter and starts a new track for the other, plus one frame (t=4) where two touching embryos are merged. Track data: `evanalyzer cli export csv --group-by track --class Embryos` gives a time course per track (area, shape, intensity per frame); the per-object export has T and Track ID columns. CP's per-track motion measurements (Displacement, IntegratedDistance, Linearity) are not computed by evanalyzer; they can be derived from the centroids in `export parquet` and then agree with CP for tracks without a division (e.g. Seq3 displacement 35.8/43.2/51.8/59.1 px CP vs 34.7/42.8/50.5/59.1 px eva).",
+    "authors": [
+      {
+        "fullName": "Victoria Foe",
+        "organization": ""
+      },
+      {
+        "fullName": "G. Odell",
+        "organization": ""
+      },
+      {
+        "fullName": "Rob Saint",
+        "organization": ""
+      }
+    ],
+    "creationTime": "2026-10-21T00:00:00Z",
+    "category": "Tracking",
+    "tags": [
+      "tracking",
+      "time-lapse",
+      "drosophila",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": 0,
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": 1,
+        "color": "#3357ff",
+        "name": "Embryos",
+        "notes": "Embryos in CP pipeline (IdentifyPrimaryObjects on the gray histone image), tracked over time"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "AUTO",
+    "groupingRegex": "",
+    "plateSize": "AUTO",
+    "wellLayout": {
+      "FIXED": {
+        "rows": 1,
+        "cols": 1
+      }
+    },
+    "wellImageOrder": [
+      1
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "Embryos",
+      "description": null,
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "TWO"
+                  }
+                },
+                "minThreshold": 2.55,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": "RAW_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 16.7,
+            "smoothingSigma": 7.14,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "FILL_OBJECT_HOLES"
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 491.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Track embryos",
+      "description": null,
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "SIMPLE_TRACKER",
+            "objectClass": {
+              "GLOBAL": 1
+            },
+            "unit": "PIXELS",
+            "maxDistance": 50.0
+          }
+        }
+      ]
+    }
+  ],
+  "modules": []
+}

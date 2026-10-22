@@ -1,0 +1,521 @@
+{
+  "schemaVersion": 4,
+  "meta": {
+    "name": "Example Illumination Correction 2",
+    "shortDescription": "Ported from CellProfiler ExampleIlluminationCorrection_Example2 pipeline",
+    "description": "Nuclei (mCherry) found three times: on the raw image, after a too-small background correction (block 8) and after a suitable one (block 20, then Li/Minimum Cross-Entropy threshold). Ported from CellProfiler ExampleIlluminationCorrection_Example2.cppipe. CP's threshold is calculated on the unsmoothed image and applied to a sigma-1 blurred copy (Image Cache + value source). Its 'Intensity' declumping is Watershed with intensity seeds, 14 px maxima suppression (CP's low-res value); seed smoothing sigma 2.85 instead of CP's 5.7 was chosen empirically, it splits touching nuclei closer to CP. evanalyzer's Subtract keeps the image mean while CP subtracts the whole background and clips at 0, and its median smoothing works on the block grid (radius 1 block) instead of CP's full-resolution disk. Result vs CP: uncorrected 40 vs 42 objects, small block 9 vs 21 (CP's extra objects are fragments of 2-53 px), large block 24 vs 30 (objects > 50 px: 23 vs 26, mean area 839 vs 844 px). The example's point - only the large block correction yields proper nuclei - is reproduced.",
+    "authors": [],
+    "creationTime": "2026-10-21T00:00:00Z",
+    "category": "Preprocessing",
+    "tags": [
+      "illumination-correction",
+      "nuclei",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": 0,
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": 1,
+        "color": "#ff3333",
+        "name": "nuclei@uncorrected",
+        "notes": "UncorrectedNuclei in CP pipeline (no illumination correction)"
+      },
+      {
+        "id": 2,
+        "color": "#ffcc33",
+        "name": "nuclei@small_block",
+        "notes": "SmallBlockCorrectedNuclei in CP pipeline (Background, block 8)"
+      },
+      {
+        "id": 3,
+        "color": "#33ff66",
+        "name": "nuclei@large_block",
+        "notes": "LargeBlockCorrectedNuclei in CP pipeline (Background, block 20)"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "AUTO",
+    "groupingRegex": "",
+    "plateSize": "AUTO",
+    "wellLayout": "AUTO",
+    "wellImageOrder": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "uncorrected",
+      "description": "Nuclei on the raw image: the illumination gradient merges/misses nuclei.",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_CACHE",
+            "mode": "STORE",
+            "address": {
+              "memory": {
+                "pipelineContext": 1
+              }
+            }
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "THREE",
+                    "middleClass": "BACKGROUND"
+                  }
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": {
+                  "MEMORY": {
+                    "pipelineContext": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 14.0,
+            "smoothingSigma": 2.85,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "FILL_OBJECT_HOLES"
+          }
+        },
+        {
+          "id": 8,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 9,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1000.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "small block",
+      "description": "Background correction with a block smaller than a nucleus: removes the nuclei themselves.",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "method": "BACKGROUND",
+            "blockSize": 8,
+            "smoothing": {
+              "type": "MEDIAN",
+              "radius": 1
+            },
+            "applyMethod": "SUBTRACT",
+            "rescale": false
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_CACHE",
+            "mode": "STORE",
+            "address": {
+              "memory": {
+                "pipelineContext": 1
+              }
+            }
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "THREE",
+                    "middleClass": "BACKGROUND"
+                  }
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": {
+                  "MEMORY": {
+                    "pipelineContext": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 14.0,
+            "smoothingSigma": 2.85,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "id": 8,
+          "enabled": true,
+          "command": {
+            "type": "FILL_OBJECT_HOLES"
+          }
+        },
+        {
+          "id": 9,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 10,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 2
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1000.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "large block",
+      "description": "Background correction with a block larger than a nucleus: the right setting.",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "method": "BACKGROUND",
+            "blockSize": 20,
+            "smoothing": {
+              "type": "MEDIAN",
+              "radius": 1
+            },
+            "applyMethod": "SUBTRACT",
+            "rescale": false
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_CACHE",
+            "mode": "STORE",
+            "address": {
+              "memory": {
+                "pipelineContext": 1
+              }
+            }
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "LI"
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": {
+                  "MEMORY": {
+                    "pipelineContext": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 14.0,
+            "smoothingSigma": 2.85,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "id": 8,
+          "enabled": true,
+          "command": {
+            "type": "FILL_OBJECT_HOLES"
+          }
+        },
+        {
+          "id": 9,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 10,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 3
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1000.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    }
+  ],
+  "modules": []
+}

@@ -351,10 +351,10 @@ The project file is a JSON document following the EVAnalyzer schema. Key top-lev
 
 ### File extensions
 
-| Extension | Description                      |
-| --------- | -------------------------------- |
-| `.evaproj` | EVAnalyzer project file         |
-| `.evapt`   | Project template file           |
-| `.evapipe` | Pipeline template file          |
-| `.evagroup` | Command group library file    |
-| `.evadb`  | Results database (DuckDB format) |
+| Extension     | Description                                      |
+| ------------- | ------------------------------------------------ |
+| `.evaproj`    | EVAnalyzer project file                          |
+| `.evatemplate` | Project template file                           |
+| `.evamodule`  | [Module](/guide/modules/) library file           |
+| `.evamodel`   | Trained [AI classifier](/ai/training/)           |
+| `.evadb`      | Results database (DuckDB format)                 |

@@ -74,7 +74,7 @@ let raw = channel(nuclei_channel);
 // ...
 ```
 
-Every `param` shows up as a setting on the step card, with its name and the default from the script. The step stores only values that differ from the default. In a [component](/guide/command-groups/), a `param` can be exposed as a component parameter like any other setting.
+Every `param` shows up as a setting on the step card, with its name and the default from the script. The step stores only values that differ from the default. In a [module](/guide/modules/), a `param` can be exposed as a module parameter like any other setting.
 
 | Type      | Value                         |
 | --------- | ----------------------------- |

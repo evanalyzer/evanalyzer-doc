@@ -28,9 +28,9 @@ This is why defining classes in the Classification tab *before* wiring up pipeli
 4. **[Classify Objects](/commands/object/classify-objects/)** - the only command that changes an object's classes after extraction. Its shape and intersection criteria decide whether an object *matches*, and its **Match Handling** mode decides what that does to the object's classes - add a class, strip one, or **reclassify** (clear everything and assign a new, named class). Reclassifying on match is how a segmentation class becomes a real named class such as `dapi@nucleus` for the first time.
 5. **Everything after** - [Object Math](/commands/object/object-math/), [Colocalization](/commands/object/colocalization/), [Voronoi](/commands/object/voronoi/), [Object Transform](/commands/object/transform-objects/), [Distance Transform](/commands/object/distance-transform/), [Save Image](/commands/object/save-image/) - all select their input objects purely by object class name, with no awareness of segmentation classes at all.
 
-## Project classes and component classes
+## Project classes and module classes
 
-The classes defined in the [Classes](/guide/classification/) panel are **project classes**. A [component](/guide/command-groups/) can also have **its own classes** for intermediate results: each use of the component gets its own copy, they never show up in the class list, and their objects are deleted when the component has run - see [Internal classes](/guide/command-groups/#internal-classes). An object never carries a project class and a group class at the same time.
+The classes defined in the [Classes](/guide/classification/) panel are **project classes**. A [module](/guide/modules/) can also have **its own classes** for intermediate results: each use of the module gets its own copy, they never show up in the class list, and their objects are deleted when the module has run - see [Internal classes](/guide/modules/#internal-classes). An object never carries a project class and a group class at the same time.
 
 ## An object can carry more than one class
 

@@ -223,30 +223,6 @@ See [About](/about/) for the full history.
   </p>
 </div>
 
-## Remote Control: Work on a Server, From Anywhere
-
-Keep your images where they are - on the GPU workstation or analysis server - and run EVAnalyzer from your own laptop.
-With [remote control](/remote/remote-control/), the GUI and the CLI run on your computer while images are read, pipelines are computed and results are written on the server.
-Only the image tiles you are looking at, previews and pages of the results table travel over the network - no copying of terabytes of raw data.
-
-- **Same app, same workflow** - the GUI and every CLI command work exactly as they do locally; a badge in the status bar shows where you are working.
-- **One worker per user** - each user logs in and gets their own compute instance on the server. Log in again later, or from another computer, and you continue in the same session.
-- **Analyses keep running** - close the laptop or lose the network: the analysis goes on on the server, and EVAnalyzer picks it up again when you reconnect.
-- **Secure by default** - encrypted (TLS) connections, password-hashed accounts from a config file or the server's system users, and every user confined to their own folders.
-- **Built for shared hardware** - put one powerful machine to work for a whole lab.
-
-```sh
-# On the server
-./evanalyzer server --listen 0.0.0.0:7400
-
-# On your computer - or use EVA › Connect to server… in the GUI
-./evanalyzer --remote wss://server-name:7400 --user alice
-```
-
-![Clients on your computer log in on the evanalyzer server, which starts one worker per user; the worker reads images and writes results on the server](../../assets/figures/remote-control.svg)
-
-[Set up remote control →](/remote/remote-control/)
-
 ## Key Features
 
 <CardGrid>
@@ -285,6 +261,13 @@ Only the image tiles you are looking at, previews and pages of the results table
     Click a row of the results and the image [flies to that
     object](/guide/results/#split-with-the-image) - check every measurement
     against the pixels it came from.
+  </Card>
+  <Card title="Object tracking" icon="right-arrow">
+    Follow objects through a time-lapse: the [Simple
+    Tracker](/commands/dataset/simple-tracker/) links them into tracks, and
+    [Results › Tracks](/guide/results/#tracks) lists every track with its
+    speed and straightness, shows its trail on the image, and charts any
+    property over time.
   </Card>
   <Card title="Interactive charts & results database" icon="star">
     [Histogram, scatter, and boxplot](/guide/results/#charts) charts, plus a

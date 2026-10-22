@@ -40,7 +40,7 @@ Each class is a row with its color, its name, its number of objects on the curre
 
 Every class has a number, its **Class ID** - the number a [Threshold](/commands/segmentation/threshold/) entry's segmentation class must match (see [Object Classes](/fundamentals/classes/)). **Auto** gives a new class the number above the highest one, so the number of a deleted class isn't reused by accident (old pipelines and results may still refer to it). Pick a number from the list to choose a free one yourself.
 
-Changing the ID of an existing class moves every reference with it: pipelines, [components](/guide/command-groups/) and annotated objects that use the class switch to the new ID. Results of earlier runs keep the old one. The background keeps its ID 0.
+Changing the ID of an existing class moves every reference with it: pipelines, [modules](/guide/modules/) and annotated objects that use the class switch to the new ID. Results of earlier runs keep the old one. The background keeps its ID 0.
 
 You can also create a class where you need it: the class pickers of the steps and the annotate bar's **Paint as** have **+ New class…** - the new class is picked at once.
 

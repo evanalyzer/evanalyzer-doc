@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 4,
+  "key": "EV_IN_CELL_DETECTION",
+  "meta": {
+    "name": "EV in cell detection",
+    "shortDescription": "EV in cell detection",
+    "description": "Detects extracellular vesicles inside cells using median background subtraction, blurring, Li thresholding and watershed splitting. The class the objects get is the module's \"EVs in cells\" parameter.",
+    "authors": [
+      {
+        "fullName": "Melanie Schuerz",
+        "organization": "University of Salzburg"
+      }
+    ],
+    "creationTime": "2026-10-20T17:24:51.268492007Z",
+    "version": 2,
+    "category": "Spot Detection",
+    "tags": [
+      "spot"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classes": [],
+  "steps": [
+    {
+      "id": 1,
+      "enabled": true,
+      "command": {
+        "type": "MEDIAN_SUBTRACT",
+        "radius": 3.0
+      }
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "command": {
+        "type": "THRESHOLD",
+        "thresholds": [
+          {
+            "method": {
+              "type": "LI"
+            },
+            "minThreshold": 0.0,
+            "maxThreshold": 65535.0,
+            "unit": "BIT",
+            "segmentationClass": 3,
+            "valueSource": "ACTUAL_IMAGE"
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "enabled": true,
+      "command": {
+        "type": "CONNECTED_COMPONENTS",
+        "minSize": 0
+      }
+    },
+    {
+      "id": 5,
+      "enabled": true,
+      "command": {
+        "type": "WATERSHED",
+        "maximumFinderTolerance": 0.5,
+        "smoothingSigma": 0.0,
+        "minObjectSize": 0,
+        "seedSource": "DISTANCE_MAP"
+      }
+    },
+    {
+      "id": 6,
+      "enabled": true,
+      "command": {
+        "type": "EXTRACT_OBJECTS",
+        "maxObjectsBeforeFail": 100000,
+        "classMapping": [
+          {
+            "segmentationClass": 3,
+            "objectClass": {
+              "GLOBAL": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "enabled": true,
+      "command": {
+        "type": "CLASSIFY_OBJECTS",
+        "originSegmentation": [],
+        "inputClasses": [
+          {
+            "GLOBAL": 3
+          }
+        ],
+        "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+        "outputClass": "UNSET",
+        "overlappingWith": "UNSET",
+        "minIntersectionArea": 0.0,
+        "sizeUnit": "PIXELS",
+        "minArea": 3.0,
+        "maxArea": 2147483600.0,
+        "minCircularity": 0.0,
+        "maxCircularity": 1.0,
+        "minSolidity": 0.0,
+        "maxSolidity": 1.0,
+        "minAspectRatio": 0.0,
+        "maxAspectRatio": 2147483600.0,
+        "minEccentricity": 0.0,
+        "maxEccentricity": 1.0,
+        "minFeret": 0.0,
+        "maxFeret": 2147483600.0,
+        "allowEdgeTouching": true,
+        "intensityFilters": []
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "key": "evs_in_cells",
+      "label": "EVs in cells",
+      "description": "",
+      "section": "Classes",
+      "default": "3",
+      "bindings": [
+        {
+          "step": 6,
+          "param": "class_mapping.0.object_class"
+        },
+        {
+          "step": 7,
+          "param": "input_classes"
+        }
+      ]
+    },
+    {
+      "key": "threshold_method",
+      "label": "Threshold method",
+      "description": "",
+      "section": "Detection",
+      "default": "Li",
+      "bindings": [
+        {
+          "step": 3,
+          "param": "thresholds.0.method"
+        }
+      ]
+    },
+    {
+      "key": "min_threshold",
+      "label": "Min threshold",
+      "description": "",
+      "section": "Detection",
+      "default": 0,
+      "bindings": [
+        {
+          "step": 3,
+          "param": "thresholds.0.min_threshold"
+        }
+      ]
+    },
+    {
+      "key": "min_area",
+      "label": "Min area",
+      "description": "",
+      "section": "Filter",
+      "default": 3,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "min_area"
+        }
+      ]
+    },
+    {
+      "key": "max_area",
+      "label": "Max area",
+      "description": "",
+      "section": "Filter",
+      "default": 2147483600,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "max_area"
+        }
+      ]
+    },
+    {
+      "key": "size_unit",
+      "label": "Size unit",
+      "description": "",
+      "section": "Filter",
+      "default": "px",
+      "bindings": [
+        {
+          "step": 7,
+          "param": "size_unit"
+        }
+      ]
+    }
+  ],
+  "uses": []
+}

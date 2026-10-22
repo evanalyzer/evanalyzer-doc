@@ -27,3 +27,4 @@ crates
 /bin
 /tools
 /.cache
+__pycache__/

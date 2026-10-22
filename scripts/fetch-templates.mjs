@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-// Fetches project/pipeline templates from evanalyzer/evanalyzer-templates and
+// Fetches project templates and modules from evanalyzer/evanalyzer-templates and
 // turns them into this site's downloads: the raw template files under
 // public/downloads/templates/, and the matching content-collection entries
 // under src/content/downloads/ that DownloadGallery.astro renders.
 //
 // Repo layout (see evanalyzer-templates' README):
-//   project_templates/evanalyzer/<name>.evapt    - built-in, flat, no metadata folder
-//   project_templates/<folder>/<name>.evapt      - contributed, one folder per template,
-//                                                   optional README.md and images/
-//   pipeline_templates/ mirrors the same split, with .evapipe files
+//   project_templates/evanalyzer/<name>.evatemplate - built-in, flat, no metadata folder
+//   project_templates/<folder>/<name>.evatemplate   - contributed, one folder per template,
+//                                                     optional README.md and images/
+//   module_templates/ mirrors the same split, with .evamodule files
 //
 // Every template file's `meta` block (name, shortDescription, description,
 // authors, tags, ...) is the source of truth for the generated frontmatter -
@@ -46,7 +46,9 @@ const ROOT = path.join(__dirname, "..");
 
 const PUBLIC_OUT = path.join(ROOT, "public/downloads/templates");
 const CONTENT_PROJECT_OUT = path.join(ROOT, "src/content/downloads/templates");
-const CONTENT_PIPELINE_OUT = path.join(ROOT, "src/content/downloads/pipelines");
+const CONTENT_MODULE_OUT = path.join(ROOT, "src/content/downloads/modules");
+// Left from before modules: cleared on every successful fetch.
+const CONTENT_PIPELINE_OUT_LEGACY = path.join(ROOT, "src/content/downloads/pipelines");
 
 // Built inside the repo (not os.tmpdir()) so the final swap is a same-filesystem
 // rename, and so a Ctrl-C or crash leaves an obviously-named leftover behind.
@@ -55,15 +57,13 @@ const STAGE_ROOT = path.join(ROOT, ".tmp-fetch-templates");
 const SECTIONS = [
   {
     dir: "project_templates",
-    ext: ".evapt",
+    ext: ".evatemplate",
     category: "template",
-    contentOut: CONTENT_PROJECT_OUT,
   },
   {
-    dir: "pipeline_templates",
-    ext: ".evapipe",
-    category: "pipeline",
-    contentOut: CONTENT_PIPELINE_OUT,
+    dir: "module_templates",
+    ext: ".evamodule",
+    category: "module",
   },
 ];
 
@@ -109,13 +109,28 @@ function createBundleZip(zipPath, templateFilePath, imagesDir) {
   }
 }
 
+// Authors are `{ fullName, organization }` objects; older files had plain
+// strings plus one `authorOrganization`.
+function formatAuthors(meta) {
+  const authors = Array.isArray(meta.authors) ? meta.authors : [];
+  const names = authors
+    .map((a) => {
+      if (typeof a === "string") return a;
+      const name = a?.fullName?.trim();
+      const org = a?.organization?.trim();
+      return name && org ? `${name} (${org})` : name || org || "";
+    })
+    .filter(Boolean);
+  if (!names.length) return "";
+  const legacyOrg = authors.every((a) => typeof a === "string") ? meta.authorOrganization?.trim() : "";
+  return names.join(", ") + (legacyOrg ? ` (${legacyOrg})` : "");
+}
+
 function buildContentBody(meta, readmeText) {
   const parts = [meta.description?.trim() || meta.shortDescription?.trim() || ""];
 
-  if (meta.authors?.length) {
-    const who = meta.authors.join(", ") + (meta.authorOrganization ? ` (${meta.authorOrganization})` : "");
-    parts.push(`**Contributed by:** ${who}`);
-  }
+  const who = formatAuthors(meta);
+  if (who) parts.push(`**Contributed by:** ${who}`);
 
   if (readmeText?.trim()) {
     parts.push("## About the example data", readmeText.trim());
@@ -192,10 +207,10 @@ function processTemplateFile({ section, publicSubdir, contentSlugPrefix, templat
 }
 
 function CONTENT_OUT_STAGE(section) {
-  return section.category === "template" ? CONTENT_PROJECT_OUT_STAGE : CONTENT_PIPELINE_OUT_STAGE;
+  return section.category === "template" ? CONTENT_PROJECT_OUT_STAGE : CONTENT_MODULE_OUT_STAGE;
 }
 
-let PUBLIC_OUT_STAGE, CONTENT_PROJECT_OUT_STAGE, CONTENT_PIPELINE_OUT_STAGE;
+let PUBLIC_OUT_STAGE, CONTENT_PROJECT_OUT_STAGE, CONTENT_MODULE_OUT_STAGE;
 
 function main() {
   rmSync(STAGE_ROOT, { recursive: true, force: true });
@@ -203,10 +218,10 @@ function main() {
 
   PUBLIC_OUT_STAGE = path.join(STAGE_ROOT, "public/downloads/templates");
   CONTENT_PROJECT_OUT_STAGE = path.join(STAGE_ROOT, "content/templates");
-  CONTENT_PIPELINE_OUT_STAGE = path.join(STAGE_ROOT, "content/pipelines");
+  CONTENT_MODULE_OUT_STAGE = path.join(STAGE_ROOT, "content/modules");
   mkdirSync(PUBLIC_OUT_STAGE, { recursive: true });
   mkdirSync(CONTENT_PROJECT_OUT_STAGE, { recursive: true });
-  mkdirSync(CONTENT_PIPELINE_OUT_STAGE, { recursive: true });
+  mkdirSync(CONTENT_MODULE_OUT_STAGE, { recursive: true });
 
   const checkoutDir = mkdtempSync(path.join(os.tmpdir(), "evanalyzer-templates-"));
 
@@ -268,8 +283,9 @@ function main() {
     rmSync(CONTENT_PROJECT_OUT, { recursive: true, force: true });
     cpSync(CONTENT_PROJECT_OUT_STAGE, CONTENT_PROJECT_OUT, { recursive: true });
 
-    rmSync(CONTENT_PIPELINE_OUT, { recursive: true, force: true });
-    cpSync(CONTENT_PIPELINE_OUT_STAGE, CONTENT_PIPELINE_OUT, { recursive: true });
+    rmSync(CONTENT_MODULE_OUT, { recursive: true, force: true });
+    cpSync(CONTENT_MODULE_OUT_STAGE, CONTENT_MODULE_OUT, { recursive: true });
+    rmSync(CONTENT_PIPELINE_OUT_LEGACY, { recursive: true, force: true });
 
     console.log(`[fetch-templates] Updated ${templateCount} templates from ${REPO}@${REF}.`);
   } catch (err) {

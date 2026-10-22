@@ -27,7 +27,7 @@ A project file's root object (`ProjectSettings`) has these top-level fields:
 | `plate` | Multi-well plate layout, for high-content screening projects. |
 | `classification` | The project's object class definitions - see [Classification](/guide/classification/). |
 | `pipelines` | The array of analysis pipelines - see below. |
-| `commandGroups` | The [command groups](/guide/command-groups/) of the project - see [Command Groups](#command-groups). |
+| `commandGroups` | The [command groups](/guide/modules/) of the project - see [Command Groups](#command-groups). |
 | `tileMerge` | The [cross-tile merging](/fundamentals/cross-tile-merging/) settings. |
 
 ## Pipelines and Steps

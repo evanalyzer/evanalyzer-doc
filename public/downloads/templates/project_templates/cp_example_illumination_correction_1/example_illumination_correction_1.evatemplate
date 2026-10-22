@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 4,
+  "meta": {
+    "name": "Example Illumination Correction 1",
+    "shortDescription": "Ported from CellProfiler ExampleIlluminationCorrection_Example1_EachMethod pipeline",
+    "description": "Illumination correction of one Transfluor GFP image: Regular method, median smoothing, divide. Ported from CellProfiler ExampleIlluminationCorrection_Example1_EachMethod.cppipe. CP's median filter size 40 is a disk of radius 17 px at full resolution; here block size 1 + median radius 17 (square window). The corrected image (Save Image) correlates r=0.99 with CP's. Example1_AllMethod (one function averaged over all 72 images) is not ported: evanalyzer calculates the correction per image.",
+    "authors": [],
+    "creationTime": "2026-10-21T00:00:00Z",
+    "category": "Preprocessing",
+    "tags": [
+      "illumination-correction",
+      "transfluor",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": 0,
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "AUTO",
+    "groupingRegex": "",
+    "plateSize": "AUTO",
+    "wellLayout": "AUTO",
+    "wellImageOrder": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "illumination correction",
+      "description": "CorrectIlluminationCalculate (Regular, each image, median 40) + Apply (divide); the corrected image is written with Save Image.",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "method": "REGULAR",
+            "blockSize": 1,
+            "smoothing": {
+              "type": "MEDIAN",
+              "radius": 17
+            },
+            "applyMethod": "DIVIDE",
+            "rescale": false
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "SAVE_IMAGE",
+            "name": "corrected",
+            "displayClasses": [],
+            "source": "IMAGE",
+            "opacity": 50
+          }
+        }
+      ]
+    }
+  ],
+  "modules": []
+}

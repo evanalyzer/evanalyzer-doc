@@ -111,9 +111,9 @@ Commands that operate on extracted objects.
 | ---------------------------------------------------- | --------------------------------------------------------------- |
 | [Simple Tracker](/commands/dataset/simple-tracker/)  | Link objects of a time-lapse into tracks (nearest neighbour)    |
 
-## Components
+## Modules
 
-Several steps can be bundled into one reusable step with its own parameters - see [Components](/guide/command-groups/).
+Several steps can be bundled into one reusable step with its own parameters - see [Modules](/guide/modules/).
 
 ## Typical Pipeline Order
 

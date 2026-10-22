@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 4,
+  "meta": {
+    "name": "Example Illumination Correction 3",
+    "shortDescription": "Ported from CellProfiler ExampleIlluminationCorrection_Example3 pipeline",
+    "description": "Worms in a well (bright-field, dark worms). Ported from CellProfiler ExampleIlluminationCorrection_Example3.cppipe. The well is found with 3-class Otsu (middle class foreground) and shrunk by 5 px; the inverted image is background-corrected with block 2 + polynomial fit and subtracted. Well area 172121 vs CP 172394 px, shrunken well 164654 vs 163852 px. CP restricts the polynomial fit to the shrunken well (MaskImage); evanalyzer cannot mask an image by objects, so the fit uses the whole image - the corrected image still correlates r=0.96 with CP's inside the well. Not ported: the second correction (Regular + Convex Hull smoothing + divide), evanalyzer has no convex-hull smoothing.",
+    "authors": [],
+    "creationTime": "2026-10-21T00:00:00Z",
+    "category": "Preprocessing",
+    "tags": [
+      "illumination-correction",
+      "worms",
+      "brightfield",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": 0,
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": 1,
+        "color": "#33ccff",
+        "name": "well",
+        "notes": "Well in CP pipeline"
+      },
+      {
+        "id": 2,
+        "color": "#ff33cc",
+        "name": "well@shrunken",
+        "notes": "ShrunkenWell in CP pipeline (Well shrunk by 5 px)"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "AUTO",
+    "groupingRegex": "",
+    "plateSize": "AUTO",
+    "wellLayout": "AUTO",
+    "wellImageOrder": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "well",
+      "description": "IdentifyPrimaryObjects Well (3-class Otsu, middle class foreground)",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "THREE",
+                    "middleClass": "FOREGROUND"
+                  }
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": "RAW_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1000.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "shrunken well",
+      "description": "ExpandOrShrinkObjects: shrink Well by 5 px",
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "TRANSFORM_OBJECTS",
+            "function": {
+              "type": "SHRINK",
+              "margin": 5.0,
+              "unit": "PIXELS"
+            },
+            "inputClass": {
+              "GLOBAL": 1
+            },
+            "outputClass": {
+              "GLOBAL": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "polynomial correction",
+      "description": "Invert + CorrectIlluminationCalculate (Background, block 2, fit polynomial) + Apply (subtract). Unlike CP the fit is not restricted to the shrunken well (no image masking in evanalyzer).",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_MATH",
+            "operand": "INVERT",
+            "secondImageAddress": "SCRATCHPAD",
+            "swapOperands": false
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "SAVE_IMAGE",
+            "name": "inverted",
+            "displayClasses": [],
+            "source": "IMAGE",
+            "opacity": 50
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "ILLUMINATION_CORRECTION",
+            "method": "BACKGROUND",
+            "blockSize": 2,
+            "smoothing": {
+              "type": "FIT_POLYNOMIAL"
+            },
+            "applyMethod": "SUBTRACT",
+            "rescale": false
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "SAVE_IMAGE",
+            "name": "polynomial_corrected",
+            "displayClasses": [],
+            "source": "IMAGE",
+            "opacity": 50
+          }
+        }
+      ]
+    }
+  ],
+  "modules": []
+}

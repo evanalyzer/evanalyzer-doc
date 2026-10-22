@@ -7,6 +7,8 @@ The **Simple Tracker** links the objects of a time-lapse into **tracks**: each o
 
 It is a [dataset step](/guide/pipelines/#dataset-steps): it runs once after every image has been analysed, on the stored objects of all frames.
 
+The tracks it makes are shown in [Results › Tracks](/guide/results/#tracks): a row per track with its time points, speed and straightness, and its trail on the image.
+
 ## Parameters
 
 | Parameter        | Description                                                                                      |
@@ -29,4 +31,4 @@ Track IDs start at 1 and are unique across tracking steps: a second Simple Track
 
 - No gap closing: an object missing in one frame ends its track, and its reappearance starts a new one.
 - No divisions or merges: each object continues at most one track.
-- Only project classes can be tracked, not the internal classes of a [component](/guide/command-groups/#internal-classes).
+- Only project classes can be tracked, not the internal classes of a [module](/guide/modules/#internal-classes).

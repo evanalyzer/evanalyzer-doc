@@ -34,6 +34,9 @@ DISPLAY = os.environ.get("EVA_DISPLAY", ":99")
 APP = Path(os.environ.get("EVA_APP", ROOT / "tools" / "evanalyzer-linux-x86_64" / "evanalyzer"))
 DATA = Path(os.environ.get("EVA_DATA", "/data/ev_plate"))
 PROJECT = DATA / "ev_plate.evaproj"
+# The time-lapse for the Tracks screenshots (make_tracks.py).
+TRACKS = Path(os.environ.get("EVA_TRACKS", "/data/ev_tracks"))
+TRACKS_PROJECT = TRACKS / "ev_tracks.evaproj"
 # A file with several image series, for the "Which series" question
 # (the app repo's tests/Slide1_distal_zoom_40x.vsi). Optional.
 SERIES_IMAGE = os.environ.get("EVA_SERIES_IMAGE", "")
@@ -481,25 +484,25 @@ def sc_dialogs():
     shot("screenshot-save-as-template")
 
 
-def sc_components():
+def sc_modules():
     pipeline_cy5(with_preview=False)
     hover(200, STEP_Y[1])
     click(STEP_MENU_X, STEP_Y[1])
-    click(234, 376, wait=1.5)      # Create component
+    click(234, 376, wait=1.5)      # Create module
     click(520, 159)
     type_text("Spot detection")
     click(680, 227)                # To
     click(577, 443, wait=1.5)      # #8 ClassifyObjects
     hover(700, 899)
-    shot("screenshot-create-component")
-    click(782, 377, wait=3)        # Create component
+    shot("screenshot-create-module")
+    click(782, 377, wait=3)        # Create module
     hover(200, STEP_Y[1])
     click(STEP_MENU_X, STEP_Y[1])
-    click(226, 432, wait=2)        # Edit component
+    click(226, 432, wait=2)        # Edit module
     click(324, 162, wait=1.5)      # Settings
     click(985, 72, wait=1.5)       # Parameters
     hover(700, 899)
-    shot("screenshot-component-settings")
+    shot("screenshot-module-settings")
 
 
 def sc_results_list():
@@ -591,6 +594,30 @@ def sc_results_export():
     shot("screenshot-results-on-image")
 
 
+def sc_results_tracks():
+    start_app("--project", str(TRACKS_PROJECT))
+    click(372, 72, wait=3)         # read the folder: the viewer needs the image list
+    click(200, 140, wait=4)
+    click(*MODE_RESULTS, wait=2)
+    click(595, 148, wait=5)        # the analysis "tracking"
+    # With tracks the results bar has a fourth view: the views shift.
+    click(415, 20, wait=4)         # Tracks
+    click(200, 189, wait=3)        # track #2 - a straight mover
+    away()
+    shot("screenshot-results-tracks")
+    click(1119, 828, wait=8)       # Show in image
+    click(1307, 127, wait=1.5)     # Trail: Whole track
+    click(1121, 828, wait=4)       # the last time point
+    away()
+    shot("screenshot-results-tracks-split")
+    click(493, 20, wait=2)         # Full
+    click(346, 20, wait=4)         # Charts
+    click(213, 173, wait=5)        # Over time
+    click(266, 446, wait=4)        # Individual tracks, faint
+    away()
+    shot("screenshot-results-over-time")
+
+
 def sc_run():
     open_project()
     open_image()
@@ -601,7 +628,29 @@ def sc_run():
     type_text("replicate_2", wait=0.2)
     click(1381, 260, wait=0.7)     # Run - the demo plate takes ~2 s
     shot("screenshot-analysis-running", 0)
-    shot("screenshot-analysis-finished", 0.8)
+    wait_for_run_button()
+    shot("screenshot-analysis-finished", 0.3)
+
+
+def pixel_luma(x, y):
+    out = subprocess.run(["sh", "-c", f"import -window root -crop 1x1+{x}+{y} -depth 8 txt:- | tail -1"],
+                         env=env, capture_output=True, text=True).stdout
+    try:
+        r, g, b = (int(v) for v in out.split("(")[1].split(")")[0].split(",")[:3])
+    except (IndexError, ValueError):
+        return 255
+    return (r * 299 + g * 587 + b * 114) // 1000
+
+
+def wait_for_run_button(timeout=120):
+    """Until the analysis is done: the black Run button is back in the top bar
+    (while it runs, the bar shows the light progress pill there)."""
+    end = time.time() + timeout
+    while time.time() < end:
+        if pixel_luma(RUN[0] - 25, RUN[1]) < 80:
+            return
+        sleep(0.3)
+    print("  (the analysis didn't finish in time)")
 
 
 SCENES = {
@@ -609,9 +658,10 @@ SCENES = {
     "pick-pipeline": sc_pick_pipeline, "add-step": sc_add_step, "step-menu": sc_step_menu,
     "eva-menu": sc_eva_menu, "colors": sc_colors, "palette": sc_palette, "tuning": sc_tuning,
     "compare": sc_compare, "switcher": sc_switcher, "classes": sc_classes, "annotate": sc_annotate,
-    "objects": sc_objects, "settings": sc_settings, "dialogs": sc_dialogs, "components": sc_components,
+    "objects": sc_objects, "settings": sc_settings, "dialogs": sc_dialogs, "modules": sc_modules,
     "results-list": sc_results_list, "results-plate": sc_results_plate, "results-charts": sc_results_charts,
     "results-split": sc_results_split, "results-export": sc_results_export,
+    "results-tracks": sc_results_tracks,
     "run": sc_run,                 # writes a second analysis: after the results scenes
     "series": sc_series,
     "start-page": sc_start_page,
@@ -632,11 +682,33 @@ def prepare_data():
         subprocess.run([sys.executable, str(here / "make_plate.py"), str(DATA)], check=True)
     subprocess.run([sys.executable, str(here / "make_project.py"), str(DATA)], check=True)
     shutil.rmtree(DATA / "results", ignore_errors=True)
-    r = subprocess.run(app_command() + ["cli", "analyze", "--project", str(PROJECT),
-                                        "--job-name", "dilution_series", "--threads", "4"],
+    analyze(PROJECT, "dilution_series")
+    if not list(TRACKS.glob("*.ome.tif")) or not TRACKS_PROJECT.exists():
+        subprocess.run([sys.executable, str(here / "make_tracks.py"), str(TRACKS)], check=True)
+    shutil.rmtree(TRACKS / "results", ignore_errors=True)
+    analyze(TRACKS_PROJECT, "tracking", "--images", str(TRACKS))
+
+
+def analyze(project, job, *extra):
+    r = subprocess.run(app_command() + ["cli", "analyze", "--project", str(project), *extra,
+                                        "--job-name", job, "--threads", "4"],
                        env=env, capture_output=True, text=True)
     if r.returncode != 0:
         sys.exit("cli analyze failed:\n" + r.stdout + r.stderr)
+
+
+def stop_strays():
+    """Closes EVAnalyzer windows left on the display by an aborted run - a
+    second window on top of the first takes the clicks."""
+    me = str(APP)
+    for line in subprocess.run(["ps", "-eo", "pid=,args="], capture_output=True, text=True).stdout.splitlines():
+        pid, _, args = line.strip().partition(" ")
+        if me in args and "take.py" not in args and not args.startswith(("bash", "/bin/sh", "sh ")):
+            try:
+                os.kill(int(pid), 15)
+            except (ProcessLookupError, PermissionError):
+                pass
+    time.sleep(1)
 
 
 def main():
@@ -660,6 +732,7 @@ def main():
     CACHE.mkdir(parents=True, exist_ok=True)
     fresh_home()
     ensure_display()
+    stop_strays()
     prepare_data()
     try:
         for name in a.scenes or SCENES:

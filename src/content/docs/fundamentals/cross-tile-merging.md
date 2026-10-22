@@ -46,7 +46,7 @@ Cross-tile object merging is configured under **EVA › [Project settings…](/g
 | **Connectivity**                               | Whether two fragments from opposite sides of a seam must be 4- or 8-connected to count as touching. Default: **8-connected**.                                                                       |
 | **Max fragments per group**                    | A safety limit (default `10000`) on how many edge-touching fragments of one class/plane group may be considered together before matching even starts. Exceeding it fails the analysis with an explicit error instead of silently building a pathological merge - the fix is to add the offending class to **Exclude classes**, not to raise the limit. |
 
-Objects of a [component's internal classes](/guide/command-groups/#internal-classes) are always merged, separately for each use of the component - **Exclude classes** only lists project classes.
+Objects of a [module's internal classes](/guide/modules/#internal-classes) are always merged, separately for each use of the module - **Exclude classes** only lists project classes.
 
 Most users never need to touch these - merging is on by default precisely because objects should be detected correctly regardless of where a tile boundary happens to fall, without anyone having to know or care that tiles exist at all.
 

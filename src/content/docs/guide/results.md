@@ -17,7 +17,7 @@ Results are a mode of the main window: switch to **Results** in the bottom bar (
 
 In Results, the top bar holds the results' controls:
 
-- **List | Plate | Charts** - the [three views](#list-view).
+- **List | Plate | Charts** - the [views](#list-view), and **Tracks** when the analysis has [tracked objects](#tracks).
 - **Analysis ▾** - the analysis shown, picked from every analysis of the project's images (**ANALYSES · N**). With none open, Results lists them to pick one; with none at all: _"None yet - Run writes one"_.
 - Inside a well, a breadcrumb **Plate › Well C3 › image** to go back up.
 - **Full | Split with image** - the results alone, or [beside the image](#split-with-the-image).
@@ -71,7 +71,9 @@ The **Charts** view plots the results instead of listing them. Pick the chart as
 - **Histogram** bins a chosen numeric property, optionally restricted to one class, and shows the object count and the distribution across bins. Under **Display**: the number of **Bins** and **Counts on a log scale**.
 - **Scatter** plots two numeric columns (**X** and **Y**), optionally restricted to one class. Large datasets are downsampled for drawing - **Points drawn** sets how many (**500**, **2 000**, **10 000** or **All**; _"2000 of 41227 objects plotted"_). Click a point to see its object on its image.
 - **Boxplot** draws one box (quartile box, median line, whiskers, and outlier dots) for a chosen property. **A box per** groups them by **class**, **image**, **well**, **plate row** or **plate column**. Click a box to see its objects in the List.
-- **Over time** <span class="evx-new">NEW</span> follows a property through the frames of a time-lapse. **A line per** **Class**, **Image**, **Well** or **Track** ([tracked objects](/commands/dataset/simple-tracker/)); each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. **Relative to the first time point** shows the change instead of the value, **Individual tracks, faint** draws every track behind the lines. The lines' values can be exported as a time course table.
+- **Over time** <span class="evx-new">NEW</span> follows a property through the frames of a time-lapse. **A line per** **Class**, **Image**, **Well** or **Track** ([tracked objects](/commands/dataset/simple-tracker/)); each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. **Relative to the first time point** shows the change instead of the value, **Individual tracks, faint** draws every track behind the lines. **Export data…** above the chart writes the lines' values per time point as a table.
+
+![The Over time chart: the mean area of gfp@vesicle per time point with its standard deviation as a band, every track faint behind it](../../../assets/screenshots/screenshot-results-over-time.png)
 
 ![Charts: results histogram](../../../assets/screenshots/screenshot-results-histogram.png)
 
@@ -143,6 +145,33 @@ The innermost level bins a single image's objects into square tiles - the **Squa
 
 ![One image binned into tiles, one tile selected with Show on image ↗ in its card](../../../assets/screenshots/screenshot-results-heatmap.png)
 
+## Tracks
+
+When an analysis has tracked objects - from a [Simple Tracker](/commands/dataset/simple-tracker/) step - the results bar offers a fourth view, **Tracks**: one row per track instead of one per object.
+
+Each track shows its **Image**, **Class**, how many **Time points** it spans, how far it **Moved** (the path from point to point), its **Speed** and its **Straightness** - the distance from its first to its last point divided by the path, so 1 is a straight line and a value near 0 an object that wandered around. **Speed unit** picks **px/frame**, **µm/min** or **µm/s** (the µm units need the pixel size, µm/min and µm/s the [frame interval](/guide/images/#frame-interval)). Click a column's head to sort by it.
+
+The filters above the table:
+
+- **Class** and **Image** - which tracks to list.
+- **At least** _N_ **time points** - leave out short tracks.
+- **From the first time point** - only tracks that are there from the start.
+- **Not touching the edge** - leave out tracks that touch the image's edge, which may have left or entered the field of view.
+
+Click a track to see it on the right: its numbers, its **Area over time**, and **The track's time points** with the position (**X px**, **Y px**) and area at each. **Show in image** opens the split layout at that track.
+
+![Results, Tracks: the filters on top, a row per track with time points, moved, speed and straightness; the selected track's area over time and time points on the right](../../../assets/screenshots/screenshot-results-tracks.png)
+
+### Tracks beside the image
+
+With **Split with image**, the tracks of one image are listed beside it, and the image draws each track as a trail through its time points. Click a row to select its track on the image - or an object to select its track (_Click an object to select its track_). **‹ ›** step to the previous or next image with tracks; **T** under the image steps through the time points or plays them.
+
+The panel at the top right of the image sets the trails: **Trail** **Off**, the last **10 time points** or the **Whole track**; **All tracks** or **Selected only**; **Color** by **Track** or **Class**.
+
+![Results, Tracks split with the image: one image's tracks as a table, their trails on the image, the selected track highlighted](../../../assets/screenshots/screenshot-results-tracks-split.png)
+
+To follow a property of the tracks over time, use the [Over time](#charts) chart with **A line per: Track**.
+
 ## Split with the image
 
 **Split with image** in the results bar puts the results on the left and the image on the right, with a divider between them that you can drag. It works with **List** and **Plate**.
@@ -173,6 +202,7 @@ The width of the results, whether the split is on, and **Follow selection** are 
 - **Objects - one row per object** - with **Images** to pick (all by default; [images left out](#leaving-images-out) are skipped unless you select them explicitly), and optionally **With coloc details** and **Each image in its own file**.
 - **Per image** - the same aggregated-by-image data as [a row per image in the List](#grouping-and-aggregating-rows); optionally the **Image heatmap** (the per-image spatial heatmap grid, with its own square size).
 - **Time course - per time point** <span class="evx-new">NEW</span> - for time-lapse data: the values per frame, as the [Over time](#charts) chart shows them.
+- **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is.
 - **Per well - plate layout (XLSX)** - the plate as a heatmap; optionally **Plate as list**, **Wells as heatmap** and **Wells as list**, with **Colors** for the heatmaps. Grouping, plate size and well layout are taken from the project's plate settings - the same ones the [Plate view](#grouping-images-into-wells) uses.
 - **Images with objects drawn (PNG)** <span class="evx-new">NEW</span> - each image as a PNG, with its channels in their colors (auto-scaled) and every object's box in its class color. Large images are written at the pyramid level up to 4096 px.
 

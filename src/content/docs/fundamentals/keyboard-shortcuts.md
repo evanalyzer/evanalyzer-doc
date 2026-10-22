@@ -105,6 +105,6 @@ See [Split with the image](/guide/results/#split-with-the-image).
 | `Escape` | Close the open dialog |
 | `F1`     | Show this help        |
 
-Dialogs don't block the window, so `Escape` closes the open dialog even after you clicked into the image. In a dialog that edits something - like the component settings - `Escape` works like **Cancel** and undoes the changes made while it was open.
+Dialogs don't block the window, so `Escape` closes the open dialog even after you clicked into the image. In a dialog that edits something - like the module settings - `Escape` works like **Cancel** and undoes the changes made while it was open.
 
 Otherwise `Tab` moves between buttons, switches, list rows and steps; `Space` or `Enter` presses the focused one. The focus ring only shows when you use the keyboard.

@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 4,
+  "meta": {
+    "name": "Example Percent Positive",
+    "shortDescription": "Ported from CellProfiler ExamplePercentPositive pipeline",
+    "description": "Two-channel percent-positive assay (HT29 cells, DNA + phospho-histone H3 mitosis marker). Ported from the CellProfiler ExamplePercentPositive.cppipe example. Channel 0 = OrigBlue/DNA (files *d0.tif), channel 1 = OrigGreen/PH3 (files *d1.tif), merged into one 2-channel TIFF per site via Fiji (images/). Mapping: IdentifyPrimaryObjects -> Gaussian blur (sigma 1.0 = CP threshold smoothing scale 1.3488/0.6744/2) + Threshold computed on the raw image (LI = Minimum Cross-Entropy for nuclei; 3-class Otsu, middle class foreground, lower bound 0.05 for PH3) + connected components + watershed (Shape -> distance-map seeds, Intensity -> intensity seeds with CP's maxima-suppression radius min-diameter/1.5 and the effective sigma 2.83 of CP's truncated 10-px smoothing kernel) + fill object holes (CP: after declumping only) + area filter from the typical diameter (pi*d^2/4) with border objects discarded. RelateObjects + FilterObjects(Children_PH3_Count >= 1) -> class ph3_pos_nuclei (nuclei overlapping a ph3 object). ClassifyObjects(MaxIntensity_OrigGreen > 0.2) -> class ph3_pos_by_intensity. CalculateMath (percent positive) has no pipeline equivalent: compute it after export as count(ph3_pos_nuclei) / count(nuclei) * 100. Result vs CP 4.2.8: nuclei 281 vs 280 (median area 115 vs 118.5 px), PH3 19 vs 20 (median 91 vs 94.5 px), PH3-positive nuclei 20 vs 20, percent positive 7.12 % vs 7.14 %, positive by max intensity 7.47 % vs 7.50 %. Remaining deviations: evanalyzer's distance-map watershed (prominence-based) splits a few large nucleus clumps that CP keeps whole (largest nucleus 354 vs 471 px), and splits one large PH3 object CP keeps whole (largest 121 vs 191 px); CP's 3-class Otsu uses a 128-bin histogram.",
+    "authors": [],
+    "creationTime": "2026-10-21T00:00:00Z",
+    "category": "Assay",
+    "tags": [
+      "percent-positive",
+      "mitosis",
+      "2-channel",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": 0,
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": 1,
+        "color": "#3366ff",
+        "name": "nuclei",
+        "notes": "Nuclei in CP (DNA channel 0)"
+      },
+      {
+        "id": 2,
+        "color": "#33ff66",
+        "name": "ph3",
+        "notes": "PH3 in CP (PH3 channel 1)"
+      },
+      {
+        "id": 3,
+        "color": "#ff3333",
+        "name": "ph3_pos_nuclei",
+        "notes": "PH3PosNuclei in CP: nuclei overlapping at least one ph3 object"
+      },
+      {
+        "id": 4,
+        "color": "#ff9900",
+        "name": "ph3_pos_by_intensity",
+        "notes": "ClassifyObjects bin PH3Pos in CP: nuclei with max PH3 intensity > 0.2"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "AUTO",
+    "groupingRegex": "",
+    "plateSize": "AUTO",
+    "wellLayout": "AUTO",
+    "wellImageOrder": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "nuclei",
+      "description": null,
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 9,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "LI"
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 1.0,
+                "unit": "RELATIVE",
+                "segmentationClass": 1,
+                "valueSource": "RAW_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 0.5,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0,
+            "seedSource": "DISTANCE_MAP"
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "FILL_OBJECT_HOLES"
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 50.27,
+            "maxArea": 5026.55,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "ph3",
+      "description": null,
+      "imageSource": {
+        "channel": 1
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 9,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "THREE",
+                    "middleClass": "FOREGROUND"
+                  }
+                },
+                "minThreshold": 0.05,
+                "maxThreshold": 1.0,
+                "unit": "RELATIVE",
+                "segmentationClass": 1,
+                "valueSource": "RAW_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 3.33,
+            "smoothingSigma": 2.83,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "FILL_OBJECT_HOLES"
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 2
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 19.63,
+            "maxArea": 314.16,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "percent positive",
+      "description": null,
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_MATCH",
+            "outputClass": {
+              "GLOBAL": 3
+            },
+            "overlappingWith": {
+              "GLOBAL": 2
+            },
+            "minIntersectionArea": 1.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true,
+            "intensityFilters": []
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_MATCH",
+            "outputClass": {
+              "GLOBAL": 4
+            },
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 0.0,
+            "maxArea": 2147483600.0,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": true,
+            "intensityFilters": [
+              {
+                "channel": 1,
+                "metric": "MAX",
+                "comparison": "ABOVE",
+                "threshold": 0.2,
+                "unit": "RELATIVE"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "modules": []
+}

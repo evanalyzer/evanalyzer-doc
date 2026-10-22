@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 4,
+  "meta": {
+    "name": "Example Speckles",
+    "shortDescription": "Ported from CellProfiler ExampleSpeckles pipeline",
+    "description": "H2AX foci (speckles) per nucleus, ported from the CellProfiler ExampleSpeckles.cppipe example. Channel 0 = Hoechst (1-162hrhoe2.tif), channel 1 = H2AX (1-162hrh2ax2.tif), merged into one 2-channel TIFF (images/) with Fiji. Nuclei: Gaussian sigma 1 + Otsu (threshold computed on the raw image, like CP), fill holes, distance-map watershed (tolerance 2), area for 120-300 px diameter, edge objects dropped. Foci: CP's EnhanceOrSuppressFeatures 'Speckles' (size 10) is a white top-hat with a radius-5 disk - built here as Image Cache + grayscale Open (11 px ellipse) + Image Math subtract. Then Robust Background threshold, intensity-seeded watershed (min distance 4), and Object Math AND with the nuclei to keep only the part of each focus inside a nucleus (CP's MaskImage + RelateObjects). Known difference: CP masks the image to the nuclei before thresholding, so its Robust Background statistics only see nuclear pixels; evanalyzer cannot mask an image by objects, so the statistics see the whole image. To compensate, deviations above average was raised from CP's 2.0 to 4.8 (reproduces CP's threshold on this image; will need re-checking on other images). Result vs CP: nuclei 6/6, areas within 1%; foci 157 vs 152, median area 56 vs 54.5 px, per-nucleus foci counts within +-2.",
+    "authors": [],
+    "creationTime": "2026-10-21T00:00:00Z",
+    "category": "Spot Detection",
+    "tags": [
+      "speckles",
+      "foci",
+      "h2ax",
+      "2-channel",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": 0,
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": 1,
+        "color": "#3366ff",
+        "name": "nucleus",
+        "notes": "Nuclei in CP pipeline"
+      },
+      {
+        "id": 2,
+        "color": "#888833",
+        "name": "h2ax@unmasked",
+        "notes": "foci before masking to nuclei (intermediate)"
+      },
+      {
+        "id": 3,
+        "color": "#33ff66",
+        "name": "h2ax",
+        "notes": "h2ax in CP pipeline (foci inside nuclei)"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "AUTO",
+    "groupingRegex": "",
+    "plateSize": "AUTO",
+    "wellLayout": {
+      "FIXED": {
+        "rows": 1,
+        "cols": 1
+      }
+    },
+    "wellImageOrder": [
+      1
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "nuclei",
+      "description": null,
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "OTSU",
+                  "classes": {
+                    "type": "TWO"
+                  }
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": "RAW_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 2.0,
+            "smoothingSigma": 0.0,
+            "minObjectSize": 0,
+            "seedSource": "DISTANCE_MAP"
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 11309.733,
+            "maxArea": 70685.836,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "h2ax",
+      "description": null,
+      "imageSource": {
+        "channel": 1
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_CACHE",
+            "mode": "STORE",
+            "address": {
+              "memory": {
+                "pipelineContext": 0
+              }
+            }
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "MORPHOLOGICAL_COMMAND",
+            "op": "OPEN",
+            "kernelSize": 11,
+            "kernelShape": "ELLIPSE",
+            "useGrayscale": true
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_MATH",
+            "operand": "SUBTRACT",
+            "secondImageAddress": {
+              "memory": {
+                "pipelineContext": 0
+              }
+            },
+            "swapOperands": true
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_CACHE",
+            "mode": "STORE",
+            "address": {
+              "memory": {
+                "pipelineContext": 1
+              }
+            }
+          }
+        },
+        {
+          "id": 5,
+          "enabled": false,
+          "command": {
+            "type": "SAVE_IMAGE",
+            "name": "tophat",
+            "displayClasses": [],
+            "source": "IMAGE",
+            "opacity": 50
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "ROBUST_BACKGROUND",
+                  "lowerOutlierFraction": 0.05,
+                  "upperOutlierFraction": 0.05,
+                  "averagingMethod": "MEAN",
+                  "deviationsAboveAverage": 4.8
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": {
+                  "MEMORY": {
+                    "pipelineContext": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 9,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 10,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 4.0,
+            "smoothingSigma": 1.0,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "id": 11,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 2
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 12,
+          "enabled": true,
+          "command": {
+            "type": "OBJECT_MATH",
+            "operation": "AND",
+            "inputClass": {
+              "GLOBAL": 2
+            },
+            "otherClass": {
+              "GLOBAL": 1
+            },
+            "otherFilterClasses": [],
+            "sizeUnit": "PIXELS",
+            "minOverlapArea": 1.0,
+            "outputClass": {
+              "GLOBAL": 3
+            },
+            "keepUnmatched": false
+          }
+        },
+        {
+          "id": 13,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 3
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 12.566371,
+            "maxArea": 962.11273,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    }
+  ],
+  "modules": []
+}

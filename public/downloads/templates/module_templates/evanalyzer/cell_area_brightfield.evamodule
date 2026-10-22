@@ -1,0 +1,240 @@
+{
+  "schemaVersion": 4,
+  "key": "CELL_AREA_BRIGHTFIELD",
+  "meta": {
+    "name": "Cell area brightfield",
+    "shortDescription": "Cell brightfield",
+    "description": "Segments the overall cell area from a brightfield image using Sobel edge detection, blurring and an automatic threshold. The class the objects get is the module's \"Cell area\" parameter.",
+    "authors": [
+      {
+        "fullName": "Melanie Schuerz",
+        "organization": "University of Salzburg"
+      }
+    ],
+    "creationTime": "2026-10-20T17:25:55.830699113Z",
+    "version": 2,
+    "category": "cell",
+    "tags": [
+      "cell"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classes": [],
+  "steps": [
+    {
+      "id": 1,
+      "enabled": true,
+      "command": {
+        "type": "EDGE_DETECTION_SOBEL",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 4,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 5,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 6,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 7,
+      "enabled": true,
+      "command": {
+        "type": "BLUR",
+        "kernelSize": 3
+      }
+    },
+    {
+      "id": 8,
+      "enabled": true,
+      "command": {
+        "type": "THRESHOLD",
+        "thresholds": [
+          {
+            "method": {
+              "type": "MIN_ERROR"
+            },
+            "minThreshold": 0.0,
+            "maxThreshold": 65535.0,
+            "unit": "BIT",
+            "segmentationClass": 1,
+            "valueSource": "ACTUAL_IMAGE"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "enabled": true,
+      "command": {
+        "type": "CONNECTED_COMPONENTS",
+        "minSize": 0
+      }
+    },
+    {
+      "id": 10,
+      "enabled": true,
+      "command": {
+        "type": "EXTRACT_OBJECTS",
+        "maxObjectsBeforeFail": 100000,
+        "classMapping": [
+          {
+            "segmentationClass": 1,
+            "objectClass": {
+              "GLOBAL": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "enabled": true,
+      "command": {
+        "type": "CLASSIFY_OBJECTS",
+        "originSegmentation": [],
+        "inputClasses": [
+          {
+            "GLOBAL": 1
+          }
+        ],
+        "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+        "outputClass": "UNSET",
+        "overlappingWith": "UNSET",
+        "minIntersectionArea": 0.0,
+        "sizeUnit": "PIXELS",
+        "minArea": 53.2,
+        "maxArea": 2147483600.0,
+        "minCircularity": 0.0,
+        "maxCircularity": 1.0,
+        "minSolidity": 0.0,
+        "maxSolidity": 1.0,
+        "minAspectRatio": 0.0,
+        "maxAspectRatio": 2147483600.0,
+        "minEccentricity": 0.0,
+        "maxEccentricity": 1.0,
+        "minFeret": 0.0,
+        "maxFeret": 2147483600.0,
+        "allowEdgeTouching": true,
+        "intensityFilters": []
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "key": "cell_area",
+      "label": "Cell area",
+      "description": "",
+      "section": "Classes",
+      "default": "1",
+      "bindings": [
+        {
+          "step": 10,
+          "param": "class_mapping.0.object_class"
+        },
+        {
+          "step": 11,
+          "param": "input_classes"
+        }
+      ]
+    },
+    {
+      "key": "threshold_method",
+      "label": "Threshold method",
+      "description": "",
+      "section": "Detection",
+      "default": "Min Error",
+      "bindings": [
+        {
+          "step": 8,
+          "param": "thresholds.0.method"
+        }
+      ]
+    },
+    {
+      "key": "min_area",
+      "label": "Min area",
+      "description": "",
+      "section": "Filter",
+      "default": 53.2,
+      "bindings": [
+        {
+          "step": 11,
+          "param": "min_area"
+        }
+      ]
+    },
+    {
+      "key": "max_area",
+      "label": "Max area",
+      "description": "",
+      "section": "Filter",
+      "default": 2147483600,
+      "bindings": [
+        {
+          "step": 11,
+          "param": "max_area"
+        }
+      ]
+    },
+    {
+      "key": "size_unit",
+      "label": "Size unit",
+      "description": "",
+      "section": "Filter",
+      "default": "px",
+      "bindings": [
+        {
+          "step": 11,
+          "param": "size_unit"
+        }
+      ]
+    },
+    {
+      "key": "thresholds_1_min_threshold",
+      "label": "Thresholds 1 · Min Threshold",
+      "description": "",
+      "default": 0,
+      "bindings": [
+        {
+          "step": 8,
+          "param": "thresholds.0.min_threshold"
+        }
+      ]
+    }
+  ],
+  "uses": []
+}

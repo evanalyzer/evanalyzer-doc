@@ -28,7 +28,7 @@ With no pipeline shown, the steps panel lists the pipelines to pick one.
 
 ![Pipelines mode with no pipeline shown: the steps panel lists the pipelines to pick one](../../../assets/screenshots/screenshot-pipeline-pick.png)
 
-The **⋯** of a pipeline has **Edit pipeline…** (or double-click the pipeline), **Duplicate**, **Save as component…** and **Delete pipeline…**.
+The **⋯** of a pipeline has **Edit pipeline…** (or double-click the pipeline), **Duplicate**, **Save as module…** and **Delete pipeline…**.
 
 ![The pipeline switcher open in the steps panel: Pipelines · 4 of 4 run, each pipeline with its checkbox, ⋮⋮, focus and ⋯](../../../assets/screenshots/screenshot-pipeline-switcher.png)
 
@@ -64,9 +64,9 @@ Click a line to open its settings right there in the panel. Hovering a line show
 | `Alt+↑` / `Alt+↓` | Move up / down |
 | `Delete` | Remove the step |
 
-The same actions are in the step's **⋯** menu - **Help** (what the step does), **Settings**, **Disable**, **Breakpoint**, **Duplicate**, **Move up** / **Move down**, **Create component** ([components](/guide/command-groups/)) and **Remove step**.
+The same actions are in the step's **⋯** menu - **Help** (what the step does), **Settings**, **Disable**, **Breakpoint**, **Duplicate**, **Move up** / **Move down**, **Create module** ([modules](/guide/modules/)) and **Remove step**.
 
-![A step's ⋯ menu: Help, Settings, Disable, Breakpoint, Duplicate, Move up and down, Create component, Remove step](../../../assets/screenshots/screenshot-step-menu.png)
+![A step's ⋯ menu: Help, Settings, Disable, Breakpoint, Duplicate, Move up and down, Create module, Remove step](../../../assets/screenshots/screenshot-step-menu.png)
 
 ### Step categories
 
@@ -80,7 +80,7 @@ The stripe on a step and in the command picker tells what kind of data goes in a
 | <span class="evx-cat evx-cat-measure"></span> | **Measure** | labelled mask → objects | Extract Objects |
 | <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | Classify Objects, Object Math, Voronoi, Colocalization |
 | <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | all images' objects | [Simple Tracker](/commands/dataset/simple-tracker/) - see [Dataset steps](#dataset-steps) |
-| <span class="evx-cat evx-cat-component"></span> | **Component ◆** | | A [component](/guide/command-groups/): several steps bundled into one, with its own parameters |
+| <span class="evx-cat evx-cat-component"></span> | **Module ◆** | | A [module](/guide/modules/): several steps bundled into one, with its own parameters |
 
 A typical pipeline flow:
 
@@ -94,7 +94,7 @@ When a fixed sequence of steps isn't enough - for example to retry a step with o
 
 ### Adding steps
 
-Click **Add step** below the steps, or **+** between two lines (**Insert a step here**), to open the command picker. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Components**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Object**, **Measure**, **Dataset**, **Component** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object** and **Dataset**. The pane on the right describes the chosen command, with its settings, authors and what to cite. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
+Click **Add step** below the steps, or **+** between two lines (**Insert a step here**), to open the command picker. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Modules**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Object**, **Measure**, **Dataset**, **Module** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object** and **Dataset**. The pane on the right describes the chosen command, with its settings, authors and what to cite. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
 
 The picker stays open: each step you add goes in after the one you added before, and the footer confirms it (_"✓ Added Threshold as step 3"_). **Done** closes it. You can also add a command from the [command palette](/guide/workspace/#command-palette) (`Ctrl+K`).
 
@@ -114,7 +114,7 @@ To keep the steps short, each command shows only its essential settings. Setting
 
 ### Problems
 
-Settings that can't work - a class that doesn't exist, a component parameter that no longer matches - are marked **⚠** on the step, with the number of problems. The **Problems** panel lists all of them; click one to go to its step.
+Settings that can't work - a class that doesn't exist, a module parameter that no longer matches - are marked **⚠** on the step, with the number of problems. The **Problems** panel lists all of them; click one to go to its step.
 
 ## Tuning panel
 
@@ -136,7 +136,7 @@ To see the image as it is after a step - not just the final objects - set a **br
 - **Snapshot** (orange) - the preview keeps the image of this step and runs on to the end.
 - **Off**.
 
-The steps panel's footer then offers **Breakpoint image**: which image of the step to show (e.g. **Processed image**). Breakpoints can't be set on the steps inside a component.
+The steps panel's footer then offers **Breakpoint image**: which image of the step to show (e.g. **Processed image**). Breakpoints can't be set on the steps inside a module; on a module's own line, it stops after the whole module.
 
 ### Compare with the original
 
@@ -176,7 +176,7 @@ Focus mode only changes what is displayed. Your own visibility settings for chan
 
 ## Reusing a pipeline
 
-**Save as component…** in a pipeline's ⋯ turns the whole pipeline into a [component](/guide/command-groups/) and saves it to the library: it then appears in the command picker under **Component** in every project, as one step with the parameters you choose.
+**Save as module…** in a pipeline's ⋯ turns the whole pipeline into a [module](/guide/modules/) and saves it to the library: it then appears in the command picker under **Module** in every project, as one step with the parameters you choose.
 
 ## Saving a Project as a Template
 
@@ -184,17 +184,17 @@ You can save an entire project - its class definitions, plate configuration, and
 
 Click **EVA › Save as template…** to open the template dialog.
 Fill in **Name**, **Short description**, **Description**, **Author**, **Organization** and optionally **Category**, **Version** (count it up when you change the template) and **Tags**, then click **Next…** to choose a save location.
-Project templates use the `.evapt` extension.
+Project templates use the `.evatemplate` extension.
 
 To create a new project from a template, use **EVA › New from template…** or **New project from a template…** on the Start page.
 This pre-populates the classes, plate settings, and all pipelines, so you can start a new experiment with a known-good configuration without rebuilding from scratch.
 
-You can also open an `.evapt` file directly with **EVA › Open…** - EVAnalyzer detects the project-template extension and applies it the same way **New from template…** does, so a template downloaded or shared with you doesn't need a separate import step.
+You can also open an `.evatemplate` file directly with **EVA › Open…** - EVAnalyzer detects the project-template extension and applies it the same way **New from template…** does, so a template downloaded or shared with you doesn't need a separate import step.
 
 ![The Save as template dialog: Name, Short description, Description, Author, Organization](../../../assets/screenshots/screenshot-save-as-template.png)
 
 :::tip
-Use project templates to standardize analysis configurations across your lab - share a single `.evapt` file to ensure every team member starts from the same pipeline and class setup.
+Use project templates to standardize analysis configurations across your lab - share a single `.evatemplate` file to ensure every team member starts from the same pipeline and class setup.
 :::
 
 ## Running the Analysis

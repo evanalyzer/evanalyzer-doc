@@ -8,6 +8,10 @@ import rehypeKatex from "rehype-katex";
 
 export default defineConfig({
   site: "https://evanalyzer.org",
+  // Command groups were renamed to components, then to modules: old links keep working.
+  redirects: {
+    "/guide/command-groups": "/guide/modules",
+  },
   // starlight-image-zoom doesn't support Astro's newer default "satteri"
   // markdown processor yet - stay on the remark/rehype pipeline until it does.
   // remark-math/rehype-katex render the $$ ... $$ formula blocks used in the
@@ -112,7 +116,7 @@ export default defineConfig({
             { label: "Images", slug: "guide/images" },
             { label: "Classes & Objects", slug: "guide/classification" },
             { label: "Pipelines", slug: "guide/pipelines" },
-            { label: "Components", slug: "guide/command-groups" },
+            { label: "Modules", slug: "guide/modules" },
             { label: "Results", slug: "guide/results" },
             { label: "Settings", slug: "guide/settings" },
           ],

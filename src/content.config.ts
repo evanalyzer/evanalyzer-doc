@@ -9,10 +9,10 @@ const downloads = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      category: z.enum(['template', 'pipeline', 'model']),
+      category: z.enum(['template', 'module', 'model']),
       // Path to the plain download (just the template/model itself),
       // relative to `public/`, e.g.
-      // "/downloads/templates/cell_uptake_2_channel_coloc.evapt".
+      // "/downloads/templates/project_templates/evanalyzer/coloc_2_channel.evatemplate".
       file: z.string(),
       fileSize: z.string().optional(),
       // Optional second download: a .zip bundling the same file together

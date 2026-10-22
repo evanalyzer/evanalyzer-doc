@@ -1,0 +1,448 @@
+{
+  "schemaVersion": 4,
+  "meta": {
+    "name": "Example Vitra",
+    "shortDescription": "Ported from CellProfiler ExampleVitra pipeline (nucleus/cytoplasm protein translocation)",
+    "description": "Nucleus/cytoplasm protein translocation assay (BBBC014), ported from CellProfiler's ExampleVitra.cppipe. Input: one 4-channel TIFF per well in images/ (Fiji merge): ch0 = DNA (\"Channel 2-*\"), ch1 = protein (\"Channel 1-*\"), ch2 = 1/VitraChannel2ILLUM, ch3 = 1/VitraChannel1ILLUM. CP divides by precomputed illumination functions (.npy, 1.0-2.0 across the field) which evanalyzer cannot load, so the inverse functions are stored as 8-bit extra channels (round(255/f), <0.4 % error) and applied with Image Math MULTIPLY - same correction as CP, not re-estimated.\nNuclei: LI (= CP Minimum Cross-Entropy) threshold computed on the corrected, unsmoothed image (Image Cache + value source) and applied to a sigma-1 Gaussian blur (CP threshold smoothing 1.3488), fill holes, intensity-seeded watershed with CP's automatic values for 5-30 px diameter (maxima suppression 3.33 px, total smoothing sigma 1.43 = 1.0 + 1.02 in quadrature), area 19.6-706.9 px (diameter range), border objects discarded. Threshold mask agrees with CP on 99.7 % of pixels.\nCells (CP Distance-B, 8 px): protein foreground = LI threshold of corrected protein; cell region = (nuclei dilated 8 px AND protein foreground) OR nuclei; Voronoi from the nuclei inside that region. Cytoplasm = cells minus nuclei eroded by 1 px (CP 'shrink smaller object').\nResult vs CP: about 22 % fewer nuclei (577/619 vs 744/782). Evanalyzer's watershed (seeds from intensity, flood on the distance map with 1 px lines) leaves 13-15 dense clumps per image unsplit, which then fail the 30 px diameter limit; lower seed tolerances raise the count but cut single nuclei into fragments. Matched nuclei have about the same area (median eva/CP 0.94-0.95). Cells/cytoplasm of isolated nuclei match CP; in crowded areas they are larger because the missing clump nuclei leave room for their neighbours. The CalculateMath ratios (nucleus/cell and cytoplasm/cell mean protein, computed after export) match closely: median 1.16 vs 1.15 and 1.01 vs 1.03 (nucleus/cell), 0.83 vs 0.80 and 1.00 vs 1.01 (cytoplasm/cell). Evanalyzer measures intensities on raw channels; corrected means were approximated as mean(ch1) x mean(ch3).",
+    "authors": [],
+    "creationTime": "2026-10-21T00:00:00Z",
+    "category": "Intensity",
+    "tags": [
+      "translocation",
+      "nucleus",
+      "cytoplasm",
+      "cellprofiler"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classification": {
+    "classes": [
+      {
+        "id": 0,
+        "color": "#97978f",
+        "name": "Background",
+        "notes": ""
+      },
+      {
+        "id": 1,
+        "color": "#3366ff",
+        "name": "nuclei",
+        "notes": "Nuclei (IdentifyPrimaryObjects on CorrDNA)"
+      },
+      {
+        "id": 2,
+        "color": "#999933",
+        "name": "protein@foreground",
+        "notes": "Thresholded CorrProtein (IdentifySecondaryObjects' own threshold)"
+      },
+      {
+        "id": 3,
+        "color": "#666666",
+        "name": "nuclei@expanded",
+        "notes": "Nuclei dilated by 8 px (Distance-B reach), helper"
+      },
+      {
+        "id": 4,
+        "color": "#888888",
+        "name": "cells@reach",
+        "notes": "nuclei@expanded AND protein@foreground, helper"
+      },
+      {
+        "id": 5,
+        "color": "#aaaaaa",
+        "name": "cells@mask",
+        "notes": "nuclei OR cells@reach: pixels a cell may occupy, helper"
+      },
+      {
+        "id": 6,
+        "color": "#33cc66",
+        "name": "cells",
+        "notes": "Cells (IdentifySecondaryObjects Distance-B, 8 px)"
+      },
+      {
+        "id": 7,
+        "color": "#555599",
+        "name": "nuclei@shrunk",
+        "notes": "Nuclei eroded by 1 px (IdentifyTertiaryObjects' shrink), helper"
+      },
+      {
+        "id": 8,
+        "color": "#ff9933",
+        "name": "cytoplasm",
+        "notes": "Cytoplasm = cells minus shrunken nuclei (IdentifyTertiaryObjects)"
+      }
+    ]
+  },
+  "plate": {
+    "groupingMode": "AUTO",
+    "groupingRegex": "",
+    "plateSize": "AUTO",
+    "wellLayout": "AUTO",
+    "wellImageOrder": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "pipelines": [
+    {
+      "id": 1,
+      "name": "nuclei",
+      "description": "IdentifyPrimaryObjects Nuclei on CorrDNA",
+      "imageSource": {
+        "channel": 0
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_MATH",
+            "operand": "MULTIPLY",
+            "secondImageAddress": {
+              "channel": 2
+            },
+            "swapOperands": false
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_CACHE",
+            "mode": "STORE",
+            "address": {
+              "memory": {
+                "pipelineContext": 1
+              }
+            }
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "GAUSSIAN_BLUR",
+            "kernelSize": 7,
+            "sigma": 1.0
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "LI"
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 1,
+                "valueSource": {
+                  "MEMORY": {
+                    "pipelineContext": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "FILL_HOLES"
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 7,
+          "enabled": true,
+          "command": {
+            "type": "WATERSHED",
+            "maximumFinderTolerance": 3.33,
+            "smoothingSigma": 1.02,
+            "minObjectSize": 0,
+            "seedSource": "INTENSITY"
+          }
+        },
+        {
+          "id": 8,
+          "enabled": true,
+          "command": {
+            "type": "FILL_OBJECT_HOLES"
+          }
+        },
+        {
+          "id": 9,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 1,
+                "objectClass": {
+                  "GLOBAL": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": 10,
+          "enabled": true,
+          "command": {
+            "type": "CLASSIFY_OBJECTS",
+            "originSegmentation": [],
+            "inputClasses": [
+              {
+                "GLOBAL": 1
+              }
+            ],
+            "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
+            "outputClass": "UNSET",
+            "overlappingWith": "UNSET",
+            "minIntersectionArea": 0.0,
+            "sizeUnit": "PIXELS",
+            "minArea": 19.6,
+            "maxArea": 706.9,
+            "minCircularity": 0.0,
+            "maxCircularity": 1.0,
+            "minSolidity": 0.0,
+            "maxSolidity": 1.0,
+            "minAspectRatio": 0.0,
+            "maxAspectRatio": 2147483600.0,
+            "minEccentricity": 0.0,
+            "maxEccentricity": 1.0,
+            "minFeret": 0.0,
+            "maxFeret": 2147483600.0,
+            "allowEdgeTouching": false,
+            "intensityFilters": []
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "protein foreground",
+      "description": "Threshold of CorrProtein used by IdentifySecondaryObjects",
+      "imageSource": {
+        "channel": 1
+      },
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "IMAGE_MATH",
+            "operand": "MULTIPLY",
+            "secondImageAddress": {
+              "channel": 3
+            },
+            "swapOperands": false
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "THRESHOLD",
+            "thresholds": [
+              {
+                "method": {
+                  "type": "LI"
+                },
+                "minThreshold": 0.0,
+                "maxThreshold": 65535.0,
+                "unit": "BIT",
+                "segmentationClass": 2,
+                "valueSource": "ACTUAL_IMAGE"
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "EXTRACT_OBJECTS",
+            "maxObjectsBeforeFail": 100000,
+            "classMapping": [
+              {
+                "segmentationClass": 2,
+                "objectClass": {
+                  "GLOBAL": 2
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "cells and cytoplasm",
+      "description": "IdentifySecondaryObjects (Distance-B) + IdentifyTertiaryObjects",
+      "imageSource": "SCRATCHPAD",
+      "enabled": true,
+      "steps": [
+        {
+          "id": 1,
+          "enabled": true,
+          "command": {
+            "type": "TRANSFORM_OBJECTS",
+            "function": {
+              "type": "EXPAND",
+              "margin": 8.0,
+              "unit": "PIXELS"
+            },
+            "inputClass": {
+              "GLOBAL": 1
+            },
+            "outputClass": {
+              "GLOBAL": 3
+            }
+          }
+        },
+        {
+          "id": 2,
+          "enabled": true,
+          "command": {
+            "type": "OBJECT_MATH",
+            "operation": "AND",
+            "inputClass": {
+              "GLOBAL": 3
+            },
+            "otherClass": {
+              "GLOBAL": 2
+            },
+            "otherFilterClasses": [],
+            "sizeUnit": "PIXELS",
+            "minOverlapArea": 1.0,
+            "outputClass": {
+              "GLOBAL": 4
+            },
+            "keepUnmatched": false
+          }
+        },
+        {
+          "id": 3,
+          "enabled": true,
+          "command": {
+            "type": "OBJECT_MATH",
+            "operation": "OR",
+            "inputClass": {
+              "GLOBAL": 1
+            },
+            "otherClass": {
+              "GLOBAL": 4
+            },
+            "otherFilterClasses": [],
+            "sizeUnit": "PIXELS",
+            "minOverlapArea": 1.0,
+            "outputClass": {
+              "GLOBAL": 5
+            },
+            "keepUnmatched": true
+          }
+        },
+        {
+          "id": 4,
+          "enabled": true,
+          "command": {
+            "type": "VORONOI",
+            "centers": {
+              "GLOBAL": 1
+            },
+            "centerFilterClasses": [],
+            "mask": {
+              "GLOBAL": 5
+            },
+            "maskFilterClasses": [],
+            "outputClass": {
+              "GLOBAL": 6
+            },
+            "unit": "PIXELS",
+            "maxRadius": 0.0,
+            "excludeAreasAtTheEdges": false,
+            "excludeAreasWithNoCenter": false
+          }
+        },
+        {
+          "id": 5,
+          "enabled": true,
+          "command": {
+            "type": "TRANSFORM_OBJECTS",
+            "function": {
+              "type": "SHRINK",
+              "margin": 1.0,
+              "unit": "PIXELS"
+            },
+            "inputClass": {
+              "GLOBAL": 1
+            },
+            "outputClass": {
+              "GLOBAL": 7
+            }
+          }
+        },
+        {
+          "id": 6,
+          "enabled": true,
+          "command": {
+            "type": "OBJECT_MATH",
+            "operation": "SUBTRACT",
+            "inputClass": {
+              "GLOBAL": 6
+            },
+            "otherClass": {
+              "GLOBAL": 7
+            },
+            "otherFilterClasses": [],
+            "sizeUnit": "PIXELS",
+            "minOverlapArea": 1.0,
+            "outputClass": {
+              "GLOBAL": 8
+            },
+            "keepUnmatched": true
+          }
+        }
+      ]
+    }
+  ],
+  "modules": []
+}

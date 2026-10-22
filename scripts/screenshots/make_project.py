@@ -7,7 +7,7 @@ gets a display range and shows CY5 + FITC only, so the screenshots look like
 real single-EV imaging instead of auto-scaled noise.
 
 The JSON follows the project format of the ai-plugin branch (schema 4,
-`components`); if the app changes the format, adapt `step()` below.
+`modules`); if the app changes the format, adapt `step()` below.
 
     python3 make_project.py /data/ev_plate
 """
@@ -98,7 +98,7 @@ project = {
                             "pixelSizes": None, "zStack": None, "tStack": None}},
     "pipelines": [spot_pipeline(1, "CY7 spots", 0, 1), spot_pipeline(2, "CY5 spots", 1, 2),
                   spot_pipeline(3, "FITC spots", 2, 3), coloc],
-    "components": [],
+    "modules": [],
 }
 out = os.path.join(data, "ev_plate.evaproj")
 with open(out, "w") as f:
