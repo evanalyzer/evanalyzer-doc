@@ -25,3 +25,5 @@ old/
 .claude
 crates
 /bin
+/tools
+/.cache

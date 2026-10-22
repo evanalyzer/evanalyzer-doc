@@ -29,7 +29,7 @@ Objects are drawn as they are when the step runs - add Save Image after the step
 Control images are written as 8-bit PNG files into the analysis output folder, one folder per source image:
 
 ```
-<image_directory>/evanalyzer/<job_name>/images/<image path without extension>/<name>_x<offset>_y<offset>.png
+<project folder>/results/<date>__<job_name>/images/<image path without extension>/<name>_x<offset>_y<offset>.png
 ```
 
 Large images are analysed in tiles, and Save Image writes one file per tile. `x` and `y` are the tile's offset in the image (zero-padded to six digits), so the files sort in tile order and the whole image can be put back together from them. Images that fit in one tile get a single file, `<name>_x000000_y000000.png`.

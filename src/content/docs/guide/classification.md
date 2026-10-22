@@ -24,14 +24,10 @@ Use `<prefix>@<type>` where the prefix (typically the fluorophore) is used for s
 Each class is a row with its color, its name, its number of objects on the current image and an eye that shows or hides its objects. Click a class to select it.
 
 - **+** (**New class**) adds a class and opens its settings.
-- **⋯ › Edit name, color, id…** of a class opens its settings.
+- **⋯ › Edit name, color, …** of a class opens its settings.
 - The same menu has **Copy**, **Move up** / **Move down** and **Delete class…**.
 
-<div class="evx-shot-todo">
-<strong>Class settings</strong>
-<span>The Class settings dialog left of the right-hand panels: Name, Notes, Class ID with Auto, the color grid (7 a row).</span>
-<code>src/assets/screenshots/screenshot-class-settings.png</code>
-</div>
+![The Class settings dialog left of the right-hand panels: Name, Notes, Class ID with Auto, the color grid (7 a row)](../../../assets/screenshots/screenshot-class-settings.png)
 
 **Class settings**:
 
@@ -50,11 +46,16 @@ You can also create a class where you need it: the class pickers of the steps an
 
 ### Add classes from the image
 
-**⋯ › Add classes from the image** creates one class per channel of the current image, as a starting point, in the channels' colors. It can add the classes found in all images, merged, or replace the list with them.
+The Classes panel's own **⋯** menu:
+
+- **Add classes from image** creates one class per channel of the current image, as a starting point, in the channels' colors.
+- **Merge classes from image** adds only the classes the list doesn't have yet.
+- **Delete all classes…** empties the list, after a confirmation.
+- **Hide unclassified objects** - see below.
 
 ### Hiding unclassified objects
 
-**⋯ › Hide unclassified objects** hides objects that have no class yet - on by default, so a large unfiltered detection doesn't drown out the objects you've actually classified.
+**⋯ › Hide unclassified objects** (in the Classes panel) hides objects that have no class yet - on by default, so a large unfiltered detection doesn't drown out the objects you've actually classified.
 
 ## Objects panel
 
@@ -72,11 +73,7 @@ Above the list are a **class filter** (**All classes** or one class) and a **sea
 
 Whether an image opens with the list or the table is set in **EVA › Project settings… › Viewport › Objects as a table**.
 
-<div class="evx-shot-todo" data-kind="new">
-<strong>Objects as a table</strong>
-<span>The objects table at the bottom of the window, a class chip and "area > 50" in its head, one row selected with its buttons.</span>
-<code>src/assets/screenshots/screenshot-objects-table.png</code>
-</div>
+![The objects table at the bottom of the window, filtered with area > 40 in its head: ID, classes, area, circularity and the mean of each channel](../../../assets/screenshots/screenshot-objects-table.png)
 
 ### The selected object
 
@@ -90,29 +87,30 @@ The selected object's details are shown in a card beside the panel:
 
 An object found by a pipeline is read-only (**From the pipeline · read-only**). An object drawn by hand can be changed.
 
-<div class="evx-shot-todo">
-<strong>Objects panel with a selected object</strong>
-<span>The Objects list on the right, one object selected; its card beside it with classes, area, circularity, means, Coloc with.</span>
-<code>src/assets/screenshots/screenshot-roi-list.png</code>
-</div>
+![The Objects list on the right, one object selected; its card beside it with its class, area, circularity, Shared by and the mean and sum of each channel - a pipeline object, read-only](../../../assets/screenshots/screenshot-roi-list.png)
 
 ### Managing objects
 
 For the selected object:
 
 - **Set class…** - pick a class, then **Add class** adds it to the object's classes, keeping the ones it has, or **Set class** replaces them.
-- **Copy to manual** - copies a pipeline object into the hand-drawn annotations, where it can be edited.
+- **Copy to annotation** - copies a pipeline object into the hand-drawn annotations, where it can be edited (for example to train a classifier on it). The copy is selected, so its class can be changed right away.
 - **Delete object** (or `Delete`) - removes a hand-drawn object, after a confirmation.
 
 The panel's **⋯** menu, for all objects of the image:
 
 | Item | What it does |
 | --- | --- |
-| **Copy pipeline objects to manual…** | Copies the pipeline's objects into the hand-drawn annotations. |
-| **Export annotations (GeoJSON)…** <span class="evx-new">NEW</span> | Writes the hand-drawn annotations of every image to a folder, one `<image>.geojson` file per image - the layout QuPath uses. |
-| **Import annotations (GeoJSON)…** <span class="evx-new">NEW</span> | Reads the `.geojson` files of a folder into the matching images - added to their hand-drawn annotations, or replacing them. |
-| **Re-measure manual annotations** | Measures the hand-drawn objects again. |
-| **Delete manual annotations…** | Removes every object drawn by hand on this image, after a confirmation. Objects found by pipelines are not affected. |
+| **Show as a table** / **Show as a list** | See [Objects as a table](#objects-as-a-table). |
+| **Copy all to annotations** | Copies the image's pipeline objects of the ticked classes into the hand-drawn annotations - with their own classes or one class for all. The same shape is not copied twice. |
+| **Export as GeoJSON** <span class="evx-new">NEW</span> | Writes the hand-drawn annotations of the open image to a `.geojson` file. Tick the classes to export and choose the file name. |
+| **Import from GeoJSON** <span class="evx-new">NEW</span> | Reads a `.geojson` file - from EVAnalyzer, QuPath or other tools - into the open image. Each class name in the file is mapped to a project class (by default the one with the same name, ignoring case), a new class, no class, or _don't import_, so QuPath's class names don't need to match. Shapes without a series go to the series shown. |
+| **Re-measure annotations** | Measures the hand-drawn objects again on the image file - every channel, full resolution. |
+| **Delete annotations…** | Removes objects drawn by hand - on this image or all images, of the chosen classes - after a confirmation. Objects found by pipelines are not affected. |
+
+![The Objects panel's ⋯ menu: Show as a table, Copy all to annotations, Export as GeoJSON, Import from GeoJSON, Re-measure annotations, Delete annotations](../../../assets/screenshots/screenshot-objects-menu.png)
+
+Drawn and imported annotations are measured on the image file itself (every channel, full resolution), in the background - so their intensities are right at any zoom, also for whole slide images and through a [server](/remote/remote-control/).
 
 ## How Classes Relate to Pipelines
 

@@ -37,11 +37,7 @@ Because the merge decision is "do these two fragments touch, however far apart t
 
 Cross-tile object merging is configured under **EVA › [Project settings…](/guide/settings/)**, section **Object merging**:
 
-<div class="evx-shot-todo">
-<strong>Object merging settings</strong>
-<span>The settings sheet searched for "merge": Merge objects across tiles, Exclude classes, Connectivity, Max fragments per group.</span>
-<code>src/assets/screenshots/screenshot-project-settings-cross-tile-merging.png</code>
-</div>
+![The settings sheet searched for "merge": Merge objects across tiles, Exclude classes, Connectivity, Max fragments per group](../../../assets/screenshots/screenshot-project-settings-cross-tile-merging.png)
 
 | Setting                                       | Description                                                                                                                                                                                          |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

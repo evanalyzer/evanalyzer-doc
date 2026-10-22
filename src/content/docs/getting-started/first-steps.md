@@ -11,11 +11,7 @@ For a tour of the window itself, see [The Workspace](/guide/workspace/).
 Start EVAnalyzer as described in [Installation](/getting-started/installation/).
 It opens on the **Start** page.
 
-<div class="evx-shot-todo">
-<strong>Start page</strong>
-<span>Open image folder…, Open project…, Empty project, New project from a template…, Connect to a server…, and the recent projects.</span>
-<code>src/assets/getting-started/screenshot-start-page.png</code>
-</div>
+![Open image folder…, Open project…, Empty project, New project from a template…, Connect to a server…, and the recent projects](../../../assets/screenshots/screenshot-start-page.png)
 
 Click **Open image folder…** (`Ctrl+Shift+O`) and choose the folder with your images.
 EVAnalyzer creates a new project for them and switches to **Images**: the images are listed on the left - or laid out on a plate, if their names carry well positions.
@@ -29,13 +25,9 @@ Before building pipelines, define the **object classes** you want to detect - fo
 The classes are in the **Classes** panel on the right.
 
 - Click **+** to add a class, then give it a name and a color.
-- Or use **⋯ › Add classes from the image** to create one class per image channel as a starting point.
+- Or use **⋯ › Add classes from image** to create one class per image channel as a starting point.
 
-<div class="evx-shot-todo">
-<strong>Classes panel</strong>
-<span>The Classes panel on the right with a few classes, its ⋯ menu open on "Add classes from the image".</span>
-<code>src/assets/screenshots/screenshot-classification.png</code>
-</div>
+![The Classes panel's ⋯ menu: Add classes from image, Merge classes from image, Delete all classes, Hide unclassified objects](../../../assets/screenshots/screenshot-classification.png)
 
 See [Classes & Objects](/guide/classification/) for details.
 
@@ -49,11 +41,7 @@ Enter a **Pipeline name** and pick the **Image source** the pipeline starts with
 - **Scratchpad** - an empty image, for a pipeline that only works on objects other pipelines found.
 - **Shared memory slot** - an image an earlier pipeline stored with [Image Cache](/commands/image-processing/image-cache/).
 
-<div class="evx-shot-todo">
-<strong>Edit pipeline dialog</strong>
-<span>The dialog next to the steps panel: Pipeline name, Image source (Channel picked, the channel picker open).</span>
-<code>src/assets/getting-started/screenshot-pipeline-edit.png</code>
-</div>
+![The dialog next to the steps panel: Pipeline name, Image source (Channel picked, the channel picker open)](../../../assets/screenshots/screenshot-add-pipeline-dialog.png)
 
 Now click **Add step** to open the command picker. It stays open, so you can add one step after another; each goes in after the one you added before. A minimal spot-detection pipeline looks like:
 
@@ -79,29 +67,21 @@ Click **Run** at the top right.
 The **Run analysis** dialog opens below it and shows what will run - the number of pipelines and images.
 Enter a **Job name** under which the result is stored, or leave it blank to get a generated one.
 
-<div class="evx-shot-todo">
-<strong>Run analysis dialog</strong>
-<span>The dialog below the Run button: "N pipelines · M images", the job name field, Run.</span>
-<code>src/assets/screenshots/screenshot-start-analysis.png</code>
-</div>
+![The dialog below the Run button: "N pipelines · M images", the job name field, Run](../../../assets/screenshots/screenshot-start-analysis.png)
 
-While the analysis runs, its progress is shown in a card at the bottom right - you can keep working on your pipelines in the meantime.
+While the analysis runs, **Run** shows its progress and a **Stop** button; you can keep looking at images in the meantime. When it is done, **Analysis finished** offers **Open results**.
 
 Results are saved to:
 
 ```
-<image_directory>/evanalyzer/<job_name>/results.evadb
+<project folder>/results/<date>__<job_name>/<job_name>.evadb
 ```
 
 ## 5. View the results
 
 Switch to **Results** (`Ctrl+3`). The analysis you just ran opens; the analysis menu in the top bar lists every analysis of the project's images.
 
-<div class="evx-shot-todo">
-<strong>Results, list view</strong>
-<span>Results mode with a fresh analysis open: the list's settings on the left, the table of objects beside them.</span>
-<code>src/assets/screenshots/screenshot-results-list.png</code>
-</div>
+![Results mode with the analysis open: the list's settings on the left, the table of objects beside them](../../../assets/screenshots/screenshot-results-list.png)
 
 See the [Results](/guide/results/) guide for full details.
 

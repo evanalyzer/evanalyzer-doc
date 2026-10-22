@@ -159,6 +159,9 @@ hero:
 ---
 
 import { Card, CardGrid, Aside } from "@astrojs/starlight/components";
+import CompareSlider from "../../components/CompareSlider.astro";
+import screenshotPipeline from "../../assets/screenshots/screenshot-colors-light.png";
+import screenshotPipelineDark from "../../assets/screenshots/screenshot-colors-dark.png";
 
 ## What is EVAnalyzer?
 
@@ -205,12 +208,19 @@ See [About](/about/) for the full history.
   </Card>
 </CardGrid>
 
-{/* Back to the light/dark CompareSlider once the new screenshots exist:
-    import CompareSlider and the two images, as before the redesign. */}
-<div class="evx-shot-todo">
-  <strong>Pipeline preview, light and dark</strong>
-  <span>The same zoomed-in pipeline preview - nuclei with segmentation overlays - in Light and in Dark, for the compare slider.</span>
-  <code>src/assets/screenshots/screenshot-pipeline-zoom.png · screenshot-pipeline-dark-zoom.png</code>
+<div class="evx-screenshot">
+  <CompareSlider
+    beforeSrc={screenshotPipeline}
+    afterSrc={screenshotPipelineDark}
+    beforeAlt="EVAnalyzer in light colors: the steps of a spot-detection pipeline on the left, the classes and the image's channels on the right, the preview's objects over a fluorescence image"
+    afterAlt="The same pipeline and preview in dark colors"
+    beforeLabel="Light"
+    afterLabel="Dark"
+  />
+  <p class="evx-caption">
+    Configure multi-step pipelines and preview segmentation results live against
+    your raw image data - in light, dark or dim colors.
+  </p>
 </div>
 
 ## Remote Control: Work on a Server, From Anywhere

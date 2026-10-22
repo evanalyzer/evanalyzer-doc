@@ -83,12 +83,12 @@ The command prints a progress line per image as it completes, then a summary:
 Project:   experiment.evaproj
 Images:    48
 Pipelines: 1 enabled
-Output:    ./evanalyzer/EV Detection
+Output:    ./results/20261021T190435Z__EV Detection
 Running with 7 parallel thread(s)...
 
 [48/48] /data/plate1/A1_01.tif
 Done: 48 image(s) analyzed in 32.4s (0 failed)
-Results database written under: ./evanalyzer/EV Detection
+Results database written under: ./results/20261021T190435Z__EV Detection
 ```
 
 A project with no images (and no `--images` override) fails fast with an error instead of running.
@@ -147,7 +147,7 @@ The command exits with a non-zero status code if any images are missing, making 
 
 ## Results Database
 
-`analyze` writes results to a `results.evadb` file (DuckDB format) under the project's job folder - the same file the GUI's [Results](/guide/results/) view opens. `view`, `columns`, and `export` all read from this file via `--db`.
+`analyze` writes results to a `<job name>.evadb` file (DuckDB format) in `results/<date>__<job name>/` next to the project - the same file the GUI's [Results](/guide/results/) view opens. `view`, `columns`, and `export` all read from this file via `--db`.
 
 ```sh
 duckdb results.evadb "SELECT object_class_name, COUNT(*) FROM objects GROUP BY object_class_name"

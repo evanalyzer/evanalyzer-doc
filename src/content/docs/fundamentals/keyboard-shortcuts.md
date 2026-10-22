@@ -3,7 +3,7 @@ title: Keyboard Shortcuts
 description: Every keyboard shortcut in EVAnalyzer, grouped by context.
 ---
 
-Press **F1**, or choose **EVA › Shortcuts**, to open this same reference inside the app at any time.
+Press **F1**, or choose **EVA › Help › Shortcuts**, to open this same reference inside the app at any time.
 
 ## File
 
@@ -57,9 +57,10 @@ Every brush stroke and every drawn shape is an undo step of its own.
 | `S`            | Select            |
 | `K`            | Paint marker      |
 | `R`            | Paint rectangle   |
-| `O`            | Paint oval        |
+| `E`            | Paint ellipse     |
 | `P`            | Paint polygon     |
-| `#`            | Show/Hide objects |
+| `O`            | Show / hide the objects |
+| `A`            | Show / hide the annotate tool bar |
 
 These are unmodified single-letter mnemonics, so they only fire when the image (not a text field) has keyboard focus - typing into a search box or name field types the letter normally instead of switching tools.
 
@@ -81,8 +82,10 @@ While [comparing](/guide/pipelines/#compare-with-the-original) a breakpoint imag
 | `Ctrl+2` | Pipelines                                           |
 | `Ctrl+3` | Results                                             |
 | `Ctrl+F` | Jump to the image search field                      |
+| `Tab`    | Hide / show all panels (nothing focused)            |
+| `Alt+1`…`4` | Show / hide Steps, Classes, Image, Objects       |
 
-`Ctrl+1`..`3` switch the [modes](/guide/workspace/#bottom-bar-and-modes) in the bottom bar. `Ctrl+F` switches to Images first if it isn't already active, then focuses its search field.
+`Ctrl+1`..`3` switch the [modes](/guide/workspace/#bottom-bar-and-modes) in the bottom bar, `Alt+1`..`4` the [panels](/guide/workspace/#view) (also in **EVA › View**). `Tab` hides all panels only while no field or button has the keyboard focus - there it still moves the focus. `Ctrl+F` switches to Images first if it isn't already active, then focuses its search field.
 
 In the [command palette](/guide/workspace/#command-palette), `↑` / `↓` choose, `Enter` runs and `Escape` closes.
 
@@ -104,4 +107,4 @@ See [Split with the image](/guide/results/#split-with-the-image).
 
 Dialogs don't block the window, so `Escape` closes the open dialog even after you clicked into the image. In a dialog that edits something - like the component settings - `Escape` works like **Cancel** and undoes the changes made while it was open.
 
-`Tab` moves between buttons, switches, list rows and steps; `Space` or `Enter` presses the focused one. The focus ring only shows when you use the keyboard.
+Otherwise `Tab` moves between buttons, switches, list rows and steps; `Space` or `Enter` presses the focused one. The focus ring only shows when you use the keyboard.

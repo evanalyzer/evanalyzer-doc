@@ -3,11 +3,13 @@ title: Results
 description: Viewing, exploring, and exporting analysis results - as a list, on a plate, in charts, or beside the image.
 ---
 
-EVAnalyzer stores results in a DuckDB database file named `results.evadb`:
+EVAnalyzer stores the results of each analysis in a DuckDB database file, in a folder of its own named by the start time and the job name:
 
 ```
-<image_directory>/evanalyzer/<job_name>/results.evadb
+<project folder>/results/<date>__<job_name>/<job_name>.evadb
 ```
+
+The folder also holds `<job_name>.evaproj`, a copy of the exact settings that analysis used.
 
 Results are a mode of the main window: switch to **Results** in the bottom bar (`Ctrl+3`).
 
@@ -23,11 +25,7 @@ In Results, the top bar holds the results' controls:
 
 Each view has its settings in a panel on the left and its content beside it. The bottom bar shows the number of images (_"81 images · 1 disabled"_).
 
-<div class="evx-shot-todo">
-<strong>Results, List view</strong>
-<span>Results mode with List: the results bar on top, the settings panel on the left (A row per, Images / Classes / Columns), the table beside it with one row selected.</span>
-<code>src/assets/screenshots/screenshot-results-list.png</code>
-</div>
+![Results mode, List: the results bar on top, the Images, Classes and Columns lists and A row per on the left, the table of objects beside them](../../../assets/screenshots/screenshot-results-list.png)
 
 ## List View
 
@@ -37,21 +35,13 @@ The settings panel has three check lists - **Images**, **Classes** and **Columns
 
 Click a row to select it; it stays highlighted. **Show on image ↗** - or a double-click - opens the object on its image: the image opens in the editor with the object marked, and a bar over it, **RESULTS · Row 12 of 200 ‹ › Back to results**, steps to the previous or next row's object or takes you back.
 
-<div class="evx-shot-todo" data-kind="new">
-<strong>A result on its image</strong>
-<span>After Show on image ↗: the image with the object marked and the bar "RESULTS · Row 12 of 200 ‹ › Back to results ✕" at the top.</span>
-<code>src/assets/screenshots/screenshot-results-on-image.png</code>
-</div>
+![After Show on image ↗: the image with the object marked and the bar "RESULTS · Row 12 of 200 ‹ › Back to results ✕" at the top](../../../assets/screenshots/screenshot-results-on-image.png)
 
 ### Grouping and Aggregating Rows
 
 **A row per** switches the table from **Objects** (flat, one row per object) to **Images** (one row per image/class combination). With **Images**, **Aggregate** picks one or more of **Average**, **Minimum**, **Maximum**, **Std Dev**, **Sum**, **Median** and **Skewness**. Every numeric column is duplicated per selected aggregation (for example **Area (px²) \[avg\]** and **Area (px²) \[sum\]**), so you can compare, say, average object size against total covered area per image.
 
-<div class="evx-shot-todo">
-<strong>Rows per image, aggregated</strong>
-<span>A row per: Images, Aggregate: Average and Sum - columns doubled per aggregation.</span>
-<code>src/assets/screenshots/screenshot-results-table-view-group-by-image.png</code>
-</div>
+![A row per: Images, Aggregate: Average and Sum - columns doubled per aggregation](../../../assets/screenshots/screenshot-results-table-view-group-by-image.png)
 
 ### Transpose
 
@@ -62,11 +52,7 @@ Click a row to select it; it stays highlighted. **Show on image ↗** - or a dou
 
 The **Classes** list decides which classes become column blocks.
 
-<div class="evx-shot-todo">
-<strong>Transposed table</strong>
-<span>Transpose on, a row per image: one column block per class.</span>
-<code>src/assets/screenshots/screenshot-results-side-by-side.png</code>
-</div>
+![Transpose on, a row per image: one column block per class](../../../assets/screenshots/screenshot-results-side-by-side.png)
 
 ### Colocalization Details
 
@@ -80,17 +66,18 @@ With **A row per: Objects**, the **Coloc details** switch flattens each object's
 
 ## Charts
 
-The **Charts** view plots the rows selected in the List's settings instead of listing them. Pick the chart as a tile: **Histogram**, **Scatter** or **Boxplot**.
+The **Charts** view plots the results instead of listing them. Pick the chart as a tile: **Histogram**, **Scatter**, **Boxplot** or **Over time**.
 
 - **Histogram** bins a chosen numeric property, optionally restricted to one class, and shows the object count and the distribution across bins. Under **Display**: the number of **Bins** and **Counts on a log scale**.
-- **Scatter** plots two numeric columns (**X** and **Y**), optionally restricted to one class. Large datasets are downsampled for drawing - **Points drawn** sets how many. Click a point to see its object on its image.
+- **Scatter** plots two numeric columns (**X** and **Y**), optionally restricted to one class. Large datasets are downsampled for drawing - **Points drawn** sets how many (**500**, **2 000**, **10 000** or **All**; _"2000 of 41227 objects plotted"_). Click a point to see its object on its image.
 - **Boxplot** draws one box (quartile box, median line, whiskers, and outlier dots) for a chosen property. **A box per** groups them by **class**, **image**, **well**, **plate row** or **plate column**. Click a box to see its objects in the List.
+- **Over time** <span class="evx-new">NEW</span> follows a property through the frames of a time-lapse. **A line per** **Class**, **Image**, **Well** or **Track** ([tracked objects](/commands/dataset/simple-tracker/)); each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. **Relative to the first time point** shows the change instead of the value, **Individual tracks, faint** draws every track behind the lines. The lines' values can be exported as a time course table.
 
-<div class="evx-shot-todo">
-<strong>Charts</strong>
-<span>Three shots: Histogram, Scatter, and Boxplot with "A box per: well".</span>
-<code>src/assets/screenshots/screenshot-results-histogram.png · screenshot-results-scatter.png · screenshot-results-boxplot.png</code>
-</div>
+![Charts: results histogram](../../../assets/screenshots/screenshot-results-histogram.png)
+
+![Charts: results scatter](../../../assets/screenshots/screenshot-results-scatter.png)
+
+![Charts: results boxplot](../../../assets/screenshots/screenshot-results-boxplot.png)
 
 ## Plate View
 
@@ -98,7 +85,7 @@ The **Charts** view plots the rows selected in the List's settings instead of li
 
 The settings panel holds the same settings on all three levels: **Class**, **Property** (the metric to color by), **Aggregate**, **Colors** (Excel, Viridis, Plasma, Inferno, Cividis, Coolwarm, Red-Blue, YlGnBu, Haline, Algae, or Thermal) and **Group by**. The legend shows the active color range - click it to switch between **Auto** and a **Manual** min/max.
 
-Click a tile to select it: the card on the right shows its value - and for a well, its images. **Open well ›** / **Open image ›** drill in, or simply double-click the tile.
+Click a tile to select it: the card on the right shows its value - and for a well, its images with their own values. **Open well ›** / **Open image ›** drill in, or simply double-click the tile.
 
 ### Grouping images into wells
 
@@ -118,11 +105,7 @@ Grouping, plate size and well layout are **project settings**: they are stored i
 
 Each tile is one well, colored by the aggregated metric across everything grouped into it. Wells are placed by decoding their group label into a row/column coordinate (e.g. `A14`). Pick a **Plate size** - **Auto** (the smallest standard layout that fits your data) or a fixed layout from 1 to 3456 wells (e.g. **96 Well (8 x 12)**, **384 Well (16 x 24)**).
 
-<div class="evx-shot-todo">
-<strong>Plate view</strong>
-<span>A 96-well plate heatmap, one well selected - its card on the right with the value and the well's images.</span>
-<code>src/assets/screenshots/screenshot-results-matrix-plate-view.png</code>
-</div>
+![A 96-well plate heatmap, one well selected - its card on the right with the value and the well's images](../../../assets/screenshots/screenshot-results-matrix-plate-view.png)
 
 ### Well
 
@@ -133,15 +116,11 @@ Drill into a well to see its individual images (fields) laid out as their own gr
 
 **Rearranging images by drag and drop.** If the images were not acquired in the order the grid shows them (e.g. a meander scan), drag an image tile onto another position - the two images swap places. The new order is stored in the project's plate settings and applies to every well of the plate. If the layout was **Auto**, the grid shown becomes a fixed grid of the same size first. The same order can also be edited number by number under **Images in well** in [Settings](/guide/settings/).
 
-<div class="evx-shot-todo">
-<strong>Well view</strong>
-<span>Inside a well: the images as a grid, the breadcrumb "Plate › Well C3" in the top bar, one image left out (crossed out).</span>
-<code>src/assets/screenshots/screenshot-matrix-well-view.png</code>
-</div>
+![Inside a well: the images as a grid, the breadcrumb "Plate › Well C3" in the top bar, one image left out (crossed out)](../../../assets/screenshots/screenshot-matrix-well-view.png)
 
 ### Leaving images out
 
-An image can be excluded from the statistics, for example because it is out of focus or contains an artifact. Click its eye in the well's card (**Leave this image out of the results**); click it again to use it again.
+An image can be excluded from the statistics, for example because it is out of focus or contains an artifact. Click its eye in the well's card, or select its tile inside the well and click **Leave this image out of the results**; **Use this image in the results** brings it back.
 
 An image left out:
 
@@ -162,53 +141,38 @@ If the whole analysis did not finish (cancelled, failed or interrupted, e.g. by 
 
 The innermost level bins a single image's objects into square tiles - the **Square size** (36, 48, 64, 128, 256, or 1024 px) - colored by the same metric and aggregate as the levels above. Click a tile to select it; **Show on image ↗** shows that region of the image in the editor, marked with a rectangle.
 
-<div class="evx-shot-todo">
-<strong>Image heatmap</strong>
-<span>One image binned into tiles, one tile selected with Show on image ↗ in its card.</span>
-<code>src/assets/screenshots/screenshot-results-heatmap.png</code>
-</div>
+![One image binned into tiles, one tile selected with Show on image ↗ in its card](../../../assets/screenshots/screenshot-results-heatmap.png)
 
 ## Split with the image
 
 **Split with image** in the results bar puts the results on the left and the image on the right, with a divider between them that you can drag. It works with **List** and **Plate**.
 
-The analysis' objects are drawn on the image, in their class colors. Select a row in the List and the image **flies to its object** - a ring, faint lines and a card (class, ID, area, the mean of a channel you pick, position) mark it, and the other objects are dimmed. Click an object on the image to select its row.
+The analysis' objects are drawn on the image, in their class colors. Select a row in the List and the image **flies to its object** - a yellow crosshair and a card (class, ID, area, the mean of a channel, position) mark it. Click an object on the image to select its row.
 
 - `↑` / `↓` (or **‹ ›**) step to the previous or next object; `Esc` lets go of it.
 - **Follow selection** switches the flying off - the image then stays where it is.
 - **Color by** **Class** or **Value** - with Value, the objects take the heatmap's colors for the chosen property.
 - In **Plate**, a well shows its images in a filmstrip under the image.
-- **Image controls** open the [image panel](/guide/images/#image-panel) as a drawer over the image.
+- **Image** opens the [image panel](/guide/images/#image-panel) as a drawer over the image.
 - **Open in Images ↗** opens the image in the editor.
 
 The width of the results, whether the split is on, and **Follow selection** are remembered. With **Reduce motion** on (**EVA › Project settings… › Viewport**), the image jumps to the object instead of flying there.
 
-<div class="evx-shot-todo" data-kind="new">
-<strong>Split with image, List</strong>
-<span>The list on the left, one row selected; the image on the right with the object ringed and its card.</span>
-<code>src/assets/screenshots/screenshot-results-split-list.png</code>
-</div>
+![The list on the left, one row selected; the image on the right with the object ringed and its card](../../../assets/screenshots/screenshot-results-split-list.png)
 
-<div class="evx-shot-todo" data-kind="new">
-<strong>Split with image, Plate</strong>
-<span>The plate heatmap on the left, a well selected; its images as a filmstrip under the image, Color by: Value.</span>
-<code>src/assets/screenshots/screenshot-results-split-plate.png</code>
-</div>
+![The plate heatmap on the left, a well selected; its images as a filmstrip under the image, Color by: Value](../../../assets/screenshots/screenshot-results-split-plate.png)
 
 ## Exporting Results
 
 **Export…** in the results bar opens the export card below it: what to export, the **Format**, the **Classes** and the folder (**To**). **More options ›** shows the rest. Every checked option is written out together in one run.
 
-<div class="evx-shot-todo">
-<strong>Export</strong>
-<span>The export card below Export…: the four kinds, Format, Classes, To - and a second shot with More options › open.</span>
-<code>src/assets/screenshots/screenshot-results-export-dialog.png</code>
-</div>
+![The export card below Export…: what to export, Format, Classes and the folder](../../../assets/screenshots/screenshot-results-export-dialog.png)
 
 **What:**
 
 - **Objects - one row per object** - with **Images** to pick (all by default; [images left out](#leaving-images-out) are skipped unless you select them explicitly), and optionally **With coloc details** and **Each image in its own file**.
 - **Per image** - the same aggregated-by-image data as [a row per image in the List](#grouping-and-aggregating-rows); optionally the **Image heatmap** (the per-image spatial heatmap grid, with its own square size).
+- **Time course - per time point** <span class="evx-new">NEW</span> - for time-lapse data: the values per frame, as the [Over time](#charts) chart shows them.
 - **Per well - plate layout (XLSX)** - the plate as a heatmap; optionally **Plate as list**, **Wells as heatmap** and **Wells as list**, with **Colors** for the heatmaps. Grouping, plate size and well layout are taken from the project's plate settings - the same ones the [Plate view](#grouping-images-into-wells) uses.
 - **Images with objects drawn (PNG)** <span class="evx-new">NEW</span> - each image as a PNG, with its channels in their colors (auto-scaled) and every object's box in its class color. Large images are written at the pyramid level up to 4096 px.
 
@@ -220,6 +184,8 @@ The width of the results, whether the split is on, and **Follow selection** are 
 - **Transpose the tables** - writes the object and image tables [transposed](#transpose), with the classes next to each other.
 - **Measurements** and **Aggregations** - which columns and aggregations to write.
 - **Z planes** and **Time points** - restrict the export to a range.
+
+![The export card with More options open: name prefix, transpose, measurements, aggregations, Z planes and time points](../../../assets/screenshots/screenshot-results-export-more.png)
 
 The image heatmap and the plate and well exports are XLSX-only. **Parquet** goes further: picking it ignores every other setting (filters, columns, grouping, checkboxes) and writes a single `objects.parquet` file - a raw, unfiltered dump of every column in the results database, meant for downstream tools that read Parquet natively rather than for a human to open.
 

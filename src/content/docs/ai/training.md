@@ -7,11 +7,7 @@ Unlike [AI Models](/ai/overview/), which run a **pretrained** deep-learning netw
 
 Open it with **EVA › AI training…**. It opens as a sheet on the right, so the image and your annotations stay in view while you set it up.
 
-<div class="evx-shot-todo">
-<strong>Train classifier</strong>
-<span>The Train classifier sheet on the right: Pixel / Object, the classes with their counts, the training in short, "Uses the annotations of N images" - training a neural-network pixel classifier.</span>
-<code>src/assets/screenshots/screenshot-ai-training.png</code>
-</div>
+![The Train classifier sheet on the right: Pixel or Object classifier, the classes to learn with their counts, the training in short and Uses the annotations of 1 image](../../../assets/screenshots/screenshot-ai-training.png)
 
 ## Two Kinds of Classifier
 

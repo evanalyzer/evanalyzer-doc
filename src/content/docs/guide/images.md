@@ -24,11 +24,9 @@ Type into **Search files…** (`Ctrl+F`) to filter by file name. Click a row to 
 
 The images grouped into wells, by the project's plate settings (**EVA › Project settings… › Plate & grouping**, the same as in [Results › Plate](/guide/results/#grouping-images-into-wells)). Each well shows a bar with the state of its images; click a well to list its images below the plate. A plate bigger than 8 × 12 is shown in sections of 8 × 12 - pick one above the plate (_A1–H12 · A13–H24 …_).
 
-<div class="evx-shot-todo">
-<strong>Images panel, Plate</strong>
-<span>Images mode, the panel on Plate: wells with their state bars, one well picked and its images listed below. A second shot on List.</span>
-<code>src/assets/screenshots/screenshot-images-plate.png · screenshot-images-list.png</code>
-</div>
+![Images panel, Plate: images plate](../../../assets/screenshots/screenshot-images-plate.png)
+
+![Images panel, Plate: images list](../../../assets/screenshots/screenshot-images-list.png)
 
 ## Image info
 
@@ -45,11 +43,7 @@ Below the list, **Image info** shows the selected image in short: **Channels · 
 
 The values come from the file. Change a wrong one; **Reset** brings back the file's value. Changed values apply to the whole project and are marked **edited**.
 
-<div class="evx-shot-todo">
-<strong>Image info</strong>
-<span>The Image info card with All metadata › open: channels with their colors, pixel size, frame interval; one value marked "edited".</span>
-<code>src/assets/screenshots/screenshot-image-meta.png</code>
-</div>
+![The Image info card with All metadata › open: channels with their colors, pixel size, frame interval; one value marked "edited"](../../../assets/screenshots/screenshot-image-meta.png)
 
 ### Pixel size
 
@@ -66,17 +60,13 @@ EVAnalyzer colors every channel by its emission wavelength, read from the file. 
 - Pick one of the color tiles - each tile is an emission wavelength between 420 nm and 635 nm (pure blue, green and red are at 450, 532 and 635 nm), shown in exactly the color the viewer will use. Or type any wavelength into **Emission (nm)** and press Enter.
 - Click **Done** to close the chooser, or **Reset** to go back to the wavelength stored in the file.
 
-The chosen wavelength is saved in the project and applies to that channel in every image of the project. Classes created with **Add classes from the image** in the [Classes](/guide/classification/#add-classes-from-the-image) panel take over the channel colors shown in the viewer.
+The chosen wavelength is saved in the project and applies to that channel in every image of the project. Classes created with **Add classes from image** in the [Classes](/guide/classification/#add-classes-from-the-image) panel take over the channel colors shown in the viewer.
 
 Channels the file gives no wavelength are shown white. To give them distinct colors instead, switch on **Color channels without a wavelength** in **EVA › Project settings… › Viewport** - the colors are then kept in the project as their wavelength.
 
 RGB images keep their fixed red, green and blue channel colors.
 
-<div class="evx-shot-todo">
-<strong>Channel color chooser</strong>
-<span>The color chooser open from a channel swatch: wavelength tiles, Emission (nm), Reset and Done.</span>
-<code>src/assets/screenshots/screenshot-image-channel-color.png</code>
-</div>
+![The color chooser open from a channel swatch: wavelength tiles, Emission (nm), Reset and Done](../../../assets/screenshots/screenshot-image-channel-color.png)
 
 ## Image panel
 
@@ -84,27 +74,22 @@ The **Image** panel on the right (its button above the right-hand panels shows a
 
 ### Channels
 
-Each channel of the image with its color, its number (**ch 0**, **ch 1**, …) and an eye that shows or hides it.
+Each channel of the image with its color, its number (**ch 0**, **ch 1**, …) and an eye that shows or hides it. Click a channel to select it - the histogram shows the selected channel.
 
 - **Grayscale** shows the channels in white instead of their colors. Because overlaid gray channels can't be told apart, only one channel is visible at a time: switching grayscale on keeps the selected channel (or the first visible one), and showing another channel hides the previous one. The setting is saved in the project.
-- **Show objects** shows or hides the objects over the image (`#`).
-- **Overlay** sets the opacity of the objects, in percent.
+The small bar at the bottom left of the image holds the objects: its button shows or hides them (`O`), the slider sets their opacity in percent.
 
 ### Histogram
 
 The histogram of the selected channel, with its black and white points as two lines you can drag. The values are in the image's own units (0 to 2<sup>bits</sup>), the counts on a log scale (**Log** switches to linear).
 
-- **Auto-scale** sets black and white from the histogram; double-click the histogram does the same. **All channels** does it for every channel of the image.
+- **Auto-scale** sets black and white from the histogram; double-click the histogram does the same. Its menu (**▾**) does it for every channel of the image.
 - **Values ›** shows the numbers: **Black / white** and **Axis min / max**.
 - **Use for all images** applies these settings to every image of the project.
 
 An image opened for the first time is auto-scaled, every channel. To start with the full value range instead, switch off **Auto-scale new images** in **EVA › Project settings… › Viewport**. The scaling of each image is kept in the project either way.
 
-<div class="evx-shot-todo">
-<strong>Image panel</strong>
-<span>The Image panel: channels with eyes, Grayscale / Show objects, Overlay, the histogram with its black and white lines, Values › open, Z and T rows.</span>
-<code>src/assets/screenshots/screenshot-image-panel.png</code>
-</div>
+![The Image panel: channels with their eyes, Grayscale, the histogram of CY5 with its black and white lines, Values open with Black / white and Axis min / max](../../../assets/screenshots/screenshot-image-panel.png)
 
 ### Z-stack
 
@@ -116,7 +101,7 @@ For images with several frames, **T** steps through the frames (`,` and `.`). **
 
 ### Navigator
 
-For large images a mini-map shows the whole image with the visible part marked. Click or drag in it to move there.
+A mini-map in the corner shows the whole image with the visible part marked. Click or drag in it to move there. **EVA › View › Navigator** shows it **Auto** (only when zoomed in), **Always** or **Never**.
 
 ## Series selection
 
@@ -126,11 +111,7 @@ The series is a **project-wide setting**: it applies to every image of the proje
 
 An image that lacks the project's series shows its first series, but an analysis refuses to start rather than measuring it on a different series.
 
-<div class="evx-shot-todo" data-kind="new">
-<strong>Series question</strong>
-<span>"Which series" over the image - the series with their sizes, Decide later.</span>
-<code>src/assets/screenshots/screenshot-series.png</code>
-</div>
+!["Which series" over the image - the series with their sizes, Decide later](../../../assets/screenshots/screenshot-series.png)
 
 ## Viewing large images
 
@@ -140,7 +121,7 @@ Large images that come with pyramid levels (SVS, NDPI, MRXS, CZI, OME-TIFF) are 
 
 ### Scale bar
 
-A physical scale bar is drawn over the image, in nm, µm or mm depending on the zoom. If the file has no pixel size, set it in the [image info](#pixel-size).
+A physical scale bar is drawn at the bottom right of the image, in nm, µm or mm depending on the zoom. If the file has no pixel size, set it in the [image info](#pixel-size).
 
 ### Position and pixel value
 
@@ -156,7 +137,7 @@ To keep a measurement, use the **Marker** tool (`K`) in [annotate mode](#annotat
 
 ## Annotating the image
 
-Click **Annotate** in the top bar to draw on the image. The annotate bar appears over the image:
+Click **Annotate** in the top bar (or press `A`) to draw on the image. The annotate bar appears over the image:
 
 | Tool | Key | What it does |
 | --- | --- | --- |
@@ -164,22 +145,18 @@ Click **Annotate** in the top bar to draw on the image. The annotate bar appears
 | **Select** | `S` | Select an object. |
 | **Marker** | `K` | A [measurement marker](#position-and-pixel-value). |
 | **Rectangle** | `R` | Drag a rectangular region. |
-| **Ellipse** | `O` | Drag an elliptical region. |
+| **Ellipse** | `E` | Drag an elliptical region. |
 | **Polygon** | `P` | Click the corners, double-click to close. |
 | **Brush** <span class="evx-new">NEW</span> | | Paint a region - a stroke as wide as the brush. |
 | **Eraser** <span class="evx-new">NEW</span> | | Cut away from hand-drawn objects. |
 
-**Paint as** picks the class of what you draw - **+ New class…** creates one and picks it at once. **Size** sets the brush's width.
+**Paint as** picks the class of what you draw - **+ New class…** creates one and picks it at once. The paint tools stay off until a class is picked. **Size** sets the brush's width in pixels.
 
 The brush paints into the selected hand-drawn object, or makes a new one of the chosen class. The eraser cuts hand-drawn objects: an object it empties is deleted, the others are measured again. Every stroke and every drawn shape is a step of its own for **Undo**.
 
-Annotations are saved per image in the project. To measure them and use them in an analysis - for example to count spots inside a hand-drawn region - add [Load Annotated Objects](/commands/object/load-annotated-objects/) to a pipeline. Annotations can also be exported and imported as GeoJSON from the Objects panel's ⋯ menu, see [Classes & Objects](/guide/classification/#managing-objects).
+Annotations are saved per image in the project. To measure them and use them in an analysis - for example to count spots inside a hand-drawn region - add [Load Annotated Objects](/commands/object/load-annotated-objects/) to a pipeline. Annotations can also be exported and imported as GeoJSON - for example to and from QuPath - from the Objects panel's ⋯ menu, see [Classes & Objects](/guide/classification/#managing-objects).
 
-<div class="evx-shot-todo" data-kind="new">
-<strong>Annotate mode with the brush</strong>
-<span>The annotate bar with Brush active, Paint as "Class 1", Size 12 - a painted region on the image.</span>
-<code>src/assets/screenshots/screenshot-annotate-brush.png</code>
-</div>
+![The annotate bar with the Brush active, Paint as tetraspeck@bead, Size 12 px - a painted region on the image](../../../assets/screenshots/screenshot-annotate-brush.png)
 
 ## Supported formats
 

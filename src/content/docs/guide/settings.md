@@ -7,11 +7,7 @@ Open **EVA › Project settings…** to change the settings of the open project 
 
 **Project settings are saved with the project; the settings under This computer here.** **Apply** saves the changes, **Cancel** discards them, and **Reset to defaults** sets the shown section back to its defaults.
 
-<div class="evx-shot-todo">
-<strong>Settings</strong>
-<span>The settings sheet on the right: the search on top, Project › General open, Plate & grouping and Object merging folded, This computer › Viewport below.</span>
-<code>src/assets/screenshots/screenshot-project-settings.png</code>
-</div>
+![The settings sheet on the right: the search on top, Project › General open, Plate & grouping and Object merging folded, This computer › Viewport below](../../../assets/screenshots/screenshot-project-settings.png)
 
 ## Project
 
@@ -57,4 +53,4 @@ How the image viewer works on this computer: its memory - which matters most for
 
 ## Colors
 
-The color scheme - **Light**, **Dark** or **Dim** - is picked in the **EVA** menu, not here. See [Colors](/guide/workspace/#colors).
+The color scheme - **Light**, **Dark** or **Dim** - is picked under **EVA › View › Colors**, not here. See [Colors](/guide/workspace/#colors).
