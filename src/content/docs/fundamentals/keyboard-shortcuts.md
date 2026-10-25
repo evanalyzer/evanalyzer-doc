@@ -31,6 +31,7 @@ Every brush stroke and every drawn shape is an undo step of its own.
 | Shortcut          | Action                                             |
 | ----------------- | -------------------------------------------------- |
 | `F5`              | Refresh the preview                                |
+| `Shift+F5`        | Preview the whole image                            |
 | `F`               | Focus on the selected pipeline (again: show all)   |
 | `Alt`+click       | Focus on a pipeline (again: show all)              |
 | Double-click      | Edit a pipeline's name and image source            |
@@ -41,7 +42,7 @@ Every brush stroke and every drawn shape is an undo step of its own.
 | `Alt+↑` / `Alt+↓` | Move the selected step                             |
 | `Delete`          | Remove the selected step (no object selected)      |
 
-`F5` re-runs the pipeline preview once - the same as **Refresh preview** in the top bar - a single dry-run, distinct from switching **Auto preview** on or off.
+`F5` re-runs the pipeline preview once - the same as **Refresh preview** in the top bar - a single dry-run, distinct from switching **Auto preview** on or off. `Shift+F5` runs it once on the [whole image](/guide/pipelines/#live-preview) instead of only the part in view.
 
 `F` and `Alt`+click are the quick way into [Focus Mode](/guide/pipelines/#focus-mode): they show only the channel and classes of one pipeline. Plain `F` is used because `Ctrl+F` is the image search.
 
@@ -83,9 +84,9 @@ While [comparing](/guide/pipelines/#compare-with-the-original) a breakpoint imag
 | `Ctrl+3` | Results                                             |
 | `Ctrl+F` | Jump to the image search field                      |
 | `Tab`    | Hide / show all panels (nothing focused)            |
-| `Alt+1`…`4` | Show / hide Steps, Classes, Image, Objects       |
+| `Alt+1`…`5` | Show / hide Steps, Classes, Image, Objects, Measurements |
 
-`Ctrl+1`..`3` switch the [modes](/guide/workspace/#bottom-bar-and-modes) in the bottom bar, `Alt+1`..`4` the [panels](/guide/workspace/#view) (also in **EVA › View**). `Tab` hides all panels only while no field or button has the keyboard focus - there it still moves the focus. `Ctrl+F` switches to Images first if it isn't already active, then focuses its search field.
+`Ctrl+1`..`3` switch the [modes](/guide/workspace/#bottom-bar-and-modes) in the bottom bar, `Alt+1`..`5` the [panels](/guide/workspace/#view) (also in **EVA › View**). `Tab` hides all panels only while no field or button has the keyboard focus - there it still moves the focus. `Ctrl+F` switches to Images first if it isn't already active, then focuses its search field.
 
 In the [command palette](/guide/workspace/#command-palette), `↑` / `↓` choose, `Enter` runs and `Escape` closes.
 

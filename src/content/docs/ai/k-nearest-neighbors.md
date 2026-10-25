@@ -22,9 +22,14 @@ A sample surrounded mostly by `Class A` examples gets predicted as `Class A`; th
 | Parameter            | Description                                                                                                                                                                                                        |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **K (Neighbors)**    | How many nearest neighbors vote on each prediction. Small k follows local detail (and noise) closely; large k smooths the decision boundary out                                                                    |
-| **Distance Metric**  | How distance between two feature vectors is measured - Euclidean, Manhattan, or Minkowski                                                                                                                          |
+| **Distance Metric**  | How distance between two feature vectors is measured - Euclidean (default), Manhattan, Minkowski, Cosine or Hamming |
+| **Minkowski order (p)** | Only with Minkowski: the order of the norm (default 3; p = 1 is Manhattan, p = 2 Euclidean) |
 | **Search Algorithm** | How the nearest neighbors are found - **Linear Search** checks every stored point; **Cover Tree** indexes them spatially to skip distant points on larger datasets. Same result either way, just a speed trade-off |
 | **Vote Weighting**   | **Uniform** - every one of the k neighbors counts equally. **Distance-weighted** - closer neighbors count for more than farther ones                                                                               |
+
+## Certainty
+
+Besides the class, k-NN gives each prediction a **certainty**: the neighbours' share of the winning class, weighted like the vote (3 of 3 neighbours → 1, 2 of 3 → 0.67 with uniform weighting). The [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/)'s **Min Certainty** turns pixels the model is less sure about into background.
 
 ## When to Choose It
 

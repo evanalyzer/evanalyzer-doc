@@ -1,8 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="256" viewBox="0 0 440 256">
   <style>
     .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
     .lbl { font: 13px sans-serif; fill: #1f2937; }
     .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
     .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
   </style>
-<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/><circle cx="170" cy="110" r="45" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/><circle cx="230" cy="110" r="45" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/><text class="lbl-sm" fill="#2563eb" x="130" y="70">cy5@spot</text><text class="lbl-sm" fill="#ea580c" x="250" y="70">cy7@spot</text><text class="lbl-sm" x="200" y="115" text-anchor="middle">overlap</text><text class="lbl-sm" x="200" y="128" text-anchor="middle">area</text><text class="lbl-bold" x="220" y="185" text-anchor="middle">tracking ID: 42</text><text class="lbl-sm" x="220" y="200" text-anchor="middle">shared by both spots + the overlap object</text><text class="lbl-bold" x="220" y="30" text-anchor="middle">Colocalization</text></svg>
+<rect class="bg" x="0.5" y="0.5" width="439" height="255" rx="10"/>
+<!-- ch1 spot (blue) and ch2 spot (orange) overlapping -->
+<circle cx="120" cy="95" r="42" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+<circle cx="180" cy="95" r="38" fill="#ea580c" fill-opacity="0.3" stroke="#ea580c" stroke-width="2"/>
+<polygon points="152.7,68.6 155.5,72.5 157.8,76.6 159.6,81.0 160.9,85.6 161.7,90.3 162.0,95.0 161.7,99.7 160.9,104.4 159.6,109.0 157.8,113.4 155.5,117.5 152.7,121.4 149.5,117.7 146.9,113.6 144.8,109.2 143.2,104.6 142.3,99.9 142.0,95.0 142.3,90.1 143.2,85.4 144.8,80.8 146.9,76.4 149.5,72.3" fill="#9333ea" fill-opacity="0.45" stroke="#9333ea" stroke-width="1.5"/>
+<text class="lbl-bold" style="fill:#2563eb" x="98" y="44" text-anchor="middle">ch1 · ID 3</text>
+<text class="lbl-bold" style="fill:#ea580c" x="200" y="48" text-anchor="middle">ch2 · ID 7</text>
+<!-- overlap label -->
+<line x1="153" y1="112" x2="153" y2="178" stroke="#9333ea" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#9333ea" x="153" y="192" text-anchor="middle">overlap region</text>
+<text class="lbl-sm" style="fill:#9333ea" x="153" y="205" text-anchor="middle">(Overlap regions as)</text>
+<!-- partner lists -->
+<text class="lbl-sm" x="140" y="158" text-anchor="end">partners: ch2 ID 7</text>
+<text class="lbl-sm" style="fill:#16a34a" x="140" y="172" text-anchor="end">+ class "ch1 with ch2"</text>
+<text class="lbl-sm" x="166" y="158">partners: ch1 ID 3</text>
+<!-- lone spot -->
+<circle cx="360" cy="95" r="30" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+<text class="lbl-bold" style="fill:#2563eb" x="360" y="54" text-anchor="middle">ch1 · ID 4</text>
+<text class="lbl-sm" x="360" y="158" text-anchor="middle">no ch2 partner:</text>
+<text class="lbl-sm" x="360" y="172" text-anchor="middle">records nothing</text>
+<text class="lbl-bold" x="220" y="228" text-anchor="middle">Colocalization</text>
+<text class="lbl-sm" x="220" y="243" text-anchor="middle">overlapping objects record each other as partners</text>
+</svg>

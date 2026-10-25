@@ -185,7 +185,7 @@ def step_shot(label):
 
 EVA = (36, 20)
 REFRESH_PREVIEW = (195, 20)
-ANNOTATE = (227, 20)
+ANNOTATE = (259, 20)
 COMPARE = (1137, 20)
 RUN = (1343, 20)
 MODE_IMAGES, MODE_PIPELINES, MODE_RESULTS = (34, 885), (104, 885), (175, 885)
@@ -198,9 +198,10 @@ ADD_STEP = (200, 455)
 IMAGE_CENTER = (745, 450)
 OVERLAY_KNOB = (503, 838)
 EVA_VIEW = (70, 387)
-VIEW_COLORS = {"light": (423, 597), "dark": (482, 597), "dim": (539, 597)}
-RESULTS_VIEW = {"list": (229, 20), "plate": (287, 20), "charts": (354, 20)}
-RESULTS_FULL, RESULTS_SPLIT = (433, 20), (533, 20)
+VIEW_COLORS = {"light": (423, 625), "dark": (482, 625), "dim": (539, 625)}
+# The views sit in the top bar after the analysis' name ("dilution_series ▾").
+RESULTS_VIEW = {"list": (348, 20), "plate": (394, 20), "charts": (449, 20)}
+RESULTS_FULL, RESULTS_SPLIT = (1161, 20), (1260, 20)
 EXPORT = (1383, 20)
 CARD_BUTTON = (1277, 151)        # "Open well ›" / "Open image ›" on the right-hand card
 
@@ -298,6 +299,15 @@ def sc_images():
     click(237, 243, wait=1.5)      # well C4
     away()
     shot("screenshot-images-plate")
+
+
+def sc_go_to_image():
+    open_project()
+    open_image()
+    click(365, 20, wait=1.5)       # the image chip: Go to image
+    type_text("C0")
+    hover(1000, 600)
+    shot("screenshot-go-to-image")
 
 
 def sc_image_panel():
@@ -477,7 +487,7 @@ def sc_dialogs():
     click(80, 448, wait=1.5)       # AI training…
     hover(700, 899)
     shot("screenshot-ai-training")
-    click(1310, 834)               # Close
+    key("Escape")                  # Close
     click(*EVA)
     click(98, 285, wait=1.5)       # Save as template…
     hover(700, 899)
@@ -510,17 +520,17 @@ def sc_results_list():
     click(600, 227, wait=1)
     away()
     shot("screenshot-results-list")
-    click(150, 659)                # A row per
+    click(150, 711)                # A row per
     click(58, 646, wait=3)         # Images
-    click(38, 311, wait=1.5)       # untick Background (no objects: NaN rows)
-    click(150, 711)                # Aggregate
+    click(38, 363, wait=1.5)       # untick Background (no objects: NaN rows)
+    click(150, 763)                # Aggregate
     click(43, 762)                 # + Sum
     key("Escape")
-    scroll(150, 360, -3)           # the class list down to tetraspeck@bead
-    click(38, 391, wait=2)         # untick it
+    scroll(150, 410, -3)           # the class list down to tetraspeck@bead
+    click(38, 443, wait=2)         # untick it
     away()
     shot("screenshot-results-table-view-group-by-image")
-    click(266, 742, wait=3)        # Transpose
+    click(266, 794, wait=3)        # Transpose
     away()
     shot("screenshot-results-side-by-side")
 
@@ -572,10 +582,11 @@ def sc_results_split():
     away()
     shot("screenshot-results-split-list")
     click(*RESULTS_VIEW["plate"], wait=5)
+    click(*RESULTS_SPLIT, wait=5)  # every view keeps its own Full / Split
     click(475, 375, wait=4)        # well C5
     away()
     shot("screenshot-results-split-plate")
-    click(*RESULTS_FULL, wait=2)   # "split" is a user setting: leave it off
+    click(*RESULTS_FULL, wait=2)   # "split" is saved with the view: leave it off
 
 
 def sc_results_export():
@@ -594,14 +605,28 @@ def sc_results_export():
     shot("screenshot-results-on-image")
 
 
+def sc_results_views():
+    results("plate")
+    click(551, 20, wait=1.5)       # + : NEW VIEW
+    click(649, 197, wait=3)        # A copy of the view shown
+    sh("xdotool", "mousemove", "579", "20", "click", "--repeat", "2", "--delay", "80", "1")
+    sleep(1)                       # double-click: rename it
+    key("ctrl+a")
+    type_text("Wells by count")
+    key("Return", wait=1.5)
+    click(706, 20, wait=1.5)       # + again, now after the renamed view
+    hover(820, 300)
+    shot("screenshot-results-views")
+
+
 def sc_results_tracks():
     start_app("--project", str(TRACKS_PROJECT))
     click(372, 72, wait=3)         # read the folder: the viewer needs the image list
     click(200, 140, wait=4)
     click(*MODE_RESULTS, wait=2)
     click(595, 148, wait=5)        # the analysis "tracking"
-    # With tracks the results bar has a fourth view: the views shift.
-    click(415, 20, wait=4)         # Tracks
+    # The views follow the analysis' name, "tracking" is shorter: they shift.
+    click(470, 20, wait=4)         # Tracks
     click(200, 189, wait=3)        # track #2 - a straight mover
     away()
     shot("screenshot-results-tracks")
@@ -610,8 +635,8 @@ def sc_results_tracks():
     click(1121, 828, wait=4)       # the last time point
     away()
     shot("screenshot-results-tracks-split")
-    click(493, 20, wait=2)         # Full
-    click(346, 20, wait=4)         # Charts
+    click(*RESULTS_FULL, wait=2)
+    click(410, 20, wait=4)         # Charts
     click(213, 173, wait=5)        # Over time
     click(266, 446, wait=4)        # Individual tracks, faint
     away()
@@ -654,13 +679,14 @@ def wait_for_run_button(timeout=120):
 
 
 SCENES = {
-    "images": sc_images, "image-panel": sc_image_panel, "workspace": sc_workspace, "pipeline": sc_pipeline,
+    "images": sc_images, "image-panel": sc_image_panel, "go-to-image": sc_go_to_image, "workspace": sc_workspace, "pipeline": sc_pipeline,
     "pick-pipeline": sc_pick_pipeline, "add-step": sc_add_step, "step-menu": sc_step_menu,
     "eva-menu": sc_eva_menu, "colors": sc_colors, "palette": sc_palette, "tuning": sc_tuning,
     "compare": sc_compare, "switcher": sc_switcher, "classes": sc_classes, "annotate": sc_annotate,
     "objects": sc_objects, "settings": sc_settings, "dialogs": sc_dialogs, "modules": sc_modules,
     "results-list": sc_results_list, "results-plate": sc_results_plate, "results-charts": sc_results_charts,
     "results-split": sc_results_split, "results-export": sc_results_export,
+    "results-views": sc_results_views,
     "results-tracks": sc_results_tracks,
     "run": sc_run,                 # writes a second analysis: after the results scenes
     "series": sc_series,

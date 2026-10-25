@@ -83,7 +83,9 @@ The selected object's details are shown in a card beside the panel:
 - **Area** in pixels² and in the physical unit (nm²) from the image's pixel size,
 - **Circularity**,
 - the **mean** intensity of each channel,
-- **Coloc with** - each class it colocalizes with, and how many of that class's objects.
+- **Parent** - for an object linked by [Relate Objects](/commands/object/relate-objects/), the classes of the objects it belongs to (_"Cell"_),
+- **Children** - how many linked objects belong to it, per class (_"Spot · 7"_),
+- **Touches** - each class it colocalizes with, and how many of that class's objects.
 
 An object found by a pipeline is read-only (**From the pipeline · read-only**). An object drawn by hand can be changed.
 

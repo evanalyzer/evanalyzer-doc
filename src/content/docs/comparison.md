@@ -16,7 +16,7 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 | Feature Name                      | Detailed Functionality                                                                                                                                                                                             | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | ------------ | ------ | ------ |
-| **Bio-Formats Integration**       | Native reader for vendor raw formats (`.czi`, `.nd2`, `.lif`, `.oib`, `.ome.tif`, `.svs`) using Bio-Formats or OME libraries. Avoids time-consuming pre-conversion to 8-bit TIFF and proprietary software lock-in. | ✅†        | ✅           | ✅     | ✅     |
+| **Native Vendor Formats**         | Native reader for vendor raw formats (`.czi`, `.nd2`, `.lif`, `.oib`, `.ome.tif`, `.svs`). Avoids time-consuming pre-conversion to 8-bit TIFF and proprietary software lock-in. | ✅†        | ✅           | ✅     | ✅     |
 | **Metadata Parsing**              | Extracts spatial calibration ($\mu m/\text{pixel}$, Z-spacing), time intervals, channel names, emission wavelength, and objective info. Ensures accurate physical measurements without manual entry.               | ✅         | ✅           | ✅     | ✅     |
 | **Automatic Channel Access**      | Individual channels of a multi-channel image are directly addressable right after import, without a separate per-channel mapping step.                                                                             | ✅         | ⚠️\*         | ✅     | ✅     |
 | **Multidimensional (ND) Support** | Seamless display and navigation of 5D hyperstacks ($X, Y, Z, \text{Channel}, \text{Time/T}$).                                                                                                                      | ✅         | ⚠️           | ✅     | ✅     |
@@ -30,7 +30,7 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 ‡ This is a genuine differentiator, not a documentation gap for the other three: none of them merge segmentation results across internal processing-tile boundaries for objects larger than a fixed overlap window. Tools that tile large images at all fall back to overlap-based stitching, which only reconciles an object that fits entirely inside the shared overlap strip - see [Cross-Tile Object Merging](/fundamentals/cross-tile-merging/) for why that ceiling exists and how EVAnalyzer avoids it.
 
-†EVAnalyzer's is using a Rust port of the original Java written BioFormats library. This port may be unstable for some not widly used image formats right now.
+†EVAnalyzer reads them with [scopeio](https://github.com/evanalyzer/scopeio), its own pure-Rust image library - see [Image Formats](/fundamentals/image-formats/) for the supported formats.
 
 ---
 
@@ -156,7 +156,7 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 ## Benchmark
 
-A controlled benchmark ran the same reference pipeline (rolling-ball background subtraction → double blur → threshold → connected components → area filter → colocalization) against the same 81 Olympus `.vsi` microscopy images (2048×2048, 2 channels) across five tool configurations. QuPath is not included as a separate measurement - its viewer and processing core are built on ImageJ/Bio-Formats internals, so its performance is expected to track the plain Fiji macro figures below rather than differ meaningfully from them.
+A controlled benchmark ran the same reference pipeline (rolling-ball background subtraction → double blur → threshold → connected components → area filter → colocalization) against the same 81 Olympus `.vsi` microscopy images (2048×2048, 2 channels) across five tool configurations. QuPath is not included as a separate measurement - its viewer and processing core are built on ImageJ internals, so its performance is expected to track the plain Fiji macro figures below rather than differ meaningfully from them.
 
 **Test system:** Intel Core Ultra 9 185H (16 cores / 22 threads), 62 GB RAM, Ubuntu 24.04.
 

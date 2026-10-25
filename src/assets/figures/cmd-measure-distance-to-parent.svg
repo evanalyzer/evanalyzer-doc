@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="240" viewBox="0 0 440 240">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="239" rx="10"/>
+<!-- parent -->
+<ellipse cx="200" cy="105" rx="130" ry="62" fill="#4b5563" fill-opacity="0.12" stroke="#4b5563" stroke-width="2"/>
+<text class="lbl-bold" x="70" y="40" text-anchor="middle">parent (Cell)</text>
+<!-- parent centre -->
+<line x1="194" y1="105" x2="206" y2="105" stroke="#1f2937" stroke-width="2"/>
+<line x1="200" y1="99" x2="200" y2="111" stroke="#1f2937" stroke-width="2"/>
+<text class="lbl-sm" x="200" y="128" text-anchor="middle">parent centre</text>
+<!-- child -->
+<circle cx="275" cy="72" r="10" fill="#9333ea" fill-opacity="0.35" stroke="#9333ea" stroke-width="2"/>
+<circle cx="275" cy="72" r="2" fill="#1f2937"/>
+<text class="lbl-bold" style="fill:#9333ea" x="340" y="96">child (Spot)</text>
+<line x1="337" y1="88" x2="285" y2="76" stroke="#9333ea" stroke-width="1"/>
+<!-- centre to centre -->
+<line x1="273" y1="73" x2="203" y2="104" stroke="#2563eb" stroke-width="2.5"/>
+<text class="lbl-sm" style="fill:#2563eb" x="196" y="78" text-anchor="middle">to parent centre</text>
+<!-- centre to edge -->
+<line x1="276" y1="70" x2="280.9" y2="56.5" stroke="#ea580c" stroke-width="2.5"/>
+<circle cx="280.9" cy="56.5" r="2.5" fill="#ea580c"/>
+<text class="lbl-sm" style="fill:#ea580c" x="290" y="36">to parent edge</text>
+<line x1="296" y1="40" x2="283" y2="54" stroke="#ea580c" stroke-width="1"/>
+<!-- legend: edge pixel -->
+<text class="lbl-sm" x="220" y="186" text-anchor="middle">edge: parent pixels with a 4-neighbour outside the parent</text>
+<text class="lbl-bold" x="220" y="210" text-anchor="middle">Measure Distance To Parent</text>
+<text class="lbl-sm" x="220" y="226" text-anchor="middle">both distances start at the child's centre of mass</text>
+</svg>

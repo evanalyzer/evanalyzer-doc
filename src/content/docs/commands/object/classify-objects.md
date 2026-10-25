@@ -35,7 +35,7 @@ All shape-based criteria accept the field's maximum representable value as "no l
 | **Min solidity / Max solidity**           | Ratio of area to convex hull area (0-1)                          |
 | **Min aspect ratio / Max aspect ratio**   | Fitted-ellipse major/minor axis ratio                            |
 | **Min eccentricity / Max eccentricity**   | Elongation from fitted ellipse (0 = circle, 1 = line segment)    |
-| **Min Feret / Max Feret**                 | Bounding-box diagonal, in the chosen **Size unit**                |
+| **Min Feret / Max Feret**                 | Range for the object's [Max Feret diameter](/fundamentals/metrics/#max-feret-diameter) (longest distance between two pixel centres), in the chosen **Size unit** |
 | **Allow edge touching**                   | If disabled, objects that touch the image border fail the match  |
 
 ### Size unit
@@ -70,7 +70,7 @@ An optional, additional criterion evaluated alongside the shape and intensity cr
 | **Intersecting With**      | An object class to test overlap against. When set, the object only matches if it also overlaps at least one object of this class by at least **Min intersection area** |
 | **Min intersection area** | Minimum overlap area, in the chosen **Size unit**. Has no effect while **Intersecting With** is unset                                                                  |
 
-Unlike the shape criteria, this one is disabled entirely by leaving **Intersecting With** unset (no sentinel value needed) rather than by relaxing a threshold. It corresponds to the [Intersection Count](/fundamentals/metrics/#intersection-count) metric - counting how many objects from another class overlap a given object - used here as a pass/fail gate rather than just a recorded value.
+Unlike the shape criteria, this one is disabled entirely by leaving **Intersecting With** unset (no sentinel value needed) rather than by relaxing a threshold. It corresponds to the [Intersection](/fundamentals/metrics/#intersection) metric - counting how many objects from another class overlap a given object - used here as a pass/fail gate rather than just a recorded value.
 
 ## Match Handling
 

@@ -35,6 +35,10 @@ Because every tree is trained on different data and different feature subsets, t
 **Number of Trees** and **Max Tree Depth** are capped at sensible defaults (50 trees, depth 20) on purpose: a pixel classifier re-walks every tree for *every pixel of every image* it's applied to via [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/), so tree count and depth trade prediction speed against accuracy far more directly than they would for a one-off object classification pass.
 :::
 
+## Certainty
+
+Besides the class, the forest gives each prediction a **certainty**: the share of trees that voted for the winning class (1 when every tree agrees, 0.6 when 30 of 50 do). The [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/)'s **Min Certainty** turns pixels the forest is less sure about into background.
+
 ## When to Choose It
 
 Random Forest is a good first try for most pixel and object classifiers: it's insensitive to feature scale (no need to normalize Gaussian-blur output against raw intensity), tolerates noisy or redundant feature channels well (an uninformative feature just doesn't get picked at many splits), and needs very little hyperparameter tuning to get a reasonable result. Its main limitation is the inference-time cost discussed above - if a forest large/deep enough to be accurate is also too slow to run over every pixel of your images, consider [k-Nearest Neighbors](/ai/k-nearest-neighbors/) or a [Neural Network](/ai/neural-network-mlp/) instead.

@@ -10,7 +10,6 @@ EVAnalyzer is written in Rust (2024 edition) and uses Cargo as its build system.
 | Tool                                 | Version                                           |
 | ------------------------------------ | ------------------------------------------------- |
 | [Rust toolchain](https://rustup.rs/) | 1.80 or later                                     |
-| Java JDK                             | 11 or later (required for Bio-Formats)            |
 | Linux system libraries (GUI)         | `libinput10 libxkbcommon0 libfontconfig1 libgbm1` |
 
 ## Clone the repository
@@ -59,7 +58,7 @@ The workspace is split into focused crates:
 
 | Crate             | Description                                                                           |
 | ----------------- | ------------------------------------------------------------------------------------- |
-| `evanalyzer_core` | Image I/O (Bio-Formats via JVM), processing algorithms, object model, pipeline execution |
+| `evanalyzer_core` | Image I/O ([scopeio](https://github.com/evanalyzer/scopeio)), processing algorithms, object model, pipeline execution |
 | `evanalyzer_cfg`  | Project settings, JSON serialisation, pipeline command configuration                  |
 | `evanalyzer_app`  | Application handle, shared project state                                              |
 | `evanalyzer_gui`  | Slint-based desktop GUI - viewport, histogram, annotation tools, classification panel |

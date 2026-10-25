@@ -19,6 +19,8 @@ run("connected_components");
 print(`objects: ${instance_count()}`);
 ```
 
+![A script step: the code keeps images in variables, decides with an if what to run next, and runs regular pipeline commands with run(); the image the last command produced is the image the next pipeline step gets](../../../../assets/figures/cmd-script.svg)
+
 ## Parameters
 
 | Parameter   | Description                                                                                                                                                             |
@@ -403,7 +405,7 @@ Click **Edit script** on the step card to open the editor:
 
 ## Limits
 
-A script runs once per [tile](/fundamentals/cross-tile-merging/), so it can only run commands that work on a tile. The object commands (Classify Objects, AI Object Classifier, Colocalization, Object Math, Transform Objects, Voronoi, Load Annotated Objects) work on the whole image's objects and can't run inside a script - add them as regular steps after the script step. A script can't run another script.
+A script runs once per [tile](/fundamentals/cross-tile-merging/), so it can only run commands that work on a tile. The commands of the **Object** category (Classify Objects, AI Object Classifier, Colocalization, Object Math, Transform Objects, Voronoi, Load Annotated Objects, Propagation, Relate Objects) and of the **Measure** category (Area Occupied, Image Intensity, Image Quality, Exclude Image, Measure Colocalization, Measure Texture, Measure Object Shape, Measure Object Neighbors, Measure Distance To Parent) work on the whole image and can't run inside a script, nor can the dataset step [Simple Tracker](/commands/dataset/simple-tracker/) - add them as regular steps after the script step. The script editor's command reference doesn't offer them. A script can't run another script.
 
 Scripts run in a sandbox without file or network access. To keep a broken script from hanging an analysis (or a server), each run is limited to one million operations, 32 nested function calls, strings of 1 MB, arrays of 100,000 and maps of 10,000 entries. A script that exceeds a limit, doesn't parse or throws an error fails the step with the line and column of the problem.
 

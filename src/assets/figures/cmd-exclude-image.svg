@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="330" viewBox="0 0 440 330">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="329" rx="10"/>
+<rect x="16" y="16" width="140" height="70" rx="6" fill="#ffffff" stroke="#d8dce1"/>
+<text class="lbl-sm" x="26" y="34">quality_01 measured:</text>
+<text class="lbl" style="fill:#2563eb" x="26" y="54">Focus score 0.09</text>
+<text class="lbl" style="fill:#2563eb" x="26" y="74">Pixels at max 3 %</text>
+<rect x="186" y="16" width="238" height="70" rx="6" fill="#ffffff" stroke="#d8dce1"/>
+<text class="lbl-sm" x="196" y="34">Rules (Exclude When: Any Rule)</text>
+<text class="lbl" x="196" y="54">Focus score Below 0.1</text>
+<text class="lbl-bold" style="fill:#ea580c" x="414" y="54" text-anchor="end">met</text>
+<text class="lbl" x="196" y="74">Pixels at max Above 5</text>
+<text class="lbl-sm" style="fill:#6b7280" x="414" y="74" text-anchor="end">not met</text>
+<line x1="158" y1="51" x2="182" y2="51" stroke="#4b5563" stroke-width="1.5" marker-end="url(#e1)"/>
+<line x1="310" y1="88" x2="310" y2="112" stroke="#4b5563" stroke-width="1.5" marker-end="url(#e1)"/>
+<text class="lbl-sm" style="fill:#ea580c" x="300" y="104" text-anchor="end">one rule met: image excluded</text>
+<rect x="16" y="118" width="408" height="112" rx="6" fill="#ffffff" stroke="#d8dce1"/>
+<text class="lbl-sm" x="26" y="136">Results › List</text>
+<line x1="16" y1="146" x2="424" y2="146" stroke="#e5e7eb"/>
+<g><text class="lbl" x="26" y="164">A01_01.tif</text><text class="lbl" x="136" y="164">42 objects</text></g>
+<line x1="16" y1="174" x2="424" y2="174" stroke="#e5e7eb"/>
+<g opacity="0.55"><text class="lbl" x="26" y="192">A01_02.tif</text><text class="lbl" x="136" y="192">17 objects</text></g>
+<line x1="22" y1="188" x2="226" y2="188" stroke="#6b7280" stroke-width="1"/>
+<rect x="306" y="180" width="66" height="17" rx="8.5" fill="#ffedd5"/>
+<text class="lbl-sm" style="fill:#ea580c" x="339" y="192" text-anchor="middle">Excluded</text>
+<ellipse cx="396" cy="188" rx="9" ry="5.5" fill="none" stroke="#4b5563" stroke-width="1.5"/>
+<circle cx="396" cy="188" r="2.2" fill="#4b5563"/>
+<line x1="387" y1="195" x2="405" y2="181" stroke="#4b5563" stroke-width="1.5"/>
+<line x1="16" y1="202" x2="424" y2="202" stroke="#e5e7eb"/>
+<g><text class="lbl" x="26" y="220">A01_03.tif</text><text class="lbl" x="136" y="220">39 objects</text></g>
+<rect x="60" y="240" width="364" height="36" rx="6" fill="#1f2937"/>
+<text class="lbl-sm" style="fill:#f9fafb" x="70" y="255">Excluded by the pipeline: Focus score (channel 0)</text>
+<text class="lbl-sm" style="fill:#f9fafb" x="70" y="269">of quality_01 = 0.09, below 0.1</text>
+<path d="M334,240 l6,-6 l6,6 z" fill="#1f2937"/>
+<text class="lbl-bold" x="220" y="300" text-anchor="middle">Exclude Image</text>
+<text class="lbl-sm" x="220" y="316" text-anchor="middle">the eye takes the image back into the results</text>
+</svg>

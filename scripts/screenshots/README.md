@@ -71,7 +71,8 @@ The app's log is in `.cache/screenshots/app.log`. A run first closes EVAnalyzer 
 
 ## Not scripted
 
-- `screenshot-image-measure-points.png` (a measurement marker) and
-  `screenshot-results-coloc-details-view.png` - still placeholders in the
-  docs.
+- `screenshot-image-measure-points.png` (a measurement marker),
+  `screenshot-results-coloc-details-view.png`, `screenshot-results-children.png`
+  and `screenshot-measurements-panel.png` - still placeholders in the docs
+  (see SCREENSHOTS.md).
 - The Windows SmartScreen screenshots of the installation page.

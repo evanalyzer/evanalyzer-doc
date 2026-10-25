@@ -1,77 +1,87 @@
 ---
 title: Colocalization
-description: Find objects from multiple classes that spatially overlap and assign them a shared tracking ID.
+description: Find the objects of two or more classes that overlap and record them as each other's partners.
 ---
 
-The **Colocalization** command identifies objects from two or more input classes that overlap each other. Overlapping objects are defined as _colocalising_. EVAnalyzer assigns all colocalising objects a shared **tracking ID**, allowing them to be grouped in the results table.
+The **Colocalization** command answers "are these objects at the same place?". Every object of the classes to colocalize that overlaps an object of each other class records those objects as its **partners**. The [results](/guide/results/#colocalization-details) list the partners by ID and count them per class (see [Colocalization Partners](/fundamentals/metrics/#colocalization-partners)).
 
-Unlike [Object Math](/commands/object/object-math/), which *derives a new shape* from two object sets, Colocalization's job is to *link* objects that already exist - each overlapping pair (or group) keeps its own identity and metrics, but gains a shared tracking ID and, optionally, a new object recording the overlap area itself.
+Optionally, the colocalizing objects of one class also get a class of their own (for example "ch1 with ch2"), and the overlap regions become objects of their own.
 
-![Overlapping objects from two classes, plus the overlap region itself, all share one tracking ID](../../../../assets/figures/cmd-colocalization.svg)
+![A ch1 spot overlapping a ch2 spot: both record the other as partner, the ch1 spot can get the class "ch1 with ch2", and the overlap region can become an object; a spot without an overlapping partner records nothing](../../../../assets/figures/cmd-colocalization.svg)
+
+Unlike [Object Math](/commands/object/object-math/), which derives a new shape from two object sets, Colocalization links objects that already exist: each one keeps its ID, shape and measurements. Which object _belongs to_ which (spots per cell) is the job of [Relate Objects](/commands/object/relate-objects/).
 
 ## Parameters
 
-| Parameter                             | Description                                                                                                     |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **Classes to colocalize**             | Two or more object classes that must all have an overlapping member for an object to be considered colocalising |
-| **Multiplicity**                      | How many partners an object may coloc with at once - see below                                                  |
-| **Class for overlapping areas**       | A class assigned to a new object representing the actual overlap area                                           |
-| **Exclude classes**                   | Objects that also overlap one of these classes are dropped entirely, even if they'd otherwise match - see below |
-| **Min colocalization area**           | Minimum overlap area in the selected unit                                                                       |
-| **Size unit**                         | Unit for the min area threshold: **Pixels** (default), **Nanometer**, or **Percent** - see below                |
+| Parameter                                      | Description                                                                                                                                                       |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Colocalize**                                 | The classes whose objects must overlap (e.g. the ch1 and the ch2 spots). At least two; with fewer the step does nothing.                                         |
+| **All combinations**                           | Also record the partners of objects that don't overlap an object of every class - see [All combinations](#all-combinations). Off by default.                     |
+| **But not**                                    | Objects that also overlap an object of one of these classes are left out entirely - see [But not](#but-not).                                                     |
+| **By at least**                                | How much two objects must overlap, in **Size Unit**. `0` (default): any overlap.                                                                                  |
+| **Size Unit**                                  | Unit of **By at least**: **px** (default), **nm** or **%** - see [Minimum overlap](#minimum-overlap).                                                            |
+| **Partners**                                   | Which overlapping objects count as partners - see [Partners](#partners).                                                                                          |
+| **Overlap regions as**                         | Optional: the overlap region of each colocalizing group becomes a new object with this class.                                                                    |
+| **Mark objects of**                            | Optional: only the colocalizing objects of this class get the class set under **As**. Unset: the colocalizing objects of every class.                            |
+| **As**                                         | Optional: the class the colocalizing objects get (e.g. "ch1 with ch2") - to count them per image or relate them to cells. Unset: only the partners are recorded. |
 
-:::note
-**Filter classes**, an older secondary-overlap filter, still exists in the underlying project schema for compatibility with older projects, but is hidden from the command picker in favor of **Exclude classes** below.
-:::
+## How it works
+
+For every object of each class in **Colocalize**:
+
+1. The objects of every _other_ class in **Colocalize** that overlap it by at least **By at least** are its candidate partners. **Partners** may reduce them to the best-overlapping one.
+2. If it has no partner of one of the other classes, it records nothing (unless **All combinations** is on).
+3. If it also overlaps an object of a **But not** class by at least **By at least**, it records nothing.
+4. Otherwise it records its partners, per class. With **As** set, it gets that class (only when it is of the class under **Mark objects of**, if one is set). With **Overlap regions as** set, the region where it and one partner of each other class all overlap becomes a new object.
+
+Each object is checked on its own, so the partner links go both ways: a ch1 spot lists its ch2 spot, and the ch2 spot lists the ch1 spot. An overlap region is created once per group of objects, not once per member. It is measured on every channel like any other object, but it records no partners.
 
 ## Minimum overlap
 
-**Min colocalization area** decides how much two objects must overlap to count as colocalizing. Its meaning depends on **Size unit**:
+**By at least** decides how much two objects must overlap to count as partners. Its meaning depends on **Size Unit**:
 
-| Size unit     | Two objects colocalize when …                                                       |
-| ------------- | ----------------------------------------------------------------------------------- |
-| **Pixels**    | they share at least this many pixels                                                |
-| **Nanometer** | their overlap area is at least this large in physical units (uses the pixel size)   |
-| **Percent**   | the overlap covers at least this percentage of the **smaller** of the two objects   |
+| Size Unit | Two objects are partners when …                                                   |
+| --------- | --------------------------------------------------------------------------------- |
+| **px**    | they share at least this many pixels                                              |
+| **nm**    | their overlap area is at least this large in physical units (uses the pixel size) |
+| **%**     | the overlap covers at least this percentage of the **smaller** of the two objects |
 
-**Percent** makes the threshold independent of object size: a spot lying completely inside a cell overlaps it by 100 %, whatever the size of the cell. For example, with 50 %, a 100 px spot that overlaps a 400 px cell by 50 px colocalizes (50 % of the spot), even though the overlap is only 12.5 % of the cell. The same threshold is applied to [Exclude classes](#exclude-classes).
+**%** makes the threshold independent of object size: a spot lying completely inside a cell overlaps it by 100 %, whatever the size of the cell. For example, with 50 %, a 100 px spot that overlaps a 400 px cell by 50 px colocalizes (50 % of the spot), even though the overlap is only 12.5 % of the cell. The same threshold applies to [But not](#but-not).
 
-## Multiplicity
+## Partners
 
-**Multiplicity** replaces the old "Allow multi-object colocalization" checkbox with three explicit modes:
+| Option (GUI label)                              | Effect                                                                                                                                                         |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **All partners** _(default)_                    | Every overlapping object that meets **By at least** is a partner - a spot touching two others has two.                                                       |
+| **Only the best-overlapping partner**           | Per other class, only the object with the largest overlap. Two objects are partners only when each is the other's best.                                       |
+| **Several partners only for selected classes**  | Only the objects of the selected classes may have more than one partner; every other class is capped to its best-overlapping one. Kept for older pipelines. |
 
-| Mode (GUI label)                     | Effect                                                                                                                                     |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| **No multi coloc (1:1)** *(default)* | Every object keeps only its single best-overlap match (largest overlap area) per other class                                             |
-| **Allow multi coloc**                | Every object may coloc with every overlapping partner that meets **Min colocalization area**                                             |
-| **Multi coloc only for selected**    | Only the listed classes may coloc with more than one partner - every other class in **Classes to colocalize** is still capped to its single best match |
+With **Only the best-overlapping partner**, a small object on the border of two larger ones picks the one it overlaps more. A tie goes to the object further up in the image, then further left - the same pick in every run.
 
-**Multi coloc only for selected** is the tool for a "count spots per cell" shape: with **Classes to colocalize** set to `Cell, Spot` and multiplicity limited to `Cell`, a cell can coloc with any number of spots, but each spot still picks exactly one cell (the one it overlaps most) - so a spot sitting on the border between two cells is never double-counted under both.
+**Several partners only for selected classes** was the way to count spots per cell: with **Colocalize** set to `Cell, Spot` and `Cell` selected, a cell can have any number of spots, but each spot only one cell. For new pipelines use [Relate Objects](/commands/object/relate-objects/) for this.
 
-Where an object is capped to a single best match, ties (equal overlap area) are broken toward the lower object ID, so the result is deterministic rather than depending on cache iteration order.
+## All combinations
 
-## Exclude Classes
+By default an object records partners only when it overlaps an object of **every** other class. With three classes A, B and C, an A object overlapping only a B object records nothing.
 
-**Exclude classes** is a blocklist evaluated *after* the classes-to-colocalize check: an object that satisfies **Classes to colocalize** is dropped entirely - no colocalization recorded, no overlap-area object created - if it also overlaps any object from one of these classes by at least **Min colocalization area**. Leave empty (the default) to disable this filter.
+With **All combinations** on, every overlapping pair is recorded, also for objects that miss one of the classes. One step with A, B and C then shows A∩B, A∩C, B∩C and A∩B∩C in the partner columns of the results. **As** and **Overlap regions as** still need every class: only the objects overlapping an object of each class get the class, and only those groups give an overlap region.
 
-Example: to find objects colocalizing with a nucleus stain and a membrane stain, but excluding any that also overlap a dead-cell marker, set **Classes to colocalize** to the nucleus and membrane classes and **Exclude classes** to the dead-cell-marker class.
+## But not
 
-## Colocalizing handling
+**But not** is a blocklist checked after the partners are found: an object that overlaps an object of one of these classes by at least **By at least** records no partners, gets no class and gives no overlap region - even though it passed the check for **Colocalize**. Leave it empty (the default) to turn it off.
 
-When an object is found to colocalize, one of two operations is applied:
+Example: to find the cells colocalizing with a nucleus stain and a membrane stain, but not the ones that also overlap a dead-cell marker, set **Colocalize** to the nucleus and membrane classes and **But not** to the dead-cell-marker class.
 
-- **Move** - the object's class is changed to a new class. The Object ID is unchanged.
-- **Copy** - a new object is created with the new class; the origin object's ID is recorded in the copy's origin object ID field.
+## Example: two-channel spot colocalization
 
-A new **colocalizing area** object is created for the overlapping region. This object is assigned to the class specified by **Class for overlapping areas** and can be used for further measurements.
-
-All colocalising objects - input objects and the colocalization-area object - receive the same tracking ID. In the results table, rows with the same tracking ID appear adjacent to each other.
-
-## Example: Two-channel spot colocalization
-
-1. Classify spots in Cy5 channel → `cy5@spot`
-2. Classify spots in Cy7 channel → `cy7@spot`
+1. Classify the spots in the Cy5 channel → `cy5@spot`
+2. Classify the spots in the Cy7 channel → `cy7@spot`
 3. Add a Colocalization step:
-   - Classes: `cy5@spot`, `cy7@spot`
-   - Class for overlapping areas: `coloc@cy5cy7`
-4. All Cy5 spots that overlap with a Cy7 spot (and vice versa) receive a common tracking ID.
+   - **Colocalize**: `cy5@spot`, `cy7@spot`
+   - **Mark objects of**: `cy5@spot`, **As**: `cy5 with cy7`
+   - **Overlap regions as**: `coloc@cy5cy7` (optional)
+4. Every Cy5 spot overlapping a Cy7 spot (and every Cy7 spot overlapping a Cy5 spot) lists its partner in the results. The Cy5 spots with a partner also carry `cy5 with cy7`, so the [results](/guide/results/) count them per image - or, after [Relate Objects](/commands/object/relate-objects/) with the cells as parents, per cell.
+
+:::note
+**Filter classes**, an older secondary filter, still exists in the project file for older projects, but is not shown on the step card: only objects carrying every filter class take part.
+:::

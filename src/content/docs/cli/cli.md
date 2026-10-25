@@ -171,10 +171,7 @@ Prints a database summary (image/class counts, T/Z-stack ranges) followed by a p
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
 | `--transpond <true\|false>`   | Show the classes side by side, see [Filter Arguments](#filter-arguments) |
-
-:::note
-`--colocalized <true|false>` is accepted by `view` and `export` but always errors today - row-level colocalization filtering has no equivalent in the current results backend yet.
-:::
+| `--t <n\|a-b>`, `--z <n\|a-b>` | Only these time points / Z planes, see [Filter Arguments](#filter-arguments) |
 
 ## columns
 
@@ -205,6 +202,8 @@ mean_scaled_ch0                Avg Intensity (Ch 0)           intensity
 sum_scaled_ch0                 Sum Intensity (Ch 0)           intensity
 ```
 
+Measurement steps add a column per measurement, with the id `measurement:<step ID>/<measurement>` (group **Measurements**); a measurement that points to another object also has `measurement_object:<…>`.
+
 Run this first when scripting `export` - column ids are the values to pass to `--group-by`-adjacent tooling and to `duckdb` queries against the same file.
 
 ## export
@@ -225,6 +224,39 @@ Exports a results database to CSV, XLSX, or Parquet, with the same filtering and
 | `--out <path>` | Output file path (required)               |
 | _filter args_  | See [Filter Arguments](#filter-arguments) |
 | _group args_   | See [Group Arguments](#group-arguments)   |
+| `--tracks`     | A row per track instead of per object - see [Tracks](#tracks) |
+| `--measurements` | A row per measurement value - see [Measurements](#measurements) |
+| `--project <path>` `--view <name>` | Export as a List view of the project shows the results - see [Exporting as a view](#exporting-as-a-view) |
+
+### Tracks
+
+`--tracks` writes the [tracks table](/guide/results/#tracks): a row per track with when it was seen, how far, fast and straight it moved, and the `--agg` statistics (default `avg`) of every numeric column over its time points. It can't be combined with `--group-by`; `--group-regex` sets the pattern of its well column.
+
+| Argument | Description |
+| --- | --- |
+| `--min-points <n>` | Only tracks with at least this many time points (default `1`) |
+| `--from-start` | Only tracks there from the first time point |
+| `--no-edge` | Leave out tracks with an object touching the image edge |
+| `--speed-unit <px-frame\|um-min\|um-s>` | The speed's unit (default `um-min`; `px-frame` without a pixel size or frame interval) |
+
+### Measurements
+
+`--measurements` writes the values of the [measurement steps](/guide/pipelines/#measurement-steps), one row per value, with the columns `image_name`, `image_rel_path`, `z_stack`, `t_stack`, `region`, `object_id`, `related_object_id`, `object_class_name`, `step`, `measurement`, `unit`, `key` and `value` - the same table as the GUI's [Measurements export](/guide/results/#exporting-results). `--image`, `--t` and `--z` restrict it; every measurement is written. Results without a measurement step fail with _"These results have no measurements - a pipeline needs a measurement step"_. It can't be combined with `--tracks`.
+
+```sh
+./evanalyzer cli export csv --db results.evadb --out measurements.csv --measurements
+```
+
+### Exporting as a view
+
+`--view <name>` exports the results the way a [List view](/guide/results/#views) of the project shows them: its columns, classes, images (**Only disabled** exports just the images left out), its [children and linked-object columns](/guide/results/#parents-and-children), [Coloc pairs](/guide/results/#coloc-pairs), and a row per object or - with **A row per: Images** - per image with the view's aggregations. `--project` names the `.evaproj` file the view belongs to; both are needed together. The name is matched ignoring case.
+
+```sh
+./evanalyzer cli export xlsx --db results.evadb --out qc.xlsx \
+  --project experiment.evaproj --view QC
+```
+
+Explicit `--image`, `--class` and `--group-by` win over the view. Columns the view names but these results lack are left out, with a note on stderr (_"Not in these results, left out of the view: …"_). A name that isn't a view of the project fails with the list of its views; a Plate, Charts or Tracks view fails with _"--view exports List views"_. It can't be combined with `--tracks` or `--measurements`.
 
 ### export parquet
 
@@ -248,6 +280,8 @@ Shared by `view` and every `export` subcommand:
 | `--image <name>`              | Restrict to this image name (repeatable)                  |
 | `--class <name>`              | Restrict to this object class (repeatable)                |
 | `--transpond <true\|false>`   | Place the classes side by side instead of below each other - the CLI twin of the GUI's [Transpose](/guide/results/#transpose). Default `false` |
+| `--t <n\|a-b>`                | Only these time points: one (`3`) or a range (`2-5`, both ends included), 0-based. Default: all |
+| `--z <n\|a-b>`                | Only these Z planes, written the same way. Default: all |
 
 :::note
 `--transpond` is currently only applied by `view`; `export csv`/`export xlsx` accept it but still write the normal row layout. Use the GUI's **Transpond output table** export option for a transposed file.
@@ -259,10 +293,14 @@ Shared by `export csv` and `export xlsx` - mirrors the GUI's [Grouping and Aggre
 
 | Argument                            | Description                                                                                                                    |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `--group-by <image\|folder\|regex>` | Aggregate rows instead of exporting one row per object. Only `image` has a matching query today - `folder`/`regex` are recognized but currently rejected |
-| `--agg <list>`                      | Comma-separated aggregate function(s) applied to every numeric column when grouping: `min`, `max`, `avg` (default), `median`, `stdev`, `sum` |
-| `--split-colocalized`               | Accepted but currently rejected - no row-level "is this object colocalized at all" split exists in the current backend        |
-| `--group-by-class`                  | No-op when grouping by image - `image` grouping always splits by class already                                                |
+| `--group-by <kind>`                 | Aggregate rows instead of exporting one row per object. `image`: a row per image and class, per time point. `class`, `well`, `group`, `folder`, `regex`, `track`: a time course - a line per class (every image pooled), per well (from the image names), per `--group-regex` group (`regex` is the same), per folder or per track |
+| `--group-regex <regex>`             | Regex on the image name for `--group-by group` / `regex`: its first capture group is the group |
+| `--agg <list>`                      | Comma-separated statistic(s) of every numeric column when grouping: `min`, `max`, `avg`, `median`, `stdev`, `sum`, and for a time course also `q1`, `q3`. Default `avg`; for a time course `avg,stdev` |
+| `--normalize <none\|t0>`            | Time course values relative to each line's first time point (`t0`: in % of it) |
+| `--layout <long\|wide\|both>`       | Time course tables: `long` (default, a row per time point × line), `wide` (per value and statistic a row per time point and a column per line; for CSV one file each next to `--out`, named `<name>_<value>.csv`) or both |
+| `--group-by-class`                  | Accepted, but has no effect: `image` grouping always splits by class already |
+
+The `--colocalized` and `--split-colocalized` options are gone; use **A row per: Coloc pairs** in a [view](#exporting-as-a-view) for the partners of each object.
 
 ## train-classifier
 

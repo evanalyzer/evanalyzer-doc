@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9333ea"/></marker>
+    <marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+<circle cx="150" cy="95" r="52" fill="#c8d8fa" stroke="#2563eb" stroke-width="2"/>
+<circle cx="118" cy="62" r="24" fill="#f9cdb6" stroke="#ea580c" stroke-width="2"/>
+<circle cx="196" cy="126" r="22" fill="#f9cdb6" stroke="#ea580c" stroke-width="2"/>
+<circle cx="80" cy="150" r="18" fill="#f9cdb6" stroke="#ea580c" stroke-width="2"/>
+<text class="lbl-sm" style="fill:#2563eb" x="150.0" y="100.0" text-anchor="middle">ch1 spot</text>
+<text class="lbl-bold" style="fill:#ea580c" x="118.0" y="66.0" text-anchor="middle">a</text>
+<text class="lbl-bold" style="fill:#ea580c" x="196.0" y="130.0" text-anchor="middle">b</text>
+<text class="lbl-bold" style="fill:#ea580c" x="80.0" y="154.0" text-anchor="middle">c</text>
+<text class="lbl-sm" x="270.0" y="50.0" text-anchor="start">ch2 spots a, b overlap it;</text>
+<text class="lbl-sm" x="270.0" y="64.0" text-anchor="start">c does not</text>
+<text class="lbl-bold" x="270.0" y="96.0" text-anchor="start">Coloc with ch2 = 2</text>
+<text class="lbl-sm" x="270.0" y="112.0" text-anchor="start">partner IDs: a, b</text>
+<text class="lbl-sm" x="270.0" y="140.0" text-anchor="start">a and b each record</text>
+<text class="lbl-sm" x="270.0" y="154.0" text-anchor="start">the ch1 spot as partner</text>
+<text class="lbl-bold" x="220" y="200" text-anchor="middle">Colocalization partners, per partner class</text>
+<text class="lbl-sm" x="220" y="216" text-anchor="middle">set by Colocalization: a count and the partners' IDs per class</text>
+</svg>

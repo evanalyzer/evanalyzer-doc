@@ -3,25 +3,31 @@ title: Voronoi
 description: Partition the image into regions based on the nearest object centre.
 ---
 
-The **Voronoi** command constructs a Voronoi diagram from the centroid positions of a set of input objects. Each Voronoi cell is the region of the image closest to one particular centre point. The resulting cells are stored as objects of the configured output class.
+The **Voronoi** command constructs a Voronoi diagram from the centre points of a set of input objects (the centre of each object's bounding box). Each Voronoi cell is the region of the image closest to one particular centre point. The resulting cells are stored as objects of the configured output class.
 
 A common use case is approximating cell boundaries from known nucleus positions when no cell-surface stain is available.
 
-![Every pixel is assigned to whichever seed's centroid it's closest to, tiling the image into cells](../../../../assets/figures/cmd-voronoi.svg)
+![Every pixel is assigned to whichever seed's centre point it's closest to, tiling the image into cells](../../../../assets/figures/cmd-voronoi.svg)
 
 ## Parameters
 
 | Parameter | Description |
 |---|---|
-| **Centers** | Object class whose centroids are used as Voronoi seeds |
+| **Centers** | Object class whose centre points (bounding-box centres) are used as Voronoi seeds |
 | **Center filter classes** | Additional classes used to refine which centres are included |
 | **Mask** | An optional object class used to clip (intersect) the Voronoi cells |
 | **Mask filter classes** | Additional classes used to refine the clipping mask |
 | **Output class** | Object class assigned to the constructed Voronoi cells |
 | **Max radius** | Maximum radius of a Voronoi cell (disabled if –1) |
-| **Unit** | Size unit for max radius (*px*, *µm*, …) |
+| **Unit** | Size unit for max radius: *nm* or *px* |
 | **Exclude areas at edges** | Discard Voronoi cells that touch the image border |
 | **Exclude areas without centre** | Discard cells that do not contain a seed point after masking |
+
+## Ties and links
+
+A pixel exactly as far from two centres goes to the centre whose object comes first in reading order (further up, then further left), so the cells are the same in every run.
+
+The cells are not linked to the objects they grew from. To get, for example, the nucleus of each cell in the results, add [Relate Objects](/commands/object/relate-objects/) after the Voronoi step.
 
 ## Max Radius
 

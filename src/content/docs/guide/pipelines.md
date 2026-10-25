@@ -77,8 +77,9 @@ The stripe on a step and in the command picker tells what kind of data goes in a
 | <span class="evx-cat evx-cat-preprocess"></span> | **Preprocess** | image → image | Rolling Ball, Gaussian Blur, edge detection |
 | <span class="evx-cat evx-cat-segment"></span> | **Segment** | image → segmentation mask | Threshold, UNet |
 | <span class="evx-cat evx-cat-object"></span> | **Instance Seg.** | mask → labelled mask | Connected Components, Watershed |
-| <span class="evx-cat evx-cat-measure"></span> | **Measure** | labelled mask → objects | Extract Objects |
-| <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | Classify Objects, Object Math, Voronoi, Colocalization |
+| <span class="evx-cat evx-cat-extract"></span> | **Extract** | labelled mask → objects | Extract Objects, Fill Object Holes |
+| <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | Classify Objects, Object Math, Voronoi, Colocalization, [Relate Objects](/commands/object/relate-objects/), [Propagation](/commands/object/propagation/) |
+| <span class="evx-cat evx-cat-measure"></span> | **Measure** <span class="evx-new">NEW</span> | objects / image → values | [Image Intensity](/commands/measure/image-intensity/), [Measure Texture](/commands/measure/measure-texture/), [Exclude Image](/commands/measure/exclude-image/) - see [Measurement steps](#measurement-steps) |
 | <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | all images' objects | [Simple Tracker](/commands/dataset/simple-tracker/) - see [Dataset steps](#dataset-steps) |
 | <span class="evx-cat evx-cat-component"></span> | **Module ◆** | | A [module](/guide/modules/): several steps bundled into one, with its own parameters |
 
@@ -88,13 +89,16 @@ A typical pipeline flow:
 2. **Segment** commands separate foreground from background (Threshold), **Instance Seg.** commands split it into single objects (Connected Components → Watershed).
 3. **Extract Objects** converts the labelled mask into objects of a class.
 4. **Classify Objects** applies size/circularity filters and assigns an object class.
-5. **Object** commands perform further analysis (Colocalization, Distance Transform, …).
+5. **Object** commands perform further analysis (Colocalization, Relate Objects, …).
+6. **Measure** commands measure the final objects or the image (texture, colocalization coefficients, image quality, …).
+
+A step can only follow the categories that fit before it: Extract after Instance Seg. (or another Extract), Object after Extract or Object, Measure after Extract, Object or Measure, Dataset after any of those or another Dataset step.
 
 When a fixed sequence of steps isn't enough - for example to retry a step with other settings depending on the image - use a [Script](/commands/image-processing/script/) step: a small program that runs the same commands with loops and conditions.
 
 ### Adding steps
 
-Click **Add step** below the steps, or **+** between two lines (**Insert a step here**), to open the command picker. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Modules**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Object**, **Measure**, **Dataset**, **Module** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object** and **Dataset**. The pane on the right describes the chosen command, with its settings, authors and what to cite. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
+Click **Add step** below the steps, or **+** between two lines (**Insert a step here**), to open the command picker. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Modules**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Extract**, **Object**, **Measure**, **Dataset**, **Module** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object**, **Measure** and **Dataset**. The pane on the right describes the chosen command, with its settings, authors and what to cite. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
 
 The picker stays open: each step you add goes in after the one you added before, and the footer confirms it (_"✓ Added Threshold as step 3"_). **Done** closes it. You can also add a command from the [command palette](/guide/workspace/#command-palette) (`Ctrl+K`).
 
@@ -110,7 +114,7 @@ A step's settings open right in the panel (click its line), or in the **step set
 
 ### Advanced settings
 
-To keep the steps short, each command shows only its essential settings. Settings that rarely need changing - fine-tuning options of the AI models, filters and object commands - are under **Advanced** (with the number of them). If you changed an advanced setting from its default, it says so (**· 2 changed**), so modified settings are never hidden unnoticed. Tick **Always** to show the advanced settings of every step; EVAnalyzer remembers this.
+To keep the steps short, each command shows only its essential settings. Settings that rarely need changing - fine-tuning options of the AI models, filters and object commands - are under **Advanced** (with the number of them). If you changed an advanced setting from its default, it says so (**· 2 changed**), so modified settings are never hidden unnoticed. Tick **Always** to show the advanced settings of every step; EVAnalyzer remembers this. Some dropdowns offer extra choices only in the advanced section - it says where (_"More choices in: Partners"_).
 
 ### Problems
 
@@ -127,6 +131,18 @@ The Tuning panel has a tab **All pinned · N**, one tab per step and **Find a se
 ## Live preview
 
 The image shows the result of all steps on the current image. With **Auto preview** on (top bar), any change refreshes it; **Refresh preview** (`F5`) refreshes it once - after switching images, for example. The bottom bar shows how many objects it found.
+
+The preview only works on the part of the image in view. **Preview the whole image** <span class="evx-new">NEW</span> (top bar, `Shift+F5`) runs it on the whole image - the visible part first - and its note says how many objects the whole image has (_"Whole image: 1 204 objects"_). The note stays until another image is shown; a change of the settings cancels a running whole-image preview, or marks a finished one _"Whole image: outdated - settings changed"_.
+
+### Measurements panel
+
+When a pipeline or module has [measurement steps](#measurement-steps), the **Measurements** panel on the right (`Alt+5`, **EVA › View › Measurements**) lists what the preview measured, by step: each measurement's name, its step and value - an image's own value (_image_), or the median over the objects (_median of 23 objects_). Its head says **visible part**: like the preview, it measures only what is in view. Click a row to show its step. When an [Exclude Image](/commands/measure/exclude-image/) step would leave the image out, a banner says so and why (_"Excluded from the results: …"_).
+
+<div class="evx-shot-todo">
+<strong>Measurements panel</strong>
+<span>The Measurements panel on the right ("visible part" in its head): rows of measurement name, step · median of N objects, value; an Exclude Image banner on top.</span>
+<code>src/assets/screenshots/screenshot-measurements-panel.png</code>
+</div>
 
 ### Breakpoints
 
@@ -149,6 +165,14 @@ With a breakpoint image, **Compare** in the top bar shows the breakpoint image a
 While comparing, the [histogram](/guide/images/#histogram) offers **Original | Breakpoint** - the breakpoint image has its own black and white points.
 
 ![A breakpoint on Threshold, Compare on: the breakpoint image left, the original right, the divider between them; the histogram offers Original or Breakpoint](../../../assets/screenshots/screenshot-compare.png)
+
+### Measurement steps
+
+**Measure** steps - category **Measure** in the command picker - add values to the results without changing any object. They come after the objects are final (after the Extract and Object steps), so they measure what ends up in the results. Some measure the **image** - one value per image plane, of the whole image or of the area a class covers (e.g. [Image Quality](/commands/measure/image-quality/), [Area Occupied](/commands/measure/area-occupied/)) -, some measure **each object** of a class (e.g. [Measure Object Shape](/commands/measure/measure-object-shape/), [Measure Distance To Parent](/commands/measure/measure-distance-to-parent/)), some both ([Measure Colocalization](/commands/measure/measure-colocalization/), [Measure Texture](/commands/measure/measure-texture/) with **Per object of**). A value that points to another object - the nearest neighbour, the parent - stores that object too.
+
+Every measurement step has an **ID**, unique in the project, which names its values: a value's key is _ID/measurement_, and the results show it as **ID · measurement** (e.g. **coloc_01 · Pearson**). A new step gets the next free ID of its kind (`coloc_01`, `coloc_02`, …); a duplicated step gets a new one. An ID may only have letters, digits and `_`, and IDs that differ only in case count as the same - both are reported as [problems](#problems) on the step. A module with a measurement step that is used twice measures under the same ID twice: make the ID a [module parameter](/guide/modules/#exposing-settings-as-parameters), so each use gets its own.
+
+Later steps choose measurements by these names - [Exclude Image](/commands/measure/exclude-image/) for example leaves an image out of the results by **Rules** that compare a **Measurement** with a **Value**. The values show in the [Measurements panel](#measurements-panel) while you tune, as columns in [Results](/guide/results/#list-view) and in the [measurements export](/guide/results/#exporting-results).
 
 ### Dataset steps
 
@@ -199,7 +223,7 @@ Use project templates to standardize analysis configurations across your lab - s
 
 ## Running the Analysis
 
-Once all pipelines are configured, click **Run** at the top right. The **Run analysis** dialog opens below it, shows how many pipelines and images will run, and asks for an optional **Job name** (left blank, a name is generated).
+Once all pipelines are configured, click **Run** at the top right. The **Run analysis** dialog opens below it, shows how many pipelines and images will run, and asks for an optional **Job name** - left blank, the generated name shown in the field is used (_Leave blank to use "brave_otter"._).
 
 If the pipelines have dataset steps, the dialog offers **Only run the dataset steps**: no image is analysed again - the dataset steps run on a copy of an earlier analysis (chosen from the list), saved under the new job name. Use it to try other tracking settings without re-analysing every image.
 

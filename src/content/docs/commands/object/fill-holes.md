@@ -31,4 +31,4 @@ Fill Holes works on the segmentation map, so a gap enclosed by several touching 
 
 ## Background
 
-Fill Holes belongs to the **Object** category, alongside commands like [Extract Objects](/commands/object/extract-objects/) and [Voronoi](/commands/object/voronoi/), and can only be followed by another Object-category command.
+Fill Holes belongs to the **Instance segmentation** category, alongside [Connected Components](/commands/segmentation/connected-components/) and [Watershed](/commands/segmentation/watershed/): it works on the segmentation map after a [Threshold](/commands/segmentation/threshold/) and before the objects are created by [Extract Objects](/commands/object/extract-objects/) (category **Extract**).

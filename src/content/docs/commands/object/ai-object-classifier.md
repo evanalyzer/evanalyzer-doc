@@ -5,6 +5,8 @@ description: Classify already-extracted objects with a Random Forest, k-Nearest 
 
 The **AI Object Classifier** command applies an object classifier trained via the app's [Train Classifier dialog](/ai/training/) as a classification step: every object in the pipeline cache matching **Input Classes** is scored independently, using the same feature recipe used at training time, then remapped through **Segmentation Mapping** into this project's own classes and applied via **Match Handling**.
 
+![Each object's features - shape, intensity and, for the ring features, the ring around it - go through the model; a predicted class with a mapping is applied to the object, an unmapped one leaves it untouched](../../../../assets/figures/cmd-ai-object-classifier.svg)
+
 It uses the same input-selection logic as [Classify Objects](/commands/object/classify-objects/), but the output class comes from a trained model's prediction instead of a fixed shape/intersection rule - use it where the populations aren't cleanly separable by shape criteria, or to complement a Classify Objects step earlier in the pipeline.
 
 Available in builds with the `ai` Cargo feature enabled - see [AI Models](/ai/overview/).
@@ -28,6 +30,14 @@ Available in builds with the `ai` Cargo feature enabled - see [AI Models](/ai/ov
 :::note[Unmapped predictions leave the object untouched]
 A predicted class with no matching **Segmentation Mapping** entry - including a mapping row still left at its default, unset target - leaves the object's classes completely unchanged, in either **Match Handling** mode. This differs from [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/), where an unmapped prediction resets the pixel to `Background`: here, "no rule matched" means "don't touch it," matching how a partially-configured mapping list is expected to behave mid-setup.
 :::
+
+## Features
+
+The model brings its own feature list from training, and the step measures the same features. Shape and intensity features are the object's own [metrics](/fundamentals/metrics/), as stored when it was extracted.
+
+The **ring features** describe an object's surroundings: the **mean intensity of the ring** around the object, and the **contrast** - the object's mean intensity minus its ring's. The ring is every pixel at most the model's ring width (5 px unless set otherwise in training) away from the object, cut at the image border. Neighbouring objects inside the ring count - it is the surroundings as they are. The step measures the ring of every object on the channels' images, the same way as in training.
+
+See [Training](/ai/training/) for choosing the features and the ring width.
 
 The command errors if **Model Path** doesn't exist, or if it points at a model trained as a **Pixel Classifier** instead of an **Object Classifier**.
 

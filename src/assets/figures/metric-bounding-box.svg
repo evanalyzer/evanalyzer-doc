@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9333ea"/></marker>
+    <marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<rect x="45" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="85" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="105" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="125" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="145" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="165" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="185" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="205" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="30" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="45" y="50" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="50" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="85" y="50" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="105" y="50" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="125" y="50" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="145" y="50" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="165" y="50" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="185" y="50" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="205" y="50" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="50" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="45" y="70" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="70" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="85" y="70" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="105" y="70" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="125" y="70" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="145" y="70" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="165" y="70" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="185" y="70" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="205" y="70" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="70" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="45" y="90" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="90" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="85" y="90" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="105" y="90" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="125" y="90" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="145" y="90" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="165" y="90" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="185" y="90" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="205" y="90" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="90" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="45" y="110" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="110" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="85" y="110" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="105" y="110" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="125" y="110" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="145" y="110" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="165" y="110" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="185" y="110" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="205" y="110" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="110" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="45" y="130" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="130" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="85" y="130" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="105" y="130" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="125" y="130" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="145" y="130" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="165" y="130" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="185" y="130" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="205" y="130" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="130" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="45" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="85" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="105" y="150" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="125" y="150" width="20" height="20" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="145" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="165" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="185" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="205" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="150" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="45" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="65" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="85" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="105" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="125" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="145" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="165" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="185" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="205" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<rect x="225" y="170" width="20" height="20" fill="#ffffff" stroke="#d1d5db" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#6b7280" x="55.0" y="24.0" text-anchor="middle" font-size="9">0</text>
+<text class="lbl-sm" style="fill:#6b7280" x="75.0" y="24.0" text-anchor="middle" font-size="9">1</text>
+<text class="lbl-sm" style="fill:#6b7280" x="95.0" y="24.0" text-anchor="middle" font-size="9">2</text>
+<text class="lbl-sm" style="fill:#6b7280" x="115.0" y="24.0" text-anchor="middle" font-size="9">3</text>
+<text class="lbl-sm" style="fill:#6b7280" x="135.0" y="24.0" text-anchor="middle" font-size="9">4</text>
+<text class="lbl-sm" style="fill:#6b7280" x="155.0" y="24.0" text-anchor="middle" font-size="9">5</text>
+<text class="lbl-sm" style="fill:#6b7280" x="175.0" y="24.0" text-anchor="middle" font-size="9">6</text>
+<text class="lbl-sm" style="fill:#6b7280" x="195.0" y="24.0" text-anchor="middle" font-size="9">7</text>
+<text class="lbl-sm" style="fill:#6b7280" x="215.0" y="24.0" text-anchor="middle" font-size="9">8</text>
+<text class="lbl-sm" style="fill:#6b7280" x="235.0" y="24.0" text-anchor="middle" font-size="9">9</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="43.0" text-anchor="end" font-size="9">0</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="63.0" text-anchor="end" font-size="9">1</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="83.0" text-anchor="end" font-size="9">2</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="103.0" text-anchor="end" font-size="9">3</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="123.0" text-anchor="end" font-size="9">4</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="143.0" text-anchor="end" font-size="9">5</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="163.0" text-anchor="end" font-size="9">6</text>
+<text class="lbl-sm" style="fill:#6b7280" x="39.0" y="183.0" text-anchor="end" font-size="9">7</text>
+<rect x="65" y="50" width="140" height="120" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<text class="lbl-bold" style="fill:#ea580c" x="262.0" y="50.0" text-anchor="start">x min = 1, y min = 1</text>
+<text class="lbl-bold" style="fill:#ea580c" x="262.0" y="70.0" text-anchor="start">x max = 7, y max = 6</text>
+<text class="lbl-sm" x="262.0" y="98.0" text-anchor="start">the first and last pixel</text>
+<text class="lbl-sm" x="262.0" y="112.0" text-anchor="start">columns and rows of the</text>
+<text class="lbl-sm" x="262.0" y="126.0" text-anchor="start">mask - both included</text>
+<text class="lbl-bold" x="220" y="220" text-anchor="middle">Bounding box = smallest axis-aligned rectangle</text>
+<text class="lbl-sm" x="220" y="236" text-anchor="middle">here 7 × 6 pixels; the mask is stored relative to it</text>
+</svg>

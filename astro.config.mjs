@@ -340,7 +340,54 @@ export default defineConfig({
                   label: "Object Math",
                   slug: "commands/object/object-math",
                 },
+                { label: "Propagation", slug: "commands/object/propagation" },
+                {
+                  label: "Relate Objects",
+                  slug: "commands/object/relate-objects",
+                },
                 { label: "Save Image", slug: "commands/object/save-image" },
+              ],
+            },
+            {
+              label: "Measure",
+              collapsed: true,
+              items: [
+                {
+                  label: "Area Occupied",
+                  slug: "commands/measure/area-occupied",
+                },
+                {
+                  label: "Image Intensity",
+                  slug: "commands/measure/image-intensity",
+                },
+                {
+                  label: "Image Quality",
+                  slug: "commands/measure/image-quality",
+                },
+                {
+                  label: "Exclude Image",
+                  slug: "commands/measure/exclude-image",
+                },
+                {
+                  label: "Measure Colocalization",
+                  slug: "commands/measure/measure-colocalization",
+                },
+                {
+                  label: "Measure Texture",
+                  slug: "commands/measure/measure-texture",
+                },
+                {
+                  label: "Measure Object Shape",
+                  slug: "commands/measure/measure-object-shape",
+                },
+                {
+                  label: "Measure Object Neighbors",
+                  slug: "commands/measure/measure-object-neighbors",
+                },
+                {
+                  label: "Measure Distance To Parent",
+                  slug: "commands/measure/measure-distance-to-parent",
+                },
               ],
             },
             {

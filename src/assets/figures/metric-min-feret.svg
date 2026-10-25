@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9333ea"/></marker>
+    <marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+<rect x="68" y="20" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="82" y="20" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="54" y="34" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="68" y="34" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="82" y="34" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="96" y="34" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="54" y="48" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="68" y="48" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="82" y="48" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="96" y="48" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="110" y="48" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="68" y="62" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="82" y="62" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="96" y="62" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="110" y="62" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="124" y="62" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="82" y="76" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="96" y="76" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="110" y="76" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="124" y="76" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="138" y="76" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="152" y="76" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="96" y="90" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="110" y="90" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="124" y="90" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="138" y="90" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="152" y="90" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="166" y="90" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="110" y="104" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="124" y="104" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="138" y="104" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="152" y="104" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="166" y="104" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="124" y="118" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="138" y="118" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="152" y="118" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="166" y="118" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="180" y="118" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="138" y="132" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="152" y="132" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="166" y="132" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="180" y="132" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="152" y="146" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<rect x="166" y="146" width="14" height="14" fill="#bed0f9" stroke="#87a9f4" stroke-width="1"/>
+<polygon points="61.0,41.0 75.0,27.0 89.0,27.0 159.0,83.0 173.0,97.0 187.0,125.0 187.0,139.0 173.0,153.0 159.0,153.0 61.0,55.0" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="61.0" cy="41.0" r="2.5" fill="#4b5563"/>
+<circle cx="75.0" cy="27.0" r="2.5" fill="#4b5563"/>
+<circle cx="89.0" cy="27.0" r="2.5" fill="#4b5563"/>
+<circle cx="159.0" cy="83.0" r="2.5" fill="#4b5563"/>
+<circle cx="173.0" cy="97.0" r="2.5" fill="#4b5563"/>
+<circle cx="187.0" cy="125.0" r="2.5" fill="#4b5563"/>
+<circle cx="187.0" cy="139.0" r="2.5" fill="#4b5563"/>
+<circle cx="173.0" cy="153.0" r="2.5" fill="#4b5563"/>
+<circle cx="159.0" cy="153.0" r="2.5" fill="#4b5563"/>
+<circle cx="61.0" cy="55.0" r="2.5" fill="#4b5563"/>
+<line x1="80.5" y1="4.5" x2="209.5" y2="133.5" stroke="#ea580c" stroke-width="2"/>
+<line x1="45.5" y1="39.5" x2="174.5" y2="168.5" stroke="#ea580c" stroke-width="2"/>
+<line x1="159.0" y1="153.0" x2="194.0" y2="118.0" stroke="#9333ea" stroke-width="2" marker-start="url(#aP)" marker-end="url(#aP)"/>
+<text class="lbl-bold" style="fill:#9333ea" x="275.0" y="50.0" text-anchor="start">Min Feret = 3.5 px</text>
+<text class="lbl-sm" x="275.0" y="66.0" text-anchor="start">the narrowest gap</text>
+<text class="lbl-sm" x="275.0" y="80.0" text-anchor="start">between two parallel</text>
+<text class="lbl-sm" x="275.0" y="94.0" text-anchor="start">lines (orange) that</text>
+<text class="lbl-sm" x="275.0" y="108.0" text-anchor="start">hold the object</text>
+<text class="lbl-sm" style="fill:#4b5563" x="275.0" y="136.0" text-anchor="start">(Max Feret: 11.4 px)</text>
+<text class="lbl-bold" x="220" y="200" text-anchor="middle">Min Feret = narrowest caliper width</text>
+<text class="lbl-sm" x="220" y="216" text-anchor="middle">rotating calipers over the hull of the pixel centres</text>
+</svg>

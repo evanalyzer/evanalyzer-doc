@@ -30,12 +30,12 @@ After opening images or a project, EVAnalyzer continues in **Images**; after an 
 From left to right:
 
 - **EVA** - the [EVA menu](#the-eva-menu).
-- **Undo**, **Redo**, **Save**, **Refresh preview** (`F5`) and **Annotate** (switches the [annotate bar](/guide/images/#annotating-the-image) on and off, `A`).
-- The **image chip** - the image shown, and for files with several series **Series 2 of 5 ▾** to pick the [series](/guide/images/#series-selection).
+- **Undo**, **Redo**, **Save**, **Refresh preview** (`F5`), **Preview the whole image** (`Shift+F5`, see [Live preview](/guide/pipelines/#live-preview)) and **Annotate** (switches the [annotate bar](/guide/images/#annotating-the-image) on and off, `A`).
+- The **image chip** - the image shown; click it to [go to another image](/guide/images/#go-to-image) by typing part of its name. For files with several series, **Series 2 of 5 ▾** beside it picks the [series](/guide/images/#series-selection).
 - The project's name in the middle.
 - **Compare** (only with a [breakpoint image](/guide/pipelines/#breakpoints)), **Debug mode**, **Auto preview** and **Run**. While an analysis runs, **Run** turns into its progress - see [Working while an analysis runs](#working-while-an-analysis-runs).
 
-In **Results** the top bar holds the results' controls instead - see [Results](/guide/results/).
+In **Results** the top bar holds the results' controls instead - the analysis, the [views](/guide/results/#views) as tabs, **Full | Split with image** and **Export…** - see [Results](/guide/results/#the-results-bar).
 
 ## The EVA menu
 
@@ -55,7 +55,7 @@ Everything that used to be in the menu bar is in the **EVA** menu at the top lef
 
 | Item | Key | What it does |
 | --- | --- | --- |
-| **Steps** (or **Images**), **Classes**, **Image**, **Objects** | `Alt+1` … `Alt+4` | Show or hide that panel. |
+| **Steps** (or **Images**), **Classes**, **Image**, **Objects**, **Measurements** | `Alt+1` … `Alt+5` | Show or hide that panel. |
 | **Hide all panels** / **Show the panels** | `Tab` | Only the image - again: the panels come back. `Tab` does this while no field or button has the keyboard. |
 | **Step values on a second line** | | A step's values below its name instead of beside it. |
 | **Navigator** | | **Auto** (only zoomed in), **Always** or **Never**. |
@@ -77,11 +77,12 @@ Switching modes keeps the image's zoom and position. The bottom bar also reminds
 
 ## Floating panels
 
-The panels float over the image and only take the room they need; the image shows through around them. Click a panel's title to fold it to its head, `Alt+1` … `Alt+4` show and hide them one by one, and `Tab` hides them all. Which panels are folded or hidden is remembered.
+The panels float over the image and only take the room they need; the image shows through around them. Click a panel's title to fold it to its head, `Alt+1` … `Alt+5` show and hide them one by one, and `Tab` hides them all. Which panels are folded or hidden is remembered.
 
 - **Classes** - the project's [classes](/guide/classification/).
 - **Objects** - the objects of the image, as a list or as a [table](/guide/classification/#objects-as-a-table).
 - **Image** - channels, overlay, [histogram](/guide/images/#histogram), Z and T, and the [navigator](/guide/images/#navigator).
+- **Measurements** <span class="evx-new">NEW</span> - the values the preview's [measurement steps](/guide/pipelines/#measurement-steps) measured. Shown only when a pipeline or module has a measurement step.
 
 Dialogs open where they belong - step settings next to the steps, class settings left of the right-hand panels, Settings as a sheet on the right. They don't block the window: the image, the panels and the shortcuts stay usable, and every dialog can be moved by its head. `Esc` closes the open one.
 
@@ -109,12 +110,12 @@ In every scheme the image's background stays black, so fluorescence reads the sa
 
 ## Working while an analysis runs
 
-An analysis no longer locks the window. While it runs, **Run** in the top bar turns into its progress - **Analyzing ▬ 12 / 48 · ~2 s** and **Stop** - and the bottom bar names the image it finished last. You can keep looking at images and previewing them meanwhile. The steps are locked while the analysis runs (**Steps are locked while the analysis runs.**); **Unlock** in the steps panel lets you edit them anyway - the running analysis keeps the settings it started with. Switching to another project asks first.
+An analysis no longer locks the window. While it runs, **Run** in the top bar turns into its progress - **Analyzing ▬ 12 / 48 · ~2 s** and **Stop** - and the bottom bar names the image in work - the one started first, with the number of others running beside it (_"Analyzing · A03_01.tif (+3) · image 12 / 48"_). You can keep looking at images meanwhile.
+
+Every run starts with the steps locked: the steps panel says **Steps are locked while the analysis runs.**, the settings can't be changed and no preview runs, so the analysis has the computer's memory to itself. **Unlock** in that strip lets you edit and preview anyway - _"The run uses a snapshot. Edits apply to the next run."_ - and **Lock** locks them again. When the analysis ends - finished, stopped or failed - the steps unlock by themselves and, with **Auto preview** on, the image shown is previewed again. Switching to another project asks first.
 
 When it is done, **Analysis finished · 48 images** appears over the image, with **Open results**.
 
 ![Analysis finished · 48 images, with Open results, over the image](../../../assets/screenshots/screenshot-analysis-finished.png)
-
-On a computer that needs all its memory for the analysis, switch this off in **EVA › Project settings… › Viewport › Edit while an analysis runs**: the window then waits until the analysis is done.
 
 ![The top bar while an analysis runs: Analyzing, the progress, 12 / 48 images, about 2 s left, and Stop](../../../assets/screenshots/screenshot-analysis-running.png)

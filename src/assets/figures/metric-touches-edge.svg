@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9333ea"/></marker>
+    <marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+<rect x="40" y="20" width="360" height="150" fill="#ffffff" stroke="#111827" stroke-width="2"/>
+<text class="lbl-sm" style="fill:#6b7280" x="46.0" y="34.0" text-anchor="start">image</text>
+<ellipse cx="150" cy="90" rx="34" ry="26" fill="#c8d8fa" stroke="#2563eb" stroke-width="2"/>
+<ellipse cx="270" cy="110" rx="28" ry="30" fill="#c8d8fa" stroke="#2563eb" stroke-width="2"/>
+<path d="M 400 40 A 30 34 0 0 0 400 108 Z" fill="#fad5c2" stroke="#ea580c" stroke-width="2"/>
+<path d="M 70 170 A 28 26 0 0 1 126 170 Z" fill="#fad5c2" stroke="#ea580c" stroke-width="2"/>
+<text class="lbl-sm" style="fill:#2563eb" x="150.0" y="94.0" text-anchor="middle">false</text>
+<text class="lbl-sm" style="fill:#2563eb" x="270.0" y="114.0" text-anchor="middle">false</text>
+<text class="lbl-sm" style="fill:#ea580c" x="362.0" y="78.0" text-anchor="end">true</text>
+<text class="lbl-sm" style="fill:#ea580c" x="98.0" y="162.0" text-anchor="middle">true</text>
+<text class="lbl-bold" x="220" y="200" text-anchor="middle">Touches edge = a mask pixel on the image border</text>
+<text class="lbl-sm" x="220" y="216" text-anchor="middle">cut-off objects (orange) are only partly measured</text>
+</svg>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="300" viewBox="0 0 440 300">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="t1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="299" rx="10"/>
+<text class="lbl-sm" x="24" y="28">gray levels 0-3</text>
+<rect x="24" y="40" width="34" height="34" fill="#ffffff" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="41.0" y="62.0" text-anchor="middle">0</text>
+<rect x="58" y="40" width="34" height="34" fill="#ffffff" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="75.0" y="62.0" text-anchor="middle">0</text>
+<rect x="92" y="40" width="34" height="34" fill="#cbd5e1" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="109.0" y="62.0" text-anchor="middle">1</text>
+<rect x="126" y="40" width="34" height="34" fill="#cbd5e1" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="143.0" y="62.0" text-anchor="middle">1</text>
+<rect x="24" y="74" width="34" height="34" fill="#ffffff" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="41.0" y="96.0" text-anchor="middle">0</text>
+<rect x="58" y="74" width="34" height="34" fill="#ffffff" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="75.0" y="96.0" text-anchor="middle">0</text>
+<rect x="92" y="74" width="34" height="34" fill="#cbd5e1" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="109.0" y="96.0" text-anchor="middle">1</text>
+<rect x="126" y="74" width="34" height="34" fill="#cbd5e1" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="143.0" y="96.0" text-anchor="middle">1</text>
+<rect x="24" y="108" width="34" height="34" fill="#ffffff" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="41.0" y="130.0" text-anchor="middle">0</text>
+<rect x="58" y="108" width="34" height="34" fill="#64748b" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="75.0" y="130.0" text-anchor="middle">2</text>
+<rect x="92" y="108" width="34" height="34" fill="#64748b" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="109.0" y="130.0" text-anchor="middle">2</text>
+<rect x="126" y="108" width="34" height="34" fill="#64748b" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="143.0" y="130.0" text-anchor="middle">2</text>
+<rect x="24" y="142" width="34" height="34" fill="#64748b" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="41.0" y="164.0" text-anchor="middle">2</text>
+<rect x="58" y="142" width="34" height="34" fill="#64748b" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="75.0" y="164.0" text-anchor="middle">2</text>
+<rect x="92" y="142" width="34" height="34" fill="#1f2937" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="109.0" y="164.0" text-anchor="middle">3</text>
+<rect x="126" y="142" width="34" height="34" fill="#1f2937" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="143.0" y="164.0" text-anchor="middle">3</text>
+<line x1="47.0" y1="67.0" x2="71.0" y2="67.0" stroke="#2563eb" stroke-width="2" marker-end="url(#t1)"/>
+<text class="lbl-sm" style="fill:#2563eb" x="92" y="192" text-anchor="middle">pair: Scale = 1 px, 0°</text>
+<line x1="92" y1="242" x2="112.0" y2="242.0" stroke="#4b5563" stroke-width="1.5"/>
+<text class="lbl-sm" x="128.0" y="246.0" text-anchor="middle">0°</text>
+<line x1="92" y1="242" x2="106.1" y2="227.9" stroke="#4b5563" stroke-width="1.5"/>
+<text class="lbl-sm" x="117.5" y="223.4" text-anchor="middle">45°</text>
+<line x1="92" y1="242" x2="92.0" y2="222.0" stroke="#4b5563" stroke-width="1.5"/>
+<text class="lbl-sm" x="92.0" y="214.0" text-anchor="middle">90°</text>
+<line x1="92" y1="242" x2="77.9" y2="227.9" stroke="#4b5563" stroke-width="1.5"/>
+<text class="lbl-sm" x="66.5" y="223.4" text-anchor="middle">135°</text>
+<line x1="170" y1="108" x2="200" y2="108" stroke="#4b5563" stroke-width="1.5"/>
+<path d="M200,104 l7,4 l-7,4 z" fill="#4b5563"/>
+<text class="lbl-sm" x="310" y="18" text-anchor="middle">co-occurrence (0°)</text>
+<text class="lbl-sm" x="265.0" y="34" text-anchor="middle">j=0</text>
+<text class="lbl-sm" x="244" y="59.0" text-anchor="end">i=0</text>
+<text class="lbl-sm" x="295.0" y="34" text-anchor="middle">j=1</text>
+<text class="lbl-sm" x="244" y="89.0" text-anchor="end">i=1</text>
+<text class="lbl-sm" x="325.0" y="34" text-anchor="middle">j=2</text>
+<text class="lbl-sm" x="244" y="119.0" text-anchor="end">i=2</text>
+<text class="lbl-sm" x="355.0" y="34" text-anchor="middle">j=3</text>
+<text class="lbl-sm" x="244" y="149.0" text-anchor="end">i=3</text>
+<rect x="250" y="40" width="30" height="30" fill="#2563eb" fill-opacity="0.47" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="265.0" y="60.0" text-anchor="middle">4</text>
+<rect x="280" y="40" width="30" height="30" fill="#2563eb" fill-opacity="0.23" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="295.0" y="60.0" text-anchor="middle">2</text>
+<rect x="310" y="40" width="30" height="30" fill="#2563eb" fill-opacity="0.12" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="325.0" y="60.0" text-anchor="middle">1</text>
+<rect x="340" y="40" width="30" height="30" fill="#2563eb" fill-opacity="0.00" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="355.0" y="60.0" text-anchor="middle">0</text>
+<rect x="250" y="70" width="30" height="30" fill="#2563eb" fill-opacity="0.23" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="265.0" y="90.0" text-anchor="middle">2</text>
+<rect x="280" y="70" width="30" height="30" fill="#2563eb" fill-opacity="0.47" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="295.0" y="90.0" text-anchor="middle">4</text>
+<rect x="310" y="70" width="30" height="30" fill="#2563eb" fill-opacity="0.00" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="325.0" y="90.0" text-anchor="middle">0</text>
+<rect x="340" y="70" width="30" height="30" fill="#2563eb" fill-opacity="0.00" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="355.0" y="90.0" text-anchor="middle">0</text>
+<rect x="250" y="100" width="30" height="30" fill="#2563eb" fill-opacity="0.12" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="265.0" y="120.0" text-anchor="middle">1</text>
+<rect x="280" y="100" width="30" height="30" fill="#2563eb" fill-opacity="0.00" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="295.0" y="120.0" text-anchor="middle">0</text>
+<rect x="310" y="100" width="30" height="30" fill="#2563eb" fill-opacity="0.70" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#ffffff" x="325.0" y="120.0" text-anchor="middle">6</text>
+<rect x="340" y="100" width="30" height="30" fill="#2563eb" fill-opacity="0.12" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="355.0" y="120.0" text-anchor="middle">1</text>
+<rect x="250" y="130" width="30" height="30" fill="#2563eb" fill-opacity="0.00" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="265.0" y="150.0" text-anchor="middle">0</text>
+<rect x="280" y="130" width="30" height="30" fill="#2563eb" fill-opacity="0.00" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="295.0" y="150.0" text-anchor="middle">0</text>
+<rect x="310" y="130" width="30" height="30" fill="#2563eb" fill-opacity="0.12" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="325.0" y="150.0" text-anchor="middle">1</text>
+<rect x="340" y="130" width="30" height="30" fill="#2563eb" fill-opacity="0.23" stroke="#94a3b8"/>
+<text class="lbl" style="fill:#1f2937" x="355.0" y="150.0" text-anchor="middle">2</text>
+<text class="lbl-sm" x="310" y="176" text-anchor="middle">symmetric: 24 counts, p = n / 24</text>
+<text class="lbl-sm" style="fill:#16a34a" x="310" y="196" text-anchor="middle">diagonal: equal pairs (smooth)</text>
+<text class="lbl-sm" style="fill:#ea580c" x="310" y="210" text-anchor="middle">far off it: contrast</text>
+<text class="lbl-bold" x="220" y="270" text-anchor="middle">Measure Texture</text>
+<text class="lbl-sm" x="220" y="286" text-anchor="middle">13 Haralick features per direction from the co-occurrence matrix</text>
+</svg>

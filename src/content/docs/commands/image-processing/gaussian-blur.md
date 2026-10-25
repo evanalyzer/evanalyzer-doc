@@ -15,8 +15,8 @@ Gaussian Blur is the preferred noise-reduction step for fluorescence images befo
 
 | Parameter | Description |
 |---|---|
-| **Kernel size** | Side length of the kernel in pixels (must be odd; range 3–27) |
-| **Sigma** | Standard deviation of the Gaussian distribution (controls the spread) |
+| **Kernel size** | Side length of the kernel in pixels (must be odd; range 3–49, default 3) |
+| **Sigma** | _(advanced)_ Standard deviation of the Gaussian distribution (controls the spread; range 0.1–8, default 0.34) |
 
 ### Choosing sigma
 

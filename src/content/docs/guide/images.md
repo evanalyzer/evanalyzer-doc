@@ -28,6 +28,12 @@ The images grouped into wells, by the project's plate settings (**EVA › Projec
 
 ![Images panel, Plate: images list](../../../assets/screenshots/screenshot-images-list.png)
 
+### Go to image
+
+To switch images without the panel, click the **image chip** in the top bar. **Go to image** opens below it: type parts of the file name or folder - every word must appear in the image's path, in any order and case. The list shows up to 50 matches with their size (_"50 of 812 - type to narrow down"_), the open image ticked. `↑` / `↓` (or `Page Up` / `Page Down`) move, `Enter` opens the highlighted image, `Esc` closes. **Show all images** switches to Images mode.
+
+![Go to image under the image chip: "C0" typed, the matching images with their size, Show all images at the bottom](../../../assets/screenshots/screenshot-go-to-image.png)
+
 ## Image info
 
 Below the list, **Image info** shows the selected image in short: **Channels · Z · T**, size, **Pixel size**, **Magnification**. **All metadata ›** shows everything the file holds (**Less ‹** folds it again).
@@ -125,7 +131,7 @@ A physical scale bar is drawn at the bottom right of the image, in nm, µm or mm
 
 ### Position and pixel value
 
-As you move the mouse over the image, the bottom bar shows the cursor's **position** and the **pixel value** of every visible channel.
+As you move the mouse over the image, the bottom bar shows the cursor's **position** and the **pixel value** of every visible channel - by the channel's name, or _Channel 0_, _Channel 1_, … when the file names none.
 
 To keep a measurement, use the **Marker** tool (`K`) in [annotate mode](#annotating-the-image) and click the position: a marker with the values of all channels stays on the image. Right-click it to remove it.
 

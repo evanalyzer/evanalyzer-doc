@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 41 pipeline commands grouped by category.
+description: All 52 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -15,6 +15,7 @@ Pipeline commands are the building blocks of an analysis. Each command takes eit
 | **Morphology**               | White  | Binary/greyscale image | Image                          |
 | **AI segmentation**          | White  | Image                  | Binary mask / object instances |
 | **Object processing**        | Green  | Objects                | Objects / measurements         |
+| **Measure**                  | Blue   | Image + final objects  | Measurements                   |
 | **Dataset**                  | -      | Objects of all images  | Objects / measurements         |
 
 :::note
@@ -101,7 +102,25 @@ Commands that operate on extracted objects.
 | [Object Transform](/commands/object/transform-objects/)        | Scale, snap, expand, shrink, or fit an ellipse to objects                                                    |
 | [Object Math](/commands/object/object-math/)                   | Boolean set operations (AND, OR, XOR, Subtract) between two object classes                                   |
 | [Distance Transform](/commands/object/distance-transform/)     | Measure distances between object pairs                                                                       |
+| [Propagation](/commands/object/propagation/)                   | Grow a region around each seed object through a channel (e.g. cells around nuclei)                           |
+| [Relate Objects](/commands/object/relate-objects/)             | Link each child object to its parent (e.g. spots to their cell)                                              |
 | [Save Image](/commands/object/save-image/)                     | Write a control image to disk, optionally with selected classes drawn on top                                 |
+
+## Measure
+
+Measure steps run once the objects are final. They measure the whole image or every object and add the values to the [results](/guide/results/).
+
+| Command                                                                         | Purpose                                                                       |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Area Occupied](/commands/measure/area-occupied/)                               | How much of the image the objects of a class cover                            |
+| [Image Intensity](/commands/measure/image-intensity/)                           | Brightness statistics of a channel over the whole image                       |
+| [Image Quality](/commands/measure/image-quality/)                               | Focus, blur, saturation and noise of a channel                                |
+| [Exclude Image](/commands/measure/exclude-image/)                               | Leave an image out of the results when its measurements say it's bad         |
+| [Measure Colocalization](/commands/measure/measure-colocalization/)             | Pearson, Manders and related coefficients of two channels, per image and object |
+| [Measure Texture](/commands/measure/measure-texture/)                           | Haralick texture features, per image and object                               |
+| [Measure Object Shape](/commands/measure/measure-object-shape/)                 | Convex area, solidity, Euler number and radii of every object                 |
+| [Measure Object Neighbors](/commands/measure/measure-object-neighbors/)         | Neighbours, percent touching and closest objects                              |
+| [Measure Distance To Parent](/commands/measure/measure-distance-to-parent/)     | Each child's distance to its parent (linked by Relate Objects)                |
 
 ## Dataset
 
@@ -124,6 +143,7 @@ Image
             └─ Fill Holes / Fill Object Holes (optional cleanup)
                  └─ Extract Objects
                       └─ Classify Objects
-                           └─ Object Processing (Colocalization, Distance, …)
-                                └─ Save Image
+                           └─ Object Processing (Colocalization, Propagation, Relate Objects, …)
+                                └─ Measure (Image Quality, Object Shape, Texture, …)
+                                     └─ Save Image
 ```

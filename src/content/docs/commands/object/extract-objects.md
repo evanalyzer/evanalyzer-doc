@@ -5,7 +5,9 @@ description: Convert labelled binary regions into segmentation-class objects.
 
 The **Extract Objects** command reads a labelled instance map and creates one segmentation-class object per labelled region. That map can come from [Connected Components](/commands/segmentation/connected-components/) (or [Watershed](/commands/segmentation/watershed/)), or directly from an instance-segmentation command such as [AI Cellpose Segmentation](/commands/ai-segmentation/cellpose/) or [AI Stardist Segmentation](/commands/ai-segmentation/stardist/), which already separate touching objects on their own. These objects are the raw candidates passed to [Classify Objects](/commands/object/classify-objects/) for final filtering and class assignment.
 
-This is the boundary between "pixels" and "objects" in the pipeline: everything before this step operates on whole images, and everything after operates on individually addressable regions with their own [metrics](/fundamentals/metrics/), mask, and object ID.
+This is the boundary between "pixels" and "objects" in the pipeline: everything before this step operates on whole images, and everything after operates on individually addressable regions with their own [metrics](/fundamentals/metrics/), mask, and object ID. In the command picker it belongs to the **Extract** category, together with [Fill Object Holes](/commands/object/fill-object-holes/).
+
+While extracting, the step measures every object's intensities on each image channel: sum, mean, minimum and maximum, and the spread of its pixel values - standard deviation, median, lower and upper quartile and median absolute deviation (see [Intensity metrics](/fundamentals/metrics/#intensity-metrics)).
 
 ![Each labelled region turns into an addressable object record with its own mask, geometry, and metrics](../../../../assets/figures/cmd-extract-objects.svg)
 
@@ -13,7 +15,7 @@ This is the boundary between "pixels" and "objects" in the pipeline: everything 
 
 | Parameter | Description |
 |---|---|
-| **Max objects before fail** | Hard upper limit on the number of regions extracted. If more regions are found the pipeline step fails, preventing runaway processing on misconfigured segmentation (default: –1 = unlimited) |
+| **Max objects before fail** | Hard upper limit on the number of regions extracted. If more regions are found the pipeline step fails, preventing runaway processing on misconfigured segmentation (default: 100000) |
 | **Class Mapping** | Which object class the objects of a segmentation class get - see [Class mapping](#class-mapping). Empty by default |
 
 ## Class mapping

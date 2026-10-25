@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="260" viewBox="0 0 440 260">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="259" rx="10"/>
+<rect x="24" y="30" width="30" height="30" fill="rgb(233,233,233)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="39.0" y="49.0" text-anchor="middle">10</text>
+<rect x="54" y="30" width="30" height="30" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="69.0" y="49.0" text-anchor="middle">12</text>
+<rect x="84" y="30" width="30" height="30" fill="rgb(231,231,231)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="99.0" y="49.0" text-anchor="middle">11</text>
+<rect x="114" y="30" width="30" height="30" fill="rgb(233,233,233)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="129.0" y="49.0" text-anchor="middle">10</text>
+<rect x="24" y="60" width="30" height="30" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="39.0" y="79.0" text-anchor="middle">12</text>
+<rect x="54" y="60" width="30" height="30" fill="rgb(79,79,79)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#ffffff" x="69.0" y="79.0" text-anchor="middle">80</text>
+<rect x="84" y="60" width="30" height="30" fill="rgb(57,57,57)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#ffffff" x="99.0" y="79.0" text-anchor="middle">90</text>
+<rect x="114" y="60" width="30" height="30" fill="rgb(227,227,227)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="129.0" y="79.0" text-anchor="middle">13</text>
+<rect x="24" y="90" width="30" height="30" fill="rgb(231,231,231)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="39.0" y="109.0" text-anchor="middle">11</text>
+<rect x="54" y="90" width="30" height="30" fill="rgb(227,227,227)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="69.0" y="109.0" text-anchor="middle">13</text>
+<rect x="84" y="90" width="30" height="30" fill="rgb(46,46,46)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#ffffff" x="99.0" y="109.0" text-anchor="middle">95</text>
+<rect x="114" y="90" width="30" height="30" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="129.0" y="109.0" text-anchor="middle">12</text>
+<rect x="24" y="120" width="30" height="30" fill="rgb(233,233,233)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="39.0" y="139.0" text-anchor="middle">10</text>
+<rect x="54" y="120" width="30" height="30" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="69.0" y="139.0" text-anchor="middle">12</text>
+<rect x="84" y="120" width="30" height="30" fill="rgb(225,225,225)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="99.0" y="139.0" text-anchor="middle">14</text>
+<rect x="114" y="120" width="30" height="30" fill="rgb(231,231,231)" stroke="#94a3b8" stroke-width="1"/>
+<text class="lbl-sm" style="fill:#1f2937" x="129.0" y="139.0" text-anchor="middle">11</text>
+<text class="lbl-sm" x="84" y="166" text-anchor="middle">every pixel, background too</text>
+<text class="lbl-sm" x="172" y="36">sorted (rank 0 … 15)</text>
+<rect x="172" y="70" width="15" height="22" fill="rgb(233,233,233)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="187" y="70" width="15" height="22" fill="rgb(233,233,233)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="202" y="70" width="15" height="22" fill="rgb(233,233,233)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="217" y="70" width="15" height="22" fill="rgb(231,231,231)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="232" y="70" width="15" height="22" fill="rgb(231,231,231)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="247" y="70" width="15" height="22" fill="rgb(231,231,231)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="262" y="70" width="15" height="22" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="277" y="70" width="15" height="22" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="292" y="70" width="15" height="22" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="307" y="70" width="15" height="22" fill="rgb(229,229,229)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="322" y="70" width="15" height="22" fill="rgb(227,227,227)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="337" y="70" width="15" height="22" fill="rgb(227,227,227)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="352" y="70" width="15" height="22" fill="rgb(225,225,225)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="367" y="70" width="15" height="22" fill="rgb(79,79,79)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="382" y="70" width="15" height="22" fill="rgb(57,57,57)" stroke="#94a3b8" stroke-width="1"/>
+<rect x="397" y="70" width="15" height="22" fill="rgb(46,46,46)" stroke="#94a3b8" stroke-width="1"/>
+<line x1="179.5" y1="92" x2="179.5" y2="100" stroke="#4b5563" stroke-width="1.5"/>
+<text class="lbl-sm" style="fill:#4b5563" x="175.5" y="111">Min 10</text>
+<line x1="235.75" y1="92" x2="235.75" y2="116" stroke="#2563eb" stroke-width="1.5"/>
+<text class="lbl-sm" style="fill:#2563eb" x="235.75" y="127" text-anchor="middle">Q1 11</text>
+<line x1="292.0" y1="92" x2="292.0" y2="100" stroke="#16a34a" stroke-width="1.5"/>
+<text class="lbl-sm" style="fill:#16a34a" x="292.0" y="111" text-anchor="middle">Median 12</text>
+<line x1="348.25" y1="92" x2="348.25" y2="116" stroke="#2563eb" stroke-width="1.5"/>
+<text class="lbl-sm" style="fill:#2563eb" x="348.25" y="127" text-anchor="middle">Q3 13.25</text>
+<line x1="404.5" y1="92" x2="404.5" y2="100" stroke="#4b5563" stroke-width="1.5"/>
+<text class="lbl-sm" style="fill:#4b5563" x="408.5" y="111" text-anchor="end">Max 95</text>
+<line x1="172" y1="64" x2="412" y2="64" stroke="none"/>
+<text class="lbl-bold" style="fill:#ea580c" x="172" y="160">Mean 26</text>
+<text class="lbl-sm" x="252" y="160">pulled up by 3 bright pixels</text>
+<text class="lbl-bold" style="fill:#16a34a" x="172" y="180">Median 12</text>
+<text class="lbl-sm" x="252" y="180">robust</text>
+<text class="lbl-bold" style="fill:#9333ea" x="172" y="200">MAD 1</text>
+<text class="lbl-sm" x="252" y="200">median of |v − 12|</text>
+<text class="lbl-bold" x="220" y="230" text-anchor="middle">Image Intensity</text>
+<text class="lbl-sm" x="220" y="246" text-anchor="middle">statistics over all pixels of a channel, in gray values</text>
+</svg>

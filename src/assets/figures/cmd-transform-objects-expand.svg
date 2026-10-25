@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="230" viewBox="0 0 440 230">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
+<line x1="220" y1="20" x2="220" y2="170" stroke="#d8dce1" stroke-width="1"/>
+<!-- Expand: each object grows on its own, the grown shapes overlap -->
+<text class="lbl-bold" x="110" y="30" text-anchor="middle">Expand</text>
+<circle cx="88" cy="100" r="34" fill="#2563eb" fill-opacity="0.15" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="132" cy="100" r="34" fill="#ea580c" fill-opacity="0.15" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4 3"/>
+<path d="M 110,74.1 A 34 34 0 0 1 110,125.9 A 34 34 0 0 1 110,74.1 Z" fill="#9333ea" fill-opacity="0.35"/>
+<circle cx="88" cy="100" r="14" fill="#2563eb" fill-opacity="0.45" stroke="#2563eb" stroke-width="2"/>
+<circle cx="132" cy="100" r="14" fill="#ea580c" fill-opacity="0.45" stroke="#ea580c" stroke-width="2"/>
+<!-- margin arrow -->
+<line x1="74" y1="100" x2="54" y2="100" stroke="#1f2937" stroke-width="1.5"/>
+<line x1="54" y1="95" x2="54" y2="105" stroke="#4b5563" stroke-width="1"/>
+<line x1="74" y1="95" x2="74" y2="105" stroke="#4b5563" stroke-width="1"/>
+<text class="lbl-sm" x="50" y="146" text-anchor="middle">Margin</text>
+<line x1="58" y1="136" x2="63" y2="104" stroke="#4b5563" stroke-width="1" stroke-dasharray="2 2"/>
+<text class="lbl-sm" style="fill:#9333ea" x="120" y="166" text-anchor="middle">grown shapes overlap</text>
+<!-- Expand Without Overlap: nearest object wins, they meet halfway -->
+<text class="lbl-bold" x="330" y="30" text-anchor="middle">Expand Without Overlap</text>
+<path d="M 330,74.1 A 34 34 0 1 0 330,125.9 Z" fill="#2563eb" fill-opacity="0.15" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4 3"/>
+<path d="M 330,74.1 A 34 34 0 1 1 330,125.9 Z" fill="#ea580c" fill-opacity="0.15" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="330" y1="74.1" x2="330" y2="125.9" stroke="#16a34a" stroke-width="2"/>
+<circle cx="308" cy="100" r="14" fill="#2563eb" fill-opacity="0.45" stroke="#2563eb" stroke-width="2"/>
+<circle cx="352" cy="100" r="14" fill="#ea580c" fill-opacity="0.45" stroke="#ea580c" stroke-width="2"/>
+<text class="lbl-sm" style="fill:#16a34a" x="330" y="150" text-anchor="middle">meet halfway:</text>
+<text class="lbl-sm" style="fill:#16a34a" x="330" y="164" text-anchor="middle">each pixel to the nearer object</text>
+<text class="lbl-bold" x="220" y="200" text-anchor="middle">Expanding two neighbours by the same margin</text>
+<text class="lbl-sm" x="220" y="216" text-anchor="middle">filled: the objects · dashed: what they grow to</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="330" viewBox="0 0 440 330">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="329" rx="10"/>
+<rect x="16" y="14" width="198" height="122" rx="6" fill="#ffffff" stroke="#d8dce1"/>
+<rect x="226" y="14" width="198" height="122" rx="6" fill="#ffffff" stroke="#d8dce1"/>
+<rect x="16" y="146" width="198" height="122" rx="6" fill="#ffffff" stroke="#d8dce1"/>
+<rect x="226" y="146" width="198" height="122" rx="6" fill="#ffffff" stroke="#d8dce1"/>
+<text class="lbl-bold" x="24" y="31">Focus score</text>
+<text class="lbl-sm" x="206" y="31" text-anchor="end">variance / mean</text>
+<polyline points="28.0,108.0 32.3,108.0 36.6,108.0 40.9,108.0 45.2,108.0 49.5,108.0 53.8,108.0 58.1,54.0 62.4,54.0 66.7,54.0 71.0,54.0 75.3,54.0 79.6,54.0 83.9,54.0 88.2,108.0 92.5,108.0 96.8,108.0 101.1,108.0 105.4,108.0 109.7,108.0 114.0,108.0 118.3,54.0 122.6,54.0 126.9,54.0 131.2,54.0 135.5,54.0 139.8,54.0 144.1,54.0 148.4,108.0 152.7,108.0 157.0,108.0 161.3,108.0 165.6,108.0 169.9,108.0 174.2,108.0 178.5,54.0 182.8,54.0 187.1,54.0 191.4,54.0 195.7,54.0 200.0,54.0" fill="none" stroke="#2563eb" stroke-width="2"/>
+<polyline points="28.0,81.0 32.3,87.5 36.6,92.7 40.9,95.6 45.2,95.6 49.5,92.7 53.8,87.5 58.1,81.0 62.4,74.5 66.7,69.3 71.0,66.4 75.3,66.4 79.6,69.3 83.9,74.5 88.2,81.0 92.5,87.5 96.8,92.7 101.1,95.6 105.4,95.6 109.7,92.7 114.0,87.5 118.3,81.0 122.6,74.5 126.9,69.3 131.2,66.4 135.5,66.4 139.8,69.3 144.1,74.5 148.4,81.0 152.7,87.5 157.0,92.7 161.3,95.6 165.6,95.6 169.9,92.7 174.2,87.5 178.5,81.0 182.8,74.5 187.1,69.3 191.4,66.4 195.7,66.4 200.0,69.3" fill="none" stroke="#ea580c" stroke-width="2"/>
+<line x1="28" y1="114" x2="206" y2="114" stroke="#94a3b8"/>
+<text class="lbl-sm" style="fill:#2563eb" x="28" y="130">sharp: high</text>
+<text class="lbl-sm" style="fill:#ea580c" x="202" y="130" text-anchor="end">blurred: low</text>
+<text class="lbl-bold" x="234" y="31">Power log-log slope</text>
+<line x1="252" y1="114" x2="414" y2="114" stroke="#94a3b8"/>
+<line x1="252" y1="114" x2="252" y2="42" stroke="#94a3b8"/>
+<line x1="258" y1="50" x2="410" y2="76" stroke="#2563eb" stroke-width="2"/>
+<line x1="258" y1="54" x2="338" y2="92" stroke="#ea580c" stroke-width="2"/>
+<text class="lbl-sm" style="fill:#2563eb" x="412" y="70" text-anchor="end">sharp</text>
+<text class="lbl-sm" style="fill:#ea580c" x="412" y="108" text-anchor="end">blurred: steeper</text>
+<text class="lbl-sm" x="333" y="128" text-anchor="middle">log radius (frequency)</text>
+<text class="lbl-sm" x="242" y="78" text-anchor="middle" transform="rotate(-90 242 78)">log power</text>
+<text class="lbl-bold" x="24" y="163">Pixels at the maximum</text>
+<rect x="28.0" y="242" width="6.9" height="4" fill="#94a3b8"/>
+<rect x="36.4" y="236" width="6.9" height="10" fill="#94a3b8"/>
+<rect x="44.8" y="228" width="6.9" height="18" fill="#94a3b8"/>
+<rect x="53.2" y="220" width="6.9" height="26" fill="#94a3b8"/>
+<rect x="61.6" y="216" width="6.9" height="30" fill="#94a3b8"/>
+<rect x="70.0" y="219" width="6.9" height="27" fill="#94a3b8"/>
+<rect x="78.4" y="226" width="6.9" height="20" fill="#94a3b8"/>
+<rect x="86.8" y="232" width="6.9" height="14" fill="#94a3b8"/>
+<rect x="95.2" y="236" width="6.9" height="10" fill="#94a3b8"/>
+<rect x="103.6" y="239" width="6.9" height="7" fill="#94a3b8"/>
+<rect x="112.0" y="241" width="6.9" height="5" fill="#94a3b8"/>
+<rect x="120.4" y="242" width="6.9" height="4" fill="#94a3b8"/>
+<rect x="128.8" y="243" width="6.9" height="3" fill="#94a3b8"/>
+<rect x="137.2" y="243" width="6.9" height="3" fill="#94a3b8"/>
+<rect x="145.6" y="244" width="6.9" height="2" fill="#94a3b8"/>
+<rect x="154.0" y="244" width="6.9" height="2" fill="#94a3b8"/>
+<rect x="162.4" y="244" width="6.9" height="2" fill="#94a3b8"/>
+<rect x="170.8" y="245" width="6.9" height="1" fill="#94a3b8"/>
+<rect x="179.2" y="245" width="6.9" height="1" fill="#94a3b8"/>
+<rect x="187.6" y="188" width="6.9" height="58" fill="#ea580c"/>
+<line x1="28" y1="246" x2="206" y2="246" stroke="#94a3b8"/>
+<text class="lbl-sm" style="fill:#ea580c" x="180" y="186" text-anchor="end">many pixels at the</text>
+<text class="lbl-sm" style="fill:#ea580c" x="180" y="199" text-anchor="end">image's max: saturated</text>
+<text class="lbl-sm" x="28" y="262">dark</text>
+<text class="lbl-sm" x="206" y="262" text-anchor="end">bright</text>
+<text class="lbl-bold" x="234" y="163">Noise σ (Immerkær)</text>
+<rect x="240" y="176" width="26" height="26" fill="#cfe0f7" stroke="#94a3b8"/>
+<text class="lbl" x="253.0" y="193.0" text-anchor="middle">1</text>
+<rect x="266" y="176" width="26" height="26" fill="#ffe3cc" stroke="#94a3b8"/>
+<text class="lbl" x="279.0" y="193.0" text-anchor="middle">−2</text>
+<rect x="292" y="176" width="26" height="26" fill="#cfe0f7" stroke="#94a3b8"/>
+<text class="lbl" x="305.0" y="193.0" text-anchor="middle">1</text>
+<rect x="240" y="202" width="26" height="26" fill="#ffe3cc" stroke="#94a3b8"/>
+<text class="lbl" x="253.0" y="219.0" text-anchor="middle">−2</text>
+<rect x="266" y="202" width="26" height="26" fill="#cfe0f7" stroke="#94a3b8"/>
+<text class="lbl" x="279.0" y="219.0" text-anchor="middle">4</text>
+<rect x="292" y="202" width="26" height="26" fill="#ffe3cc" stroke="#94a3b8"/>
+<text class="lbl" x="305.0" y="219.0" text-anchor="middle">−2</text>
+<rect x="240" y="228" width="26" height="26" fill="#cfe0f7" stroke="#94a3b8"/>
+<text class="lbl" x="253.0" y="245.0" text-anchor="middle">1</text>
+<rect x="266" y="228" width="26" height="26" fill="#ffe3cc" stroke="#94a3b8"/>
+<text class="lbl" x="279.0" y="245.0" text-anchor="middle">−2</text>
+<rect x="292" y="228" width="26" height="26" fill="#cfe0f7" stroke="#94a3b8"/>
+<text class="lbl" x="305.0" y="245.0" text-anchor="middle">1</text>
+<text class="lbl-sm" x="330" y="190">flat areas and</text>
+<text class="lbl-sm" x="330" y="204">slopes cancel out;</text>
+<text class="lbl-sm" x="330" y="218">what is left is noise</text>
+<text class="lbl-sm" style="fill:#9333ea" x="330" y="240">σ ∝ mean of</text>
+<text class="lbl-sm" style="fill:#9333ea" x="330" y="254">|response|</text>
+<text class="lbl-bold" x="220" y="300" text-anchor="middle">Image Quality</text>
+<text class="lbl-sm" x="220" y="316" text-anchor="middle">is the channel sharp, not saturated and not noisy?</text>
+</svg>

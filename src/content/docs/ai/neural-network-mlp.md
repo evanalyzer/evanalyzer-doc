@@ -31,6 +31,10 @@ The network is arranged in layers: an **input layer** (one node per feature), on
 
 Watch the live per-epoch status banner while training: it reports both training loss and, once there are at least 25 total samples, a held-out **validation loss**. If validation loss climbs while training loss keeps falling, the network is memorizing the training examples rather than generalizing - see [Choosing a Model](/ai/training/#choosing-a-model) for what to do about it.
 
+## Certainty
+
+Besides the class, the network gives each prediction a **certainty**: the softmax probability of the winning class (0 to 1). The [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/)'s **Min Certainty** turns pixels the network is less sure about into background.
+
 ## When to Choose It
 
-An MLP can fit more complex, non-linear decision boundaries than a shallow Random Forest or a distance-based k-NN, but it needs a larger and more varied set of labeled examples to do it reliably - with only a handful of painted examples per class, Random Forest will usually generalize better with less tuning. Because training involves gradient descent over real-valued weights, feature scale matters more here than for Random Forest: keep the [Feature Channels](/ai/training/#feature-best-practices-pixel-classifier) or [Object Metrics](/ai/training/#choosing-object-metrics-object-classifier) you select on roughly comparable scales where possible.
+An MLP can fit more complex, non-linear decision boundaries than a shallow Random Forest or a distance-based k-NN, but it needs a larger and more varied set of labeled examples to do it reliably - with only a handful of painted examples per class, Random Forest will usually generalize better with less tuning. Because training involves gradient descent over real-valued weights, feature scale matters more here than for Random Forest: keep the [Pixel Features](/ai/training/#pixel-features) or [Object Features](/ai/training/#object-features) you select on roughly comparable scales where possible.

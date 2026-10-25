@@ -40,7 +40,8 @@
   --ink-cat-preprocess: #22c3d6;
   --ink-cat-segment: #d77ae6;
   --ink-cat-object: #f08c3c;
-  --ink-cat-measure: #e0be3a;
+  --ink-cat-extract: #e0be3a;
+  --ink-cat-measure: #5b9bea;
   --ink-cat-classify: #3fbf92;
   --ink-cat-dataset: #8b8bf0;
   --ink-cat-component: #e8849f;
@@ -86,7 +87,8 @@
   --ink-cat-preprocess: #0ea5b7;
   --ink-cat-segment: #c04bd6;
   --ink-cat-object: #e0761f;
-  --ink-cat-measure: #c9a313;
+  --ink-cat-extract: #c9a313;
+  --ink-cat-measure: #2f7bd9;
   --ink-cat-classify: #2fa37c;
   --ink-cat-dataset: #6366f1;
   --ink-cat-component: #e06c8b;
@@ -389,6 +391,7 @@ site-search dialog::backdrop {
 .evx-cat-preprocess { --evx-cat: var(--ink-cat-preprocess); }
 .evx-cat-segment { --evx-cat: var(--ink-cat-segment); }
 .evx-cat-object { --evx-cat: var(--ink-cat-object); }
+.evx-cat-extract { --evx-cat: var(--ink-cat-extract); }
 .evx-cat-measure { --evx-cat: var(--ink-cat-measure); }
 .evx-cat-classify { --evx-cat: var(--ink-cat-classify); }
 .evx-cat-dataset { --evx-cat: var(--ink-cat-dataset); }

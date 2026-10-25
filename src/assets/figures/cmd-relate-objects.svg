@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="240" viewBox="0 0 440 240">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="239" rx="10"/>
+<!-- parents -->
+<ellipse cx="82" cy="100" rx="60" ry="50" fill="#2563eb" fill-opacity="0.1" stroke="#2563eb" stroke-width="2"/>
+<ellipse cx="208" cy="100" rx="52" ry="46" fill="#ea580c" fill-opacity="0.1" stroke="#ea580c" stroke-width="2"/>
+<text class="lbl-bold" style="fill:#2563eb" x="82" y="40" text-anchor="middle">Cell A</text>
+<text class="lbl-bold" style="fill:#ea580c" x="208" y="44" text-anchor="middle">Cell B</text>
+<!-- children of A -->
+<circle cx="58" cy="82" r="7" fill="#2563eb" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="92" cy="124" r="7" fill="#2563eb" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="102" cy="74" r="7" fill="#2563eb" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.5"/>
+<!-- straddling A's edge, centre inside -->
+<circle cx="135" cy="112" r="9" fill="#2563eb" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.5"/>
+<!-- children of B -->
+<circle cx="196" cy="84" r="7" fill="#ea580c" fill-opacity="0.5" stroke="#ea580c" stroke-width="1.5"/>
+<circle cx="226" cy="122" r="7" fill="#ea580c" fill-opacity="0.5" stroke="#ea580c" stroke-width="1.5"/>
+<!-- no parent -->
+<circle cx="150" cy="168" r="7" fill="#6b7280" fill-opacity="0.35" stroke="#6b7280" stroke-width="1.5"/>
+<text class="lbl-sm" x="162" y="172">no parent</text>
+<!-- centre dots -->
+<g fill="#1f2937">
+  <circle cx="58" cy="82" r="1.8"/><circle cx="92" cy="124" r="1.8"/><circle cx="102" cy="74" r="1.8"/>
+  <circle cx="135" cy="112" r="1.8"/><circle cx="196" cy="84" r="1.8"/><circle cx="226" cy="122" r="1.8"/>
+  <circle cx="150" cy="168" r="1.8"/>
+</g>
+<line x1="122" y1="162" x2="133" y2="123" stroke="#4b5563" stroke-width="1"/>
+<text class="lbl-sm" x="122" y="174" text-anchor="end">centre inside A</text>
+<!-- results -->
+<line x1="282" y1="30" x2="282" y2="190" stroke="#d8dce1" stroke-width="1"/>
+<text class="lbl-bold" x="296" y="42">Cell rows</text>
+<text class="lbl-sm" x="296" y="62">Cell A: Spot · Count</text><text class="lbl-bold" style="fill:#2563eb" x="424" y="62" text-anchor="end">4</text>
+<text class="lbl-sm" x="296" y="80">Cell B: Spot · Count</text><text class="lbl-bold" style="fill:#ea580c" x="424" y="80" text-anchor="end">2</text>
+<text class="lbl-sm" x="296" y="98">+ Mean, Median, … of</text>
+<text class="lbl-sm" x="296" y="112">the spots' values</text>
+<text class="lbl-bold" x="296" y="138">Spot rows</text>
+<text class="lbl-sm" x="296" y="158">Parent Cell: A or B</text>
+<text class="lbl-sm" x="296" y="172">(empty: no parent)</text>
+<text class="lbl-sm" x="296" y="186">+ the cell's values</text>
+<text class="lbl-bold" x="220" y="206" text-anchor="middle">Relate Objects</text>
+<text class="lbl-sm" x="220" y="222" text-anchor="middle">each spot is linked to the cell its centre lies in</text>
+</svg>

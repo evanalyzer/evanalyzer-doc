@@ -79,7 +79,7 @@ Changes apply to every use of the module. **Apply** keeps them; **Cancel** (or *
 
 ### Checks
 
-EVAnalyzer checks modules when a project is loaded and while editing - for example a parameter that controls settings of different kinds, a setting that no longer exists, or a [mixing of internal and project classes](#internal-classes). Problems are shown as **⚠** on the module step, in the [Problems](/guide/pipelines/#problems) panel and in the bar of the opened module, so they are found before an analysis starts.
+EVAnalyzer checks modules when a project is loaded and while editing - for example a parameter that controls settings of different kinds, a setting that no longer exists, a [mixing of internal and project classes](#internal-classes), or a module with a [measurement step](/guide/pipelines/#measurement-steps) that is used more than once and so measures under the same **ID** each time (_"… make the name a module parameter, so each use gets its own"_). Problems are shown as **⚠** on the module step, in the [Problems](/guide/pipelines/#problems) panel and in the bar of the opened module, so they are found before an analysis starts.
 
 ## Internal classes
 
@@ -90,6 +90,7 @@ The rules that follow from this:
 - **Moving objects into a project class.** An object never carries an internal and a project class at the same time. [Classify Objects](/commands/object/classify-objects/) (and the AI Object Classifier) may _reclassify_ internal objects into a project class - a typical "filter" module: internal candidates in, project-class hits out. _Adding_ a project class to an internal object (or the other way round) is an error.
 - **Commands that create new objects** are always fine: the new objects belong to the class they are written to. A Voronoi of internal seeds can write project-class cells.
 - **Colocalization links to internal objects** are removed when the module ends. If you want the numbers that come from them (e.g. a spot count per cell), the spot class must be a project class - a module parameter.
+- **[Relate Objects](/commands/object/relate-objects/) links to internal parents** are removed the same way: the results then have no children per parent for them. EVAnalyzer warns about both.
 - **Extract Objects** inside a module can map a segmentation class to one of the module's classes with its [class mapping](/commands/object/extract-objects/#class-mapping).
 - **Dataset steps** such as the [Simple Tracker](/commands/dataset/simple-tracker/) only work on project classes.
 - [Cross-tile merging](/fundamentals/cross-tile-merging/) merges internal objects of each use of a module separately.

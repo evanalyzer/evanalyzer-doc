@@ -32,7 +32,7 @@ The command runs once per image and plane on the whole image, so an annotation c
 1. Draw the regions of interest on each image with the **Rectangle**, **Oval** or **Polygon** tool and assign them the class `roi@region`.
 2. In a first pipeline, add **Load Annotated Objects** with **Input classes** set to `roi@region` and **Output class** set to `roi@region`.
 3. In a second pipeline, detect the spots as usual, e.g. Threshold → Connected Components → [Extract Objects](/commands/object/extract-objects/) → [Classify Objects](/commands/object/classify-objects/) as `cy5@spot`.
-4. Add a [Colocalization](/commands/object/colocalization/) step with `roi@region` and `cy5@spot`, multiplicity limited to `roi@region`, to count the spots per region.
+4. Add a [Relate Objects](/commands/object/relate-objects/) step with **Children** `cy5@spot` and **Parents** `roi@region`: the results then give the number of spots per region.
 
 :::tip
 Annotations are stored per image in the project file. Only images you have annotated contribute objects - the command loads nothing on an image without annotations.

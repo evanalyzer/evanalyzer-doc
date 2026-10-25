@@ -3,23 +3,31 @@ title: Image Formats
 description: Supported image formats, multi-channel images, Z-stacks, and big image support.
 ---
 
-EVAnalyzer reads images through the open-source [Bio-Formats](https://www.openmicroscopy.org/bio-formats/) library, which is bundled with the application.
-Both 8-bit and 16-bit greyscale and 8-bit RGB color images are supported.
+EVAnalyzer reads images through [scopeio](https://github.com/evanalyzer/scopeio), a pure-Rust reader for microscopy and whole-slide images built into the application - no Java needed.
+Samples of 8, 16 and 32 bits (unsigned or signed) and 32/64-bit floating point are read, greyscale or RGB. When a file declares fewer significant bits than its sample type holds (e.g. 12-bit data stored as 16-bit), the value range follows the significant bits.
 
-## Supported Extensions
+## Supported Formats
 
-```
-tif  tiff  btif  btiff  btf
-jpg  jpeg
-vsi  ics  czi  nd2  lif  lei
-fli  scn  sxm  lim  oir  top
-stk  nd  bip  msr  dm3  dm4
-img  cr2  ch5  dib  ims  pic
-raw  1sc  std  spc  avi  cif
-sif  aim  svs  arf  sld  ome.tiff
-```
+| Format | Extension(s) |
+| --- | --- |
+| TIFF / BigTIFF / OME-TIFF | `.tif` `.tiff` `.tf2` `.tf8` `.btf` |
+| Zeiss CZI / LSM / ZVI | `.czi` `.lsm` `.zvi` |
+| Nikon ND2 | `.nd2` |
+| Leica LIF / LOF / XLEF / SCN | `.lif` `.lof` `.xlef` `.xlcf` `.xlif` `.scn` |
+| Olympus VSI / OIB / OIF / OIR | `.vsi` `.oib` `.oif` `.oir` |
+| Aperio SVS | `.svs` |
+| Hamamatsu NDPI | `.ndpi` `.ndpis` |
+| 3DHistech MIRAX | `.mrxs` |
+| Ventana BIF, Akoya QPTIFF | `.bif` `.qptiff` |
+| Imaris, DeltaVision, MetaMorph | `.ims` `.dv` `.r3d` `.stk` `.nd` |
+| DICOM | `.dcm` `.dicom` |
+| PNG, JPEG, JPEG 2000, BMP | `.png` `.jpg` `.jpeg` `.jp2` `.j2k` `.bmp` |
 
-A complete list of all Bio-Formats–supported formats is available at [docs.openmicroscopy.org](https://docs.openmicroscopy.org/bio-formats/latest/supported-formats.html).
+Only files with these extensions are listed in the [Images panel](/guide/images/). Companion files that belong to a main file - such as the `.ets` files next to a `.vsi` - are opened through the main file.
+
+:::note
+Formats that earlier versions could open but are not in this list (e.g. `.ics`, `.sld`, `.lei`, `.dm3`) can't be opened any more - convert them to OME-TIFF.
+:::
 
 :::tip[Best results]
 Use raw, uncompressed images directly from your microscope without any pre-processing or compression applied. For multi-channel images, keep the channels in their original multi-channel format rather than merging them into an RGB image.
@@ -47,17 +55,17 @@ EVAnalyzer can access and process any plane individually.
 Pipeline input is specified by channel index (0-based).
 Z and T handling is configured in the [Image control tab]() on the right hand side.
 
-## OME-XML Metadata
+## Metadata
 
-EVAnalyzer reads OME-XML metadata embedded in or alongside image files. OME metadata provides:
+EVAnalyzer takes from the file, per series:
 
-- Number and order of channels
-- Physical pixel sizes (nm/µm/mm)
-- Z-step size
+- the number of channels, Z planes and time frames,
+- each channel's name and emission wavelength (its color in the viewer) - a channel without a name is shown as _Channel 0_, _Channel 1_, …,
+- the physical pixel size in X, Y and Z,
+- the frame interval of a time-lapse - the file's time increment, or else the mean step between the time stamps of the first and the last frame,
+- the objective's magnification.
 
-:::caution
-If no OME metadata is found in a multi-channel file, EVAnalyzer assumes a single channel. Ensure your multi-channel images include valid OME metadata for correct channel loading.
-:::
+A wrong value can be corrected in the [image info](/guide/images/#image-info). RGB images are split into **Red**, **Green** and **Blue** channels (alpha is dropped).
 
 ## Big Images
 
@@ -80,9 +88,4 @@ See [Cross-Tile Object Merging](/fundamentals/cross-tile-merging/) for how this 
 EVAnalyzer can generate a navigator minimap for big images only when the file contains a pyramid representation (reduced-resolution levels). Ensure pyramid support is enabled when saving whole-slide images.
 :::
 
-Formats that support big (pyramid) images:
-
-```
-.afi  .svs  .ims  .vsi  .ndpi  .ndpis  .jp2
-.tiff .tif  .tf2  .tf8  .btf   .sld    .jpg  .czi
-```
+Large images that come with pyramid levels (for example SVS, NDPI, MRXS, CZI, OME-TIFF) are read at the level that fits the zoom; see [Viewing large images](/guide/images/#viewing-large-images).

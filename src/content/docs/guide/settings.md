@@ -23,9 +23,13 @@ Open **EVA › Project settings…** to change the settings of the open project 
 
 How images are grouped into wells and how the plate and the wells are laid out - **Grouping**, **Regex**, **Plate size**, **Well size** (**Rows** / **Columns**) and **Images in well**. These are the same settings as in the [Results' Plate view](/guide/results/#grouping-images-into-wells) and the [Images panel's Plate](/guide/images/#plate); see there for what they mean.
 
-### Object merging
+### Objects
 
-The settings of [cross-tile object merging](/fundamentals/cross-tile-merging/#settings): **Merge objects across tiles**, **Exclude classes**, **Connectivity** and **Max fragments per group**.
+The settings of [cross-tile object merging](/fundamentals/cross-tile-merging/#settings) - **Merge objects across tiles**, **Exclude classes**, **Connectivity** and **Max fragments per group** - and what the results keep of the objects:
+
+| Setting | Description |
+| --- | --- |
+| **Keep object outlines in the results** <span class="evx-new">NEW</span> | On (the default): the results store each object's mask, so the [split view](/guide/results/#split-with-the-image) draws its real outline. Off: a smaller results file; the split view draws the objects as ellipses. |
 
 ## This computer
 
@@ -45,7 +49,6 @@ How the image viewer works on this computer: its memory - which matters most for
 | **Preview tiles**                        | At most this many tiles in a preview - zoomed out further, zoom in first. **Auto**: one per 4 GB of RAM of the computer running it.                                                                         |
 | **Breakpoint tiles**                     | The visible tiles nearest the middle show their [breakpoint image](/guide/pipelines/#breakpoints) - each up to ~190 MB RAM while a breakpoint is set (freed when it is cleared or an analysis starts). **Auto**: as this computer's RAM allows. |
 | **Draw in software**                     | Without the graphics card: about 135 MB less RAM, and smoother on computers without a working graphics driver (virtual machines, remote desktop, older computers). Slower on very large screens. Takes effect after a restart. |
-| **Edit while an analysis runs**          | Pipelines can be edited and the image previewed while an analysis runs - its progress is shown over the image. Off: the window waits until the analysis is done, for a computer that needs all its RAM for the analysis. |
 | **Objects as a table**                   | The objects open as a [table](/guide/classification/#objects-as-a-table) below the image. Off: as a list in the right panel. Its ⋯ switches either way.                                                    |
 | **Auto-scale new images**                | An image opened the first time is auto-scaled, every channel. Off: the full value range. The scaling is kept in the project either way.                                                                     |
 | **Color channels without a wavelength**  | When an image opens, channels the file gives no emission wavelength get distinct colors (kept in the project as their wavelength). Off: white.                                                             |
