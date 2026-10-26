@@ -226,6 +226,18 @@ See [About](/about/) for the full history.
 ## Key Features
 
 <CardGrid>
+  <Card title="Live preview" icon="seti:image">
+    See every change at once: with [Auto preview](/guide/pipelines/#live-preview)
+    on, the pipeline re-runs on the part of the image in view whenever you
+    change a setting, and the objects it finds appear over the image right
+    away - no "run and wait" loop while you tune.
+  </Card>
+  <Card title="High throughput, really fast" icon="rocket">
+    Written in Rust and running on every core: 81 two-channel 2048 × 2048
+    images analysed in 14 s - 9× faster than a Fiji macro and 13.6× faster
+    than CellProfiler in parallel mode, with 12× less RAM.
+    [Benchmark →](/comparison/#benchmark)
+  </Card>
   <Card title="Multiple pipelines" icon="puzzle">
     Create as many independent image processing [pipelines](/guide/pipelines/)
     as your experiment needs - one per channel, or chained together for complex
@@ -253,9 +265,8 @@ See [About](/about/) for the full history.
     across Z-stacks and time-lapse (T-stack) sequences.
   </Card>
   <Card title="Live multi-channel viewer" icon="magnifier">
-    Per-channel brightness/contrast, visibility toggles, and colour assignment,
-    with a live pipeline preview that updates as you tune each step - pin the
-    settings that matter to the [Tuning panel](/guide/pipelines/#tuning-panel),
+    Per-channel brightness/contrast, visibility toggles, and colour assignment -
+    pin the settings that matter to the [Tuning panel](/guide/pipelines/#tuning-panel),
     and set [breakpoints](/guide/pipelines/#breakpoints) to see any step's image.
   </Card>
   <Card title="Results beside the image" icon="seti:image">
@@ -284,10 +295,6 @@ See [About](/about/) for the full history.
   <Card title="Batch processing at scale" icon="rocket">
     Queue and process thousands of images unattended - the same pipeline runs
     consistently across an entire dataset, storing results as it goes.
-  </Card>
-  <Card title="Built in Rust" icon="setting">
-    EVAnalyzer is written in [Rust](/about/) rather than Python, for native-code
-    performance and memory safety across large batch runs.
   </Card>
   <Card title="Classical & AI segmentation" icon="cloud-download">
     Combine classical algorithms (Threshold, Watershed, Edge Detection) with
