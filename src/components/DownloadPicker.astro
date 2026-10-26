@@ -8,21 +8,35 @@ const REPO = "evanalyzer/evanalyzer";
     <div class="picker-options" role="group" aria-label="Operating system">
       <button type="button" class="picker-btn" data-os="windows">
         <span class="picker-btn-title">Windows</span>
-        <span class="picker-btn-sub">x86-64</span>
       </button>
       <button type="button" class="picker-btn" data-os="linux">
         <span class="picker-btn-title">Linux</span>
-        <span class="picker-btn-sub">x86-64</span>
       </button>
       <button type="button" class="picker-btn" data-os="macos">
         <span class="picker-btn-title">macOS</span>
-        <span class="picker-btn-sub">Apple Silicon</span>
       </button>
     </div>
   </div>
 
   <div class="picker-step">
-    <p class="picker-label">2. CUDA acceleration?</p>
+    <p class="picker-label">2. Choose your processor</p>
+    <div class="picker-options" role="group" aria-label="Processor">
+      <button type="button" class="picker-btn" data-arch="x86_64">
+        <span class="picker-btn-title">x86-64</span>
+        <span class="picker-btn-sub">Intel / AMD - most PCs</span>
+      </button>
+      <button type="button" class="picker-btn" data-arch="arm64">
+        <span class="picker-btn-title">ARM64</span>
+        <span class="picker-btn-sub">Snapdragon, Apple Silicon, ARM servers</span>
+      </button>
+    </div>
+    <p class="picker-note" data-arch-note hidden>
+      macOS builds are for Apple Silicon (ARM64) only.
+    </p>
+  </div>
+
+  <div class="picker-step">
+    <p class="picker-label">3. CUDA acceleration?</p>
     <div class="picker-options" role="group" aria-label="CUDA acceleration">
       <button type="button" class="picker-btn" data-cuda="false">
         <span class="picker-btn-title">No CUDA</span>
@@ -34,7 +48,7 @@ const REPO = "evanalyzer/evanalyzer";
       </button>
     </div>
     <p class="picker-note" data-cuda-note hidden>
-      CUDA builds aren't available for macOS - showing the CPU build instead.
+      CUDA builds exist only for x86-64 - showing the CPU build instead.
     </p>
   </div>
 
@@ -48,21 +62,29 @@ const REPO = "evanalyzer/evanalyzer";
   // ever rendered per page, so a plain class lookup is the reliable option.
   const root = document.querySelector(".download-picker");
   const osButtons = root.querySelectorAll("[data-os]");
+  const archButtons = root.querySelectorAll("[data-arch]");
+  const archNote = root.querySelector("[data-arch-note]");
   const cudaButtons = root.querySelectorAll("[data-cuda]");
   const cudaNote = root.querySelector("[data-cuda-note]");
   const resultEl = root.querySelector("[data-result]");
 
-  let state = { os: null, cuda: false };
+  // archChoice is what the user picked; arch is what is shown (macOS forces ARM64).
+  let state = { os: null, arch: "x86_64", archChoice: "x86_64", cuda: false };
   let releasesPromise = null;
 
   function osKeywords(os) {
     return { windows: ["windows"], linux: ["linux"], macos: ["macos", "darwin"] }[os] || [];
   }
 
-  function assetMatches(name, os, cuda) {
+  function archKeywords(arch) {
+    return { x86_64: ["x86_64", "x64", "amd64"], arm64: ["arm64", "aarch64"] }[arch] || [];
+  }
+
+  function assetMatches(name, os, arch, cuda) {
     const n = name.toLowerCase();
     if (!n.startsWith("evanalyzer-")) return false;
     if (!osKeywords(os).some((k) => n.includes(k))) return false;
+    if (!archKeywords(arch).some((k) => n.includes(k))) return false;
     const hasCuda = n.includes("cuda");
     return cuda ? hasCuda : !hasCuda;
   }
@@ -144,7 +166,7 @@ const REPO = "evanalyzer/evanalyzer";
     try {
       const releases = await fetchReleases();
       for (const release of releases) {
-        const assets = (release.assets || []).filter((a) => assetMatches(a.name, state.os, state.cuda));
+        const assets = (release.assets || []).filter((a) => assetMatches(a.name, state.os, state.arch, state.cuda));
         if (assets.length > 0) {
           renderMatch(release, assets);
           return;
@@ -156,18 +178,40 @@ const REPO = "evanalyzer/evanalyzer";
     }
   }
 
+  function select(buttons, isSelected) {
+    buttons.forEach((b) => b.classList.toggle("is-selected", isSelected(b)));
+  }
+
+  // macOS has only ARM64 builds, and CUDA builds exist only for x86-64:
+  // disable what doesn't exist and fall back to what does.
+  function applyConstraints() {
+    const isMac = state.os === "macos";
+    archButtons.forEach((b) => (b.disabled = isMac && b.dataset.arch === "x86_64"));
+    archNote.hidden = !isMac;
+    state.arch = isMac ? "arm64" : state.archChoice;
+    select(archButtons, (b) => b.dataset.arch === state.arch);
+
+    const noCuda = state.arch === "arm64";
+    cudaButtons.forEach((b) => (b.disabled = noCuda && b.dataset.cuda === "true"));
+    cudaNote.hidden = !(noCuda && state.cuda);
+    if (noCuda) state.cuda = false;
+    select(cudaButtons, (b) => (b.dataset.cuda === "true") === state.cuda);
+  }
+
   osButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       state.os = btn.dataset.os;
-      osButtons.forEach((b) => b.classList.toggle("is-selected", b === btn));
+      select(osButtons, (b) => b === btn);
+      applyConstraints();
+      update();
+    });
+  });
 
-      const isMac = state.os === "macos";
-      cudaButtons.forEach((b) => (b.disabled = isMac && b.dataset.cuda === "true"));
-      cudaNote.hidden = !(isMac && state.cuda);
-      if (isMac) {
-        state.cuda = false;
-        cudaButtons.forEach((b) => b.classList.toggle("is-selected", b.dataset.cuda === "false"));
-      }
+  archButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (btn.disabled) return;
+      state.archChoice = btn.dataset.arch;
+      applyConstraints();
       update();
     });
   });
@@ -176,15 +220,17 @@ const REPO = "evanalyzer/evanalyzer";
     btn.addEventListener("click", () => {
       if (btn.disabled) return;
       state.cuda = btn.dataset.cuda === "true";
-      cudaButtons.forEach((b) => b.classList.toggle("is-selected", b === btn));
-      cudaNote.hidden = !(state.os === "macos" && state.cuda);
+      applyConstraints();
       update();
     });
   });
 
-  // Default selection: no CUDA, OS auto-detected from the browser (user can override).
-  cudaButtons.forEach((b) => b.classList.toggle("is-selected", b.dataset.cuda === "false"));
+  // Default selection: no CUDA, OS and architecture guessed from the browser
+  // (user can override). Browsers rarely tell ARM apart, so x86-64 is the default
+  // except on macOS, which only has Apple Silicon builds.
   const ua = navigator.userAgent.toLowerCase();
+  if (/aarch64|arm64|armv8/.test(ua)) state.archChoice = "arm64";
+  applyConstraints();
   const guessedOs = ua.includes("windows") ? "windows" : ua.includes("mac") ? "macos" : ua.includes("linux") ? "linux" : null;
   if (guessedOs) {
     const btn = root.querySelector(`[data-os="${guessedOs}"]`);

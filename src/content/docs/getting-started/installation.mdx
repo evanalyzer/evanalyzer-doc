@@ -5,19 +5,21 @@ description: How to download and install EVAnalyzer on Linux, Windows, or macOS.
 
 import DownloadPicker from "../../../components/DownloadPicker.astro";
 
-EVAnalyzer is distributed as a pre-built binary for Linux, Windows, and macOS.
+EVAnalyzer is distributed as a pre-built binary for Linux and Windows (x86-64 and ARM64) and macOS (Apple Silicon).
 No package manager or build toolchain is required to run the application.
 
 Before downloading, check the [System Requirements](/getting-started/system-requirements/) page - in particular if you plan to use a CUDA build for GPU-accelerated AI segmentation.
 
 ## Downloading
 
-Pick your operating system and whether you want a CUDA-accelerated build. The link below always points at the latest published release on [GitHub](https://github.com/evanalyzer/evanalyzer/releases).
+Pick your operating system and processor, and whether you want a CUDA-accelerated build. The link below always points at the latest published release on [GitHub](https://github.com/evanalyzer/evanalyzer/releases).
 
 <DownloadPicker />
 
 :::tip[Not sure which to pick?]
 If you don't have a dedicated NVIDIA GPU, choose **No CUDA** - the CPU build runs everywhere and AI segmentation still works, just slower. See [System Requirements](/getting-started/system-requirements/) for GPU/driver details.
+
+Most PCs have an x86-64 (Intel or AMD) processor. Choose **ARM64** for ARM machines such as Windows on Snapdragon laptops or a Raspberry Pi / ARM server running 64-bit Linux. ARM64 builds are CPU-only.
 :::
 
 :::note[Looking for project templates or AI models?]
@@ -27,16 +29,18 @@ Those live on the separate [Downloads](/downloads/) page, linked at the top of e
 Packages follow this naming scheme on the [GitHub Releases page](https://github.com/evanalyzer/evanalyzer/releases/latest):
 
 | Platform              | CPU-only                         | CUDA-accelerated                                  |
-| ---------------------- | -------------------------------- | ------------------------------------------------- |
-| Windows x86-64        | `evanalyzer-windows-x86_64.zip`  | `evanalyzer-windows-cuda-x86_64.zip`              |
-| Linux x86-64          | `evanalyzer-linux-x86_64.tar.gz` | `evanalyzer-linux-cuda-x86_64.7z.001` + `.7z.002` |
+| --------------------- | -------------------------------- | ------------------------------------------------- |
+| Windows x86-64        | `evanalyzer-windows-x86_64.zip`  | `evanalyzer-windows-x86_64-cuda.7z.001`           |
+| Windows ARM64         | `evanalyzer-windows-arm64.zip`   | - (CUDA builds are x86-64 only)                   |
+| Linux x86-64          | `evanalyzer-linux-x86_64.tar.gz` | `evanalyzer-linux-x86_64-cuda.7z.001` + `.7z.002` |
+| Linux ARM64           | `evanalyzer-linux-arm64.tar.gz`  | - (CUDA builds are x86-64 only)                   |
 | macOS (Apple Silicon) | `evanalyzer-macos-arm64.tar.gz`  | - (CUDA is not available on macOS)                |
 
 :::note[Linux CUDA package is split in two]
 The CUDA-enabled Linux build bundles the CUDA runtime libraries and exceeds GitHub's 2 GB single-file limit, so it's published as a two-part 7-Zip archive. Download **both** `.7z.001` and `.7z.002` into the same folder, then extract with:
 
 ```sh
-7z x evanalyzer-linux-cuda-x86_64.7z.001
+7z x evanalyzer-linux-x86_64-cuda.7z.001
 ```
 
 7-Zip automatically pulls in the second part - you don't need to combine the files yourself first.
