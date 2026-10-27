@@ -3,7 +3,7 @@ title: Exclude Image
 description: Leave an image out of the results when its measurements say it is bad - e.g. out of focus or saturated - with the reason, so it can be checked and taken back in.
 ---
 
-**Exclude Image** leaves an image out of the results when its measurements say it is bad. Each rule compares a measurement of an earlier step - for example the focus score of [Image Quality](/commands/measure/image-quality/) - with a value. When the rules are met, the image is still analysed to the end, but it is marked as **Excluded** in the results, with the reason. You can check it by hand and take it back in if it is fine.
+**Exclude Image** leaves an image out of the results when its measurements say it is bad. Each rule compares a measurement of an earlier step - for example the focus score of [Measure Image Quality](/commands/measure/image-quality/) - with a value. When the rules are met, the image is still analysed to the end, but it is marked as **Excluded** in the results, with the reason. You can check it by hand and take it back in if it is fine.
 
 ![The rules compare the image's measurements with values: the focus score 0.09 is below 0.1, so with Any Rule the image is excluded; in the results its row is struck through with an Excluded badge, the reason on hover, and the eye takes it back in](../../../../assets/figures/cmd-exclude-image.svg)
 
@@ -52,5 +52,5 @@ Taking an image back in by hand removes the reason: if you later leave it out ag
 
 ## Limitations
 
-- Only image measurements can be used, not measurements per object (e.g. the [colocalization per object](/commands/measure/measure-colocalization/)).
+- Only image measurements can be used, not measurements per object (e.g. the values of [Measure Object Colocalization](/commands/measure/measure-colocalization/)).
 - The rules of one step combine with either Any Rule or All Rules. For mixed logic, use several Exclude Image steps: each one can exclude the image on its own.

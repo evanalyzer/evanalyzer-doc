@@ -78,8 +78,8 @@ The stripe on a step and in the command picker tells what kind of data goes in a
 | <span class="evx-cat evx-cat-segment"></span> | **Segment** | image → segmentation mask | Threshold, UNet |
 | <span class="evx-cat evx-cat-object"></span> | **Instance Seg.** | mask → labelled mask | Connected Components, Watershed |
 | <span class="evx-cat evx-cat-extract"></span> | **Extract** | labelled mask → objects | Extract Objects, Fill Object Holes |
-| <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | Classify Objects, Object Math, Voronoi, Colocalization, [Relate Objects](/commands/object/relate-objects/), [Propagation](/commands/object/propagation/) |
-| <span class="evx-cat evx-cat-measure"></span> | **Measure** <span class="evx-new">NEW</span> | objects / image → values | [Image Intensity](/commands/measure/image-intensity/), [Measure Texture](/commands/measure/measure-texture/), [Exclude Image](/commands/measure/exclude-image/) - see [Measurement steps](#measurement-steps) |
+| <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | Classify Objects, Object Math, Voronoi, [Colocalize Objects](/commands/object/colocalization/), [Relate Objects](/commands/object/relate-objects/), [Propagation](/commands/object/propagation/) |
+| <span class="evx-cat evx-cat-measure"></span> | **Measure** <span class="evx-new">NEW</span> | objects / image → values | [Measure Image Intensity](/commands/measure/image-intensity/), [Measure Image / Object Texture](/commands/measure/measure-texture/), [Exclude Image](/commands/measure/exclude-image/) - see [Measurement steps](#measurement-steps) |
 | <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | all images' objects | [Simple Tracker](/commands/dataset/simple-tracker/) - see [Dataset steps](#dataset-steps) |
 | <span class="evx-cat evx-cat-component"></span> | **Module ◆** | | A [module](/guide/modules/): several steps bundled into one, with its own parameters |
 
@@ -89,7 +89,7 @@ A typical pipeline flow:
 2. **Segment** commands separate foreground from background (Threshold), **Instance Seg.** commands split it into single objects (Connected Components → Watershed).
 3. **Extract Objects** converts the labelled mask into objects of a class.
 4. **Classify Objects** applies size/circularity filters and assigns an object class.
-5. **Object** commands perform further analysis (Colocalization, Relate Objects, …).
+5. **Object** commands perform further analysis (Colocalize Objects, Relate Objects, …).
 6. **Measure** commands measure the final objects or the image (texture, colocalization coefficients, image quality, …).
 
 A step can only follow the categories that fit before it: Extract after Instance Seg. (or another Extract), Object after Extract or Object, Measure after Extract, Object or Measure, Dataset after any of those or another Dataset step.
@@ -134,6 +134,8 @@ The image shows the result of all steps on the current image. With **Auto previe
 
 The preview only works on the part of the image in view. **Preview the whole image** <span class="evx-new">NEW</span> (top bar, `Shift+F5`) runs it on the whole image - the visible part first - and its note says how many objects the whole image has (_"Whole image: 1 204 objects"_). The note stays until another image is shown; a change of the settings cancels a running whole-image preview, or marks a finished one _"Whole image: outdated - settings changed"_.
 
+While the preview runs, a small pill at the top of the image shows its progress; its **✕** cancels it. If the preview fails, the pill says why and in which step - _"Preview failed in cellpose › #3 Blur: …"_. A message too long for the pill opens as a card with the whole text, **Show step** (selects the step in the steps panel) and **Copy message** (for a bug report). Neither blocks the image.
+
 ### Measurements panel
 
 When a pipeline or module has [measurement steps](#measurement-steps), the **Measurements** panel on the right (`Alt+5`, **EVA › View › Measurements**) lists what the preview measured, by step: each measurement's name, its step and value - an image's own value (_image_), or the median over the objects (_median of 23 objects_). Its head says **visible part**: like the preview, it measures only what is in view. Click a row to show its step. When an [Exclude Image](/commands/measure/exclude-image/) step would leave the image out, a banner says so and why (_"Excluded from the results: …"_).
@@ -168,7 +170,7 @@ While comparing, the [histogram](/guide/images/#histogram) offers **Original | B
 
 ### Measurement steps
 
-**Measure** steps - category **Measure** in the command picker - add values to the results without changing any object. They come after the objects are final (after the Extract and Object steps), so they measure what ends up in the results. Some measure the **image** - one value per image plane, of the whole image or of the area a class covers (e.g. [Image Quality](/commands/measure/image-quality/), [Area Occupied](/commands/measure/area-occupied/)) -, some measure **each object** of a class (e.g. [Measure Object Shape](/commands/measure/measure-object-shape/), [Measure Distance To Parent](/commands/measure/measure-distance-to-parent/)), some both ([Measure Colocalization](/commands/measure/measure-colocalization/), [Measure Texture](/commands/measure/measure-texture/) with **Per object of**). A value that points to another object - the nearest neighbour, the parent - stores that object too.
+**Measure** steps - category **Measure** in the command picker - add values to the results without changing any object. They come after the objects are final (after the Extract and Object steps), so they measure what ends up in the results. Some measure the **image** - one value per image plane, of the whole image or of the area a class covers (the **Measure Image …** commands, e.g. [Measure Image Quality](/commands/measure/image-quality/), [Measure Image Area Occupied](/commands/measure/area-occupied/)) -, others measure **each object** of a class (the **Measure Object …** commands, e.g. [Measure Object Shape](/commands/measure/measure-object-shape/), [Measure Object Distance To Parent](/commands/measure/measure-distance-to-parent/)). Colocalization and texture come as a pair: [Measure Image / Object Colocalization](/commands/measure/measure-colocalization/) and [Measure Image / Object Texture](/commands/measure/measure-texture/). A value that points to another object - the nearest neighbour, the parent - stores that object too.
 
 Every measurement step has an **ID**, unique in the project, which names its values: a value's key is _ID/measurement_, and the results show it as **ID · measurement** (e.g. **coloc_01 · Pearson**). A new step gets the next free ID of its kind (`coloc_01`, `coloc_02`, …); a duplicated step gets a new one. An ID may only have letters, digits and `_`, and IDs that differ only in case count as the same - both are reported as [problems](#problems) on the step. A module with a measurement step that is used twice measures under the same ID twice: make the ID a [module parameter](/guide/modules/#exposing-settings-as-parameters), so each use gets its own.
 

@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 52 pipeline commands grouped by category.
+description: All 55 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -40,6 +40,7 @@ Commands for reducing noise and enhancing signal before segmentation.
 | [Image Math](/commands/image-processing/image-math/)                   | Combine two images mathematically                |
 | [Image Cache](/commands/image-processing/image-cache/)                 | Store or retrieve an image from cache slots      |
 | [Load Image Channel](/commands/image-processing/load-image-channel/)   | Load another channel as the current image        |
+| [Color Deconvolution](/commands/image-processing/color-deconvolution/) | Separate the stains of a brightfield RGB image (e.g. H&E, H-DAB) |
 | [Script](/commands/image-processing/script/)                           | Run your own Rhai script, using the other commands |
 
 ## Edge & Feature Detection
@@ -97,7 +98,7 @@ Commands that operate on extracted objects.
 | [Extract Objects](/commands/object/extract-objects/)           | Convert binary mask regions to segmentation-class objects                                                    |
 | [Classify Objects](/commands/object/classify-objects/)         | Filter and assign final object classes                                                                       |
 | [AI Object Classifier](/commands/object/ai-object-classifier/) | Classify objects with a Random Forest/k-NN/MLP model you [train yourself](/ai/training/) on painted examples |
-| [Colocalization](/commands/object/colocalization/)             | Find overlapping objects across classes                                                                      |
+| [Colocalize Objects](/commands/object/colocalization/)         | Find overlapping objects across classes                                                                      |
 | [Voronoi](/commands/object/voronoi/)                           | Partition space from object centroids                                                                        |
 | [Object Transform](/commands/object/transform-objects/)        | Scale, snap, expand, shrink, or fit an ellipse to objects                                                    |
 | [Object Math](/commands/object/object-math/)                   | Boolean set operations (AND, OR, XOR, Subtract) between two object classes                                   |
@@ -112,15 +113,15 @@ Measure steps run once the objects are final. They measure the whole image or ev
 
 | Command                                                                         | Purpose                                                                       |
 | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Area Occupied](/commands/measure/area-occupied/)                               | How much of the image the objects of a class cover                            |
-| [Image Intensity](/commands/measure/image-intensity/)                           | Brightness statistics of a channel over the whole image                       |
-| [Image Quality](/commands/measure/image-quality/)                               | Focus, blur, saturation and noise of a channel                                |
+| [Measure Image Area Occupied](/commands/measure/area-occupied/)                 | How much of the image the objects of a class cover                            |
+| [Measure Image Intensity](/commands/measure/image-intensity/)                   | Brightness statistics of a channel over the whole image                       |
+| [Measure Image Quality](/commands/measure/image-quality/)                       | Focus, blur, saturation and noise of a channel                                |
 | [Exclude Image](/commands/measure/exclude-image/)                               | Leave an image out of the results when its measurements say it's bad         |
-| [Measure Colocalization](/commands/measure/measure-colocalization/)             | Pearson, Manders and related coefficients of two channels, per image and object |
-| [Measure Texture](/commands/measure/measure-texture/)                           | Haralick texture features, per image and object                               |
+| [Measure Image / Object Colocalization](/commands/measure/measure-colocalization/) | Pearson, Manders and related coefficients of two channels, over the image or per object |
+| [Measure Image / Object Texture](/commands/measure/measure-texture/)            | Haralick texture features, over the image or per object                       |
 | [Measure Object Shape](/commands/measure/measure-object-shape/)                 | Convex area, solidity, Euler number and radii of every object                 |
 | [Measure Object Neighbors](/commands/measure/measure-object-neighbors/)         | Neighbours, percent touching and closest objects                              |
-| [Measure Distance To Parent](/commands/measure/measure-distance-to-parent/)     | Each child's distance to its parent (linked by Relate Objects)                |
+| [Measure Object Distance To Parent](/commands/measure/measure-distance-to-parent/) | Each child's distance to its parent (linked by Relate Objects)                |
 
 ## Dataset
 
@@ -143,7 +144,7 @@ Image
             └─ Fill Holes / Fill Object Holes (optional cleanup)
                  └─ Extract Objects
                       └─ Classify Objects
-                           └─ Object Processing (Colocalization, Propagation, Relate Objects, …)
+                           └─ Object Processing (Colocalize Objects, Propagation, Relate Objects, …)
                                 └─ Measure (Image Quality, Object Shape, Texture, …)
                                      └─ Save Image
 ```

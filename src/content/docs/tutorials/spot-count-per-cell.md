@@ -35,7 +35,7 @@ Create a pipeline named `Nucleus` targeting the DAPI channel:
 | Connected Components | -                                                               |
 | Watershed            | Tolerance: 0.3 (optional)                                       |
 | Extract Objects      | -                                                               |
-| Classify Objects     | Target: `dapi@nucleus`; Min area: 500 px²; Min circularity: 0.3 |
+| Classify Objects     | Target: `dapi@nucleus`; Min Size: 500 px²; Min circularity: 0.3 |
 
 ## Step 3: EV Detection Pipeline
 

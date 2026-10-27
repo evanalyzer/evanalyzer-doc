@@ -13,7 +13,7 @@
     <marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
   </defs>
 <rect class="bg" x="0.5" y="0.5" width="439" height="229" rx="10"/>
-<text class="lbl-sm" style="fill:#4b5563" x="110.0" y="24.0" text-anchor="middle">Measure Distance To Parent</text>
+<text class="lbl-sm" style="fill:#4b5563" x="110.0" y="24.0" text-anchor="middle">Measure Object Distance To Parent</text>
 <ellipse cx="110" cy="105" rx="88" ry="62" fill="#dee8fc" stroke="#2563eb" stroke-width="2"/>
 <circle cx="140" cy="92" r="9" fill="#f7bc9e" stroke="#ea580c" stroke-width="2"/>
 <circle cx="110" cy="105" r="3.5" fill="#2563eb"/>

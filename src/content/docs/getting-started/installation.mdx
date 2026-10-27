@@ -19,7 +19,7 @@ Pick your operating system and processor, and whether you want a CUDA-accelerate
 :::tip[Not sure which to pick?]
 If you don't have a dedicated NVIDIA GPU, choose **No CUDA** - the CPU build runs everywhere and AI segmentation still works, just slower. See [System Requirements](/getting-started/system-requirements/) for GPU/driver details.
 
-Most PCs have an x86-64 (Intel or AMD) processor. Choose **ARM64** for ARM machines such as Windows on Snapdragon laptops or a Raspberry Pi / ARM server running 64-bit Linux. ARM64 builds are CPU-only.
+Most PCs have an x86-64 (Intel or AMD) processor. Choose **ARM64** for ARM machines such as Windows on Snapdragon laptops or a Raspberry Pi / ARM server running 64-bit Linux. ARM64 builds are CPU-only. The Linux ARM64 build has no AI model steps (Cellpose, StarDist, U-Net, YOLOv5) - there is no libtorch for Linux ARM64; everything else works.
 :::
 
 :::note[Looking for project templates or AI models?]
@@ -30,23 +30,21 @@ Packages follow this naming scheme on the [GitHub Releases page](https://github.
 
 | Platform              | CPU-only                         | CUDA-accelerated                                  |
 | --------------------- | -------------------------------- | ------------------------------------------------- |
-| Windows x86-64        | `evanalyzer-windows-x86_64.zip`  | `evanalyzer-windows-x86_64-cuda.7z.001`           |
+| Windows x86-64        | `evanalyzer-windows-x86_64.zip`  | `evanalyzer-windows-x86_64-cuda.7z`               |
 | Windows ARM64         | `evanalyzer-windows-arm64.zip`   | - (CUDA builds are x86-64 only)                   |
-| Linux x86-64          | `evanalyzer-linux-x86_64.tar.gz` | `evanalyzer-linux-x86_64-cuda.7z.001` + `.7z.002` |
+| Linux x86-64          | `evanalyzer-linux-x86_64.tar.gz` | `evanalyzer-linux-x86_64-cuda.7z`                 |
 | Linux ARM64           | `evanalyzer-linux-arm64.tar.gz`  | - (CUDA builds are x86-64 only)                   |
 | macOS (Apple Silicon) | `evanalyzer-macos-arm64.tar.gz`  | - (CUDA is not available on macOS)                |
 
-:::note[Linux CUDA package is split in two]
-The CUDA-enabled Linux build bundles the CUDA runtime libraries and exceeds GitHub's 2 GB single-file limit, so it's published as a two-part 7-Zip archive. Download **both** `.7z.001` and `.7z.002` into the same folder, then extract with:
+:::note[CUDA packages are 7-Zip archives]
+The CUDA builds bundle the CUDA runtime libraries and are packed as one `.7z` file each. Extract it with [7-Zip](https://www.7-zip.org/) on Windows, or on Linux with:
 
 ```sh
-7z x evanalyzer-linux-x86_64-cuda.7z.001
+7z x evanalyzer-linux-x86_64-cuda.7z
 ```
-
-7-Zip automatically pulls in the second part - you don't need to combine the files yourself first.
 :::
 
-Extract the downloaded archive to a directory of your choice.
+Extract the downloaded archive to a directory of your choice. Besides the app, every package holds `LICENSE` and `THIRD-PARTY-NOTICES.txt` - the licences of the third-party components shipped with it.
 
 ## VS Code Extension
 
@@ -78,7 +76,7 @@ Sometimes the GUI requires a few system libraries on Linux.
 If not still installed, install them once with:
 
 ```sh
-apt-get install libinput10 libxkbcommon0 libfontconfig1 libgbm1
+apt-get install libinput10 libxkbcommon0 libxkbcommon-x11-0 libfontconfig1 libgbm1
 ```
 
 :::
@@ -92,7 +90,7 @@ Double-click `evanalyzer.exe`, or from PowerShell:
 ```
 
 :::note[Windows SmartScreen warning]
-Because EVAnalyzer is an open-source project and its releases are not commercially code-signed, Windows SmartScreen may block the application on first launch. This is expected and safe to dismiss.
+The release builds of `evanalyzer.exe` and its AI plugin are code-signed. Windows SmartScreen judges a download also by how often it has been seen, so for a new release it may still block the application on first launch. Check that the publisher shown under **More info** is EVAnalyzer's; then it is safe to dismiss.
 
 **Step 1** — When the blue "Windows protected your PC" dialog appears, click **More info**.
 

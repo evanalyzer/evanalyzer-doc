@@ -4,7 +4,7 @@ description: Browse images as a list or a plate, view their channels, adjust the
 ---
 
 In **Images** mode (`Ctrl+1`) the **Images** panel on the left lists every image file found in the project's image folder.
-Open a folder with **EVA › Open images folder…** (`Ctrl+Shift+O`) or the folder button in the panel's head; the refresh button reads the folder again.
+Open a folder with **EVA › Select image folder…** (`Ctrl+Shift+O`) or the folder button in the panel's head; the refresh button reads the folder again.
 
 ## Images panel
 
@@ -43,7 +43,7 @@ Below the list, **Image info** shows the selected image in short: **Channels · 
 | **Magnification** | From the file. |
 | **Channels · Z · T** | Number of channels, Z planes and time frames. |
 | **Channels** | Each channel's name, color and emission wavelength (nm) - color editable, see below. |
-| **Pixel size X Y Z** | In nm - editable, see below. |
+| **Pixel size X Y Z** | In nm - editable, see below. Z is the distance between two planes; **0** means it is unknown. |
 | **Frame interval** | Seconds between two frames of a time-lapse - editable. |
 | **File size**, **Pixel type** | From the file. |
 
@@ -54,6 +54,8 @@ The values come from the file. Change a wrong one; **Reset** brings back the fil
 ### Pixel size
 
 Correct the pixel size if it was not stored correctly in the file - it sets the scale bar and every physical-unit measurement (area, distance) of an analysis.
+
+The Z value is the spacing between two planes of a z-stack. EVAnalyzer never guesses it: if the file doesn't give it, it stays unknown (shown as 0) until you enter it. The [orthogonal views and the 3D view](#orthogonal-views-and-3d-view) draw the planes by it; with an unknown spacing they draw each plane as thick as a pixel is wide, and say so. Enter 0 to make it unknown again.
 
 ### Frame interval
 
@@ -99,7 +101,35 @@ An image opened for the first time is auto-scaled, every channel. To start with 
 
 ### Z-stack
 
-For images with several Z planes, **Z** picks **Single** (one plane) or a projection: **Max**, **Min**, **Avg**, **Sum** or **Mid** (middle plane). `Page Up` / `Page Down` step through the planes.
+For images with several Z planes, the bar at the bottom of the image has a **Z** part: the plane shown (_3 / 12_), ◀ ▶ to step through the planes (also `Page Up` / `Page Down`), and a menu that picks how the z-stack is shown:
+
+| Choice | Shows |
+| --- | --- |
+| **Slice** | One plane. |
+| **Max**, **Min**, **Avg**, **Sum** | A projection of all planes: their maximum, minimum, mean or sum. |
+| **Mid** | The middle plane. |
+| **3D** <span class="evx-new">NEW</span> | One plane at a time, as **Slice** - the z-stack is treated as one volume. |
+
+The choice is the project's z-stack setting: the live preview and an analysis use it too. **3D** is a preparation for analysing volumes - no command works on volumes yet, so with **3D** the pipeline editor marks every step with an error (_"… works on planes (2D) only, but the project analyzes the z-stacks as volumes (3D) - choose another z-stack setting"_), and neither an analysis nor [AI training](/ai/training/) starts. Switching between **3D** and the other choices shows **Check the size settings** when steps have size limits set, since a size is an area for planes and a volume for volumes.
+
+### Orthogonal views and 3D view
+
+With **Slice** or **3D**, the Z part of the bar has two more buttons <span class="evx-new">NEW</span>: **3D view** and **Orthogonal views**. Only one of the two views is on at a time.
+
+**Orthogonal views** shows the z-stack from the side, through a yellow crosshair:
+
+- the **XZ** view below the image - the image row at the crosshair, through every plane,
+- the **YZ** view right of the image - the image column at the crosshair, through every plane.
+
+The two views follow the image's pan and zoom, and a yellow line marks the plane shown. With the **Move** tool, click (without dragging) into the image to put the crosshair there. Click or drag in the XZ or YZ view to move the crosshair and go to the plane under the mouse. The planes are drawn in their true proportions - as thick as the z spacing over the pixel size; the corner between the views says by how much (_"z spacing × 3.2"_). With an unknown [z spacing](#pixel-size) they are drawn as square pixels, with a note. A stack thicker than its band shows the planes around the current one.
+
+**3D view** covers the image with the whole z-stack, seen from any side: each screen pixel shows the brightest voxel along its line of sight (a maximum intensity projection), in the channels' colors and with their black and white points, as in the image. Drag to turn it, use the mouse wheel to zoom, double-click to go back to the start. For speed the volume is reduced to at most 256 pixels across and 256 planes, and drawn coarser while you turn it. The scale bar and the navigator are hidden in the 3D view.
+
+<div class="evx-shot-todo">
+<strong>Orthogonal views and 3D view</strong>
+<span>A z-stack (e.g. Fiji's Fly Brain) with Orthogonal views on: the XZ view below, the YZ view right of the image, the yellow crosshair; and the same stack in the 3D view, turned a little.</span>
+<code>src/assets/screenshots/screenshot-image-ortho.png, screenshot-image-3d.png</code>
+</div>
 
 ### Time-lapse
 
@@ -154,13 +184,16 @@ Click **Annotate** in the top bar (or press `A`) to draw on the image. The annot
 | **Ellipse** | `E` | Drag an elliptical region. |
 | **Polygon** | `P` | Click the corners, double-click to close. |
 | **Brush** <span class="evx-new">NEW</span> | | Paint a region - a stroke as wide as the brush. |
+| **Wand** <span class="evx-new">NEW</span> | `W` | Paint like the brush, but keep to edges. |
 | **Eraser** <span class="evx-new">NEW</span> | | Cut away from hand-drawn objects. |
 
-**Paint as** picks the class of what you draw - **+ New class…** creates one and picks it at once. The paint tools stay off until a class is picked. **Size** sets the brush's width in pixels.
+**Paint as** picks the class of what you draw - **+ New class…** creates one and picks it at once. The paint tools stay off until a class is picked. **Size** sets the width of the brush, the wand and the eraser in pixels.
 
-The brush paints into the selected hand-drawn object, or makes a new one of the chosen class. The eraser cuts hand-drawn objects: an object it empties is deleted, the others are measured again. Every stroke and every drawn shape is a step of its own for **Undo**.
+The brush paints into the selected hand-drawn object, or makes a new one of the chosen class.
 
-Annotations are saved per image in the project. To measure them and use them in an analysis - for example to count spots inside a hand-drawn region - add [Load Annotated Objects](/commands/object/load-annotated-objects/) to a pipeline. Annotations can also be exported and imported as GeoJSON - for example to and from QuPath - from the Objects panel's ⋯ menu, see [Classes & Objects](/guide/classification/#managing-objects).
+The **wand** paints the same way, but stops at edges - a stroke inside a nucleus stays inside it. When you let go, it goes along the stroke circle by circle (each as wide as **Size**) and takes only the pixels that look like the pixel at the centre of the circle and are connected to it. "Look like" is decided on what the viewer shows: the visible channels, each scaled to its 1-99 % range in view and smoothed over 3 × 3 pixels, and the color distance of each pixel to the centre pixel, split in two with Otsu's threshold. A circle without a clear edge is taken whole, as the brush does. The wand works on the pixels shown, so zoom in for finer edges. The eraser cuts hand-drawn objects: an object it empties is deleted, the others are measured again. Every stroke and every drawn shape is a step of its own for **Undo**.
+
+Annotations are saved per image in the project, with the plane and frame they were drawn on. One drawn on a plane shows on that plane and on the z-projections of its frame; one drawn while a [z-projection](#z-stack) is shown belongs to the projections of its frame only - it shows there, and only analyses and [AI training](/ai/training/#z-stacks-and-time-lapses) on a z-projection use it. To measure them and use them in an analysis - for example to count spots inside a hand-drawn region - add [Load Annotated Objects](/commands/object/load-annotated-objects/) to a pipeline. Annotations can also be exported and imported as GeoJSON - for example to and from QuPath - from the Objects panel's ⋯ menu, see [Classes & Objects](/guide/classification/#managing-objects).
 
 ![The annotate bar with the Brush active, Paint as tetraspeck@bead, Size 12 px - a painted region on the image](../../../assets/screenshots/screenshot-annotate-brush.png)
 

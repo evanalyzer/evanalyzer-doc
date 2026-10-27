@@ -28,6 +28,6 @@
 <line x1="296" y1="40" x2="283" y2="54" stroke="#ea580c" stroke-width="1"/>
 <!-- legend: edge pixel -->
 <text class="lbl-sm" x="220" y="186" text-anchor="middle">edge: parent pixels with a 4-neighbour outside the parent</text>
-<text class="lbl-bold" x="220" y="210" text-anchor="middle">Measure Distance To Parent</text>
+<text class="lbl-bold" x="220" y="210" text-anchor="middle">Measure Object Distance To Parent</text>
 <text class="lbl-sm" x="220" y="226" text-anchor="middle">both distances start at the child's centre of mass</text>
 </svg>

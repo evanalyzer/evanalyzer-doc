@@ -57,3 +57,24 @@ How the image viewer works on this computer: its memory - which matters most for
 ## Colors
 
 The color scheme - **Light**, **Dark** or **Dim** - is picked under **EVA › View › Colors**, not here. See [Colors](/guide/workspace/#colors).
+
+## Where EVAnalyzer stores its data
+
+Your settings and templates are in one folder in your home folder:
+
+| System  | Folder                       |
+| ------- | ---------------------------- |
+| Linux   | `~/.evanalyzer/`             |
+| macOS   | `~/evanalyzer/`              |
+| Windows | `C:\Users\<name>\evanalyzer\` |
+
+```
+evanalyzer/
+├── settings.json      settings for this computer, incl. the servers you trust
+├── templates/         your project templates and modules
+└── logs/crash.log     details of crashes, for bug reports
+```
+
+Copy this folder to take your settings, templates and modules to another computer. When you [work on a server](/remote/remote-control/), the same folder is in your home folder on the server.
+
+Project settings are not in this folder - they are saved in the project file (`.evaproj`).

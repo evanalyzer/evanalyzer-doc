@@ -1,0 +1,107 @@
+---
+// The Downloads page's three sections side by side at the top, with how many
+// items each has - so Modules and AI Models aren't hidden below the long
+// template gallery.
+import { getCollection } from "astro:content";
+
+const entries = await getCollection("downloads");
+const count = (category: string) => entries.filter((e) => e.data.category === category).length;
+
+const sections = [
+  {
+    href: "#project-templates",
+    title: "Project Templates",
+    sub: "Whole projects: classes, plate settings and pipelines",
+    count: count("template"),
+  },
+  {
+    href: "#modules",
+    title: "Modules",
+    sub: "Reusable steps for any pipeline",
+    count: count("module"),
+  },
+  {
+    href: "#ai-models",
+    title: "AI Models",
+    sub: "Pre-trained models for AI segmentation and classification",
+    count: count("model"),
+  },
+];
+---
+
+<nav class="download-sections not-content" aria-label="Download sections">
+  {
+    sections.map((s) => (
+      <a class="download-section" href={s.href}>
+        <span class="download-section-head">
+          <span class="download-section-title">{s.title}</span>
+          <span class="download-section-count">{s.count}</span>
+        </span>
+        <span class="download-section-sub">{s.sub}</span>
+        <span class="download-section-go">Show ↓</span>
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .download-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .download-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: var(--ink-radius-lg);
+    background: var(--ink-panel);
+    color: var(--sl-color-text);
+    text-decoration: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .download-section:hover {
+    border-color: var(--ink-focus);
+    background: var(--ink-hover);
+  }
+
+  .download-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .download-section-title {
+    font-weight: 600;
+    font-size: var(--sl-text-lg);
+  }
+
+  .download-section-count {
+    min-width: 1.75rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--ink-selection);
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .download-section-sub {
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+
+  .download-section-go {
+    margin-top: auto;
+    padding-top: 0.25rem;
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+    color: var(--ink-focus);
+  }
+</style>

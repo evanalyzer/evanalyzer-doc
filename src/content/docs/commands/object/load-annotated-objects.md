@@ -16,6 +16,7 @@ Use it when automatic segmentation isn't possible or reliable for one population
 | **Input classes**          | Only load annotations that carry at least one of these classes. Leave empty to load every annotated object of the image.      |
 | **Output class**           | Class added to every loaded object, so later steps can select them. Set to **Unset** to add none.                              |
 | **Keep annotated classes** | Keep the classes the objects were given while annotating. Off (the default), the objects start with the **Output class** only. |
+| **Use on**                 | On which planes an annotation is used - see [Planes and time points](#planes-and-time-points). **Its own plane** (default), **Every plane** or **Every plane and time point**. |
 
 ## How it works
 
@@ -25,7 +26,19 @@ For every image the pipeline runs on, the command takes the annotations stored f
 - Its **intensities are measured** on every channel of the image being analyzed - values stored with the annotation are not reused, since they may be outdated or were never measured for a hand-drawn shape.
 - Links the annotation may carry to other objects (colocalization partners, parent/child relations, tracking IDs) are dropped, because they refer to the stored IDs.
 
-The command runs once per image and plane on the whole image, so an annotation crossing a tile border stays one object. Only the annotations of the plane being processed are loaded; with a [Z-projection](/guide/images/#z-stack) the annotations of the projected time frame are used.
+The command runs once per image and plane on the whole image, so an annotation crossing a tile border stays one object.
+
+### Planes and time points
+
+**Use on** decides which annotations each analysed plane gets:
+
+| Use on | An annotation is loaded … |
+| --- | --- |
+| **Its own plane** | where it was drawn: an annotation of a plane on that plane, one drawn on a z-projection in analyses on a z-projection. An analysis on a [Z-projection](/guide/images/#z-stack) uses every annotation of the time point. |
+| **Every plane** | on every plane of its time point, wherever it was drawn - e.g. a region outlined once in a **Max** view and analysed plane by plane. |
+| **Every plane and time point** | on every plane and every time point - e.g. a fixed region in a time series. |
+
+A loaded object always belongs to the plane being analysed (plane 0 for a z-projection), like the objects segmented on it - so a region outlined once can be the parent of the spots of every plane or frame.
 
 ## Example: count spots inside hand-drawn regions
 

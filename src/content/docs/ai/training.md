@@ -7,7 +7,7 @@ Unlike [AI Models](/ai/overview/), which run a **pretrained** deep-learning netw
 
 Open it with **EVA › AI training…**. It opens as a sheet on the right, so the image and your annotations stay in view while you set it up.
 
-The sheet - **Train classifier** _from your annotations_ - is built from foldable sections: **CLASSES TO LEARN**, **EXAMPLES FROM**, **FEATURES**, **MODEL**, **TRAINING OPTIONS** and **EXAMPLE OBJECTS**, with the model's name, **Load…** and **Train** in its footer.
+The sheet - **Train classifier** _from your annotations_ - is built from foldable sections: **CLASSES TO LEARN**, **EXAMPLES FROM**, **FEATURES**, **MODEL** and **EXAMPLE OBJECTS**, with the model's name, **Load…** and **Train** in its footer.
 
 ![The Train classifier sheet on the right: Pixel classifier, the classes to learn, examples from, the features with channel chips, presets and the feature × size table, and Load… and Train in the footer](../../../assets/screenshots/screenshot-ai-training.png)
 
@@ -67,16 +67,25 @@ Name the model in the footer and click **Train**. The footer says whether the ex
 - _"Spot has no examples - draw some or untick it."_ or _"Spot has 3 examples - it trains, but draw ~5 or more for a steadier model."_ - it trains, but warns.
 - _"Ready: 3 classes, 94 examples from 2 images."_
 
-The project must be saved first (the model is stored next to it). While training runs, the status shows its progress - the images and tiles read, and for MLP the train/validation loss per epoch; **Cancel** stops it. The sheet stays open afterwards, so you can change something and retrain.
+The project must be saved first (the model is stored next to it). Training refuses a project whose z-stacks are set to **3D** (_"Training on z-stacks as volumes (3D) isn't supported yet"_). While training runs, the status shows its progress - the images and tiles read, and for MLP the train/validation loss per epoch; **Cancel** stops it. The sheet stays open afterwards, so you can change something and retrain.
 
 ### 8. Use the model in a pipeline
 
 The trained model is saved to `<project>/models/<model name>.evamodel`, and **RESULT** says what was trained (_"50 tree(s), trained on 2 340 sample(s)."_).
 
 - If a pipeline already uses the model, it reloads it, and with **Auto preview** on the [preview](/guide/pipelines/#live-preview) shows the new result right away.
-- If no pipeline uses it yet, **Add to pipeline** adds one named _"AI · <model name>"_: for a pixel classifier an [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) on the first trained channel, followed by Connected Components and Extract Objects; for an object classifier an [AI Object Classifier](/commands/object/ai-object-classifier/). The new pipeline is shown and previewed; **Undo** removes it again.
+- If no pipeline uses it yet, **Add to pipeline** adds one named _"AI · <model name>"_: for a pixel classifier an [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) on the first trained channel, followed by Connected Components and Extract Objects; for an object classifier an [AI Object Classifier](/commands/object/ai-object-classifier/) whose input classes are the classes the enabled pipelines give objects - so objects an earlier step removed stay removed. The new pipeline is shown and previewed; **Undo** removes it again.
 
 You can also add an AI Pixel Classifier or AI Object Classifier step yourself and point it at the file.
+
+### Z-stacks and time-lapses
+
+Each example is trained on the image an analysis would use it on, by the project's [z-stack setting](/guide/images/#z-stack):
+
+- **Slice** (the planes one by one): each example on its own plane of its frame. Examples drawn while a projection was shown are left out.
+- A projection (**Max**, **Min**, **Avg**, **Sum**, **Mid**): each example on that projection of its frame - the examples drawn on single planes as well as those drawn on the projection.
+
+An annotation remembers whether it was drawn on a plane or on a projection, and the image shows it only where it belongs: one drawn on a plane on that plane and on the projections of its frame; one drawn on a projection only on the projections. So for a z-stack analysed as a Max projection, draw your examples on the Max view.
 
 ## Choosing a Model
 
@@ -90,7 +99,7 @@ For MLP, watch the per-epoch status banner: if validation loss climbs while trai
 
 See [Random Forest](/ai/random-forest/), [k-Nearest Neighbors](/ai/k-nearest-neighbors/), and [Neural Network (MLP)](/ai/neural-network-mlp/) for a detailed look at how each algorithm actually works.
 
-**TRAINING OPTIONS** holds **Balance classes with few examples**, **Normalize features (nearest neighbours, neural network)** and **Hold back** _x_ **of the examples (0–1) to check how well it works** (default 0.2). In this version they are kept with the sheet's settings but not passed to the training: the MLP always holds back 20 % for its validation loss, and no balancing or normalising is done.
+The MLP always holds back 20 % of the examples for its validation loss; no balancing of classes or normalising of features is done. (The earlier **TRAINING OPTIONS** section, whose settings the training never used, is no longer shown.)
 
 <a id="feature-best-practices-pixel-classifier"></a>
 
@@ -140,7 +149,7 @@ The ring statistics are measured in a ring around each object - every pixel at m
 
 **Shape only** ticks Area, Perimeter, Circularity, Solidity, Aspect ratio, Max Feret and Eccentricity; **Recommended** adds Mean, Median and Std dev of every channel; **All** ticks everything.
 
-The intensities are measured on the image itself - under each object on its own Z and T plane, every channel at full resolution - the same way the [AI Object Classifier](/commands/object/ai-object-classifier/) step measures them, so training and the pipeline see the same values. With shape features alone no image is read. An image that can't be read is reported and its objects skipped.
+The intensities are measured on the image itself - under each object on the image an analysis uses it on (its own plane of its frame, or with a z-projection that projection of its frame - see [Z-stacks and time-lapses](#z-stacks-and-time-lapses)), every channel at full resolution - the same way the [AI Object Classifier](/commands/object/ai-object-classifier/) step measures them, so training and the pipeline see the same values. With shape features alone no image is read. An image that can't be read is reported and its objects skipped.
 
 _Class and position are never used._ Including the class would leak the training label itself, and position would teach the model _where_ an object is instead of _what it looks like_, a classic overfitting trap.
 

@@ -193,14 +193,13 @@ header.header {
   border-bottom: 1px solid var(--ink-border);
 }
 
-/* -- Sidebar: rows like the app's lists - grey selection, indigo edge --- */
+/* -- Sidebar: rows like the app's lists - a plain grey selection -------- */
 nav.sidebar a[aria-current="page"],
 nav.sidebar a[aria-current="page"]:hover,
 nav.sidebar a[aria-current="page"]:focus {
   background-color: var(--ink-selection);
   color: var(--ink-text);
   font-weight: 600;
-  box-shadow: inset 2px 0 0 var(--ink-focus);
 }
 nav.sidebar a {
   border-radius: var(--ink-radius-md);

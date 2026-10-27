@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<!-- input: brightfield RGB -->
+<text class="lbl-bold" x="70" y="26" text-anchor="middle">RGB image</text>
+<rect x="20" y="36" width="100" height="100" fill="#ffffff" stroke="#6b7280"/>
+<ellipse cx="50" cy="66" rx="18" ry="14" fill="#5b4a9b"/>
+<ellipse cx="92" cy="104" rx="17" ry="13" fill="#5b4a9b"/>
+<circle cx="92" cy="104" r="7" fill="#8a5a2b"/>
+<ellipse cx="88" cy="58" rx="13" ry="10" fill="#9a6331"/>
+<text class="lbl-sm" x="70" y="152" text-anchor="middle">blue nuclei, brown DAB</text>
+<!-- step -->
+<line x1="128" y1="86" x2="168" y2="86" stroke="#4b5563" stroke-width="2" marker-end="url(#a1)"/>
+<text class="lbl-sm" x="148" y="76" text-anchor="middle">OD</text>
+<text class="lbl-sm" x="148" y="104" text-anchor="middle">· M⁻¹</text>
+<!-- outputs -->
+<!-- stain 1 -->
+<rect x="180" y="36" width="70" height="70" fill="#111827" stroke="#2563eb" stroke-width="2"/>
+<ellipse cx="201" cy="57" rx="13" ry="10" fill="#f9fafb"/>
+<ellipse cx="231" cy="84" rx="12" ry="9" fill="#f9fafb"/>
+<ellipse cx="228" cy="51" rx="9" ry="7" fill="#6b7280"/>
+<text class="lbl-bold" style="fill:#2563eb" x="215" y="122" text-anchor="middle">Stain 1</text>
+<text class="lbl-sm" x="215" y="136" text-anchor="middle">Hematoxylin</text>
+<!-- stain 2 -->
+<rect x="264" y="36" width="70" height="70" fill="#111827" stroke="#ea580c" stroke-width="2"/>
+<ellipse cx="312" cy="51" rx="9" ry="7" fill="#f9fafb"/>
+<circle cx="315" cy="84" r="5" fill="#f9fafb"/>
+<text class="lbl-bold" style="fill:#ea580c" x="299" y="122" text-anchor="middle">Stain 2</text>
+<text class="lbl-sm" x="299" y="136" text-anchor="middle">DAB</text>
+<!-- stain 3 -->
+<rect x="348" y="36" width="70" height="70" fill="#111827" stroke="#9333ea" stroke-width="2"/>
+<ellipse cx="369" cy="57" rx="13" ry="10" fill="#374151"/>
+<text class="lbl-bold" style="fill:#9333ea" x="383" y="122" text-anchor="middle">Stain 3</text>
+<text class="lbl-sm" x="383" y="136" text-anchor="middle">residual</text>
+<!-- keep -->
+<path d="M215,144 L215,158 L299,158" fill="none" stroke="#9ca3af" stroke-dasharray="3 3"/>
+<path d="M383,144 L383,158 L299,158" fill="none" stroke="#9ca3af" stroke-dasharray="3 3"/>
+<line x1="299" y1="144" x2="299" y2="170" stroke="#4b5563" stroke-width="2" marker-end="url(#a1)"/>
+<text class="lbl-sm" x="299" y="186" text-anchor="middle">Keep: one of them goes on as a gray image</text>
+<text class="lbl-sm" x="299" y="200" text-anchor="middle">(bright = much stain; 8-bit value / 100 = OD)</text>
+<text class="lbl-bold" x="220" y="224" text-anchor="middle">Color Deconvolution (H-DAB)</text>
+<text class="lbl-sm" x="220" y="240" text-anchor="middle">optical density split into the amounts of each stain</text>
+</svg>

@@ -1,9 +1,9 @@
 ---
-title: Area Occupied
+title: Measure Image Area Occupied
 description: Measure how much of the image the objects of a class cover - in pixels, in µm² and as a part of the image.
 ---
 
-**Area Occupied** measures how much of the image the objects of one class cover: the covered area in pixels, in µm² (when the pixel size is known) and as a part of the image (0 to 1). Where objects of the class overlap, the shared pixels count once.
+**Measure Image Area Occupied** measures how much of the image the objects of one class cover: the covered area in pixels, in µm² (when the pixel size is known) and as a part of the image (0 to 1). Where objects of the class overlap, the shared pixels count once.
 
 ![Two objects of the class overlap in 4 pixels: the covered area is 16 + 16 - 4 = 28 pixels, 28 of the 96 image pixels (0.29); an object of another class is not counted](../../../../assets/figures/cmd-area-occupied.svg)
 

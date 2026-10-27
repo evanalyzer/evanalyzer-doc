@@ -45,7 +45,7 @@ AI segmentation commands are only available in builds with the `ai` Cargo featur
 1. If **Image scale** isn't `1`, the tile is resized by that factor.
 2. The tile is analyzed in overlapping **640×640 windows** at full resolution - small tiles are padded - so small objects stay detectable instead of being shrunk away. Neighboring windows overlap by **Window overlap** pixels.
 3. Each window runs through the model. Detections below **Confidence threshold** are dropped. A box touching a window edge that lies inside the tile is discarded - the neighboring window sees that object whole.
-4. For segmentation models the mask of every detection is built like YOLOv5's own `process_mask`: the predicted coefficients weight the mask prototypes, the result is cut to the box, scaled up and thresholded at **Mask threshold**.
+4. For segmentation models the mask of every detection is built like YOLOv5's own `process_mask`: the predicted coefficients weight the mask prototypes (YOLACT's method), the result is cut to the box, scaled up and thresholded at **Mask threshold**. Each mask is assembled only around its own box, not over the whole 640×640 window, so even hundreds of objects per window need little memory.
 5. **Non-maximum suppression** across all windows: of overlapping detections of one class (box IoU above **IoU threshold**), only the most confident one stays. This also merges objects that two windows both saw.
 6. The objects are painted into the segmentation and instance maps, more confident objects on top. Objects left smaller than **Minimum object size** are removed, and the maps are scaled back to the original size if needed.
 
@@ -58,3 +58,5 @@ If large objects come out cut in half along a straight line, **Window overlap** 
 ## Background
 
 Glenn Jocher, Ayush Chaurasia, and Alex Stoken, "ultralytics/yolov5: v7.0 - YOLOv5 SOTA Realtime Instance Segmentation," _Zenodo_, 2022. doi:[10.5281/zenodo.3908559](https://doi.org/10.5281/zenodo.3908559)
+
+Daniel Bolya, Chong Zhou, Fanyi Xiao, and Yong Jae Lee, "YOLACT: Real-time Instance Segmentation," _IEEE/CVF International Conference on Computer Vision (ICCV)_, 2019. doi:[10.1109/ICCV.2019.00925](https://doi.org/10.1109/ICCV.2019.00925) - how the masks are assembled from prototypes and coefficients.

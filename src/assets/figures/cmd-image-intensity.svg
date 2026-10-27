@@ -73,6 +73,6 @@
 <text class="lbl-sm" x="252" y="180">robust</text>
 <text class="lbl-bold" style="fill:#9333ea" x="172" y="200">MAD 1</text>
 <text class="lbl-sm" x="252" y="200">median of |v − 12|</text>
-<text class="lbl-bold" x="220" y="230" text-anchor="middle">Image Intensity</text>
+<text class="lbl-bold" x="220" y="230" text-anchor="middle">Measure Image Intensity</text>
 <text class="lbl-sm" x="220" y="246" text-anchor="middle">statistics over all pixels of a channel, in gray values</text>
 </svg>

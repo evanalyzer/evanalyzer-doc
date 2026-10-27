@@ -114,6 +114,6 @@
 <text class="lbl-bold" x="232" y="172">Part of the image occupied</text>
 <text class="lbl" x="232" y="190">28 / 96 px = 0.29</text>
 <text class="lbl-sm" x="120.0" y="174" text-anchor="middle">image: 12 × 8 = 96 px</text>
-<text class="lbl-bold" x="220" y="220" text-anchor="middle">Area Occupied</text>
+<text class="lbl-bold" x="220" y="220" text-anchor="middle">Measure Image Area Occupied</text>
 <text class="lbl-sm" x="220" y="236" text-anchor="middle">the union of the class's masks, in px², µm² and as a part of the image</text>
 </svg>

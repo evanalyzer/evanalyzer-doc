@@ -1,15 +1,17 @@
 ---
-title: Colocalization
+title: Colocalize Objects
 description: Find the objects of two or more classes that overlap and record them as each other's partners.
 ---
 
-The **Colocalization** command answers "are these objects at the same place?". Every object of the classes to colocalize that overlaps an object of each other class records those objects as its **partners**. The [results](/guide/results/#colocalization-details) list the partners by ID and count them per class (see [Colocalization Partners](/fundamentals/metrics/#colocalization-partners)).
+The **Colocalize Objects** command answers "are these objects at the same place?". Every object of the classes to colocalize that overlaps an object of each other class records those objects as its **partners**. The [results](/guide/results/#colocalization-details) list the partners by ID and count them per class (see [Colocalization Partners](/fundamentals/metrics/#colocalization-partners)).
 
 Optionally, the colocalizing objects of one class also get a class of their own (for example "ch1 with ch2"), and the overlap regions become objects of their own.
 
 ![A ch1 spot overlapping a ch2 spot: both record the other as partner, the ch1 spot can get the class "ch1 with ch2", and the overlap region can become an object; a spot without an overlapping partner records nothing](../../../../assets/figures/cmd-colocalization.svg)
 
-Unlike [Object Math](/commands/object/object-math/), which derives a new shape from two object sets, Colocalization links objects that already exist: each one keeps its ID, shape and measurements. Which object _belongs to_ which (spots per cell) is the job of [Relate Objects](/commands/object/relate-objects/).
+Unlike [Object Math](/commands/object/object-math/), which derives a new shape from two object sets, Colocalize Objects links objects that already exist: each one keeps its ID, shape and measurements. Which object _belongs to_ which (spots per cell) is the job of [Relate Objects](/commands/object/relate-objects/). To measure how the _intensities_ of two channels go together, use [Measure Image or Object Colocalization](/commands/measure/measure-colocalization/).
+
+Until version 4 of the project file this command was called **Colocalization**; older projects are converted when they are opened.
 
 ## Parameters
 
@@ -18,7 +20,7 @@ Unlike [Object Math](/commands/object/object-math/), which derives a new shape f
 | **Colocalize**                                 | The classes whose objects must overlap (e.g. the ch1 and the ch2 spots). At least two; with fewer the step does nothing.                                         |
 | **All combinations**                           | Also record the partners of objects that don't overlap an object of every class - see [All combinations](#all-combinations). Off by default.                     |
 | **But not**                                    | Objects that also overlap an object of one of these classes are left out entirely - see [But not](#but-not).                                                     |
-| **By at least**                                | How much two objects must overlap, in **Size Unit**. `0` (default): any overlap.                                                                                  |
+| **By at least**                                | How much two objects must overlap (an area), in **Size Unit**. `0` (default): any overlap.                                                                               |
 | **Size Unit**                                  | Unit of **By at least**: **px** (default), **nm** or **%** - see [Minimum overlap](#minimum-overlap).                                                            |
 | **Partners**                                   | Which overlapping objects count as partners - see [Partners](#partners).                                                                                          |
 | **Overlap regions as**                         | Optional: the overlap region of each colocalizing group becomes a new object with this class.                                                                    |
@@ -33,6 +35,8 @@ For every object of each class in **Colocalize**:
 2. If it has no partner of one of the other classes, it records nothing (unless **All combinations** is on).
 3. If it also overlaps an object of a **But not** class by at least **By at least**, it records nothing.
 4. Otherwise it records its partners, per class. With **As** set, it gets that class (only when it is of the class under **Mark objects of**, if one is set). With **Overlap regions as** set, the region where it and one partner of each other class all overlap becomes a new object.
+
+Each overlap counts on its own: with three classes A, B and C, an A object colocalizes when it overlaps a B object and a C object - also when the B and the C object lie in different parts of it and don't touch each other. Colocalizing does not mean that all three share an area; that shared area is the overlap region. An overlap region is only made where the objects really all overlap: the A object in the example is colocalized, but gets no overlap region.
 
 Each object is checked on its own, so the partner links go both ways: a ch1 spot lists its ch2 spot, and the ch2 spot lists the ch1 spot. An overlap region is created once per group of objects, not once per member. It is measured on every channel like any other object, but it records no partners.
 
@@ -76,7 +80,7 @@ Example: to find the cells colocalizing with a nucleus stain and a membrane stai
 
 1. Classify the spots in the Cy5 channel → `cy5@spot`
 2. Classify the spots in the Cy7 channel → `cy7@spot`
-3. Add a Colocalization step:
+3. Add a Colocalize Objects step:
    - **Colocalize**: `cy5@spot`, `cy7@spot`
    - **Mark objects of**: `cy5@spot`, **As**: `cy5 with cy7`
    - **Overlap regions as**: `coloc@cy5cy7` (optional)

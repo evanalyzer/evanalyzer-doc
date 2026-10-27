@@ -48,7 +48,7 @@ In the exported results database, each object stores its links in `parent_ids`, 
 Relate Objects replaces the earlier **Parent Object ID**, which some commands set on their own. Today only Relate Objects links objects; its link per parent class takes that place.
 :::
 
-[Measure Distance To Parent](/commands/measure/measure-distance-to-parent/) measures how far each child lies from its parent. [Propagation](/commands/object/propagation/) grows cells from nuclei; relate them afterwards to get each cell's nucleus.
+[Measure Object Distance To Parent](/commands/measure/measure-distance-to-parent/) measures how far each child lies from its parent. [Propagation](/commands/object/propagation/) grows cells from nuclei; relate them afterwards to get each cell's nucleus.
 
 ## Limitations
 

@@ -218,6 +218,10 @@ export default defineConfig({
                   slug: "commands/image-processing/load-image-channel",
                 },
                 {
+                  label: "Color Deconvolution",
+                  slug: "commands/image-processing/color-deconvolution",
+                },
+                {
                   label: "Script",
                   slug: "commands/image-processing/script",
                 },
@@ -324,7 +328,7 @@ export default defineConfig({
                   slug: "commands/object/ai-object-classifier",
                 },
                 {
-                  label: "Colocalization",
+                  label: "Colocalize Objects",
                   slug: "commands/object/colocalization",
                 },
                 { label: "Voronoi", slug: "commands/object/voronoi" },
@@ -353,15 +357,15 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
-                  label: "Area Occupied",
+                  label: "Measure Image Area Occupied",
                   slug: "commands/measure/area-occupied",
                 },
                 {
-                  label: "Image Intensity",
+                  label: "Measure Image Intensity",
                   slug: "commands/measure/image-intensity",
                 },
                 {
-                  label: "Image Quality",
+                  label: "Measure Image Quality",
                   slug: "commands/measure/image-quality",
                 },
                 {
@@ -369,11 +373,11 @@ export default defineConfig({
                   slug: "commands/measure/exclude-image",
                 },
                 {
-                  label: "Measure Colocalization",
+                  label: "Measure Image & Object Colocalization",
                   slug: "commands/measure/measure-colocalization",
                 },
                 {
-                  label: "Measure Texture",
+                  label: "Measure Image & Object Texture",
                   slug: "commands/measure/measure-texture",
                 },
                 {
@@ -385,7 +389,7 @@ export default defineConfig({
                   slug: "commands/measure/measure-object-neighbors",
                 },
                 {
-                  label: "Measure Distance To Parent",
+                  label: "Measure Object Distance To Parent",
                   slug: "commands/measure/measure-distance-to-parent",
                 },
               ],

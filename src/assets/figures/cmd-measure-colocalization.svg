@@ -157,6 +157,6 @@
 <text class="lbl-sm" x="264" y="188">from the pixels in C</text>
 <text class="lbl-sm" x="264" y="212">t = % of the channel's max,</text>
 <text class="lbl-sm" x="264" y="226">or Costes' automatic threshold</text>
-<text class="lbl-bold" x="220" y="270" text-anchor="middle">Measure Colocalization</text>
+<text class="lbl-bold" x="220" y="270" text-anchor="middle">Measure Image &amp; Object Colocalization</text>
 <text class="lbl-sm" x="220" y="286" text-anchor="middle">do the two channels' intensities go together - per image and per object</text>
 </svg>

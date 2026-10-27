@@ -25,6 +25,6 @@
 <text class="lbl-bold" style="fill:#2563eb" x="360" y="54" text-anchor="middle">ch1 · ID 4</text>
 <text class="lbl-sm" x="360" y="158" text-anchor="middle">no ch2 partner:</text>
 <text class="lbl-sm" x="360" y="172" text-anchor="middle">records nothing</text>
-<text class="lbl-bold" x="220" y="228" text-anchor="middle">Colocalization</text>
+<text class="lbl-bold" x="220" y="228" text-anchor="middle">Colocalize Objects</text>
 <text class="lbl-sm" x="220" y="243" text-anchor="middle">overlapping objects record each other as partners</text>
 </svg>

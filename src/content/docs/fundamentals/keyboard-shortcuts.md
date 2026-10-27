@@ -12,7 +12,8 @@ Press **F1**, or choose **EVA › Help › Shortcuts**, to open this same refere
 | `Ctrl+S`       | Save                  |
 | `Ctrl+Shift+S` | Save As               |
 | `Ctrl+O`       | Open                  |
-| `Ctrl+Shift+O` | Open an images folder |
+| `Ctrl+I`       | Open one image        |
+| `Ctrl+Shift+O` | Select an image folder |
 
 ## Edit
 
@@ -60,6 +61,7 @@ Every brush stroke and every drawn shape is an undo step of its own.
 | `R`            | Paint rectangle   |
 | `E`            | Paint ellipse     |
 | `P`            | Paint polygon     |
+| `W`            | Wand              |
 | `O`            | Show / hide the objects |
 | `A`            | Show / hide the annotate tool bar |
 
@@ -71,7 +73,7 @@ While [comparing](/guide/pipelines/#compare-with-the-original) a breakpoint imag
 
 | Shortcut                | Action                      |
 | ----------------------- | --------------------------- |
-| `Page Up` / `Page Down` | The previous / next Z slice |
+| `Page Up` / `Page Down` | The previous / next Z slice (with **Slice** or **3D**) |
 | `,` / `.`               | The previous / next frame   |
 
 ## Navigation

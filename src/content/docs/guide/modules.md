@@ -38,12 +38,12 @@ Its **⋯** menu has the usual step actions (**Settings**, **Disable**, **Breakp
 
 | Action               | What it does                                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **View**             | Opens the module read-only, to see what it does.                                                                            |
-| **Edit module**   | Opens the module's steps for editing - changes apply to every use. See [Editing a module](#editing-a-module).        |
-| **Edit in place**    | Gives this step a copy of its own (it asks for the copy's name if other steps use the module) and opens it - changes stay with this step. |
+| **Look into module** | Opens the module read-only, to see what it does.                                                                            |
+| **Edit this module** | Gives this step a copy of its own (it asks for the copy's name if other steps use the module) and opens it - changes stay with this step. |
+| **Create module** | Bundles this and more steps into a new module.                                                                              |
+| **Edit modules**     | Opens the module's steps for editing - changes apply to every use. See [Editing a module](#editing-a-module).        |
 | **Expand**           | Puts the steps back into the pipeline, with this step's parameter values. The module's own classes become new project classes, its memory slots pipeline slots. |
 | **Save as**          | Saves the module as a library file (`.evamodule`).                                                                            |
-| **Create module** | Bundles this and more steps into a new module.                                                                              |
 
 **Update to v_N_** stays on the step itself: it shows when the [library](#module-library) has a newer version of the module. **Duplicate** adds a second use of the same module; **Remove step** removes the step, the module itself stays in the project.
 
@@ -51,7 +51,7 @@ The **?** on any step - module or command - shows what the step does: a command'
 
 ## Editing a module
 
-**Edit module** opens the module's steps in the steps panel, with a bar on top: **‹ Back · Pipeline › ◆ Module · Settings**. The bar also says who else is affected - _Only this step uses this module - changes reach no other step._ Inside, you work as in a normal pipeline - add, remove, move steps and change settings.
+**Edit modules** opens the module's steps in the steps panel, with a bar on top: **‹ Back · Pipeline › ◆ Module · Settings**. The bar also says who else is affected - _Only this step uses this module - changes reach no other step._ Inside, you work as in a normal pipeline - add, remove, move steps and change settings.
 
 Changes to a module **apply to every use of it**. If the module is used by more than one step, EVAnalyzer asks first:
 
@@ -89,7 +89,7 @@ The rules that follow from this:
 
 - **Moving objects into a project class.** An object never carries an internal and a project class at the same time. [Classify Objects](/commands/object/classify-objects/) (and the AI Object Classifier) may _reclassify_ internal objects into a project class - a typical "filter" module: internal candidates in, project-class hits out. _Adding_ a project class to an internal object (or the other way round) is an error.
 - **Commands that create new objects** are always fine: the new objects belong to the class they are written to. A Voronoi of internal seeds can write project-class cells.
-- **Colocalization links to internal objects** are removed when the module ends. If you want the numbers that come from them (e.g. a spot count per cell), the spot class must be a project class - a module parameter.
+- **Colocalize Objects links to internal objects** are removed when the module ends. If you want the numbers that come from them (e.g. a spot count per cell), the spot class must be a project class - a module parameter.
 - **[Relate Objects](/commands/object/relate-objects/) links to internal parents** are removed the same way: the results then have no children per parent for them. EVAnalyzer warns about both.
 - **Extract Objects** inside a module can map a segmentation class to one of the module's classes with its [class mapping](/commands/object/extract-objects/#class-mapping).
 - **Dataset steps** such as the [Simple Tracker](/commands/dataset/simple-tracker/) only work on project classes.
@@ -107,7 +107,7 @@ Modules no pipeline uses any more can be removed with **Remove from project** in
 
 ## Module library
 
-**Save as** in a module step's ⋯ saves the module as a library file (`.evamodule`) through the template dialog. **Save as module…** in a pipeline's ⋯ does the same for a whole pipeline. Module files in the `templates` folder in EVAnalyzer's user folder (`~/.local/share/evanalyzer/templates` on Linux, `~/Library/Application Support/evanalyzer/templates` on macOS, `%APPDATA%\evanalyzer\templates` on Windows) appear in the picker's **LIBRARY** section in every project.
+**Save as** in a module step's ⋯ saves the module as a library file (`.evamodule`) through the template dialog. **Save as module…** in a pipeline's ⋯ does the same for a whole pipeline. Module files in the `templates` folder of [EVAnalyzer's folder](/guide/settings/#where-evanalyzer-stores-its-data) (`~/.evanalyzer/templates` on Linux, `~/evanalyzer/templates` on macOS, `C:\Users\<name>\evanalyzer\templates` on Windows) appear in the picker's **LIBRARY** section in every project.
 
 - **Inserting** a library module copies it into the project, together with the modules it uses. From then on the project has its own copy: changes affect only the project, never the file, and the project stays complete without it.
 - **Updates:** the project remembers which file and version a module came from. When the library has a newer version, the module step shows **Update to v_N_**. Updating keeps every step's parameter values; if the project changed the module since inserting it, EVAnalyzer warns that updating replaces those changes.

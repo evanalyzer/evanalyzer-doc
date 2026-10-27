@@ -40,7 +40,7 @@ Each entry in `pipelines` (`PipelineSettings`) has:
 - `enabled` - disabled pipelines are skipped during analysis.
 - `steps` - an ordered array of `PipelineStepSettings`. Each step has a stable `id`, `enabled`, and either a `command` (a single command) or a `group` (a use of a [command group](#command-groups)).
 
-`command` is a `PipelineCommand` - a discriminated union keyed by a `type` string, with one variant per pipeline command (`"blur"`, `"threshold"`, `"connectedComponents"`, `"stardist"`, `"colocalization"`, and so on for [every command](/commands/overview/)). Each `type` value corresponds directly to a command documented in the [Commands reference](/commands/overview/), and the matching schema `$defs` entry (for example `BlurSettings`) lists that command's exact parameters, types, defaults, and limits.
+`command` is a `PipelineCommand` - a discriminated union keyed by a `type` string, with one variant per pipeline command (`"blur"`, `"threshold"`, `"connectedComponents"`, `"stardist"`, `"colocalizeObjects"`, and so on for [every command](/commands/overview/)). Each `type` value corresponds directly to a command documented in the [Commands reference](/commands/overview/), and the matching schema `$defs` entry (for example `BlurSettings`) lists that command's exact parameters, types, defaults, and limits.
 
 A minimal single-step pipeline looks like:
 

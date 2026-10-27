@@ -8,10 +8,13 @@ hero:
 ---
 
 import DownloadGallery from "../../components/DownloadGallery.astro";
+import DownloadSections from "../../components/DownloadSections.astro";
 
 :::note[Looking for the app itself?]
 Installers for Windows, Linux, and macOS - and the VS Code extension - live on the [Installation](/getting-started/installation/) page instead.
 :::
+
+<DownloadSections />
 
 ## Project Templates
 
@@ -21,7 +24,7 @@ Full `.evatemplate` project templates - classes, plate settings and pipelines - 
 
 ## Modules
 
-`.evamodule` [modules](/guide/modules/) - a set of steps bundled into one step with its own parameters, for any pipeline. Put the file into the `templates` folder in EVAnalyzer's user folder (`~/.local/share/evanalyzer/templates` on Linux, `~/Library/Application Support/evanalyzer/templates` on macOS, `%APPDATA%\evanalyzer\templates` on Windows) and it shows up under **Modules** in the command picker of every project. See [Module library](/guide/modules/#module-library).
+`.evamodule` [modules](/guide/modules/) - a set of steps bundled into one step with its own parameters, for any pipeline. Put the file into the `templates` folder of [EVAnalyzer's folder](/guide/settings/#where-evanalyzer-stores-its-data) (`~/.evanalyzer/templates` on Linux, `~/evanalyzer/templates` on macOS, `C:\Users\<name>\evanalyzer\templates` on Windows) and it shows up under **Modules** in the command picker of every project. See [Module library](/guide/modules/#module-library).
 
 <DownloadGallery category="module" />
 

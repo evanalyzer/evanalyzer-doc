@@ -1,9 +1,9 @@
 ---
-title: Image Intensity
+title: Measure Image Intensity
 description: Measure the brightness of a channel over the whole image - total, mean, standard deviation, minimum, maximum, median, quartiles and median absolute deviation.
 ---
 
-**Image Intensity** measures the brightness of one channel over the whole image: total, mean, standard deviation, minimum, maximum, median, lower and upper quartile and the median absolute deviation. It uses every pixel of the image, the background too - unlike the [intensity metrics](/fundamentals/metrics/#intensity-metrics) of an object, which use only the object's pixels.
+**Measure Image Intensity** measures the brightness of one channel over the whole image: total, mean, standard deviation, minimum, maximum, median, lower and upper quartile and the median absolute deviation. It uses every pixel of the image, the background too - unlike the [intensity metrics](/fundamentals/metrics/#intensity-metrics) of an object, which use only the object's pixels.
 
 ![A 4 × 4 image with three bright pixels: sorted, the pixels give the minimum, quartiles, median and maximum; the three bright pixels pull the mean (26) far above the median (12)](../../../../assets/figures/cmd-image-intensity.svg)
 

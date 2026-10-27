@@ -26,11 +26,13 @@ AI segmentation steps ([Stardist](/commands/ai-segmentation/stardist/), [UNet](/
 
 | Component  | Requirement                                                             |
 | ---------- | ----------------------------------------------------------------------- |
-| **GPU**    | An NVIDIA GPU with compute capability 6.0 or higher                     |
-| **Driver** | An NVIDIA driver new enough to support CUDA 12.x                        |
+| **GPU**    | An NVIDIA GPU with compute capability 7.5 or higher - Turing (GeForce RTX 20xx, GTX 16xx) and newer |
+| **Driver** | NVIDIA driver 580 or newer (the CUDA builds use CUDA 13.0, libtorch 2.13) |
 | **VRAM**   | 4 GB minimum; more for large images or batches of high-resolution tiles |
 
 If you don't have a CUDA-capable GPU, install the regular CPU build - AI segmentation still works, just slower.
+
+A CUDA build also runs without a usable GPU: if the driver finds no GPU, or only GPUs older than compute capability 7.5 (e.g. GTX 10xx), the AI models run on the CPU.
 
 :::note
 macOS builds are CPU-only. CUDA is an NVIDIA-only technology and is not available on Apple hardware.

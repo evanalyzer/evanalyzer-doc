@@ -98,6 +98,6 @@
 <text class="lbl-sm" x="310" y="176" text-anchor="middle">symmetric: 24 counts, p = n / 24</text>
 <text class="lbl-sm" style="fill:#16a34a" x="310" y="196" text-anchor="middle">diagonal: equal pairs (smooth)</text>
 <text class="lbl-sm" style="fill:#ea580c" x="310" y="210" text-anchor="middle">far off it: contrast</text>
-<text class="lbl-bold" x="220" y="270" text-anchor="middle">Measure Texture</text>
+<text class="lbl-bold" x="220" y="270" text-anchor="middle">Measure Image &amp; Object Texture</text>
 <text class="lbl-sm" x="220" y="286" text-anchor="middle">13 Haralick features per direction from the co-occurrence matrix</text>
 </svg>

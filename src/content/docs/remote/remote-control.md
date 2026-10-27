@@ -39,7 +39,7 @@ On the server machine:
 
 Without `--listen` the server only accepts connections from the machine itself (`127.0.0.1:7400`). When listening on every network (`0.0.0.0`), the log lists the addresses clients can use - the host name and every IP address of the machine.
 
-On first start the server creates a self-signed TLS certificate and logs its fingerprint - at every start:
+On first start the server creates a self-signed TLS certificate in its [data folder](#server-data-folder) and logs its fingerprint - at every start:
 
 ```
 Clients connect with wss:// - certificate fingerprint 1E:0F:D0:…:23:5D
@@ -116,7 +116,7 @@ The server is configured with a TOML file:
 ./evanalyzer server --config /etc/evanalyzer/server.toml
 ```
 
-Each setting is taken from the first of these that sets it: the command-line arguments (`--listen`, `--session-store`, `--log-level`), the `--config` file, the built-in defaults. The server reads no environment variables and no config file unless you pass `--config`. It reads the files once at startup, so restart it after editing them. Unknown or misspelled keys and impossible values stop the server at startup with an error that names the key.
+Each setting is taken from the first of these that sets it: the command-line arguments (`--listen`, `--data-dir`, `--log-level`, and `--ai-devices` / `--gpu-slots` for the workers), the `--config` file, the built-in defaults. The server reads no environment variables and no config file unless you pass `--config`. It reads the files once at startup, so restart it after editing them. Unknown or misspelled keys and impossible values stop the server at startup with an error that names the key.
 
 A complete example with every setting and its default:
 
@@ -125,10 +125,12 @@ A complete example with every setting and its default:
 # 0.0.0.0:7400 accepts connections from every network.
 listen = "127.0.0.1:7400"
 
-# File the running workers are recorded in, so a restarted server finds them
-# again. Default: /run/evanalyzer/sessions.json for a system service,
-# otherwise in the temp folder.
-# session_store = "/run/evanalyzer/sessions.json"
+# Folder the server keeps everything it creates in (certificate, running
+# workers, the single user's home) - see Server data folder below.
+# Absolute path. Default: /var/lib/evanalyzer for a system service (root on
+# Linux), otherwise ~/.evanalyzer/server (Linux) or ~/evanalyzer/server
+# (macOS, Windows) of the server's account.
+# data_dir = "/var/lib/evanalyzer"
 
 # error, warn, info, debug, trace, off - or per module,
 # e.g. "info,evanalyzer_core=debug".
@@ -147,7 +149,7 @@ username = "admin"
 # Default: none - a random password is made up at every start and
 # printed to the console.
 # password = "$argon2id$v=19$m=19456,t=2,p=1$…"
-# Default: a folder of its own, created on start (see Users below).
+# Default: <data_dir>/single-user, created on start (see Users below).
 # home = "/srv/evanalyzer/admin"
 # allowed_dirs = ["{home}", "/data/microscopy"]
 
@@ -164,12 +166,17 @@ passwd_file = "/etc/passwd"
 enabled = true
 # cert = "/etc/evanalyzer/cert.pem"
 # key = "/etc/evanalyzer/key.pem"
-# self_signed_dir = "/var/lib/evanalyzer/tls"
+# Not set: a self-signed certificate in <data_dir>/tls.
 
 [workers]
 # A worker stops by itself once no client has been connected and no
 # analysis has run for this many minutes. At least 1.
 idle_timeout_minutes = 120
+# Where workers run AI models: "auto" (every GPU, else the CPU), "cpu",
+# or GPU numbers like "0,2".
+# ai_devices = "auto"
+# Parallel AI inferences per GPU, at least 1.
+# gpu_slots = 1
 
 [limits]
 # Not set: no limit.
@@ -177,13 +184,37 @@ idle_timeout_minutes = 120
 # max_connections = 100
 ```
 
+### Server data folder
+
+Everything the server creates is kept in one folder, its data folder. Set it with `data_dir` in the config file or `--data-dir` on the command line - it must be an absolute path. The log names it at every start (`Data folder: …`).
+
+| Server runs                            | Default data folder     |
+| -------------------------------------- | ----------------------- |
+| as a system service (root, Linux)      | `/var/lib/evanalyzer/`  |
+| as a normal user, Linux                | `~/.evanalyzer/server/` |
+| as a normal user, macOS / Windows      | `~/evanalyzer/server/`  |
+
+`~` is the home folder of the account the server runs as.
+
+```
+<data folder>/
+├── tls/               self-signed certificate and key - back it up, or
+│                      clients have to trust a new fingerprint
+├── sessions.json      the running workers
+└── single-user/       home of the single user (default user setup)
+```
+
+The server creates the folders it needs; on Linux and macOS only its own account can read them. Files you write yourself - the config file, the users file, your own certificate - are not in the data folder; the server reads them from the path you give it (`/etc/evanalyzer/` is the usual place).
+
+Each user's settings, templates and crash log are in the EVAnalyzer folder in the user's home on the server - the same folder the app uses on a user's own computer, see [Where EVAnalyzer stores its data](/guide/settings/#where-evanalyzer-stores-its-data).
+
 ### Users
 
 `[users] source` chooses where accounts come from:
 
 | `source`           | Accounts                                                                                                       | Home folder                                                     | Worker runs as                                       |
 | ------------------ | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------- |
-| `single` (default) | One account in `[users.single]`: `admin`, with a random password made up at every start and printed to the console unless `users.single.password` is set | `users.single.home`, default: a folder of its own - `/var/lib/evanalyzer/single-user` as a system service, otherwise `evanalyzer/single-user` in the server account's data folder (`~/.local/share` on Linux, `%LOCALAPPDATA%` on Windows, `~/Library/Application Support` on macOS) | the server's account |
+| `single` (default) | One account in `[users.single]`: `admin`, with a random password made up at every start and printed to the console unless `users.single.password` is set | `users.single.home`, default: a folder of its own, `single-user` in the [data folder](#server-data-folder) | the server's account |
 | `linux`            | This machine's system users, checked against `/etc/shadow`. The server needs root or membership in the `shadow` group. | from `/etc/passwd`                                              | the user's own account, if the server runs as root |
 | `file`             | The `[[user]]` entries of a separate users file, `[users.file] path`. No system accounts needed.                | `home` of each entry                                            | the server's account                                 |
 
@@ -206,7 +237,7 @@ home = "/srv/evanalyzer/bob"
 
 ### Allowed folders
 
-A worker can read and write only its user's _allowed folders_ and the user's EVAnalyzer folder, which holds settings and templates. The allowed folders come from:
+A worker can read and write only its user's _allowed folders_ and the user's [EVAnalyzer folder](/guide/settings/#where-evanalyzer-stores-its-data) in their home, which holds settings and templates. The allowed folders come from:
 
 - the account's own `allowed_dirs`: `users.single.allowed_dirs`, an `allowed_dirs` entry in the users file, or `[users.linux.overrides.<name>]`;
 - otherwise `users.default_allowed_dirs`, which defaults to `["{home}"]`.
@@ -243,7 +274,7 @@ Anyone who can read the hashes can try to crack them offline, so make the files 
 
 Connections between clients and the server are encrypted by default (`wss://`). Workers listen on `127.0.0.1` only and are reached unencrypted.
 
-- **Self-signed certificate (default).** The server creates it on first start in `tls.self_signed_dir` and logs its fingerprint at every start. Users confirm the fingerprint once in the GUI, or pass it with `--remote-fingerprint` on the command line - without it, the command-line client refuses to connect and prints the fingerprint it was shown. Keep `self_signed_dir` (include it in backups) and the fingerprint stays the same.
+- **Self-signed certificate (default).** The server creates it on first start in `tls/` in its [data folder](#server-data-folder) and logs its fingerprint at every start. Users confirm the fingerprint once in the GUI, or pass it with `--remote-fingerprint` on the command line - without it, the command-line client refuses to connect and prints the fingerprint it was shown. Keep that folder (include it in backups) and the fingerprint stays the same.
 - **Certificate from a public authority** (e.g. Let's Encrypt): set `tls.cert` and `tls.key`. Clients connecting by that host name need no fingerprint. A certificate from your organisation's own CA works too, with the fingerprint, like a self-signed one.
 - **Without encryption**: `tls.enabled = false`, and clients use `ws://`. Only for a server behind something that encrypts already (reverse proxy, VPN, SSH tunnel) or for tests on one machine - the server warns when it listens on the network without TLS, and the client's status bar shows **unencrypted**.
 
@@ -251,7 +282,7 @@ For tests or a network you fully trust, clients can skip the certificate check w
 
 ### Workers
 
-A worker keeps running when its client disconnects or logs out, and when the server restarts (the server finds it again through `session_store`). It stops by itself once no client has been connected and no analysis has run for `workers.idle_timeout_minutes` (default 2 hours); the user's next login starts a new one.
+A worker keeps running when its client disconnects or logs out, and when the server restarts (the server finds it again through `sessions.json` in its [data folder](#server-data-folder)). It stops by itself once no client has been connected and no analysis has run for `workers.idle_timeout_minutes` (default 2 hours); the user's next login starts a new one. A reboot of the machine ends all workers: the server then forgets them, and each user's next login starts a new one.
 
 The server starts each worker with the user's home as working directory and an environment cleared of everything except what the OS needs.
 
@@ -271,13 +302,10 @@ The server starts each worker with the user's home as working directory and an e
    sudo tar xzf evanalyzer-linux-x86_64.tar.gz -C /opt/evanalyzer
    ```
 
-2. **Configure** `/etc/evanalyzer/server.toml`. Set at least `listen = "0.0.0.0:7400"` and the users. For the paths used by the unit below, also set
+2. **Configure** `/etc/evanalyzer/server.toml`. Set at least `listen = "0.0.0.0:7400"` and the users. A server running as root uses `/var/lib/evanalyzer` as its data folder anyway; with its own account (`User=evanalyzer` below) also set it, so it matches the unit's `StateDirectory`:
 
    ```toml
-   session_store = "/run/evanalyzer/sessions.json"
-
-   [tls]
-   self_signed_dir = "/var/lib/evanalyzer/tls"
+   data_dir = "/var/lib/evanalyzer"
    ```
 
 3. **Create** `/etc/systemd/system/evanalyzer.service`:
@@ -294,14 +322,12 @@ The server starts each worker with the user's home as working directory and an e
    # For users.source = "linux" remove these two lines: that needs root.
    User=evanalyzer
    Group=evanalyzer
-   RuntimeDirectory=evanalyzer
-   RuntimeDirectoryMode=0700
+   # Creates /var/lib/evanalyzer, the data folder, owned by the account above.
    StateDirectory=evanalyzer
    StateDirectoryMode=0700
    # Workers - and the analyses running in them - survive a restart of the
-   # server: stop only the server process and keep the session file.
+   # server: stop only the server process.
    KillMode=process
-   RuntimeDirectoryPreserve=yes
    Restart=on-failure
    RestartSec=5
 
@@ -365,7 +391,7 @@ These options work for the GUI and every `cli` command:
 | ------------------------ | ---------------- | ----------------------------------------------------------------- |
 | `--config <FILE>`        | -                | [Configuration file](#server-configuration) (TOML).               |
 | `--listen <ADDR>`        | `127.0.0.1:7400` | Address and port to accept clients on.                            |
-| `--session-store <FILE>` | see above        | File the running workers are recorded in.                         |
+| `--data-dir <DIR>`       | see [Server data folder](#server-data-folder) | Folder the server keeps its state in: certificate, running workers, the single user's home. |
 
 ### `evanalyzer worker`
 
@@ -374,7 +400,7 @@ These options work for the GUI and every `cli` command:
 | `--listen <ADDR>`          | `127.0.0.1:7400` | Address to listen on.                                                                             |
 | `--token <TOKEN>`          | generated        | Token clients must present. Generated and printed if not set.                                     |
 | `--root <FOLDER>`          | -                | Folder clients may browse and use. Repeat for several folders. Without it, nothing is restricted. |
-| `--home <FOLDER>`          | this account's   | Home folder of the user this worker serves; its user folder (templates) lives below it.           |
+| `--home <FOLDER>`          | this account's   | Home folder of the user this worker serves; the user's [EVAnalyzer folder](/guide/settings/#where-evanalyzer-stores-its-data) (settings, templates) is inside it. |
 | `--idle-timeout <MINUTES>` | -                | Stop once no client has been connected and no analysis has run for this long.                     |
 
 Workers started by `evanalyzer server` get all of these from the server - you only start a worker by hand for the [direct connection](#connecting-without-a-server).

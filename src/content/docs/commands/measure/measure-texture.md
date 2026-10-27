@@ -1,28 +1,28 @@
 ---
-title: Measure Texture
-description: Measure the texture of a channel with Haralick's 13 features - over the whole image and per object, as CellProfiler's MeasureTexture.
+title: Measure Image & Object Texture
+description: Measure the texture of a channel with Haralick's 13 features - over the whole image (Measure Image Texture) or in each object of a class (Measure Object Texture), as CellProfiler's MeasureTexture.
 ---
 
-**Measure Texture** measures the texture of one channel with Haralick's features: how the gray levels of pixel pairs a fixed distance apart go together. Contrast is high where neighbouring pixels differ a lot, the angular second moment where few pairs repeat over and over (smooth or regular), entropy where the pairs are all different. It gives the 13 features for the whole image and, optionally, for each object of a class. The values are those of CellProfiler's MeasureTexture (which uses mahotas), value for value.
+**Measure Image Texture** and **Measure Object Texture** measure the texture of one channel with Haralick's features: how the gray levels of pixel pairs a fixed distance apart go together. Contrast is high where neighbouring pixels differ a lot, the angular second moment where few pairs repeat over and over (smooth or regular), entropy where the pairs are all different. The two commands compute the same 13 features; **Measure Image Texture** over the whole image, **Measure Object Texture** for each object of a class. To get both, add both steps. The values are those of CellProfiler's MeasureTexture (which uses mahotas), value for value.
 
 ![A small image of gray levels 0-3: each pixel is paired with the one Scale pixels to its right (0°); the pairs are counted in both orders into the co-occurrence matrix, from which the 13 features are computed - the same for 45°, 90° and 135°](../../../../assets/figures/cmd-measure-texture.svg)
 
-It is a [measurement step](/guide/pipelines/#measurement-steps): it runs once per image plane, after all tiles of the image are read and all objects are found.
+Both are [measurement steps](/guide/pipelines/#measurement-steps): they run once per image plane, after all tiles of the image are read and all objects are found.
 
 ## Parameters
 
 | Parameter         | Description                                                                                       |
 | ----------------- | ------------------------------------------------------------------------------------------------- |
-| **ID**            | The step's ID, unique in the project. It is given automatically (`texture_01`, …) and starts the names of its values in the results. |
+| **ID**            | The step's ID, unique in the project. It is given automatically - `texture_01`, … for Measure Image Texture, `object_texture_01`, … for Measure Object Texture - and starts the names of its values in the results. |
+| **Objects**       | Measure Object Texture only: the objects measured. It must be set; the step stops with an error otherwise. |
 | **Channel**       | The channel measured.                                                                             |
 | **Scale [px]**    | How far apart the two pixels of a pair are, in pixels (1 to 1000, default 3) - about the size of the texture's grain. |
 | **Gray levels**   | The gray levels the 8-bit values are rescaled to (2 to 256, default 256). Fewer are faster and less noisy; more see finer differences. |
 | **Directions**    | **Mean of the directions** (default): one value per feature, the mean over 0°, 45°, 90° and 135°. **Each direction**: one value per feature and direction - four times as many values. |
-| **Per object of** | The objects of this class get values of their own as well. Unset (default): the whole image only.  |
 
 ## Measurements
 
-Each name ends with the channel and the scale, e.g. _"Contrast (channel 0, scale 3)"_. With **Each direction** the angle is added (_"Contrast 45° (channel 0, scale 3)"_); with **Per object of** set, every value also comes per object (_"Contrast per object (channel 0, scale 3)"_). None of them has a unit.
+Each name ends with the channel and the scale, e.g. _"Contrast (channel 0, scale 3)"_. With **Each direction** the angle is added (_"Contrast 45° (channel 0, scale 3)"_). Both commands use the same names. None of them has a unit.
 
 | Measurement                              | Range    | High when …                                                       |
 | ---------------------------------------- | -------- | ----------------------------------------------------------------- |
@@ -44,7 +44,7 @@ Each name ends with the channel and the scale, e.g. _"Contrast (channel 0, scale
 
 ### Gray levels
 
-The channel, as it is loaded from the image, is first converted to 8 bits: 0 to 255 over the bit depth's range (as scikit-image's `img_as_ubyte` rounds it). With fewer than 256 **Gray levels** the 8-bit values are then rescaled to $0 \dots L-1$. An RGB image is turned into its luminance first.
+The channel, as it is loaded from the image, is first converted to 8 bits: its values, normalised to 0 to 1 by the bit depth's maximum, times 255 (rounded as scikit-image's `img_as_ubyte` does). So the result does not depend on the bit depth. With fewer than 256 **Gray levels** the 8-bit values are then rescaled to $0 \dots L-1$. An RGB image is turned into its luminance first.
 
 ### Co-occurrence matrix
 
@@ -89,8 +89,8 @@ Where the variance is 0 (a uniform image), the correlation is 1.
 
 ### Image and objects
 
-- **Whole image:** every pixel counts, dark background included. Pairs that cross a tile border are counted as well.
-- **Per object:** only pixels of the object's mask, and only pairs whose two pixels are both in the mask and not at gray level 0 (as CellProfiler, which sets the pixels outside the object to 0). An object too small to hold a pair in one of the directions - e.g. narrower than **Scale** - gets no values (CellProfiler stores 0).
+- **Measure Image Texture:** every pixel counts, dark background included. Pairs that cross a tile border are counted as well.
+- **Measure Object Texture:** only pixels of the object's mask, and only pairs whose two pixels are both in the mask and not at gray level 0 (as CellProfiler, which sets the pixels outside the object to 0). An object too small to hold a pair in one of the directions - e.g. narrower than **Scale** - gets no values (CellProfiler stores 0).
 
 ## Choosing the settings
 
@@ -100,6 +100,6 @@ Where the variance is 0 (a uniform image), the correlation is 1.
 
 ## Results
 
-The image values belong to the image plane; in the [List view](/guide/results/#list-view) they are under **Columns › Measurements**, named _"texture_01 · Contrast (channel 0, scale 3)"_. With **A row per: Images** each image shows its own value; with **A row per: Objects** each object row shows the value of its image plane. The per-object values (_"… per object …"_) are shown on each object's row and are aggregated over the image's objects with **A row per: Images**.
+The values of Measure Image Texture belong to the image plane; in the [List view](/guide/results/#list-view) they are under **Columns › Measurements**, named _"texture_01 · Contrast (channel 0, scale 3)"_. With **A row per: Images** each image shows its own value; with **A row per: Objects** each object row shows the value of its image plane. The values of Measure Object Texture (_"object_texture_01 · Contrast (channel 0, scale 3)"_) are shown on each object's row and are aggregated over the image's objects with **A row per: Images**.
 
-The export option **Measurements - one row per value** writes every value with one row per value - see [Exporting Results](/guide/results/#exporting-results). With **Each direction** and per-object values, one step gives 104 values, so select the measurements you need in the export's **Measurements**.
+The export option **Measurements - one row per value** writes every value with one row per value - see [Exporting Results](/guide/results/#exporting-results). With **Each direction**, one step gives 52 values, so select the measurements you need in the export's **Measurements**.

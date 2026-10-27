@@ -23,7 +23,7 @@ The radius should be **at least as large as the largest object that is not backg
 | -------------- | --------------------------------------------------------------------------------------- |
 | **Radius**     | Radius of the rolling ball in pixels                                                    |
 | **Ball type**  | Shape of the virtual probe: _Ball_ (spherical cap) or _Paraboloid_                      |
-| **Pre-smooth** | Apply a light Gaussian blur before background estimation to reduce sensitivity to noise |
+| **Pre-smooth** | Smooth the image with a 3 × 3 mean before the background is estimated, to reduce sensitivity to noise (as ImageJ's _Disable smoothing_ unticked) |
 
 ### Ball type
 

@@ -316,8 +316,9 @@ Trains a pixel or object classifier from a project's labeled objects and saves i
 | `--settings <path>`          | JSON file describing the model: metadata, backend hyperparameters (Random Forest / KNN / MLP), feature spec and class labels (required)          |
 | `--model-name <name>`        | Name of the saved model file. Defaults to the name in the `--settings` metadata                                                                   |
 | `--channel <n>`              | Image channel to read (pixel classifiers only, default `0`)                                                                                       |
-| `--t-stack <n>`              | Time frame to read (pixel classifiers only, default `0`)                                                                                          |
-| `--z-stack-handling <mode>`  | How to handle Z-stacks (pixel classifiers only): `single-stack` (default), `all-stacks`, `max-intensity`, `min-intensity`, `avg-intensity`, `sum-intensity`, `take-the-middle` |
+| `--z-stack-handling <mode>`  | How the analyses using the model handle Z-stacks, which decides the image each labeled object is trained on: `single-stack` (default) or `all-stacks` - its own plane of its time frame (objects drawn on a z-projection are left out); `max-intensity`, `min-intensity`, `avg-intensity`, `sum-intensity`, `take-the-middle` - that projection of its time frame. Applies to pixel and object classifiers |
+
+Every time frame with labeled objects is used; the `--t-stack` option is gone.
 
 ## Project File
 

@@ -258,13 +258,13 @@ Track IDs are assigned by the [Simple Tracker](/commands/dataset/simple-tracker/
 
 ## Intersection
 
-Whether an object overlaps an object of another class - the number of pixels both masks share. [Classify Objects](/commands/object/classify-objects/) uses it as a filter: with **Intersecting With** set, an object only matches when it shares at least one pixel, and at least **Min Intersection Area**, with an object of that class. Objects that only touch, without sharing a pixel, don't intersect. The overlap is not stored as a column of its own.
+Whether an object overlaps an object of another class - the number of pixels both masks share. [Classify Objects](/commands/object/classify-objects/) uses it as a filter: with **Intersecting With** set, an object only matches when it shares at least one pixel, and at least **Min Intersection Size**, with an object of that class. Objects that only touch, without sharing a pixel, don't intersect. The overlap is not stored as a column of its own.
 
 ![The left object shares 8 pixels (purple) with an object of the other class and matches; the right one only touches it and doesn't](../../../assets/figures/metric-intersection.svg)
 
 ## Colocalization Partners
 
-Per partner class, how many objects of that class an object colocalises with (**Coloc with *class***), and their object IDs. Both are set by [Colocalization](/commands/object/colocalization/); the partners and their values can be shown next to each object with [Coloc details](/guide/results/#colocalization-details). The link goes both ways: each partner records the object as its partner too.
+Per partner class, how many objects of that class an object colocalises with (**Coloc with *class***), and their object IDs. Both are set by [Colocalize Objects](/commands/object/colocalization/); the partners and their values can be shown next to each object with [Coloc details](/guide/results/#colocalization-details). The link goes both ways: each partner records the object as its partner too.
 
 ![A ch1 spot overlapped by two ch2 spots (a, b) has Coloc with ch2 = 2 and records both IDs; c doesn't overlap and doesn't count](../../../assets/figures/metric-coloc-partners.svg)
 
@@ -276,13 +276,13 @@ The commands of the **Measure** category add further values - only when they are
 | --- | --- |
 | [Measure Object Shape](/commands/measure/measure-object-shape/) | Per object: convex area, solidity (CellProfiler's), Euler number, max / mean / median radius |
 | [Measure Object Neighbors](/commands/measure/measure-object-neighbors/) | Per object: number of neighbours, percent touching, first and second closest distance, angle between neighbours |
-| [Measure Distance To Parent](/commands/measure/measure-distance-to-parent/) | Per child: distance from its centroid to its parent's centroid and to its parent's edge |
-| [Measure Texture](/commands/measure/measure-texture/) | Per object and image: Haralick texture features (contrast, correlation, entropy, ...) |
-| [Measure Colocalization](/commands/measure/measure-colocalization/) | Per object and image: Pearson, Manders M1/M2 (also with Costes' threshold), overlap, K1/K2, RWC; slope per image |
-| [Image Intensity](/commands/measure/image-intensity/) | Per image: total, mean, std dev, min, max, median, quartiles and MAD of a channel |
-| [Image Quality](/commands/measure/image-quality/) | Per image: focus score, power log-log slope, percent maximal / minimal, noise |
-| [Area Occupied](/commands/measure/area-occupied/) | Per image: the area the objects of a class cover, and its part of the image |
+| [Measure Object Distance To Parent](/commands/measure/measure-distance-to-parent/) | Per child: distance from its centroid to its parent's centroid and to its parent's edge |
+| [Measure Image Texture, Measure Object Texture](/commands/measure/measure-texture/) | Per image or per object: Haralick texture features (contrast, correlation, entropy, ...) |
+| [Measure Image Colocalization, Measure Object Colocalization](/commands/measure/measure-colocalization/) | Per image or per object: Pearson, Manders M1/M2 (also with Costes' threshold), overlap, K1/K2, RWC; slope per image only |
+| [Measure Image Intensity](/commands/measure/image-intensity/) | Per image: total, mean, std dev, min, max, median, quartiles and MAD of a channel |
+| [Measure Image Quality](/commands/measure/image-quality/) | Per image: focus score, power log-log slope, percent maximal / minimal, noise |
+| [Measure Image Area Occupied](/commands/measure/area-occupied/) | Per image: the area the objects of a class cover, and its part of the image |
 
 Use [Exclude Image](/commands/measure/exclude-image/) to leave images out of the results based on these values.
 
-![Distances come from Measure commands: from a child to its parent's centroid and edge (Measure Distance To Parent), and to the nearest objects (Measure Object Neighbors)](../../../assets/figures/metric-distance.svg)
+![Distances come from Measure commands: from a child to its parent's centroid and edge (Measure Object Distance To Parent), and to the nearest objects (Measure Object Neighbors)](../../../assets/figures/metric-distance.svg)

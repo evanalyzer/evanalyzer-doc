@@ -1,35 +1,40 @@
 ---
-title: Measure Colocalization
-description: Measure how the intensities of two channels go together - Pearson, Manders M1/M2, overlap, K1/K2, RWC and Costes' thresholds - over the whole image and per object, as CellProfiler's MeasureColocalization.
+title: Measure Image & Object Colocalization
+description: Measure how the intensities of two channels go together - Pearson, Manders M1/M2, overlap, K1/K2, RWC and Costes' thresholds - over the whole image (Measure Image Colocalization) or in each object of a class (Measure Object Colocalization).
 ---
 
-**Measure Colocalization** measures how the intensities of two channels go together, pixel by pixel: Pearson's correlation, Manders' M1 and M2, the overlap coefficient, K1 and K2, the rank-weighted colocalization (RWC) and, optionally, Manders with Costes' automatic thresholds. It gives these values for the whole image and, optionally, for each object of a class. The values are those of CellProfiler's MeasureColocalization, value for value.
+**Measure Image Colocalization** and **Measure Object Colocalization** measure how the intensities of two channels go together, pixel by pixel: Pearson's correlation, Manders' M1 and M2, the overlap coefficient, K1 and K2, the rank-weighted colocalization (RWC) and, optionally, Manders with Costes' automatic thresholds. The two commands compute the same values; they differ in the region:
+
+- **Measure Image Colocalization** treats the whole image as one region and gives one set of values per image plane.
+- **Measure Object Colocalization** treats every object of a class as its own region and gives one set of values per object.
+
+To get both, add both steps. The values are those of CellProfiler's MeasureColocalization, value for value.
 
 ![A scatter plot of the two channels' pixels: Pearson uses every pixel; the thresholds (a percentage of each channel's maximum) split the plot, and Manders, overlap, K1/K2 and RWC use the pixels above both thresholds (top right) against those above each channel's own threshold](../../../../assets/figures/cmd-measure-colocalization.svg)
 
-This is **not** the [Colocalization](/commands/object/colocalization/) object command. That one works on **objects**: it finds objects of different classes that overlap and links them. Measure Colocalization works on **intensities**: it asks whether bright pixels in channel A are also bright in channel B, with no objects needed.
+These are **not** the [Colocalize Objects](/commands/object/colocalization/) object command. That one works on **objects**: it finds objects of different classes that overlap and links them. The two Measure commands work on **intensities**: they ask whether bright pixels in channel A are also bright in channel B.
 
-It is a [measurement step](/guide/pipelines/#measurement-steps): it runs once per image plane, after all tiles of the image are read and all objects are found.
+Both are [measurement steps](/guide/pipelines/#measurement-steps): they run once per image plane, after all tiles of the image are read and all objects are found.
 
 ## Parameters
 
 | Parameter                    | Description                                                                                         |
 | ---------------------------- | --------------------------------------------------------------------------------------------------- |
-| **ID**                       | The step's ID, unique in the project. It is given automatically (`coloc_01`, …) and starts the names of its values in the results. |
+| **ID**                       | The step's ID, unique in the project. It is given automatically - `coloc_01`, … for Measure Image Colocalization, `object_coloc_01`, … for Measure Object Colocalization - and starts the names of its values in the results. |
+| **Objects**                  | Measure Object Colocalization only: the objects measured. It must be set; the step stops with an error otherwise. |
 | **Channel A**                | The first channel (default 0).                                                                      |
 | **Channel B**                | The second channel (default 1).                                                                     |
-| **Threshold (% of maximum)** | A pixel counts for Manders, the overlap, K1/K2 and RWC when it is brighter than this percentage of its channel's maximum - in the image, or in the object. Default 15 %. |
+| **Threshold (% of maximum)** | A pixel counts for Manders, the overlap, K1/K2 and RWC when it is brighter than this percentage of its channel's maximum - in the image (Measure Image Colocalization), or in the object (Measure Object Colocalization). Default 15 %. |
 | **Costes thresholds**        | Manders with Costes' automatic thresholds, and how they are searched: **Off**, **Faster** (default), **Fast** or **Accurate** - see [Costes' thresholds](#costes-thresholds). |
-| **Per object of**            | The objects of this class get values of their own as well. Unset (default): the whole image only.   |
 
 ## Measurements
 
-Each name ends with the two channels, e.g. _"Pearson (channel 0 × channel 1)"_. With **Per object of** set, each value (except the slope) also comes per object, named _"Pearson per object (channel 0 × channel 1)"_.
+Each name ends with the two channels, e.g. _"Pearson (channel 0 × channel 1)"_ - the same names for both commands. Measure Object Colocalization gives every value except the slope.
 
 | Measurement             | Unit | Range   | Description                                                                          |
 | ----------------------- | ---- | ------- | ------------------------------------------------------------------------------------ |
 | **Pearson**             | -    | -1 to 1 | Correlation of A and B over all pixels. 1: they rise and fall together; 0: unrelated; -1: opposite. |
-| **Slope**               | -    | -       | The slope of the least-squares line B = slope · A + c over all pixels. Image only.    |
+| **Slope**               | -    | -       | The slope of the least-squares line B = slope · A + c over all pixels. Measure Image Colocalization only. |
 | **Manders M1**          | 0-1  | 0 to 1  | The part of A's intensity (above its threshold) in pixels where B is above its threshold too. |
 | **Manders M2**          | 0-1  | 0 to 1  | The same for B: the part of B's intensity where A is above its threshold too.         |
 | **Overlap**             | -    | 0 to 1  | Manders' overlap coefficient of the pixels above both thresholds.                    |
@@ -42,7 +47,7 @@ Each name ends with the two channels, e.g. _"Pearson (channel 0 × channel 1)"_.
 
 ## How it works
 
-The intensities $a_i, b_i$ of the two channels are taken as values from 0 to 1 (the gray value divided by the bit depth's maximum); an RGB image is turned into its luminance first. Over the whole image every pixel counts, the background too; for an object, the pixels of its mask.
+The intensities $a_i, b_i$ of the two channels are taken as values from 0 to 1 (the gray value divided by the bit depth's maximum); an RGB image is turned into its luminance first. Measure Image Colocalization uses every pixel of the image, the background too; Measure Object Colocalization the pixels of each object's mask.
 
 ### Pearson and the slope
 
@@ -51,11 +56,11 @@ r = \frac{\sum_i (a_i - \bar a)(b_i - \bar b)}{\sqrt{\sum_i (a_i - \bar a)^2 \, 
 \text{slope} = \frac{\sum_i (a_i - \bar a)(b_i - \bar b)}{\sum_i (a_i - \bar a)^2}
 $$
 
-Pearson uses every pixel, so a large dark background where both channels are low raises it. Measure per object to look only at the cells.
+Pearson uses every pixel, so a large dark background where both channels are low raises it. Use Measure Object Colocalization to look only at the cells.
 
 ### Thresholds
 
-A pixel is "bright" in A when $a_i$ is above $t_A = p \cdot \max a / 100$, with $p$ the **Threshold (% of maximum)**, and the same for B. Over the whole image the maximum is the image's; per object it is the object's own. As in CellProfiler, over the image a pixel must be **above** the threshold, in an object **at or above** it.
+A pixel is "bright" in A when $a_i$ is above $t_A = p \cdot \max a / 100$, with $p$ the **Threshold (% of maximum)**, and the same for B. For Measure Image Colocalization the maximum is the image's; for Measure Object Colocalization it is the object's own. As in CellProfiler, over the image a pixel must be **above** the threshold, in an object **at or above** it.
 
 ### Manders, overlap and K1/K2
 
@@ -83,7 +88,7 @@ w_i = \frac{R - |\text{rank}(a_i) - \text{rank}(b_i)|}{R}, \qquad
 \text{RWC}_1 = \frac{\sum_{C} a_i w_i}{\sum_{a_i > t_A} a_i}
 $$
 
-and RWC 2 the same for B. A pixel that is bright in both channels but much brighter in one counts less. Over the image the ranks are those of the whole image; per object, those of the pixels of all the objects together.
+and RWC 2 the same for B. A pixel that is bright in both channels but much brighter in one counts less. For the image the ranks are those of the whole image; for the objects, those of the pixels of all the measured objects together.
 
 ### Costes' thresholds
 
@@ -97,7 +102,7 @@ The three search methods are CellProfiler's:
 | **Fast**     | Candidates from the top down, skipping several at a time while the correlation is far from 0. Slow on 16-bit images. |
 | **Accurate** | Every candidate from the top down, one gray value at a time. Very slow on 16-bit images.           |
 
-Per object, the whole image's Costes thresholds are used; they are not searched again for each object.
+Measure Object Colocalization uses the whole image's Costes thresholds: it searches them over the whole image itself (no Measure Image Colocalization step is needed) and does not search them again for each object.
 
 ### Edge cases
 
@@ -105,9 +110,9 @@ As in CellProfiler: when no pixel of any object is bright in both channels, the 
 
 ## Results
 
-The image values belong to the image plane; in the [List view](/guide/results/#list-view) they are under **Columns › Measurements**, named _"coloc_01 · Pearson (channel 0 × channel 1)"_. With **A row per: Images** each image shows its own value; with **A row per: Objects** each object row shows the value of its image plane.
+The values of Measure Image Colocalization belong to the image plane; in the [List view](/guide/results/#list-view) they are under **Columns › Measurements**, named _"coloc_01 · Pearson (channel 0 × channel 1)"_. With **A row per: Images** each image shows its own value; with **A row per: Objects** each object row shows the value of its image plane.
 
-The per-object values (_"coloc_01 · Pearson per object (channel 0 × channel 1)"_) belong to each object of the class and are shown on its row; with **A row per: Images** they are aggregated over the image's objects like any other column. The ranges (-1 to 1, 0 to 1) are fixed, so the colour scales of the [Plate view](/guide/results/#plate-view) stay comparable between plates.
+The values of Measure Object Colocalization (_"object_coloc_01 · Pearson (channel 0 × channel 1)"_) belong to each object of the class and are shown on its row; with **A row per: Images** they are aggregated over the image's objects like any other column. The ranges (-1 to 1, 0 to 1) are fixed, so the colour scales of the [Plate view](/guide/results/#plate-view) stay comparable between plates.
 
 The export option **Measurements - one row per value** writes every value with the image, plane, region (image or object), object ID, step, measurement, unit and key - see [Exporting Results](/guide/results/#exporting-results).
 

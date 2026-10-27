@@ -1,9 +1,9 @@
 ---
-title: Image Quality
+title: Measure Image Quality
 description: Measure how usable a channel of the image is - focus score, power log-log slope, pixels at the maximum and minimum, and the noise.
 ---
 
-**Image Quality** measures how usable one channel of the image is: whether it is sharp, not noisy and not over- or underexposed. The focus score, the power log-log slope and the percentages of pixels at the maximum and minimum are those of CellProfiler's MeasureImageQuality - the same image gives the same numbers. The noise is Immerkær's estimate.
+**Measure Image Quality** measures how usable one channel of the image is: whether it is sharp, not noisy and not over- or underexposed. The focus score, the power log-log slope and the percentages of pixels at the maximum and minimum are those of CellProfiler's MeasureImageQuality - the same image gives the same numbers. The noise is Immerkær's estimate.
 
 ![Four values: the focus score is high for a sharp profile and low for a blurred one; the power log-log slope is steeper for a blurred image; a spike of pixels at the image's maximum means saturation; the noise comes from Immerkær's 3 × 3 mask](../../../../assets/figures/cmd-image-quality.svg)
 

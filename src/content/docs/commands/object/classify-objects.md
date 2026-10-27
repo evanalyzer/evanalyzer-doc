@@ -13,8 +13,10 @@ This is where raw segmentation output ("every connected group of bright pixels")
 
 | Parameter               | Description                                                                                                                                                       |
 | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Input Classes**       | Restrict evaluation to objects that already carry **at least one** of these classes. Leave empty to evaluate every object regardless of its current class          |
-| **Origin Segmentation** | _(advanced)_ Restrict evaluation to objects that came from one of these segmentation classes (the class a Threshold, pixel classifier or AI model assigned). Leave empty for all |
+| **Input Classes**       | Restrict evaluation to objects that already carry **at least one** of these classes. Leave empty to select the objects by their **Origin Segmentation** only |
+| **Origin Segmentation** | _(advanced)_ Restrict evaluation to objects that came from one of these segmentation classes (the class a Threshold, pixel classifier or AI model assigned). Leave empty to select the objects by their **Input Classes** only |
+
+With both set, an object must match both. **Origin Segmentation** alone also selects objects that have no class left - the way to bring back objects an earlier step removed. With **neither** set, the step does nothing: no object is classified, and the editor warns that the step _classifies nothing_. (Earlier versions evaluated every object then, which also gave removed objects a class again.)
 
 Objects created by [Extract Objects](/commands/object/extract-objects/) carry their segmentation class as an object class from the start, so a fresh, unfiltered population can be selected here the same way as an already-named class from an earlier Classify Objects step. Listing several classes widens the selection (a logical OR): an object that carries any one of them is evaluated. See [Object Classes](/fundamentals/classes/) for how that numbering works.
 
@@ -30,7 +32,7 @@ All shape-based criteria accept the field's maximum representable value as "no l
 
 | Criterion                                | Description                                                     |
 | ----------------------------------------- | ---------------------------------------------------------------- |
-| **Min area / Max area**                   | Object area, in the chosen **Size unit**                         |
+| **Min Size / Max Size**                   | Object area, in the chosen **Size unit**                         |
 | **Min circularity / Max circularity**     | Range 0.0-1.0; 1.0 = perfect circle                              |
 | **Min solidity / Max solidity**           | Ratio of area to convex hull area (0-1)                          |
 | **Min aspect ratio / Max aspect ratio**   | Fitted-ellipse major/minor axis ratio                            |
@@ -40,7 +42,7 @@ All shape-based criteria accept the field's maximum representable value as "no l
 
 ### Size unit
 
-Shape criteria that depend on physical size (area, Feret) use a single **Size unit** shared by both:
+Shape criteria that depend on physical size (**Min Size / Max Size**, Feret) use a single **Size unit** shared by both:
 
 - **Pixels (px)** - absolute pixel count
 - **Nanometres (nm)** - converted using the pixel size from image metadata
@@ -67,8 +69,8 @@ An optional, additional criterion evaluated alongside the shape and intensity cr
 
 | Criterion                 | Description                                                                                                                                                            |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Intersecting With**      | An object class to test overlap against. When set, the object only matches if it also overlaps at least one object of this class by at least **Min intersection area** |
-| **Min intersection area** | Minimum overlap area, in the chosen **Size unit**. Has no effect while **Intersecting With** is unset                                                                  |
+| **Intersecting With**      | An object class to test overlap against. When set, the object only matches if it also overlaps at least one object of this class by at least **Min Intersection Size** |
+| **Min Intersection Size** | Minimum overlap area, in the chosen **Size unit**. Has no effect while **Intersecting With** is unset                                                                  |
 
 Unlike the shape criteria, this one is disabled entirely by leaving **Intersecting With** unset (no sentinel value needed) rather than by relaxing a threshold. It corresponds to the [Intersection](/fundamentals/metrics/#intersection) metric - counting how many objects from another class overlap a given object - used here as a pass/fail gate rather than just a recorded value.
 
@@ -100,8 +102,8 @@ Two further modes - **Remove class on match** and **Remove class on mismatch** -
 ## Example: Spot detection
 
 ```
-Input Classes:   (empty - segmentation class from Extract Objects)
-Min area:        3 px²
+Input Classes:   the segmentation class Extract Objects gave the spots
+Min Size:        3 px²
 Min circularity:  0.1
 Allow edge touching: true
 Match Handling:  Reclassify on match
@@ -127,7 +129,7 @@ Every `dapi@cell` object whose average intensity in channel 2 is above 1200 addi
 ```
 Input Classes:      ch1@spot
 Intersecting With:   tetraspeck@spot
-Min intersection area: 1 px²
+Min Intersection Size: 1 px²
 Match Handling:      Reclassify on match
 Output Tag:          tetraspeck@spot
 ```

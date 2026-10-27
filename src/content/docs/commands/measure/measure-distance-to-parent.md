@@ -1,9 +1,9 @@
 ---
-title: Measure Distance To Parent
+title: Measure Object Distance To Parent
 description: Measure how far each child object lies from the parent Relate Objects linked it to - centre to centre, and from its centre to the parent's edge.
 ---
 
-**Measure Distance To Parent** measures how far each child (e.g. a spot) lies from the parent [Relate Objects](/commands/object/relate-objects/) linked it to (e.g. its cell): from the child's centre to the parent's centre, and from the child's centre to the nearest pixel of the parent's edge. These are the child-parent distances of CellProfiler's RelateObjects.
+**Measure Object Distance To Parent** measures how far each child (e.g. a spot) lies from the parent [Relate Objects](/commands/object/relate-objects/) linked it to (e.g. its cell): from the child's centre to the parent's centre, and from the child's centre to the nearest pixel of the parent's edge. These are the child-parent distances of CellProfiler's RelateObjects.
 
 ![A spot inside its cell: the distance to the parent centre runs from the spot's centre to the cell's centre, the distance to the parent edge from the spot's centre to the nearest edge pixel of the cell](../../../../assets/figures/cmd-measure-distance-to-parent.svg)
 

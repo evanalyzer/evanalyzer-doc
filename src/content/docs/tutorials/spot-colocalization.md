@@ -28,7 +28,7 @@ Create **one pipeline per channel** following the [Spot Count](/tutorials/spot-c
 
 Create a third pipeline with **Empty input** (no image channel needed). Add a single step:
 
-**[Colocalization](/commands/object/colocalization/)**
+**[Colocalize Objects](/commands/object/colocalization/)**
 
 | Setting                           | Value                          |
 | --------------------------------- | ------------------------------ |
@@ -56,8 +56,8 @@ After running:
 
 ## Filtering by colocalization area
 
-Add a **Classify Objects** step after Colocalization targeting `coloc@cy5cy7` to filter out low-overlap events:
+Add a **Classify Objects** step after Colocalize Objects targeting `coloc@cy5cy7` to filter out low-overlap events:
 
 | Filter   | Value                                                         |
 | -------- | ------------------------------------------------------------- |
-| Min area | 5 px² (discard single-pixel overlaps due to border artefacts) |
+| Min Size | 5 px² (discard single-pixel overlaps due to border artefacts) |

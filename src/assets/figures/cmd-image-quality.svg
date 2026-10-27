@@ -76,6 +76,6 @@
 <text class="lbl-sm" x="330" y="218">what is left is noise</text>
 <text class="lbl-sm" style="fill:#9333ea" x="330" y="240">σ ∝ mean of</text>
 <text class="lbl-sm" style="fill:#9333ea" x="330" y="254">|response|</text>
-<text class="lbl-bold" x="220" y="300" text-anchor="middle">Image Quality</text>
+<text class="lbl-bold" x="220" y="300" text-anchor="middle">Measure Image Quality</text>
 <text class="lbl-sm" x="220" y="316" text-anchor="middle">is the channel sharp, not saturated and not noisy?</text>
 </svg>

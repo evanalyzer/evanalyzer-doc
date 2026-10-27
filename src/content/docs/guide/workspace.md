@@ -13,15 +13,16 @@ As long as no project is open - when EVAnalyzer starts, and after **EVA › New*
 
 | Action | What it does |
 | --- | --- |
-| **Open image folder…** (`Ctrl+Shift+O`) | The main way in: a new project for the images of a folder. Save it when you like. |
+| **Select image folder…** (`Ctrl+Shift+O`) | The main way in: a new project for the images of a folder. Save it when you like. |
+| **Open image…** (`Ctrl+I`) <span class="evx-new">NEW</span> | One image file, opened right away - the other images of its folder are listed too. |
 | **Open project…** (`Ctrl+O`) | An `.evaproj` file - its images, pipelines and results. |
-| **Empty project** | No images yet - to look at a pipeline or build a simple one. |
+| **Empty project** | No images yet - to look at a pipeline or build a simple one. The **Images** tab of the bottom bar does the same. |
 
 Below them, **New project from a template…** starts from the classes, plate settings and pipelines of a [project template](/guide/pipelines/#saving-a-project-as-a-template), and **Connect to a server…** works on a server with [remote control](/remote/remote-control/).
 
 **Recent projects** lists up to 12 projects you opened or saved, with their path, the number of images and pipelines and when you last used them. A project that has moved shows **Locate…**; the **✕** takes it off the list, **Clear list** empties it. Tick **Open the last project when EVAnalyzer starts** to skip the Start page.
 
-After opening images or a project, EVAnalyzer continues in **Images**; after an empty project or a template, in **Pipelines**.
+Whatever you open - images, a project, an empty project or a template - EVAnalyzer continues in **Images**.
 
 ![The four actions, Connect to a server…, and a few recent projects - cells drifting in the background](../../../assets/screenshots/screenshot-start-page.png)
 
@@ -30,10 +31,11 @@ After opening images or a project, EVAnalyzer continues in **Images**; after an 
 From left to right:
 
 - **EVA** - the [EVA menu](#the-eva-menu).
-- **Undo**, **Redo**, **Save**, **Refresh preview** (`F5`), **Preview the whole image** (`Shift+F5`, see [Live preview](/guide/pipelines/#live-preview)) and **Annotate** (switches the [annotate bar](/guide/images/#annotating-the-image) on and off, `A`).
+- **Undo**, **Redo**, **Save**, **Annotate** (switches the [annotate bar](/guide/images/#annotating-the-image) on and off, `A`) and **AI training…** (opens [AI training](/ai/training/), which learns from the annotations).
 - The **image chip** - the image shown; click it to [go to another image](/guide/images/#go-to-image) by typing part of its name. For files with several series, **Series 2 of 5 ▾** beside it picks the [series](/guide/images/#series-selection).
 - The project's name in the middle.
-- **Compare** (only with a [breakpoint image](/guide/pipelines/#breakpoints)), **Debug mode**, **Auto preview** and **Run**. While an analysis runs, **Run** turns into its progress - see [Working while an analysis runs](#working-while-an-analysis-runs).
+- **Compare** (only with a [breakpoint image](/guide/pipelines/#breakpoints)), then the preview in one group - **Refresh preview** (`F5`), **Preview the whole image** (`Shift+F5`, see [Live preview](/guide/pipelines/#live-preview)) and **Auto preview** - and **Run**. While an analysis runs, **Auto preview** and **Run** give way to its progress - see [Working while an analysis runs](#working-while-an-analysis-runs).
+- **Hide all panels** / **Show the panels** at the right end.
 
 In **Results** the top bar holds the results' controls instead - the analysis, the [views](/guide/results/#views) as tabs, **Full | Split with image** and **Export…** - see [Results](/guide/results/#the-results-bar).
 
@@ -43,11 +45,33 @@ Everything that used to be in the menu bar is in the **EVA** menu at the top lef
 
 | Section | Items |
 | --- | --- |
-| **Project** | **New**, **Open…** (`Ctrl+O`), **Open recent ›**, **New from template…**, **Open images folder…** (`Ctrl+Shift+O`), **Save** (`Ctrl+S`), **Save as…**, **Save as template…**, **Project settings…**, **Cite project**, **View ›** |
+| **Project** | **New**, **Open…** (`Ctrl+O`), **Open recent ›**, **New from template…**, **Select image folder…** (`Ctrl+Shift+O`), **Save** (`Ctrl+S`), **Save as…**, **Save as template…**, **Project settings…**, **Cite project**, **View ›** |
 | **Tools** | **AI training…**, **Debug mode**, **Connect to server…** (and **Disconnect** while connected) |
 | | **Help ›** (**Shortcuts** `F1`, **evanalyzer.org**), **About** |
 
+**Open…** opens a project (`.evaproj`), a project template (`.evatemplate`), an image, or a module file (`.evamodule`). A module file is copied into the project's modules, as from the [module library](/guide/modules/#module-library) - **Module added** then says how to use it: in a pipeline with **Add step › Modules**.
+
 ![The EVA menu: Project, Open recent, View, Tools, Help and About](../../../assets/screenshots/screenshot-eva-menu.png)
+
+## The file dialog
+
+EVAnalyzer opens and saves every file through its own file dialog - the same on every system, and on a server it lists the server's folders (see [Remote Control](/remote/remote-control/)).
+
+On the left, **Places** lists, above **Home** and the drives:
+
+- **Project** - the folder of the open project file (once it is saved),
+- **Images** - the project's image folder, when it is somewhere else,
+- **Templates** - the `templates` folder of [EVAnalyzer's folder](/guide/settings/#where-evanalyzer-stores-its-data), if it exists.
+
+Below them come your own places <span class="evx-new">NEW</span>: **Add this folder** at the bottom of the list adds the folder shown; the **×** that appears when you point at one of them takes it off again. Your places are kept in the app settings (on a server, in the server's settings).
+
+A dialog that doesn't open in a folder of its own starts in the last folder chosen for this project - else the project's folder, the image folder or Home. Drives and network folders can take a few seconds to list; a spinner shows while the places or a folder load.
+
+<div class="evx-shot-todo">
+<strong>File dialog with places</strong>
+<span>The file dialog with Project, Images, Templates and a folder of your own under Places, the pointer on it showing its ×, "Add this folder" at the bottom.</span>
+<code>src/assets/screenshots/screenshot-file-dialog.png</code>
+</div>
 
 ### View
 
@@ -88,9 +112,9 @@ Dialogs open where they belong - step settings next to the steps, class settings
 
 ## Command palette
 
-Press `Ctrl+K` (or the **Ctrl K** button in the steps panel's head) to find anything by typing: an action, a step of the pipeline, a setting, a command to add, an image or a class. A setting is found by its name - _"min"_ shows **Min Area · #8 ClassifyObjects · 5** - and opens its step. `↑` `↓` choose, `Enter` runs, `Esc` closes.
+Press `Ctrl+K` (or the **Ctrl K** button in the steps panel's head) to find anything by typing: an action, a step of the pipeline, a setting, a command to add, an image or a class. A setting is found by its name - _"min"_ shows **Min Size · #8 ClassifyObjects · 5** - and opens its step. `↑` `↓` choose, `Enter` runs, `Esc` closes.
 
-![The command palette with min typed: steps, settings such as Min Area of step 8 ClassifyObjects, and commands to add](../../../assets/screenshots/screenshot-command-palette.png)
+![The command palette with min typed: steps, settings such as Min Size of step 8 ClassifyObjects, and commands to add](../../../assets/screenshots/screenshot-command-palette.png)
 
 ## Colors
 

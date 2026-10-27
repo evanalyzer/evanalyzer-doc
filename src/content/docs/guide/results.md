@@ -51,7 +51,7 @@ The **List** view shows one row per detected object. The default columns are **I
 
 - **General** - **Object ID**, **Track ID** (the track an object belongs to, see [Simple Tracker](/commands/dataset/simple-tracker/)), **Image**, **Class**, **Count**.
 - **Geometry** and **Shape** - area, perimeter, circularity, solidity, eccentricity, **Max Feret [px]**, **Min Feret [px]**, **Major Axis [px]**, **Minor Axis [px]**, **Equivalent Diameter [px]** and **Extent**.
-- **Coloc** - per partner class **Coloc with …**, the number of partners from [Colocalization](/commands/object/colocalization/).
+- **Coloc** - per partner class **Coloc with …**, the number of partners from [Colocalize Objects](/commands/object/colocalization/).
 - **Intensity** - per channel **Avg**, **Sum**, **Min**, **Max**, **Std Dev**, **Median**, **Lower Quartile**, **Upper Quartile** and **MAD Intensity (Ch n)**.
 - **Measurements** <span class="evx-new">NEW</span> - the values of the pipeline's [measurement steps](/guide/pipelines/#measurement-steps), named _step ID · measurement_ (e.g. **coloc_01 · Pearson**). A measurement of the whole image shows the image's value in every row of that image. A measurement that points to another object - the nearest neighbour, the parent - has a second column **… · object**; click its cell to see that object.
 

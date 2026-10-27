@@ -17,7 +17,7 @@ When multiple **Other class** objects overlap a single **Input class** object, t
 | **Input class**        | The "A" object set. Each object in this class is processed individually                                                               |
 | **Other class**        | The "B" object set. All overlapping objects of this class are unioned before the operation                                            |
 | **Other filter classes** | Additional classes used to restrict which **Other class** objects are considered — leave empty to use all **Other class** objects    |
-| **Min overlap area**   | Minimum overlap area (in the chosen **Unit**) required before a B object is considered to overlap an A object                         |
+| **Min Overlap Size**   | Minimum overlap area (in the chosen **Unit**) required before a B object is considered to overlap an A object                         |
 | **Output class**       | Class assigned to the resulting shape                                                                                                 |
 | **Keep unmatched**     | When enabled, input objects that have no overlapping B objects are preserved unchanged in the output class                            |
 
@@ -32,7 +32,7 @@ When multiple **Other class** objects overlap a single **Input class** object, t
 
 ## Behaviour Notes
 
-- The operation is applied per A object: each A object is matched against all B objects that overlap it (above the **Min overlap area** threshold), and their union is treated as the single "B" mask for that pair.
+- The operation is applied per A object: each A object is matched against all B objects that overlap it (above the **Min Overlap Size** threshold), and their union is treated as the single "B" mask for that pair.
 - If **Keep unmatched** is disabled (default), A objects without any overlapping B are dropped entirely and do not appear in the output.
 - The **Output class** can be the same as **Input class**, in which case the original object is replaced. If it is a new class, the result is added alongside the original.
 - Resulting shapes that extend to the image boundary are flagged as edge-touching, identical to any other boundary object.

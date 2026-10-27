@@ -11,9 +11,9 @@ For a tour of the window itself, see [The Workspace](/guide/workspace/).
 Start EVAnalyzer as described in [Installation](/getting-started/installation/).
 It opens on the **Start** page.
 
-![Open image folder…, Open project…, Empty project, New project from a template…, Connect to a server…, and the recent projects](../../../assets/screenshots/screenshot-start-page.png)
+![Select image folder…, Open image…, Open project…, Empty project, New project from a template…, Connect to a server…, and the recent projects](../../../assets/screenshots/screenshot-start-page.png)
 
-Click **Open image folder…** (`Ctrl+Shift+O`) and choose the folder with your images.
+Click **Select image folder…** (`Ctrl+Shift+O`) and choose the folder with your images - or **Open image…** (`Ctrl+I`) to start with one image file; the other images of its folder are listed too.
 EVAnalyzer creates a new project for them and switches to **Images**: the images are listed on the left - or laid out on a plate, if their names carry well positions.
 Click an image to show it; its channels, size and pixel size appear in the image info.
 

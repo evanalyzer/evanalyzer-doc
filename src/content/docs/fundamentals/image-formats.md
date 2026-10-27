@@ -53,7 +53,7 @@ Each unique combination of (C, Z, T) is one **image plane**.
 EVAnalyzer can access and process any plane individually.
 
 Pipeline input is specified by channel index (0-based).
-Z and T handling is configured in the [Image control tab]() on the right hand side.
+How a z-stack is analysed - one plane, a projection, or (in preparation) as one volume - is set with the Z menu over the image, see [Z-stack](/guide/images/#z-stack). The [orthogonal views and the 3D view](/guide/images/#orthogonal-views-and-3d-view) show a z-stack from the side and from any angle.
 
 ## Metadata
 
@@ -61,7 +61,7 @@ EVAnalyzer takes from the file, per series:
 
 - the number of channels, Z planes and time frames,
 - each channel's name and emission wavelength (its color in the viewer) - a channel without a name is shown as _Channel 0_, _Channel 1_, …,
-- the physical pixel size in X, Y and Z,
+- the physical pixel size in X, Y and Z - a Z spacing the file doesn't give stays unknown, it is never guessed,
 - the frame interval of a time-lapse - the file's time increment, or else the mean step between the time stamps of the first and the last frame,
 - the objective's magnification.
 

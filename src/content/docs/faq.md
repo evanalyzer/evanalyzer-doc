@@ -24,7 +24,9 @@ It has since been rewritten in Rust and rebranded **EVAnalyzer**, but the focus 
 <details>
 <summary>Is EVAnalyzer open-source?</summary>
 
-EVAnalyzer is fully open-source under the [AGPL-3.0](https://github.com/evanalyzer/evanalyzer/blob/main/LICENSE) license, and its development takes place [on GitHub in the `evanalyzer/evanalyzer` repository](https://github.com/evanalyzer/evanalyzer). EVAnalyzer is available as a free version under this license for non-commercial use.
+EVAnalyzer's source code is public, and its development takes place [on GitHub in the `evanalyzer/evanalyzer` repository](https://github.com/evanalyzer/evanalyzer). It is licensed under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/main/LICENSE): free for personal, academic, research and other non-commercial use. Commercial use - in a company, in a commercial product or service - needs a separate license; [open an issue](https://github.com/evanalyzer/evanalyzer/issues) or contact the maintainer.
+
+Third-party components keep their own licenses. **EVA › About › Licenses** lists every one of them with its license text, and every download carries them in `THIRD-PARTY-NOTICES.txt` next to `LICENSE`.
 
 </details>
 
