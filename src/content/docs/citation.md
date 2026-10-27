@@ -9,7 +9,7 @@ If you use EVAnalyzer in your research, please don't forget to cite us!
 
 Beyond citing EVAnalyzer itself, many individual pipeline commands (Watershed, Voronoi, Rolling Ball, Morphological Transform, and others) wrap a published algorithm with its own citation - shown in the **Background** section of each command's documentation page.
 
-To generate a ready-made bibliography for the specific pipelines in your project, choose **EVA › Cite project** and choose where to save it. EVAnalyzer writes a Markdown file containing:
+To generate a ready-made bibliography for the specific pipelines in your project, choose **EVA › Cite project** and choose where to save it - or run [`evanalyzer cli cite`](/cli/cli/#cite) (writes `citation.md` next to the project file). EVAnalyzer writes a Markdown file containing:
 
 - A tree of every enabled pipeline and its enabled steps, each step marked with a `[@citation-key]` reference (or `(Uncited)` for commands with no associated publication).
 - A **Citations** section listing the full reference - authors, year, title, journal/container, and a DOI or URL - for every distinct cited algorithm actually used in the project.
@@ -18,11 +18,20 @@ This gives you a per-project methods reference you can attach to a publication o
 
 ## EVAnalyzer (this application)
 
-> **EVAnalyzer citation:** Coming soon...
+A paper is in preparation. Until it is published, cite the software:
 
+> Danmayr, J. (2026). *EVAnalyzer: Enhanced Visual Analyzer.* https://github.com/evanalyzer/evanalyzer
+
+```bibtex
+@software{Danmayr2026-evanalyzer,
+  author = {Danmayr, Joachim},
+  title  = {{EVAnalyzer}: Enhanced Visual Analyzer},
+  year   = {2026},
+  url    = {https://github.com/evanalyzer/evanalyzer}
+}
 ```
-Coming soon...
-```
+
+GitHub's **Cite this repository** button on the [repository](https://github.com/evanalyzer/evanalyzer) gives the same reference in APA or BibTeX (from its `CITATION.cff`). Also cite the methods of the steps you used - see [Citing the algorithms you used](#citing-the-algorithms-you-used).
 
 ---
 

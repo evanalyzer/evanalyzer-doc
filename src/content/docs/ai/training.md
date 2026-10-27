@@ -78,6 +78,17 @@ The trained model is saved to `<project>/models/<model name>.evamodel`, and **RE
 
 You can also add an AI Pixel Classifier or AI Object Classifier step yourself and point it at the file.
 
+### See where the model is unsure
+
+Once a model is in a pipeline, **SHOW ON IMAGE** in the sheet turns on the **Prediction** overlay:
+
+- **Pixel classifier:** each pixel in the colour of the class it is predicted as - the stronger, the more probable. Pale areas are where the model is unsure: paint examples there, then train again.
+- **Object classifier:** each object as strong as the model is sure of its class. **MOST UNSURE OBJECTS** lists the objects it is least sure of, with their class and certainty - click one to show it on the image, copy a few to manual, give them their class, then train again.
+
+**Opacity** sets how strong a sure prediction is drawn; **Background in its colour too** also colours what is predicted as background (off: left clear); **Values under the cursor** shows the predicted class and its probability in the pixel info. A legend at the top left of the image names the classes (_pale: unsure … sure_) and hides the overlay again. The look is remembered; the overlay starts off in every session.
+
+The same certainty decides **Min Certainty** in the [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) and [AI Object Classifier](/commands/object/ai-object-classifier/) steps: predictions less sure than it are dropped.
+
 ### Z-stacks and time-lapses
 
 Each example is trained on the image an analysis would use it on, by the project's [z-stack setting](/guide/images/#z-stack):

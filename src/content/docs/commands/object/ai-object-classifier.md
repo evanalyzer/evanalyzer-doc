@@ -19,6 +19,7 @@ Available in builds with the `ai` Cargo feature enabled - see [AI Models](/ai/ov
 | **Segmentation Mapping** | Maps each of the model's predicted classes to one of this project's object classes (despite the name, this maps *object* classes, not segmentation classes - a naming quirk carried over from the pixel classifier's equivalent field) |
 | **Input Classes** | Restrict scoring to objects that already carry **at least one** of these classes - same OR semantics as Classify Objects' Input Classes (see [Object Classes](/fundamentals/classes/)). With no input class chosen the step does nothing, and the editor warns that it _classifies nothing_ (earlier versions scored every object then, giving objects an earlier step removed a class again) |
 | **Match Handling** | What to do with an object's classes once a mapped prediction is applied - see below |
+| **Min Certainty** | Objects the model is less sure about than this are left as they are (0 = off, the default). The certainty is the share of trees (Random Forest) or neighbours (k-NN) voting for the class, or the probability of the class (MLP) - see [where the model is unsure](/ai/training/#see-where-the-model-is-unsure) |
 
 ### Match Handling
 

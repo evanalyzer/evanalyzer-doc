@@ -15,7 +15,7 @@ EVAnalyzer is a source-available project, free to use for non-commercial purpose
 <details>
 <summary>Is EVAnalyzer free to use? Is the source code available?</summary>
 
-EVAnalyzer's source code is public, and its development takes place [on GitHub in the `evanalyzer/evanalyzer` repository](https://github.com/evanalyzer/evanalyzer). It is licensed under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/relates/LICENSE): free for personal, academic, research and other non-commercial use. Commercial use - in a company, in a commercial product or service - needs a separate license; [open an issue](https://github.com/evanalyzer/evanalyzer/issues) or contact the maintainer.
+EVAnalyzer's source code is public, and its development takes place [on GitHub in the `evanalyzer/evanalyzer` repository](https://github.com/evanalyzer/evanalyzer). It is licensed under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/main/LICENSE): free for personal, academic, research and other non-commercial use. Commercial use - in a company, in a commercial product or service - needs a separate license; [open an issue](https://github.com/evanalyzer/evanalyzer/issues) or contact the maintainer.
 
 Third-party components keep their own licenses. **EVA › About › Licenses** lists every one of them with its license text, and every download carries them in `THIRD-PARTY-NOTICES.txt` next to `LICENSE`.
 
@@ -38,7 +38,7 @@ Check the [GitHub issues page](https://github.com/evanalyzer/evanalyzer/issues) 
 <details>
 <summary>Can I use EVAnalyzer in a company or for commercial work?</summary>
 
-Not without a separate license. EVAnalyzer is free for personal, academic, research and other non-commercial use under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/relates/LICENSE). Using it in a company, or in a commercial product or service, needs a commercial license - [open an issue](https://github.com/evanalyzer/evanalyzer/issues) or contact the maintainer.
+Not without a separate license. EVAnalyzer is free for personal, academic, research and other non-commercial use under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/main/LICENSE). Using it in a company, or in a commercial product or service, needs a commercial license - [open an issue](https://github.com/evanalyzer/evanalyzer/issues) or contact the maintainer.
 
 </details>
 

@@ -23,6 +23,7 @@ evanalyzer.exe cli <command> [options...]
 | [`analyze`](#analyze)           | Run a project's enabled pipelines over its images and write a new results database |
 | [`project-info`](#project-info) | Print a project's images, classes, and pipelines without running anything          |
 | [`validate`](#validate)         | Check that every image referenced by a project can be found on disk                |
+| [`cite`](#cite)                 | Write a project's methods paragraph and the citations of its steps (Markdown)      |
 | [`view`](#view)                 | Print a quick summary and a page of rows from a results database                   |
 | [`columns`](#columns)           | List the column ids available for grouping/chart axes in a results database        |
 | [`export`](#export)             | Export a results database to CSV, XLSX, or Parquet                                 |
@@ -125,6 +126,19 @@ Pipelines (1):
 ```
 
 If the configured image root can't be found on disk, **Reachable** reports why instead of just "no".
+
+## cite
+
+Writes the same file as **EVA › Cite project** in the GUI: a ready-to-paste methods paragraph naming EVAnalyzer with its version, each pipeline's steps with their citations, and the full reference list - see [Citation](/citation/#citing-the-algorithms-you-used).
+
+```sh
+./evanalyzer cli cite --project experiment.evaproj
+```
+
+| Argument           | Description                                                            |
+| ------------------ | ---------------------------------------------------------------------- |
+| `--project <path>` | Project file to cite (required)                                        |
+| `--out <path>`     | Markdown file to write. Default: `citation.md` next to the project file |
 
 ## validate
 

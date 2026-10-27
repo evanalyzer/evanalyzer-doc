@@ -35,7 +35,7 @@ A side effect of this approach is that EVAnalyzer can be used on standard laptop
 
 The philosophy behind EVAnalyzer is to give everyone the opportunity to perform complex image processing and analysis. Even small laboratories without the funds to purchase expensive proprietary software should be able to conduct their research with EVAnalyzer.
 
-Consequently, EVAnalyzer is free to use for non-commercial purposes, under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/relates/LICENSE).
+Consequently, EVAnalyzer is free to use for non-commercial purposes, under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/main/LICENSE).
 
 ## Who develops EVAnalyzer
 
