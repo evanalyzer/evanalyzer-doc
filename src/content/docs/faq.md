@@ -8,23 +8,14 @@ description: Common questions about EVAnalyzer.
 <details>
 <summary>Who develops EVAnalyzer?</summary>
 
-EVAnalyzer is an open source project initiated as a leisure project by Joachim Danmayr and Melanie Schürz, in cooperation with the [Paris Lodron University of Salzburg](https://www.plus.ac.at/) and the [Ludwig Boltzmann Institute for Nanovesicular Precision Medicine](https://nvpm.lbg.ac.at/).
+EVAnalyzer is a source-available project, free to use for non-commercial purposes, initiated as a leisure project by Joachim Danmayr and Melanie Schürz, in cooperation with the [Paris Lodron University of Salzburg](https://www.plus.ac.at/) and the [Ludwig Boltzmann Institute for Nanovesicular Precision Medicine](https://nvpm.lbg.ac.at/).
 
 </details>
 
 <details>
-<summary>Why was the project previously called ImageC?</summary>
+<summary>Is EVAnalyzer free to use? Is the source code available?</summary>
 
-Inspired by [ImageJ](https://imagej.net/ij/) - a **J**ava-written image processing tool for single-image processing - the project was originally named **ImageC**, signaling a high-throughput tool written in **C**++.
-
-It has since been rewritten in Rust and rebranded **EVAnalyzer**, but the focus on high-throughput, easy-to-use image processing remains the same. See [About EVAnalyzer](/about/) for the full history.
-
-</details>
-
-<details>
-<summary>Is EVAnalyzer open-source?</summary>
-
-EVAnalyzer's source code is public, and its development takes place [on GitHub in the `evanalyzer/evanalyzer` repository](https://github.com/evanalyzer/evanalyzer). It is licensed under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/main/LICENSE): free for personal, academic, research and other non-commercial use. Commercial use - in a company, in a commercial product or service - needs a separate license; [open an issue](https://github.com/evanalyzer/evanalyzer/issues) or contact the maintainer.
+EVAnalyzer's source code is public, and its development takes place [on GitHub in the `evanalyzer/evanalyzer` repository](https://github.com/evanalyzer/evanalyzer). It is licensed under the [PolyForm Noncommercial License 1.0.0](https://github.com/evanalyzer/evanalyzer/blob/relates/LICENSE): free for personal, academic, research and other non-commercial use. Commercial use - in a company, in a commercial product or service - needs a separate license; [open an issue](https://github.com/evanalyzer/evanalyzer/issues) or contact the maintainer.
 
 Third-party components keep their own licenses. **EVA › About › Licenses** lists every one of them with its license text, and every download carries them in `THIRD-PARTY-NOTICES.txt` next to `LICENSE`.
 

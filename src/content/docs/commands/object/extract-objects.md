@@ -35,7 +35,3 @@ Threshold → Connected Components → [Watershed] ─┐
 ```
 
 Extract Objects is always followed by [Classify Objects](/commands/object/classify-objects/). The segmentation class assigned here is the intermediate class used internally; the final named object class is assigned by Classify Objects.
-
-:::note[New in EVAnalyzer vs ImageC]
-In the predecessor application (ImageC), region extraction and classification were combined into a single *Classifier* step. EVAnalyzer splits them into Extract Objects (geometry extraction) and Classify Objects (filtering + class assignment) for greater flexibility and clearer pipeline structure.
-:::

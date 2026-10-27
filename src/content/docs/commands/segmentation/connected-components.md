@@ -27,10 +27,6 @@ Setting **Min size** to a small positive value (e.g. 5–20 px²) is a lightweig
 Threshold → Connected Components → [optional Watershed] → Extract Objects
 ```
 
-:::note[New in EVAnalyzer vs ImageC]
-Connected Components is an explicit pipeline step in EVAnalyzer. In the predecessor ImageC, this step was automatically performed inside the classifier command. Making it explicit allows more control over the segmentation pipeline.
-:::
-
 ## Background
 
 Two-pass connected-component labelling with an equivalence table (union-find) is one of the oldest algorithms in image analysis, going back to Azriel Rosenfeld and John Pfaltz, "Sequential Operations in Digital Picture Processing," *Journal of the ACM*, vol. 13, no. 4, pp. 471-494, 1966.
