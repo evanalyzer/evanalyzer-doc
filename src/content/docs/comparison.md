@@ -72,13 +72,14 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | **Morphological Operations**           | Erosion, Dilation, Opening, Closing, Hole Filling, Skeletonization, Distance Transform.                                                         | ✅         | ✅           | ✅     | ⚠️     |
 | **Watershed Clustered Object Split**   | Marker-controlled watershed segmentation to separate touching or overlapping cells.                                                             | ✅         | ✅           | ✅     | ✅     |
 | **Deep Learning AI Models**            | Native or plugin access to pretrained deep learning models (Cellpose, StarDist, Segment Anything / SAM).                                        | ✅†        | ⚠️           | ✅     | ✅\*   |
+| **Model Repository Import**            | Import a pretrained model from [bioimage.io](https://bioimage.io) and get a pre-configured segmentation step from its model description.       | ✅†        | -            | ✅     | ⚠️     |
 | **Machine Learning Pixel Classifiers** | Interactive scribble-based pixel classification (e.g., Trainable Weka Segmentation, Ilastik integration).                                       | ✅         | -            | -      | ✅     |
 | **ROI Manager & Editing Tools**        | Store, group, rename, filter, dilate, measure, and export collections of vector ROIs.                                                           | ✅         | ⚠️           | ✅     | ✅     |
 | **Object Math (Boolean Set Ops)**      | AND / OR / XOR / Subtract operations between object classes to combine, exclude, or reshape detected objects (e.g., a rim around an organelle). | ✅         | ⚠️           | ⚠️     | ⚠️     |
 
 \*QuPath's Cellpose/StarDist support ships as separately installed extensions, not bundled by default.
 
-† EVAnalyzer actually only supports models stored either in ONNX or torchscript. Tensorflow models are not supported.
+† EVAnalyzer runs Cellpose-SAM, StarDist, UNet and YOLOv5 models exported as **TorchScript** only - ONNX and TensorFlow models can't be run. A bioimage.io model must ship TorchScript weights to be [imported](/ai/bioimageio-import/).
 
 ---
 
@@ -89,15 +90,18 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | **Morphometric Measurements**     | Area, perimeter, bounding box, major/minor axis, circularity, aspect ratio, roundness, solidity, 3D volume.             | ✅\*       | ✅           | ✅     | ✅     |
 | **Densitometry & Intensity**      | Mean, min/max, median, integrated density, standard deviation of pixel values across channels.                          | ✅         | ✅           | ✅     | ✅     |
 | **Colocalization Analysis**       | Pearson's correlation coefficient, Manders' overlap coefficients ($M_1/M_2$), Costes' thresholding, 2D cytofluorograms. | ✅†        | ✅           | ✅     | -      |
-| **Spatial Distance & Clustering** | Nearest neighbor distance, Delaunay triangulation, Voronoi tessellation, object-to-boundary distance.                   | ⚠️\*\*     | ⚠️           | ⚠️     | ✅     |
-| **Texture Analysis (Haralick)**   | Grey-Level Co-occurrence Matrix (GLCM): contrast, correlation, energy, entropy, and local heterogeneity.                | -          | ✅           | ✅     | ✅     |
+| **Object-Based Colocalization**   | Links overlapping objects of different classes (e.g. vesicles inside a cell) and counts or measures the overlaps.      | ✅         | ⚠️           | ⚠️     | ⚠️     |
+| **Parent/Child Object Relations** | Links child objects to their parent (spots → cell → tissue region) and reports per-parent counts and aggregated child measurements. | ✅         | ✅           | ⚠️     | ✅     |
+| **Spatial Distance & Clustering** | Nearest neighbor distance, Delaunay triangulation, Voronoi tessellation, object-to-boundary distance.                   | ✅\*\*     | ⚠️           | ⚠️     | ✅     |
+| **Texture Analysis (Haralick)**   | Grey-Level Co-occurrence Matrix (GLCM): contrast, correlation, energy, entropy, and local heterogeneity.                | ✅         | ✅           | ✅     | ✅     |
+| **Image Quality Control**         | Focus score, blur, saturation and noise per image, with automatic exclusion of bad images from the results.            | ✅         | ✅           | ⚠️     | -      |
 | **Filament & Skeleton Analysis**  | Branch point detection, filament length, segment classification, network connectivity metrics.                          | -          | ✅           | ✅     | -      |
 
-\*No 3D volume support
+\*No 3D volume support.
 
-† Object based colocalization calculation, actually no Pearson's correlation supported
+† [Pearson, Manders M1/M2, overlap, K1/K2, RWC and Costes' thresholds](/commands/measure/measure-colocalization/), per image or per object, value for value as CellProfiler's MeasureColocalization. No cytofluorogram plot.
 
-\*\* Support for voronoi grid
+\*\* [Neighbour counts and first/second closest distances](/commands/measure/measure-object-neighbors/), [distance to the parent's centre and edge](/commands/measure/measure-distance-to-parent/), and [Voronoi](/commands/object/voronoi/) tessellation. No Delaunay triangulation.
 
 ---
 
@@ -105,10 +109,15 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 | Feature Name                      | Detailed Functionality                                                                                     | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
-| **Automated Particle Tracking**   | LAP (Linear Assignment Problem), Kalman filtering, or nearest-neighbor frame-to-frame linking algorithms.  | -          | ✅           | ✅     | -      |
-| **Kinematic Trajectory Metrics**  | Velocity, instantaneous speed, directionality ratio, mean square displacement (MSD), confinement index.    | -          | ✅           | ✅     | -      |
+| **Automated Particle Tracking**   | LAP (Linear Assignment Problem), Kalman filtering, or nearest-neighbor frame-to-frame linking algorithms.  | ⚠️\*       | ✅           | ✅     | -      |
+| **Kinematic Trajectory Metrics**  | Velocity, instantaneous speed, directionality ratio, mean square displacement (MSD), confinement index.    | ⚠️†        | ✅           | ✅     | -      |
 | **Cell Division & Lineage Trees** | Handling cell division events (mitosis), branch creation, and full lineage tree visualization.             | -          | ✅           | ✅     | -      |
+| **Track Visualization**           | Track table and trails drawn on the image, stepping or playing through the time points.                    | ✅         | ⚠️           | ✅     | -      |
 | **Manual Track Editing UX**       | Interactive track visualization with easy manual link breaking, joining, path deletion, and spot tweaking. | -          | -            | ✅     | -      |
+
+\*The [Simple Tracker](/commands/dataset/simple-tracker/) links objects by greedy nearest neighbour between consecutive frames - no gap closing, no divisions or merges, no motion model.
+
+†Per track: time points, path length, speed (px/frame, µm/min or µm/s) and straightness - see [Results › Tracks](/guide/results/#tracks). No MSD or confinement analysis.
 
 ---
 
@@ -118,6 +127,7 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
 | **No-Code Pipeline Builder**          | Compose a full analysis pipeline by adding and configuring pre-built commands, without writing scripts or macros.                                                                                                                                                         | ✅         | ✅           | -      | ⚠️     |
 | **Multi-Channel Branching Pipelines** | Routes different channels or object classes down independent, custom-filtered processing branches within one project, instead of one linear sequence applied to everything. Lets each fluorescence marker get its own background correction, thresholding, or classifier. | ✅         | -            | -      | -      |
+| **Embedded Scripting**                | Write a script step with loops and conditions that calls the built-in commands, for logic a fixed sequence of steps can't express.                                                                                                                                         | ✅\*\*     | ⚠️           | ✅     | ✅     |
 | **Macro / Action Recorder**           | GUI click recorder that generates executable script code based on user interactive steps.                                                                                                                                                                                 | -          | -            | ✅     | ✅     |
 | **Batch Folder Processing**           | Applies saved macro/pipeline across entire directories without user intervention.                                                                                                                                                                                         | ✅         | ✅           | ✅     | ✅     |
 | **Multi-Threading Support**           | Parallelizes image or tile processing across CPU cores during analysis runs.                                                                                                                                                                                              | ✅         | ⚠️\*         | ⚠️     | ✅     |
@@ -127,13 +137,15 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 \*CellProfiler parallelizes across images within a single run, but real throughput on large images in practice means manually tiling images and orchestrating multiple CellProfiler instances yourself.
 
+\*\*[Script](/commands/image-processing/script/) steps are written in [Rhai](https://rhai.rs), a small embedded language - not Python, so no access to the Python package ecosystem.
+
 ---
 
 ### Data Export, Visualization & Ecosystem
 
 | Feature Name                       | Detailed Functionality                                                                                                                                                | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
-| **Open Format Data Export**        | Export measurements to standard tabular formats (`.csv`, `.xlsx`, Parquet).                                                                                           | ✅\*       | ✅           | ✅     | ✅     |
+| **Open Format Data Export**        | Export measurements to standard tabular formats (`.csv`, `.xlsx`, Parquet).                                                                                           | ✅         | ✅           | ✅     | ✅     |
 | **SQL-Queryable Results Database** | Query results directly via SQL against a bundled analysis database, instead of only flat export files.                                                                | ✅         | ⚠️           | -      | -      |
 | **Interactive Plotting & Gating**  | Scatter plots, histograms, and boxplots linked back to image views (click point -> highlight cell). Enables flow-cytometry-style gating directly from the data plots. | ✅         | ✅           | ⚠️     | -      |
 | **3D Volume Rendering**            | Hardware-accelerated (OpenGL/Vulkan) 3D volume rendering, ISO-surface rendering, and orthoviewers.                                                                    | -          | -            | ✅     | -      |
@@ -145,10 +157,10 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 | Tool              | Choose it when...                                                                                                                                 | Core strength                                                                                                                                                               | Its ceiling                                                                                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **EVAnalyzer**    | Multiplex/multi-channel fluorescence panels where every marker needs its own processing, especially at whole-slide scale.                         | Very fast and also runs on lower performance computers smooth. Branching per-channel pipelines with built-in whole-slide tiling, live preview, CLI batch/HPC execution, and [cross-tile object merging](/fundamentals/cross-tile-merging/) - no other tool here reassembles objects larger than a tile's overlap window. | No time-lapse tracking, no true 3D volume rendering; a smaller measurement library than CellProfiler/ImageJ for classic single-channel quantification. |
+| **EVAnalyzer**    | Multiplex/multi-channel fluorescence panels where every marker needs its own processing, especially at whole-slide scale.                         | Very fast and also runs on lower performance computers smooth. Branching per-channel pipelines with built-in whole-slide tiling, live preview, CLI batch/HPC execution, and [cross-tile object merging](/fundamentals/cross-tile-merging/) - no other tool here reassembles objects larger than a tile's overlap window. | Only simple nearest-neighbour tracking (no gap closing or lineages), no 3D volume analysis, no registration, stitching or deconvolution; AI models must be TorchScript; no plugin ecosystem. |
 | **CellProfiler**  | Deep, classic single- or few-channel quantification - precise shape, texture, colocalization, or particle-tracking metrics for a methods section. | The broadest, most mature measurement library here (Haralick texture, LAP tracking, Pearson's/Manders' colocalization).                                                     | One linear pipeline per run; per-channel branching and real multi-threaded throughput on large images both need manual workarounds.                    |
 | **ImageJ / Fiji** | You need a specific plugin, a quick one-off manual measurement, or maximum flexibility via scripting (macros/Jython/Groovy).                      | The largest plugin ecosystem of any tool here - most niche bio-imaging algorithms exist as an ImageJ plugin.                                                                | No structured no-code pipeline model; a reproducible pipeline means writing or recording macros yourself.                                              |
-| **QuPath**        | Whole-slide digital pathology - parent/child object hierarchies (tissue → cell → sub-cell), TMA cores, point-and-click classifier training.       | Best-in-class whole-slide viewer/pyramid handling, plus a native object hierarchy no other tool here has.                                                                   | Not built for time-lapse/live-cell tracking, correlation-based colocalization, or independent per-channel preprocessing.                               |
+| **QuPath**        | Whole-slide digital pathology - parent/child object hierarchies (tissue → cell → sub-cell), TMA cores, point-and-click classifier training.       | Best-in-class whole-slide viewer/pyramid handling, plus the most complete object hierarchy here (annotations, TMA cores, detections in one tree).                          | Not built for time-lapse/live-cell tracking, correlation-based colocalization, or independent per-channel preprocessing.                               |
 
 **EVAnalyzer** relies on a _branching pipeline_ with a focus on speed and usability, **CellProfiler** on a _linear pipeline_ with a focus on comprehensive quantitative measurement, and **QuPath** on an **object-centric, map-based workflow** with a focus on pathology images. **ImageJ**, by contrast, is a feature-rich, plugin-based, all-around image editing tool rather than a fixed pipeline paradigm.
 
@@ -193,7 +205,9 @@ _Benchmark files_
 - [cellprofiler_benchmark.cppipe](/downloads/benchmark/cellprofiler_benchmark.cppipe) - calibrated CellProfiler pipeline
 - [imagej_benchmark.ijm](/downloads/benchmark/imagej_benchmark.ijm) - plain ImageJ/Fiji macro, no plugin
 
-Download all three into the same directory (`$ROOT` below) alongside your own `images/` folder of test images before running the commands.
+Download all three into the same directory (`$ROOT` below) alongside your own `images/` folder of test images, with the tools installed under `$ROOT/tools/`.
+The snippets below are meant to be saved together as one bash script in `$ROOT` and run from there - `ROOT` is taken from the script's own location.
+Only the EVAnalyzer core CLI, plain Fiji macro and single-process CellProfiler runs are shown; the EVAnalyzer Fiji plugin and the 14-process CellProfiler run used the same project files and images.
 
 _Preparation_
 

@@ -10,6 +10,9 @@
       }
     }
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind"
+  ],
   "forwardPorts": [4321],
   "postCreateCommand": "npm install",
   "remoteUser": "node"
