@@ -141,7 +141,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
@@ -178,10 +178,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 9.0,
-            "maxArea": 177.0,
+            "minSize": 9.0,
+            "maxSize": 177.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -257,7 +257,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
@@ -294,10 +294,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 10.0,
-            "maxArea": 177.0,
+            "minSize": 10.0,
+            "maxSize": 177.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -325,7 +325,7 @@
           "id": 1,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 1
@@ -340,7 +340,7 @@
             },
             "multiplicity": "ONE_TO_ONE",
             "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
+            "minColocSize": 0.0,
             "excludeClasses": []
           }
         }

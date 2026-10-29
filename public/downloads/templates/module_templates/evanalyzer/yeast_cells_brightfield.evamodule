@@ -79,7 +79,7 @@
       "enabled": true,
       "command": {
         "type": "CONNECTED_COMPONENTS",
-        "minSize": 0
+        "minSize": 1
       }
     },
     {

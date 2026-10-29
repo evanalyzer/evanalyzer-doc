@@ -12,7 +12,7 @@
       }
     ],
     "creationTime": "2026-10-20T17:25:55.830699113Z",
-    "version": 2,
+    "version": 3,
     "category": "cell",
     "tags": [
       "cell"
@@ -101,7 +101,7 @@
       "enabled": true,
       "command": {
         "type": "CONNECTED_COMPONENTS",
-        "minSize": 0
+        "minSize": 1
       }
     },
     {
@@ -134,10 +134,10 @@
         "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
         "outputClass": "UNSET",
         "overlappingWith": "UNSET",
-        "minIntersectionArea": 0.0,
+        "minIntersectionSize": 0.0,
         "sizeUnit": "PIXELS",
-        "minArea": 53.2,
-        "maxArea": 2147483600.0,
+        "minSize": 2000.0,
+        "maxSize": 2147483600.0,
         "minCircularity": 0.0,
         "maxCircularity": 1.0,
         "minSolidity": 0.0,
@@ -189,11 +189,11 @@
       "label": "Min area",
       "description": "",
       "section": "Filter",
-      "default": 53.2,
+      "default": 2000,
       "bindings": [
         {
           "step": 11,
-          "param": "min_area"
+          "param": "min_size"
         }
       ]
     },
@@ -206,7 +206,7 @@
       "bindings": [
         {
           "step": 11,
-          "param": "max_area"
+          "param": "max_size"
         }
       ]
     },

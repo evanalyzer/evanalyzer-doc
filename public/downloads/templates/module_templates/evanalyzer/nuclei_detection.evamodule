@@ -4,7 +4,7 @@
   "meta": {
     "name": "Nuclei detection",
     "shortDescription": "Nuclei detection",
-    "description": "Detects cell nuclei using rolling ball background subtraction, blurring, Triangle thresholding and watershed splitting. The class the objects get is the module's \"Nuclei\" parameter.",
+    "description": "Detects cell nuclei using blurring, rolling ball background subtraction, Triangle thresholding and hole filling, like the EVAnalyzer Fiji plugin (touching nuclei are not split). The class the objects get is the module's \"Nuclei\" parameter.",
     "authors": [
       {
         "fullName": "Melanie Schuerz",
@@ -12,7 +12,7 @@
       }
     ],
     "creationTime": "2026-10-20T17:25:28.754415732Z",
-    "version": 2,
+    "version": 3,
     "category": "nucleus",
     "tags": [
       "nucleus"
@@ -25,10 +25,8 @@
       "id": 1,
       "enabled": true,
       "command": {
-        "type": "ROLLING_BALL",
-        "radius": 4.0,
-        "ballType": "PARABOLOID",
-        "preSmooth": true
+        "type": "BLUR",
+        "kernelSize": 3
       }
     },
     {
@@ -43,8 +41,10 @@
       "id": 3,
       "enabled": true,
       "command": {
-        "type": "BLUR",
-        "kernelSize": 3
+        "type": "ROLLING_BALL",
+        "radius": 4.0,
+        "ballType": "PARABOLOID",
+        "preSmooth": true
       }
     },
     {
@@ -70,19 +70,15 @@
       "id": 5,
       "enabled": true,
       "command": {
-        "type": "CONNECTED_COMPONENTS",
-        "minSize": 0
+        "type": "FILL_HOLES"
       }
     },
     {
       "id": 6,
       "enabled": true,
       "command": {
-        "type": "WATERSHED",
-        "maximumFinderTolerance": 0.5,
-        "smoothingSigma": 0.0,
-        "minObjectSize": 0,
-        "seedSource": "DISTANCE_MAP"
+        "type": "CONNECTED_COMPONENTS",
+        "minSize": 1
       }
     },
     {
@@ -115,10 +111,10 @@
         "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
         "outputClass": "UNSET",
         "overlappingWith": "UNSET",
-        "minIntersectionArea": 0.0,
+        "minIntersectionSize": 0.0,
         "sizeUnit": "PIXELS",
-        "minArea": 30.0,
-        "maxArea": 2147483600.0,
+        "minSize": 1000.0,
+        "maxSize": 2147483600.0,
         "minCircularity": 0.0,
         "maxCircularity": 1.0,
         "minSolidity": 0.0,
@@ -183,11 +179,11 @@
       "label": "Min area",
       "description": "",
       "section": "Filter",
-      "default": 30,
+      "default": 1000,
       "bindings": [
         {
           "step": 8,
-          "param": "min_area"
+          "param": "min_size"
         }
       ]
     },
@@ -200,7 +196,7 @@
       "bindings": [
         {
           "step": 8,
-          "param": "max_area"
+          "param": "max_size"
         }
       ]
     },

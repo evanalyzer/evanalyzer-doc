@@ -227,10 +227,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 19.6,
-            "maxArea": 706.9,
+            "minSize": 19.6,
+            "maxSize": 706.9,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -352,7 +352,7 @@
             },
             "otherFilterClasses": [],
             "sizeUnit": "PIXELS",
-            "minOverlapArea": 1.0,
+            "minOverlapSize": 1.0,
             "outputClass": {
               "GLOBAL": 4
             },
@@ -373,7 +373,7 @@
             },
             "otherFilterClasses": [],
             "sizeUnit": "PIXELS",
-            "minOverlapArea": 1.0,
+            "minOverlapSize": 1.0,
             "outputClass": {
               "GLOBAL": 5
             },
@@ -434,7 +434,7 @@
             },
             "otherFilterClasses": [],
             "sizeUnit": "PIXELS",
-            "minOverlapArea": 1.0,
+            "minOverlapSize": 1.0,
             "outputClass": {
               "GLOBAL": 8
             },

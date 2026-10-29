@@ -134,7 +134,7 @@
           }
         ],
         "creationTime": "2026-06-11T00:00:00Z",
-        "version": 1,
+        "version": 2,
         "category": "Assay",
         "tags": [
           "assay",
@@ -161,7 +161,7 @@
             "values": {
               "nuclei": "4",
               "threshold_method": "Triangle",
-              "min_threshold": 200.0,
+              "min_threshold": 0.0,
               "min_area": 1000.0
             }
           }
@@ -234,7 +234,7 @@
           "id": 8,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 21
@@ -249,7 +249,7 @@
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
+            "minColocSize": 0.0,
             "excludeClasses": []
           }
         },
@@ -278,7 +278,7 @@
           "id": 11,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 1
@@ -293,7 +293,7 @@
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
+            "minColocSize": 0.0,
             "excludeClasses": []
           }
         }
@@ -484,7 +484,7 @@
           "label": "Min threshold",
           "description": "",
           "section": "Nuclei",
-          "default": 200.0,
+          "default": 0.0,
           "bindings": [
             {
               "step": 2,
@@ -631,11 +631,11 @@
           "bindings": [
             {
               "step": 8,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 11,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             }
           ]
         }
@@ -646,7 +646,7 @@
       "meta": {
         "name": "Nuclei detection",
         "shortDescription": "Nuclei detection",
-        "description": "Detects cell nuclei using rolling ball background subtraction, blurring, Triangle thresholding and watershed splitting. The class the objects get is the module's \"Nuclei\" parameter.",
+        "description": "Detects cell nuclei using blurring, rolling ball background subtraction, Triangle thresholding and hole filling, like the EVAnalyzer Fiji plugin (touching nuclei are not split). The class the objects get is the module's \"Nuclei\" parameter.",
         "authors": [
           {
             "fullName": "Melanie Schuerz",
@@ -654,7 +654,7 @@
           }
         ],
         "creationTime": "2026-10-20T17:25:28.754415732Z",
-        "version": 2,
+        "version": 3,
         "category": "nucleus",
         "tags": [
           "nucleus"
@@ -667,10 +667,8 @@
           "id": 1,
           "enabled": true,
           "command": {
-            "type": "ROLLING_BALL",
-            "radius": 4.0,
-            "ballType": "PARABOLOID",
-            "preSmooth": true
+            "type": "BLUR",
+            "kernelSize": 3
           }
         },
         {
@@ -685,8 +683,10 @@
           "id": 3,
           "enabled": true,
           "command": {
-            "type": "BLUR",
-            "kernelSize": 3
+            "type": "ROLLING_BALL",
+            "radius": 4.0,
+            "ballType": "PARABOLOID",
+            "preSmooth": true
           }
         },
         {
@@ -712,19 +712,15 @@
           "id": 5,
           "enabled": true,
           "command": {
-            "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "type": "FILL_HOLES"
           }
         },
         {
           "id": 6,
           "enabled": true,
           "command": {
-            "type": "WATERSHED",
-            "maximumFinderTolerance": 0.5,
-            "smoothingSigma": 0.0,
-            "minObjectSize": 0,
-            "seedSource": "DISTANCE_MAP"
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
           }
         },
         {
@@ -757,10 +753,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 30.0,
-            "maxArea": 2147483600.0,
+            "minSize": 1000.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -825,11 +821,11 @@
           "label": "Min area",
           "description": "",
           "section": "Filter",
-          "default": 30,
+          "default": 1000,
           "bindings": [
             {
               "step": 8,
-              "param": "min_area"
+              "param": "min_size"
             }
           ]
         },
@@ -842,7 +838,7 @@
           "bindings": [
             {
               "step": 8,
-              "param": "max_area"
+              "param": "max_size"
             }
           ]
         },
@@ -864,7 +860,7 @@
         "originModuleKey": "NUCLEI_DETECTION",
         "library": "nuclei_detection.evacomp",
         "version": 2,
-        "contentHash": "b758552d7ab503e7"
+        "contentHash": "85b51ca28c990752"
       }
     },
     {
@@ -880,7 +876,7 @@
           }
         ],
         "creationTime": "2026-10-20T17:25:55.830699113Z",
-        "version": 2,
+        "version": 3,
         "category": "cell",
         "tags": [
           "cell"
@@ -969,7 +965,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
@@ -1002,10 +998,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 53.2,
-            "maxArea": 2147483600.0,
+            "minSize": 2000.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -1057,11 +1053,11 @@
           "label": "Min area",
           "description": "",
           "section": "Filter",
-          "default": 53.2,
+          "default": 2000,
           "bindings": [
             {
               "step": 11,
-              "param": "min_area"
+              "param": "min_size"
             }
           ]
         },
@@ -1074,7 +1070,7 @@
           "bindings": [
             {
               "step": 11,
-              "param": "max_area"
+              "param": "max_size"
             }
           ]
         },
@@ -1108,7 +1104,7 @@
         "originModuleKey": "CELL_AREA_BRIGHTFIELD",
         "library": "cell_area_brightfield.evacomp",
         "version": 2,
-        "contentHash": "6387ba97f8507461"
+        "contentHash": "f474fda4d2ed8a7e"
       }
     },
     {
@@ -1124,7 +1120,7 @@
           }
         ],
         "creationTime": "2026-10-20T17:24:51.268492007Z",
-        "version": 2,
+        "version": 3,
         "category": "Spot Detection",
         "tags": [
           "spot"
@@ -1173,7 +1169,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
@@ -1217,10 +1213,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 3.0,
-            "maxArea": 2147483600.0,
+            "minSize": 5.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -1285,11 +1281,11 @@
           "label": "Min area",
           "description": "",
           "section": "Filter",
-          "default": 3,
+          "default": 5,
           "bindings": [
             {
               "step": 7,
-              "param": "min_area"
+              "param": "min_size"
             }
           ]
         },
@@ -1302,7 +1298,7 @@
           "bindings": [
             {
               "step": 7,
-              "param": "max_area"
+              "param": "max_size"
             }
           ]
         },
@@ -1324,7 +1320,7 @@
         "originModuleKey": "EV_IN_CELL_DETECTION",
         "library": "ev_in_cell_detection.evacomp",
         "version": 2,
-        "contentHash": "b2b35b15b54d4320"
+        "contentHash": "578437424a2a4b5b"
       }
     }
   ]

@@ -126,7 +126,7 @@
           }
         ],
         "creationTime": "2026-06-11T00:00:00Z",
-        "version": 1,
+        "version": 2,
         "category": "Spot Detection",
         "tags": [
           "spot-count",
@@ -152,7 +152,7 @@
               "evs": "21",
               "threshold_method": "Manual",
               "min_threshold": 200.0,
-              "min_area": 3.0
+              "min_area": 5.0
             }
           }
         },
@@ -170,11 +170,11 @@
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
-            "minCircularity": 0.1,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
+            "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
             "maxSolidity": 1.0,
@@ -203,10 +203,10 @@
               "GLOBAL": 5
             },
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -300,7 +300,7 @@
           "label": "Min area",
           "description": "",
           "section": "Spots ch1",
-          "default": 3.0,
+          "default": 5.0,
           "bindings": [
             {
               "step": 2,
@@ -313,7 +313,7 @@
           "label": "Min circularity",
           "description": "",
           "section": "Spots ch1",
-          "default": 0.1,
+          "default": 0.0,
           "bindings": [
             {
               "step": 3,
@@ -336,7 +336,7 @@
           }
         ],
         "creationTime": "2026-10-20T17:24:19.175336003Z",
-        "version": 2,
+        "version": 3,
         "category": "Spot Detection",
         "tags": [
           "spot"
@@ -395,7 +395,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
@@ -430,10 +430,10 @@
               "GLOBAL": 1
             },
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 4.0,
-            "maxArea": 2147483600.0,
+            "minSize": 5.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -502,11 +502,11 @@
           "label": "Min area",
           "description": "",
           "section": "Filter",
-          "default": 4,
+          "default": 5,
           "bindings": [
             {
               "step": 7,
-              "param": "min_area"
+              "param": "min_size"
             }
           ]
         },
@@ -528,7 +528,7 @@
         "originModuleKey": "EV_DETECTION",
         "library": "ev_detection.evacomp",
         "version": 2,
-        "contentHash": "c30e99d5bd4fefde"
+        "contentHash": "64ba9e900cb23047"
       }
     }
   ]

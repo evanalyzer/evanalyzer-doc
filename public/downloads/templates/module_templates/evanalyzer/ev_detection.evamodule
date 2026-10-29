@@ -12,7 +12,7 @@
       }
     ],
     "creationTime": "2026-10-20T17:24:19.175336003Z",
-    "version": 2,
+    "version": 3,
     "category": "Spot Detection",
     "tags": [
       "spot"
@@ -71,7 +71,7 @@
       "enabled": true,
       "command": {
         "type": "CONNECTED_COMPONENTS",
-        "minSize": 0
+        "minSize": 1
       }
     },
     {
@@ -106,10 +106,10 @@
           "GLOBAL": 1
         },
         "overlappingWith": "UNSET",
-        "minIntersectionArea": 0.0,
+        "minIntersectionSize": 0.0,
         "sizeUnit": "PIXELS",
-        "minArea": 4.0,
-        "maxArea": 2147483600.0,
+        "minSize": 5.0,
+        "maxSize": 2147483600.0,
         "minCircularity": 0.0,
         "maxCircularity": 1.0,
         "minSolidity": 0.0,
@@ -178,11 +178,11 @@
       "label": "Min area",
       "description": "",
       "section": "Filter",
-      "default": 4,
+      "default": 5,
       "bindings": [
         {
           "step": 7,
-          "param": "min_area"
+          "param": "min_size"
         }
       ]
     },

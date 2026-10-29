@@ -61,7 +61,7 @@ Pick your operating system, then your processor - **x86-64** (Intel or AMD, most
 <details>
 <summary>Do I need an NVIDIA GPU?</summary>
 
-No. Every feature, including the AI segmentation steps, runs on the CPU. A [CUDA build](/getting-started/system-requirements/#gpu--cuda-requirements) with a supported NVIDIA GPU only makes the AI steps faster.
+No. Every feature, including the AI segmentation steps, runs on the CPU. A [CUDA build](/getting-started/system-requirements/#operating-systems) with a supported NVIDIA GPU only makes the AI steps faster.
 
 </details>
 

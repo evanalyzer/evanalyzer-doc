@@ -2,8 +2,8 @@
   "schemaVersion": 4,
   "meta": {
     "name": "Cell uptake 3 channels coloc",
-    "shortDescription": "Uptake assay with two spot channels and brightfield cell.",
-    "description": "Uptake assay with two spot channels and brightfield cell.",
+    "shortDescription": "Uptake assay with three spot channels and brightfield cell.",
+    "description": "Uptake assay with three spot channels and brightfield cell.",
     "authors": [
       {
         "fullName": "Melanie Schuerz",
@@ -210,8 +210,8 @@
       "key": "CELL_UPTAKE_3_CHANNEL_COLOC",
       "meta": {
         "name": "Cell uptake 3 channels coloc",
-        "shortDescription": "Uptake assay with two spot channels and brightfield cell.",
-        "description": "Uptake assay with two spot channels and brightfield cell.",
+        "shortDescription": "Uptake assay with three spot channels and brightfield cell.",
+        "description": "Uptake assay with three spot channels and brightfield cell.",
         "authors": [
           {
             "fullName": "Melanie Schuerz",
@@ -219,7 +219,7 @@
           }
         ],
         "creationTime": "2026-06-11T00:00:00Z",
-        "version": 1,
+        "version": 2,
         "category": "Colocalization",
         "tags": [
           "assay",
@@ -247,7 +247,7 @@
             "values": {
               "nuclei": "4",
               "threshold_method": "Triangle",
-              "min_threshold": 200.0,
+              "min_threshold": 0.0,
               "min_area": 1000.0
             }
           }
@@ -320,7 +320,7 @@
           "id": 8,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 21
@@ -335,7 +335,7 @@
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
+            "minColocSize": 0.0,
             "excludeClasses": []
           }
         },
@@ -364,7 +364,7 @@
           "id": 11,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 1
@@ -379,7 +379,7 @@
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
+            "minColocSize": 0.0,
             "excludeClasses": []
           }
         },
@@ -408,7 +408,7 @@
           "id": 14,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 2
@@ -423,7 +423,7 @@
             },
             "multiplicity": "MANY_TO_MANY",
             "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
+            "minColocSize": 0.0,
             "excludeClasses": []
           }
         },
@@ -431,7 +431,7 @@
           "id": 15,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 13
@@ -441,20 +441,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 6
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 13
+            },
+            "markAs": {
+              "GLOBAL": 6
+            }
           }
         },
         {
           "id": 16,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 3
@@ -464,20 +468,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 8
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 3
+            },
+            "markAs": {
+              "GLOBAL": 8
+            }
           }
         },
         {
           "id": 17,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 13
@@ -487,20 +495,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 14
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 13
+            },
+            "markAs": {
+              "GLOBAL": 14
+            }
           }
         },
         {
           "id": 18,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 5
@@ -510,20 +522,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 15
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 5
+            },
+            "markAs": {
+              "GLOBAL": 15
+            }
           }
         },
         {
           "id": 19,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 3
@@ -533,20 +549,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 9
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 3
+            },
+            "markAs": {
+              "GLOBAL": 9
+            }
           }
         },
         {
           "id": 20,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 5
@@ -556,20 +576,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 16
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 5
+            },
+            "markAs": {
+              "GLOBAL": 16
+            }
           }
         },
         {
           "id": 21,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 13
@@ -582,20 +606,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 7
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 13
+            },
+            "markAs": {
+              "GLOBAL": 7
+            }
           }
         },
         {
           "id": 22,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 3
@@ -608,20 +636,24 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 10
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 3
+            },
+            "markAs": {
+              "GLOBAL": 10
+            }
           }
         },
         {
           "id": 23,
           "enabled": true,
           "command": {
-            "type": "COLOCALIZATION",
+            "type": "COLOCALIZE_OBJECTS",
             "classesToColoc": [
               {
                 "GLOBAL": 5
@@ -634,13 +666,17 @@
               }
             ],
             "filterClasses": [],
-            "classForOverlappingAreas": {
-              "GLOBAL": 17
-            },
+            "classForOverlappingAreas": "UNSET",
             "multiplicity": "MANY_TO_MANY",
-            "sizeUnit": "PIXELS",
-            "minColocArea": 0.0,
-            "excludeClasses": []
+            "sizeUnit": "PERCENT",
+            "minColocSize": 1.0,
+            "excludeClasses": [],
+            "markObjectsOf": {
+              "GLOBAL": 5
+            },
+            "markAs": {
+              "GLOBAL": 17
+            }
           }
         },
         {
@@ -653,18 +689,16 @@
                 "GLOBAL": 13
               }
             ],
-            "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
               "GLOBAL": 18
             },
-            "overlappingWith": {
-              "GLOBAL": 3
-            },
+            "overlappingWith": "UNSET",
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -685,21 +719,22 @@
             "type": "CLASSIFY_OBJECTS",
             "inputClasses": [
               {
-                "GLOBAL": 18
+                "GLOBAL": 6
+              },
+              {
+                "GLOBAL": 14
               }
             ],
             "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
               "GLOBAL": 18
             },
-            "overlappingWith": {
-              "GLOBAL": 5
-            },
+            "overlappingWith": "UNSET",
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -723,18 +758,16 @@
                 "GLOBAL": 3
               }
             ],
-            "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
               "GLOBAL": 19
             },
-            "overlappingWith": {
-              "GLOBAL": 13
-            },
+            "overlappingWith": "UNSET",
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -755,21 +788,22 @@
             "type": "CLASSIFY_OBJECTS",
             "inputClasses": [
               {
-                "GLOBAL": 19
+                "GLOBAL": 8
+              },
+              {
+                "GLOBAL": 9
               }
             ],
             "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
               "GLOBAL": 19
             },
-            "overlappingWith": {
-              "GLOBAL": 5
-            },
+            "overlappingWith": "UNSET",
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -793,18 +827,16 @@
                 "GLOBAL": 5
               }
             ],
-            "matchHandling": "ADD_OUTPUT_CLASS_IF_NOT_MATCH",
+            "matchHandling": "ADD_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
               "GLOBAL": 20
             },
-            "overlappingWith": {
-              "GLOBAL": 13
-            },
+            "overlappingWith": "UNSET",
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -825,21 +857,22 @@
             "type": "CLASSIFY_OBJECTS",
             "inputClasses": [
               {
-                "GLOBAL": 20
+                "GLOBAL": 15
+              },
+              {
+                "GLOBAL": 16
               }
             ],
             "matchHandling": "REMOVE_OUTPUT_CLASS_IF_MATCH",
             "outputClass": {
               "GLOBAL": 20
             },
-            "overlappingWith": {
-              "GLOBAL": 3
-            },
+            "overlappingWith": "UNSET",
             "originSegmentation": [],
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 0.0,
-            "maxArea": 2147483600.0,
+            "minSize": 0.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -928,12 +961,12 @@
           "default": "4",
           "bindings": [
             {
-              "step": 5,
-              "param": "centers"
-            },
-            {
               "step": 2,
               "param": "nuclei"
+            },
+            {
+              "step": 5,
+              "param": "centers"
             }
           ]
         },
@@ -945,12 +978,12 @@
           "default": "11",
           "bindings": [
             {
-              "step": 5,
-              "param": "mask"
-            },
-            {
               "step": 4,
               "param": "cell_area"
+            },
+            {
+              "step": 5,
+              "param": "mask"
             }
           ]
         },
@@ -1008,12 +1041,16 @@
               "param": "class_for_overlapping_areas"
             },
             {
-              "step": 26,
-              "param": "overlapping_with"
+              "step": 15,
+              "param": "mark_objects_of"
             },
             {
-              "step": 28,
-              "param": "overlapping_with"
+              "step": 17,
+              "param": "mark_objects_of"
+            },
+            {
+              "step": 21,
+              "param": "mark_objects_of"
             },
             {
               "step": 15,
@@ -1078,12 +1115,16 @@
               "param": "class_for_overlapping_areas"
             },
             {
-              "step": 24,
-              "param": "overlapping_with"
+              "step": 16,
+              "param": "mark_objects_of"
             },
             {
-              "step": 29,
-              "param": "overlapping_with"
+              "step": 19,
+              "param": "mark_objects_of"
+            },
+            {
+              "step": 22,
+              "param": "mark_objects_of"
             },
             {
               "step": 15,
@@ -1148,12 +1189,16 @@
               "param": "class_for_overlapping_areas"
             },
             {
-              "step": 25,
-              "param": "overlapping_with"
+              "step": 18,
+              "param": "mark_objects_of"
             },
             {
-              "step": 27,
-              "param": "overlapping_with"
+              "step": 20,
+              "param": "mark_objects_of"
+            },
+            {
+              "step": 23,
+              "param": "mark_objects_of"
             },
             {
               "step": 17,
@@ -1198,7 +1243,11 @@
           "bindings": [
             {
               "step": 15,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
+            },
+            {
+              "step": 25,
+              "param": "input_classes"
             }
           ]
         },
@@ -1211,7 +1260,11 @@
           "bindings": [
             {
               "step": 16,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
+            },
+            {
+              "step": 27,
+              "param": "input_classes"
             }
           ]
         },
@@ -1224,7 +1277,11 @@
           "bindings": [
             {
               "step": 17,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
+            },
+            {
+              "step": 25,
+              "param": "input_classes"
             }
           ]
         },
@@ -1237,7 +1294,11 @@
           "bindings": [
             {
               "step": 18,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
+            },
+            {
+              "step": 29,
+              "param": "input_classes"
             }
           ]
         },
@@ -1250,7 +1311,11 @@
           "bindings": [
             {
               "step": 19,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
+            },
+            {
+              "step": 27,
+              "param": "input_classes"
             }
           ]
         },
@@ -1263,7 +1328,11 @@
           "bindings": [
             {
               "step": 20,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
+            },
+            {
+              "step": 29,
+              "param": "input_classes"
             }
           ]
         },
@@ -1276,7 +1345,7 @@
           "bindings": [
             {
               "step": 21,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
             }
           ]
         },
@@ -1289,7 +1358,7 @@
           "bindings": [
             {
               "step": 22,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
             }
           ]
         },
@@ -1302,7 +1371,7 @@
           "bindings": [
             {
               "step": 23,
-              "param": "class_for_overlapping_areas"
+              "param": "mark_as"
             }
           ]
         },
@@ -1320,10 +1389,6 @@
             {
               "step": 25,
               "param": "output_class"
-            },
-            {
-              "step": 25,
-              "param": "input_classes"
             }
           ]
         },
@@ -1341,10 +1406,6 @@
             {
               "step": 27,
               "param": "output_class"
-            },
-            {
-              "step": 27,
-              "param": "input_classes"
             }
           ]
         },
@@ -1362,10 +1423,6 @@
             {
               "step": 29,
               "param": "output_class"
-            },
-            {
-              "step": 29,
-              "param": "input_classes"
             }
           ]
         },
@@ -1387,7 +1444,7 @@
           "label": "Min threshold",
           "description": "",
           "section": "Nuclei",
-          "default": 200.0,
+          "default": 0.0,
           "bindings": [
             {
               "step": 2,
@@ -1566,58 +1623,46 @@
         },
         {
           "key": "colocalization_min_coloc_area",
-          "label": "Min coloc area",
-          "description": "",
+          "label": "Min coloc factor (%)",
+          "description": "Minimum overlap, in % of the smaller of the two spots, for two spots to count as colocalized - the EVAnalyzer plugin's \"min coloc factor\".",
           "section": "Colocalization",
-          "default": 0.0,
+          "default": 1.0,
           "bindings": [
             {
-              "step": 8,
-              "param": "min_coloc_area"
-            },
-            {
-              "step": 11,
-              "param": "min_coloc_area"
-            },
-            {
-              "step": 14,
-              "param": "min_coloc_area"
-            },
-            {
               "step": 15,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 16,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 17,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 18,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 19,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 20,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 21,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 22,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             },
             {
               "step": 23,
-              "param": "min_coloc_area"
+              "param": "min_coloc_size"
             }
           ]
         }
@@ -1628,7 +1673,7 @@
       "meta": {
         "name": "Nuclei detection",
         "shortDescription": "Nuclei detection",
-        "description": "Detects cell nuclei using rolling ball background subtraction, blurring, Triangle thresholding and watershed splitting. The class the objects get is the module's \"Nuclei\" parameter.",
+        "description": "Detects cell nuclei using blurring, rolling ball background subtraction, Triangle thresholding and hole filling, like the EVAnalyzer Fiji plugin (touching nuclei are not split). The class the objects get is the module's \"Nuclei\" parameter.",
         "authors": [
           {
             "fullName": "Melanie Schuerz",
@@ -1636,7 +1681,7 @@
           }
         ],
         "creationTime": "2026-10-20T17:25:28.754415732Z",
-        "version": 2,
+        "version": 3,
         "category": "nucleus",
         "tags": [
           "nucleus"
@@ -1649,10 +1694,8 @@
           "id": 1,
           "enabled": true,
           "command": {
-            "type": "ROLLING_BALL",
-            "radius": 4.0,
-            "ballType": "PARABOLOID",
-            "preSmooth": true
+            "type": "BLUR",
+            "kernelSize": 3
           }
         },
         {
@@ -1667,8 +1710,10 @@
           "id": 3,
           "enabled": true,
           "command": {
-            "type": "BLUR",
-            "kernelSize": 3
+            "type": "ROLLING_BALL",
+            "radius": 4.0,
+            "ballType": "PARABOLOID",
+            "preSmooth": true
           }
         },
         {
@@ -1694,19 +1739,15 @@
           "id": 5,
           "enabled": true,
           "command": {
-            "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "type": "FILL_HOLES"
           }
         },
         {
           "id": 6,
           "enabled": true,
           "command": {
-            "type": "WATERSHED",
-            "maximumFinderTolerance": 0.5,
-            "smoothingSigma": 0.0,
-            "minObjectSize": 0,
-            "seedSource": "DISTANCE_MAP"
+            "type": "CONNECTED_COMPONENTS",
+            "minSize": 1
           }
         },
         {
@@ -1739,10 +1780,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 30.0,
-            "maxArea": 2147483600.0,
+            "minSize": 1000.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -1807,11 +1848,11 @@
           "label": "Min area",
           "description": "",
           "section": "Filter",
-          "default": 30,
+          "default": 1000,
           "bindings": [
             {
               "step": 8,
-              "param": "min_area"
+              "param": "min_size"
             }
           ]
         },
@@ -1824,7 +1865,7 @@
           "bindings": [
             {
               "step": 8,
-              "param": "max_area"
+              "param": "max_size"
             }
           ]
         },
@@ -1846,7 +1887,7 @@
         "originModuleKey": "NUCLEI_DETECTION",
         "library": "nuclei_detection.evacomp",
         "version": 2,
-        "contentHash": "b758552d7ab503e7"
+        "contentHash": "85b51ca28c990752"
       }
     },
     {
@@ -1862,7 +1903,7 @@
           }
         ],
         "creationTime": "2026-10-20T17:25:55.830699113Z",
-        "version": 2,
+        "version": 3,
         "category": "cell",
         "tags": [
           "cell"
@@ -1951,7 +1992,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
@@ -1984,10 +2025,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 53.2,
-            "maxArea": 2147483600.0,
+            "minSize": 2000.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -2039,11 +2080,11 @@
           "label": "Min area",
           "description": "",
           "section": "Filter",
-          "default": 53.2,
+          "default": 2000,
           "bindings": [
             {
               "step": 11,
-              "param": "min_area"
+              "param": "min_size"
             }
           ]
         },
@@ -2056,7 +2097,7 @@
           "bindings": [
             {
               "step": 11,
-              "param": "max_area"
+              "param": "max_size"
             }
           ]
         },
@@ -2090,7 +2131,7 @@
         "originModuleKey": "CELL_AREA_BRIGHTFIELD",
         "library": "cell_area_brightfield.evacomp",
         "version": 2,
-        "contentHash": "6387ba97f8507461"
+        "contentHash": "f474fda4d2ed8a7e"
       }
     },
     {
@@ -2106,7 +2147,7 @@
           }
         ],
         "creationTime": "2026-10-20T17:24:51.268492007Z",
-        "version": 2,
+        "version": 3,
         "category": "Spot Detection",
         "tags": [
           "spot"
@@ -2155,7 +2196,7 @@
           "enabled": true,
           "command": {
             "type": "CONNECTED_COMPONENTS",
-            "minSize": 0
+            "minSize": 1
           }
         },
         {
@@ -2199,10 +2240,10 @@
             "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH",
             "outputClass": "UNSET",
             "overlappingWith": "UNSET",
-            "minIntersectionArea": 0.0,
+            "minIntersectionSize": 0.0,
             "sizeUnit": "PIXELS",
-            "minArea": 3.0,
-            "maxArea": 2147483600.0,
+            "minSize": 5.0,
+            "maxSize": 2147483600.0,
             "minCircularity": 0.0,
             "maxCircularity": 1.0,
             "minSolidity": 0.0,
@@ -2267,11 +2308,11 @@
           "label": "Min area",
           "description": "",
           "section": "Filter",
-          "default": 3,
+          "default": 5,
           "bindings": [
             {
               "step": 7,
-              "param": "min_area"
+              "param": "min_size"
             }
           ]
         },
@@ -2284,7 +2325,7 @@
           "bindings": [
             {
               "step": 7,
-              "param": "max_area"
+              "param": "max_size"
             }
           ]
         },
@@ -2306,7 +2347,7 @@
         "originModuleKey": "EV_IN_CELL_DETECTION",
         "library": "ev_in_cell_detection.evacomp",
         "version": 2,
-        "contentHash": "b2b35b15b54d4320"
+        "contentHash": "578437424a2a4b5b"
       }
     }
   ]

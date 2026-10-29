@@ -3,7 +3,7 @@ title: "Cell area brightfield"
 description: "Cell brightfield"
 category: module
 file: /downloads/templates/module_templates/evanalyzer/cell_area_brightfield.evamodule
-fileSize: "4.8 KB"
+fileSize: "4.9 KB"
 tags: ["cell"]
 ---
 
