@@ -14,6 +14,8 @@ Before downloading, check the [System Requirements](/getting-started/system-requ
 
 Pick your operating system and processor, and whether you want a CUDA-accelerated build. The link below always points at the latest published release on [GitHub](https://github.com/evanalyzer/evanalyzer/releases).
 
+**Linux:** Requires Ubuntu 24.04+, Debian 13+, Fedora 40+ or another Linux with glibc 2.39 or newer - see [System Requirements](/getting-started/system-requirements/#operating-systems).
+
 <DownloadPicker />
 
 :::tip[Not sure which to pick?]
@@ -72,11 +74,14 @@ This extension isn't published to the VS Code Marketplace or Open VSX yet, so it
 
 :::note[Linux libraries]
 
-Sometimes the GUI requires a few system libraries on Linux.
-If not still installed, install them once with:
+On X11 the GUI also needs the package `libxkbcommon-x11-0`.
+If it is not installed yet, install it once with:
 
 ```sh
-apt-get install libinput10 libxkbcommon0 libxkbcommon-x11-0 libfontconfig1 libgbm1
+sudo apt install libxkbcommon-x11-0     # Ubuntu, Debian, Linux Mint, Pop!_OS
+sudo dnf install libxkbcommon-x11       # Fedora, RHEL, Rocky Linux, AlmaLinux
+sudo zypper install libxkbcommon-x11-0  # openSUSE
+sudo pacman -S libxkbcommon-x11         # Arch Linux, Manjaro
 ```
 
 :::

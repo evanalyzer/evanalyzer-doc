@@ -79,6 +79,13 @@ Yes. Windows SmartScreen may warn about a new download, and macOS blocks apps th
 
 </details>
 
+<details>
+<summary>Linux: EVAnalyzer doesn't start - <code>GLIBC_2.39</code> not found</summary>
+
+If starting EVAnalyzer prints an error like `version 'GLIBC_2.39' not found (required by ./evanalyzer)`, your Linux is older than EVAnalyzer supports. Check your version with `ldd --version` (the first line shows the glibc version; 2.39 or newer is needed). Update to a supported version, e.g. Ubuntu 24.04 LTS - see the [system requirements](/getting-started/system-requirements/#operating-systems). On Windows, WSL with the current Ubuntu works too.
+
+</details>
+
 ## Images
 
 <details>
