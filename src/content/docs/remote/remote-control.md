@@ -116,7 +116,7 @@ The server is configured with a TOML file:
 ./evanalyzer server --config /etc/evanalyzer/server.toml
 ```
 
-Each setting is taken from the first of these that sets it: the command-line arguments (`--listen`, `--data-dir`, `--log-level`, and `--ai-devices` / `--gpu-slots` for the workers), the `--config` file, the built-in defaults. The server reads no environment variables and no config file unless you pass `--config`. It reads the files once at startup, so restart it after editing them. Unknown or misspelled keys and impossible values stop the server at startup with an error that names the key.
+Each setting is taken from the first of these that sets it: the command-line arguments (`--listen`, `--data-dir`, `--log-level`, and `--ai-devices` / `--gpu-slots` / `--ai-plugin` / `--max-threads` / `--max-ram` for the workers), the `--config` file, the built-in defaults. The server reads no environment variables and no config file unless you pass `--config`. It reads the files once at startup, so restart it after editing them. Unknown or misspelled keys and impossible values stop the server at startup with an error that names the key.
 
 A complete example with every setting and its default:
 
@@ -177,12 +177,24 @@ idle_timeout_minutes = 120
 # ai_devices = "auto"
 # Parallel AI inferences per GPU, at least 1.
 # gpu_slots = 1
+# The AI plugin library the workers try first. Default: the one next to the
+# program.
+# ai_plugin = "/opt/evanalyzer/ai/cuda/libevanalyzer_ai.so"
+# Most CPU cores each worker uses (the analysis, AI models, the results
+# database), at least 1. Default: all of them.
+# max_threads = 8
+# Most RAM in MB each worker plans with: caches, threads and the results
+# database are sized as if the computer had no more. Not a hard limit on
+# every allocation. Default: the computer's (or the container's limit).
+# max_ram_mb = 16384
 
 [limits]
 # Not set: no limit.
 # max_workers = 20
 # max_connections = 100
 ```
+
+`max_threads` and `max_ram_mb` are per worker - and each logged-in user has their own worker - not the server's in total.
 
 ### Server data folder
 

@@ -16,7 +16,7 @@ Modules and their steps carry the module color - pink - and are marked with **�
 ## Creating a module
 
 1. Choose **Create module** in the **⋯** menu of the first step you want to bundle.
-2. In the **Create module** dialog, enter a **Module name** and choose the range of steps (**From** / **To**).
+2. In the **Create module** dialog, enter a **Name** (e.g. _Cell reconstruction_) and choose the range of steps (**From** / **To**).
 3. EVAnalyzer lists the project classes the steps use under **Classes** and suggests a role for each:
 
    | Role                      | Meaning                                                                                                                                       | Suggested when                                                                                    |
@@ -39,7 +39,7 @@ Its **⋯** menu has the usual step actions (**Settings**, **Disable**, **Breakp
 | Action               | What it does                                                                                                                   |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | **Look into module** | Opens the module read-only, to see what it does.                                                                            |
-| **Edit this module** | Gives this step a copy of its own (it asks for the copy's name if other steps use the module) and opens it - changes stay with this step. |
+| **Edit this module** | Gives this step a copy of its own and opens it - changes stay with this step. If other steps use the module, the **Edit in place** dialog asks for the copy's **Name** first (**Create copy and edit**); the other steps stay unchanged, and a copy of a library module no longer gets library updates. |
 | **Create module** | Bundles this and more steps into a new module.                                                                              |
 | **Edit modules**     | Opens the module's steps for editing - changes apply to every use. See [Editing a module](#editing-a-module).        |
 | **Expand**           | Puts the steps back into the pipeline, with this step's parameter values. The module's own classes become new project classes, its memory slots pipeline slots. |
@@ -53,10 +53,7 @@ The **?** on any step - module or command - shows what the step does: a command'
 
 **Edit modules** opens the module's steps in the steps panel, with a bar on top: **‹ Back · Pipeline › ◆ Module · Settings**. The bar also says who else is affected - _Only this step uses this module - changes reach no other step._ Inside, you work as in a normal pipeline - add, remove, move steps and change settings.
 
-Changes to a module **apply to every use of it**. If the module is used by more than one step, EVAnalyzer asks first:
-
-- **Edit for all** - change the module; every step using it follows.
-- **Only this step** - make a copy (_"Name (2)"_) just for this step, and edit the copy.
+Changes to a module **apply to every use of it** - every step using it follows. To change it for one step only, use **Edit this module** on that step instead: it makes a copy just for this step and opens the copy.
 
 ### Exposing settings as parameters
 

@@ -16,7 +16,7 @@ AI segmentation commands are only available in builds with the `ai` Cargo featur
 
 ## Usage
 
-1. **Download the model.** Ready-to-use Cellpose-SAM TorchScript exports are on the [Downloads page](/downloads/#ai-models) - download `cpsam_v2.zip` and unzip it; it contains a single `cpsam_v2.pt` file. See [Getting a model](#getting-a-model) below if you need a different checkpoint.
+1. **Download the model.** Ready-to-use Cellpose-SAM TorchScript exports are on the [Add-ons page](/add-ons/#ai-models) - download `cpsam_v2.zip` and unzip it; it contains a single `cpsam_v2.pt` file. See [Getting a model](#getting-a-model) below if you need a different checkpoint.
 2. **Add AI Cellpose Segmentation to the pipeline.** Point **Model path** at the extracted `.pt` file and tune the parameters below. Normalize the image first (e.g. with [Enhance Contrast](/commands/image-processing/enhance-contrast/)) - see the tip in [How it works](#how-it-works).
 3. **Fill the holes (optional).** Cellpose fills the holes inside every object as the last post-processing step. Add [Fill Object Holes](/commands/object/fill-object-holes/) directly after this command to get the same result.
 4. **Follow with Extract Objects.** Append [Extract Objects](/commands/object/extract-objects/) after this command (or after Fill Object Holes) - AI Cellpose Segmentation already writes a per-instance label map, so Extract Objects can turn it straight into object records without a Connected Components/Watershed step in between. From there, [Classify Objects](/commands/object/classify-objects/) assigns the final object class.
@@ -38,7 +38,7 @@ AI segmentation commands are only available in builds with the `ai` Cargo featur
 
 ## Getting a model
 
-Ready-made exports live on the [Downloads page](/downloads/#ai-models): download `cpsam_v2.zip`, unzip it, and point **Model path** at the `cpsam_v2.pt` file inside.
+Ready-made exports live on the [Add-ons page](/add-ons/#ai-models): download `cpsam_v2.zip`, unzip it, and point **Model path** at the `cpsam_v2.pt` file inside.
 
 To export a different checkpoint yourself (e.g. a fine-tuned one), use [`convert_cellpose.py`](https://github.com/evanalyzer/evanalyzer/blob/main/docs/convert_cellpose.py) from the EVAnalyzer repository. It rebuilds the Cellpose-SAM network with the `cellpose` Python package, loads the requested weights, and re-saves them with `torch.jit` as a `.pt` file EVAnalyzer can load directly:
 

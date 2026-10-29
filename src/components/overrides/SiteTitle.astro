@@ -23,6 +23,12 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 		text-decoration: none;
 		white-space: nowrap;
 	}
+	/* Narrow phones: logo only, to leave room for the top nav. */
+	@media (max-width: 34rem) {
+		span {
+			display: none;
+		}
+	}
 	img {
 		width: 1.75rem;
 		height: 1.75rem;

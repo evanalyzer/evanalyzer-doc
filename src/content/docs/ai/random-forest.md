@@ -29,7 +29,6 @@ Because every tree is trained on different data and different feature subsets, t
 | **Split Criterion** | How a split's quality is scored - **Gini** impurity or **Entropy** (information gain); both usually give similar trees |
 | **Features per Split** | How many features each split may consider. `0` = automatic (√ of the total feature count) - the randomness that keeps trees decorrelated |
 | **Random Seed** | Seed for the bootstrap sampling and feature selection, so the same settings reproduce the same forest |
-| **Estimate accuracy from out-of-bag samples** | Each tree's bootstrap sample leaves roughly a third of rows unseen ("out-of-bag") - scoring the tree against those gives a built-in accuracy estimate without needing a separate held-out set |
 
 :::note[Prediction cost matters for pixel classifiers]
 **Number of Trees** and **Max Tree Depth** are capped at sensible defaults (50 trees, depth 20) on purpose: a pixel classifier re-walks every tree for *every pixel of every image* it's applied to via [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/), so tree count and depth trade prediction speed against accuracy far more directly than they would for a one-off object classification pass.

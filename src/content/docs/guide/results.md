@@ -220,7 +220,7 @@ Click a track to see it on the right: its numbers, its **Area over time**, and *
 
 With **Split with image**, the tracks of one image are listed beside it, and the image draws each track as a trail through its time points. Click a row to select its track on the image - or an object to select its track (_Click an object to select its track_). **‹ ›** step to the previous or next image with tracks; **T** under the image steps through the time points or plays them.
 
-The panel at the top right of the image sets the trails: **Trail** **Off**, the last **10 time points** or the **Whole track**; **All tracks** or **Selected only**; **Color** by **Track** or **Class**.
+The panel at the top right of the image sets the trails: **Trail** **Off**, the last **10 time points** or the **Whole track**; **All tracks** or **Selected only**; **Color** by **Track** or **Class**. With a trail of _N_ time points, **−** / **+** make it shorter or longer (by 1, or by 5 above 20); the length is remembered.
 
 ![Results, Tracks split with the image: one image's tracks as a table, their trails on the image, the selected track highlighted](../../../assets/screenshots/screenshot-results-tracks-split.png)
 
@@ -255,9 +255,9 @@ The width of the results, whether the split is on, and **Follow selection** are 
 
 - **Objects - one row per object** - with **Images** to pick (all by default; [images left out](#leaving-images-out) are skipped unless you select them explicitly), and optionally **A row per coloc pair** (as [Coloc pairs](#coloc-pairs) in the List) and **Each image in its own file**.
 - **Per image** - the same aggregated-by-image data as [a row per image in the List](#grouping-and-aggregating-rows); optionally the **Image heatmap** (the per-image spatial heatmap grid, with its own square size).
-- **Time course - per time point** <span class="evx-new">NEW</span> - for time-lapse data: the values per frame, as the [Over time](#charts) chart shows them.
+- **Time course - per time point** <span class="evx-new">NEW</span> - for time-lapse data: the values per frame, as the [Over time](#charts) chart shows them. **A line per** **Class**, **Image**, **Well** or **Track**; **Statistics** - any of mean, SD, median, Q1, Q3, min, max, sum (default mean and SD); **Tables** **Long**, **Wide** or **Both** (default; not offered for **Track**); optionally **Relative to the first time point (%)**.
 - **Measurements - one row per value** <span class="evx-new">NEW</span> - when the analysis has [measurement steps](/guide/pipelines/#measurement-steps): every value on a row of its own, with what it is about - `image_name`, `image_rel_path`, `z_stack`, `t_stack`, `region`, `object_id`, `related_object_id`, `object_class_name`, `step`, `measurement`, `unit`, `key`, `value`. This long layout reads straight into R or Python, and a new measurement needs no new column. The measurements picked under **More options › Measurements** are written (none picked: all), of the chosen images, Z planes and time points. Written as `measurements.xlsx` / `.csv`.
-- **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is.
+- **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is. Options: **Statistics** of the measurements (default mean), **At least _N_ time points**, **Only tracks from the first time point** and **Leave out tracks touching the image edge**.
 - **Per well - plate layout (XLSX)** - the plate as a heatmap; optionally **Plate as list**, **Wells as heatmap** and **Wells as list**, with **Colors** for the heatmaps. Grouping, plate size and well layout are taken from the project's plate settings - the same ones the [Plate view](#grouping-images-into-wells) uses.
 - **Images with objects drawn (PNG)** <span class="evx-new">NEW</span> - each image as a PNG, with its channels in their colors (auto-scaled) and every object's box in its class color. Large images are written at the pyramid level up to 4096 px.
 
@@ -268,7 +268,7 @@ The width of the results, whether the split is on, and **Follow selection** are 
 - **Name prefix** - put in front of every output file name as `{prefix}_{name}` (e.g. `exp1_list.xlsx`), so exports of several experiments can share one folder. Characters that aren't allowed in file names are replaced by `_`.
 - **Transpose the tables** - writes the object and image tables [transposed](#transpose), with the classes next to each other.
 - **Measurements** and **Aggregations** - which columns and aggregations to write.
-- **Z planes** and **Time points** - restrict the export to a range.
+- **Z planes** and **Time points** - **All** (default) or a **Range**.
 
 ![The export card with More options open: name prefix, transpose, measurements, aggregations, Z planes and time points](../../../assets/screenshots/screenshot-results-export-more.png)
 
@@ -276,7 +276,7 @@ The image heatmap and the plate and well exports are XLSX-only. **Parquet** goes
 
 In XLSX exports, values that come from (or, for a well/plate, are affected by) an image left out are grayed out and struck through.
 
-Click **Start export**; a progress bar tracks the run and a message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `measurements.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`), each preceded by the name prefix if one is set.
+Click **Start export**; a progress bar tracks the run and a message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `measurements.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`, `time_course.xlsx` - a _Long_ sheet plus the wide sheets - or `time_course.csv` plus `time_course_{name}.csv` per wide table, `tracks.xlsx`/`.csv`; the PNGs go to `images/{name}.png`), each preceded by the name prefix if one is set.
 
 :::tip
 For colocalization exports, partner lookups are resolved in batches of 5,000 source objects at a time - large colocalization datasets export reliably without needing to load everything at once.

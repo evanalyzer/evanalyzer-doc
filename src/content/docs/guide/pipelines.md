@@ -28,7 +28,7 @@ With no pipeline shown, the steps panel lists the pipelines to pick one.
 
 ![Pipelines mode with no pipeline shown: the steps panel lists the pipelines to pick one](../../../assets/screenshots/screenshot-pipeline-pick.png)
 
-The **⋯** of a pipeline has **Edit pipeline…** (or double-click the pipeline), **Duplicate**, **Save as module…** and **Delete pipeline…**.
+The **⋯** of a pipeline has **Edit pipeline…** (or double-click the pipeline), **New pipeline**, **Duplicate**, **Save as module…** and **Delete pipeline…**.
 
 ![The pipeline switcher open in the steps panel: Pipelines · 4 of 4 run, each pipeline with its checkbox, ⋮⋮, focus and ⋯](../../../assets/screenshots/screenshot-pipeline-switcher.png)
 
@@ -108,7 +108,7 @@ The picker stays open: each step you add goes in after the one you added before,
 
 A step's settings open right in the panel (click its line), or in the **step settings** dialog next to the panel (**⤢**, `Enter`, or **Settings** in its ⋯). The dialog - _"Threshold · step 4 · settings"_ - has **General** and **Advanced** as tabs, the step's description, and a search over all its settings.
 
-**Number fields** can be typed into, or changed without typing: drag sideways over the number (one step per 4 pixels), `Ctrl` + mouse wheel, or `↑` / `↓`.
+**Number fields** can be typed into, or changed without typing: drag sideways over the number (one step per 4 pixels), `Ctrl` + mouse wheel, `↑` / `↓`, or the **−** / **+** buttons beside it (not on the small fields).
 
 ![Threshold · step 4 · settings next to the steps panel: General and Advanced tabs, the search, the description and the setting rows](../../../assets/screenshots/screenshot-step-settings.png)
 
@@ -118,11 +118,11 @@ To keep the steps short, each command shows only its essential settings. Setting
 
 ### Problems
 
-Settings that can't work - a class that doesn't exist, a module parameter that no longer matches - are marked **⚠** on the step, with the number of problems. The **Problems** panel lists all of them; click one to go to its step.
+Settings that can't work - a class that doesn't exist, a module parameter that no longer matches - are marked **⚠** on the step, with the number of problems. The **Problems** panel lists all of them; click one to go to its step. Some problems come with a fix one click away - **Add class _N_** for a missing class, **Stop setting _<setting>_** for a module parameter that no longer matches.
 
 ## Tuning panel
 
-When a pipeline is nearly right, the last few settings that matter are often spread over several steps. **Pin** them to keep them together: the pin next to a setting adds it to the **Tuning** panel, docked below the image; **⌖** on a step's line pins all its settings (again: unpins them).
+When a pipeline is nearly right, the last few settings that matter are often spread over several steps. **Pin** them to keep them together: the pin next to a setting (shown, like its **?**, while you point at the row) adds it to the **Tuning** panel, docked below the image; **⌖** on a step's line pins all its settings (again: unpins them).
 
 The Tuning panel has a tab **All pinned · N**, one tab per step and **Find a setting**. Change a value there and the preview follows - without opening the steps. The pins are saved with the project; **✕** closes the panel, a new pin opens it again.
 
@@ -134,7 +134,7 @@ The image shows the result of all steps on the current image. With **Auto previe
 
 The preview only works on the part of the image in view. **Preview the whole image** <span class="evx-new">NEW</span> (top bar, `Shift+F5`) runs it on the whole image - the visible part first - and its note says how many objects the whole image has (_"Whole image: 1 204 objects"_). The note stays until another image is shown; a change of the settings cancels a running whole-image preview, or marks a finished one _"Whole image: outdated - settings changed"_.
 
-While the preview runs, a small pill at the top of the image shows its progress; its **✕** cancels it. If the preview fails, the pill says why and in which step - _"Preview failed in cellpose › #3 Blur: …"_. A message too long for the pill opens as a card with the whole text, **Show step** (selects the step in the steps panel) and **Copy message** (for a bug report). Neither blocks the image.
+While the preview runs, a small pill at the top of the image shows its progress; its **✕** cancels it. An image that takes a moment to open shows _"Opening <name>…"_ in the same pill first (no ✕), and the bottom bar says **Opening** instead of **Ready**. If the preview fails, the pill says why and in which step - _"Preview failed in cellpose › #3 Blur: …"_. A message too long for the pill opens as a card with the whole text, **Show step** (selects the step in the steps panel) and **Copy message** (for a bug report). Neither blocks the image.
 
 ### Measurements panel
 

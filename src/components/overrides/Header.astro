@@ -1,7 +1,7 @@
 ---
 // Override of @astrojs/starlight/components/Header.astro.
-// Adds a small "Home / Documentation / Downloads" nav between the site title
-// and the search box, so the downloads section (deliberately kept outside
+// Adds a small "Home / Documentation / Add-ons" nav between the site title
+// and the search box, so the add-ons section (deliberately kept outside
 // the docs sidebar) is still reachable from every page's top toolbar.
 import config from 'virtual:starlight/user-config';
 
@@ -16,8 +16,8 @@ const shouldRenderSearch =
 
 const pathname = Astro.url.pathname;
 const isHome = pathname === '/';
-const isDownloads = pathname === '/downloads' || pathname.startsWith('/downloads/');
-const isDocs = !isHome && !isDownloads;
+const isAddOns = pathname === '/add-ons' || pathname.startsWith('/add-ons/');
+const isDocs = !isHome && !isAddOns;
 ---
 
 <div class="header">
@@ -25,10 +25,12 @@ const isDocs = !isHome && !isDownloads;
 		<SiteTitle />
 	</div>
 	<div class="sl-flex middle-group print:hidden">
-		<nav class="sl-hidden md:sl-flex top-nav" aria-label="Section">
+		<nav class="sl-flex top-nav" aria-label="Section">
 			<a href="/" aria-current={isHome ? 'page' : undefined}>Home</a>
-			<a href="/getting-started/installation/" aria-current={isDocs ? 'page' : undefined}>Documentation</a>
-			<a href="/downloads/" aria-current={isDownloads ? 'page' : undefined}>Downloads</a>
+			<a href="/getting-started/installation/" aria-current={isDocs ? 'page' : undefined}>
+				<span class="md:sl-hidden">Docs</span><span class="sl-hidden md:sl-block">Documentation</span>
+			</a>
+			<a href="/add-ons/" aria-current={isAddOns ? 'page' : undefined}>Add-ons</a>
 		</nav>
 		{shouldRenderSearch && <Search />}
 	</div>
@@ -68,8 +70,9 @@ const isDocs = !isHome && !isDownloads;
 			min-width: 0;
 		}
 
+		/* Phones: tighter, so the nav fits beside the logo, search and menu buttons. */
 		.top-nav {
-			gap: 1.5rem;
+			gap: 0.75rem;
 			align-items: center;
 			flex-shrink: 0;
 		}
@@ -105,6 +108,9 @@ const isDocs = !isHome && !isDownloads;
 		}
 
 		@media (min-width: 50rem) {
+			.top-nav {
+				gap: 1.5rem;
+			}
 			:global(:root[data-has-sidebar]) {
 				--__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
 			}

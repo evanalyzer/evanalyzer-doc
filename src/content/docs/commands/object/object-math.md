@@ -35,6 +35,7 @@ When multiple **Other class** objects overlap a single **Input class** object, t
 - The operation is applied per A object: each A object is matched against all B objects that overlap it (above the **Min Overlap Size** threshold), and their union is treated as the single "B" mask for that pair.
 - If **Keep unmatched** is disabled (default), A objects without any overlapping B are dropped entirely and do not appear in the output.
 - The **Output class** can be the same as **Input class**, in which case the original object is replaced. If it is a new class, the result is added alongside the original.
+- Any operation whose result has no pixels left (e.g. **Subtract** where B covers A, or **XOR** of identical masks) yields no object - nothing is created, measured or stored, regardless of **Keep unmatched**. In place (output class = input class), the input object is removed.
 - Resulting shapes that extend to the image boundary are flagged as edge-touching, identical to any other boundary object.
 
 ## Example: Isolate cytoplasm by subtracting the nucleus

@@ -13,7 +13,7 @@ Save Image is a transparent step: it doesn't change the image, so the steps afte
 
 | Parameter           | Description                                                                                                                                         |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name**            | File name of the control image (without extension).                                                                                                 |
+| **Name**            | File name of the control image (without extension). It may not contain a folder (`/`, `\`, `..`, a drive like `C:`) - the step then stops with an error and writes nothing. |
 | **Display Classes** | Object classes to draw on top of the image. Empty: the image is saved as it is.                                                                     |
 | **Source**          | _(advanced)_ What to save: **Image** (the current image, default), **Instance Map** or **Segmentation Mask** - both colored, one color per label. |
 | **Opacity**         | _(advanced)_ Opacity of the filled objects in percent: **0** draws only the contours, **100** solid fills. Contours are always drawn opaque.        |

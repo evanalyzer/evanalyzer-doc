@@ -31,7 +31,7 @@ The objects, the segmentation and the memory slots of the pipeline are not touch
 | **Take The Middle** | as its middle z-plane                                                                  |
 | **None**            | as the single z-plane **Z Index**                                                      |
 
-Any choice other than **Auto** is meant for a project that analyses one projection or one plane. If the project analyses the z-planes one by one, the pipeline runs once per plane - but on the same loaded image every time, so its objects repeat for every plane.
+Any choice other than **Auto** is meant for a project that analyses one projection or one plane - in a project that analyses the z-planes one by one, the step gets a **⚠** warning: use either one-by-one z-planes or a projection, not both. If the project analyses the z-planes one by one, the pipeline runs once per plane - but on the same loaded image every time, so its objects repeat for every plane.
 
 Objects found on a different projection than the project's are still drawn over the project's image, and annotations are matched to the project's z-planes.
 

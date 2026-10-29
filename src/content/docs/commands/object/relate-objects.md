@@ -37,7 +37,7 @@ With **Remove children without a parent**, a child that ends up without a parent
 
 Once objects are linked, the [List View](/guide/results/#list-view) gets two more groups in its settings:
 
-- **Children**: one entry per linked pair, e.g. _Spot in Cell_. Ticking it adds columns to the parent's rows: the number of its children (**Spot · Count**, 0 for a cell without spots) and, for every ticked value column, an aggregate of the children's values (**Spot · Mean · Area [px]**). **Of the columns** picks the aggregates: Mean (default), Median, Min, Max, Sum, Std dev or Skewness. A parent without children has no aggregate.
+- **Children**: one entry per linked pair, e.g. _Spot in Cell_. Ticking it adds columns to the parent's rows: the number of its children (**Spot · Count**, 0 for a cell without spots) and, for every ticked value column, an aggregate of the children's values (**Spot · Mean · Area [px]**). **Of the columns** picks the aggregates: **Average** (default), **Minimum**, **Maximum**, **Std Dev**, **Sum**, **Median** or **Skewness**. A parent without children has no aggregate.
 - **Linked objects**: one entry per parent class, e.g. _Parent · Cell_. Ticking it adds columns to the child's rows: the parent's object ID (**Parent Cell**) and the parent's value of every ticked value column (**Parent Cell · Area [px]**), e.g. the cell's area next to each spot.
 
 The object details beside the image list an object's **Parent** and **Children**.

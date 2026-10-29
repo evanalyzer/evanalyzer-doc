@@ -43,29 +43,24 @@ Follow the [Spot Count](/tutorials/spot-count/) pipeline for the EV channel to p
 
 ## Step 4: Link Spots to Nuclei
 
-After the Classify Objects step in the EV pipeline, add a second **Classify Objects** step:
+After the Classify Objects step in the EV pipeline, add a **[Relate Objects](/commands/object/relate-objects/)** step:
 
-| Setting                | Value                                                  |
-| ---------------------- | ------------------------------------------------------ |
-| Origin class           | `cy5@spot`                                             |
-| Target class           | `cy5@spot-in-nucleus`                                  |
-| Intersection condition | Intersects with `dapi@nucleus` (min intersection: 10%) |
+| Setting                          | Value                            |
+| -------------------------------- | -------------------------------- |
+| Children                         | `cy5@spot`                       |
+| Parents                          | `dapi@nucleus`                   |
+| A child belongs to the parent if | Its centre is in the parent      |
+| Remove children without a parent | On, to keep only spots in nuclei |
 
-Objects that intersect a nucleus are moved to `cy5@spot-in-nucleus`. Spots that do not intersect remain as `cy5@spot` and can optionally be moved to `cy5@spot-outside` by an additional step.
+Every spot whose centre lies in a nucleus is linked to that nucleus. With **Remove children without a parent** off, the other spots stay as unlinked `cy5@spot` objects.
 
 ## Step 5: Results
 
-In the results view:
+In the [List View](/guide/results/#list-view) of the results:
 
-- The `cy5@spot-in-nucleus` **Count** per image gives total spots inside nuclei.
-- With the parent object ID relationship, you can query spots per nucleus in the DuckDB results file:
-
-```sql
-SELECT parent_object_id, COUNT(*) AS spots_per_nucleus
-FROM objects
-WHERE class = 'cy5@spot-in-nucleus'
-GROUP BY parent_object_id;
-```
+- The `cy5@spot` **Count** per image gives the total number of linked spots.
+- Under **Children**, tick the entry for the spots in the nuclei (e.g. _cy5@spot in dapi@nucleus_). Every nucleus row then gets the number of its spots (**· Count**, 0 for a nucleus without spots) and, for every ticked value column, an aggregate of its spots' values.
+- Click a nucleus's spot count to list just its spots. [Export](/guide/results/#exporting-results) the list to get the spots per nucleus as a table.
 
 ## Voronoi cell approximation (no cell stain)
 

@@ -24,7 +24,7 @@ Use `<prefix>@<type>` where the prefix (typically the fluorophore) is used for s
 Each class is a row with its color, its name, its number of objects on the current image and an eye that shows or hides its objects. Click a class to select it.
 
 - **+** (**New class**) adds a class and opens its settings.
-- **⋯ › Edit name, color, …** of a class opens its settings.
+- **⋯ › Edit name, color, id…** of a class opens its settings.
 - The same menu has **Copy**, **Move up** / **Move down** and **Delete class…**.
 
 ![The Class settings dialog left of the right-hand panels: Name, Notes, Class ID with Auto, the color grid (7 a row)](../../../assets/screenshots/screenshot-class-settings.png)
@@ -48,7 +48,7 @@ You can also create a class where you need it: the class pickers of the steps an
 
 The Classes panel's own **⋯** menu:
 
-- **Add classes from image** creates one class per channel of the current image, as a starting point, in the channels' colors.
+- **Add classes from image** creates one class per channel of the current image, as a starting point, in the channels' colors. Each class is named after its channel; a channel without a name gives _Class 0_, _Class 1_, … (counted from 0, like the channels).
 - **Merge classes from image** adds only the classes the list doesn't have yet.
 - **Delete all classes…** empties the list, after a confirmation.
 - **Hide unclassified objects** - see below.
@@ -65,7 +65,7 @@ Click a row to select it - the object is highlighted on the image, and selecting
 
 ### Filtering
 
-Above the list are a **class filter** (**All classes** or one class) and a **search**. The search takes an object id, a class name, or a condition on a measurement - `area > 50`, `circ < 0.6` - and several terms separated by commas.
+Above the list are a **class filter** and a **search**. The class filter's menu picks what to **SHOW** - **All**, **Annotations** (drawn by hand) or **Detections** (found by the pipeline) - and the **CLASS** (**All classes** or one class); the chip then reads e.g. _All classes · manual_, and its **✕** resets both. The search takes an object id, a class name, or a condition on a measurement - `area > 50`, `circ < 0.6` - and several terms separated by commas.
 
 ### Objects as a table
 
@@ -82,7 +82,8 @@ The selected object's details are shown in a card beside the panel:
 - its classes,
 - **Area** in pixels² and in the physical unit (nm²) from the image's pixel size,
 - **Circularity**,
-- the **mean** intensity of each channel,
+- **Shared by** - how many objects have the same segmentation class (_"120 objects"_),
+- per channel, the mean (**μ**) and the sum (**Σ**) of its intensity,
 - **Parent** - for an object linked by [Relate Objects](/commands/object/relate-objects/), the classes of the objects it belongs to (_"Cell"_),
 - **Children** - how many linked objects belong to it, per class (_"Spot · 7"_),
 - **Touches** - each class it colocalizes with, and how many of that class's objects.
@@ -95,8 +96,8 @@ An object found by a pipeline is read-only (**From the pipeline · read-only**).
 
 For the selected object:
 
-- **Set class…** - pick a class, then **Add class** adds it to the object's classes, keeping the ones it has, or **Set class** replaces them.
-- **Copy to annotation** - copies a pipeline object into the hand-drawn annotations, where it can be edited (for example to train a classifier on it). The copy is selected, so its class can be changed right away.
+- **Set class** - pick a class, then **Add class** adds it to the object's classes, keeping the ones it has, or **Set class** replaces them.
+- **Copy to annotation** - copies a pipeline object into the hand-drawn annotations, where it can be edited (for example to train a classifier on it). The **Copy object as annotation** dialog asks for **THE COPY'S CLASS**: **Its own classes** or **Another class**; **Copy** makes the copy and selects it.
 - **Delete object** (or `Delete`) - removes a hand-drawn object, after a confirmation.
 
 The panel's **⋯** menu, for all objects of the image:
@@ -104,9 +105,9 @@ The panel's **⋯** menu, for all objects of the image:
 | Item | What it does |
 | --- | --- |
 | **Show as a table** / **Show as a list** | See [Objects as a table](#objects-as-a-table). |
-| **Copy all to annotations** | Copies the image's pipeline objects of the ticked classes into the hand-drawn annotations - with their own classes or one class for all. The same shape is not copied twice. |
+| **Copy all to annotations** | Opens **Copy pipeline objects as annotations**: tick the **OBJECTS OF THESE CLASSES** to copy, and give the copies **Their own classes** or **One class for all**. The same shape is not copied twice. |
 | **Export as GeoJSON** <span class="evx-new">NEW</span> | Writes the hand-drawn annotations of the open image to a `.geojson` file. Tick the classes to export and choose the file name. |
-| **Import from GeoJSON** <span class="evx-new">NEW</span> | Reads a `.geojson` file - from EVAnalyzer, QuPath or other tools - into the open image. Each class name in the file is mapped to a project class (by default the one with the same name, ignoring case), a new class, no class, or _don't import_, so QuPath's class names don't need to match. Shapes without a series go to the series shown. |
+| **Import from GeoJSON** <span class="evx-new">NEW</span> | Reads a `.geojson` file - from EVAnalyzer, QuPath or other tools - into the open image. Each class name in the file is mapped to a project class (by default the one with the same name, ignoring case), a new class, no class, or _don't import_, so QuPath's class names don't need to match. Shapes without a series go to the series shown. **Add to the annotations** keeps the annotations already there (the same pixels are not added again); **Replace them** deletes this image's hand-drawn annotations first - Undo brings them back. |
 | **Re-measure annotations** | Measures the hand-drawn objects again on the image file - every channel, full resolution. |
 | **Delete annotations…** | Removes objects drawn by hand - on this image or all images, of the chosen classes - after a confirmation. Objects found by pipelines are not affected. |
 

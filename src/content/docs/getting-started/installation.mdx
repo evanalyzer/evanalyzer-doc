@@ -25,7 +25,7 @@ Most PCs have an x86-64 (Intel or AMD) processor. Choose **ARM64** for ARM machi
 :::
 
 :::note[Looking for project templates or AI models?]
-Those live on the separate [Downloads](/downloads/) page, linked at the top of every page.
+Those live on the separate [Add-ons](/add-ons/) page, linked at the top of every page.
 :::
 
 Packages follow this naming scheme on the [GitHub Releases page](https://github.com/evanalyzer/evanalyzer/releases/latest):
@@ -46,7 +46,7 @@ The CUDA builds bundle the CUDA runtime libraries and are packed as one `.7z` fi
 ```
 :::
 
-Extract the downloaded archive to a directory of your choice. Besides the app, every package holds `LICENSE` and `THIRD-PARTY-NOTICES.txt` - the licences of the third-party components shipped with it.
+Extract the downloaded archive to a directory of your choice, and keep its contents together: the AI models (Cellpose, StarDist, U-Net, YOLOv5) run through the **AI plugin** in the `ai` folder next to the program (on Windows, also keep the `.dll` files next to `evanalyzer.exe`). Without it everything else works, and AI steps report _"AI models need the AI plugin (…), which is not installed"_. Besides the app, every package holds `LICENSE` and `THIRD-PARTY-NOTICES.txt` - the licences of the third-party components shipped with it.
 
 ## VS Code Extension
 

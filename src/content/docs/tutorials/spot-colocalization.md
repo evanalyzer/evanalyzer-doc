@@ -30,19 +30,20 @@ Create a third pipeline with **Empty input** (no image channel needed). Add a si
 
 **[Colocalize Objects](/commands/object/colocalization/)**
 
-| Setting                           | Value                          |
-| --------------------------------- | ------------------------------ |
-| Classes to colocalize             | `cy5@spot`, `cy7@spot`         |
-| Class for overlapping areas       | `coloc@cy5cy7`                 |
-| Min colocalization area           | 1 px²                          |
-| Allow multi-object colocalization | disabled (one-to-one matching) |
+| Setting            | Value                                          |
+| ------------------ | ---------------------------------------------- |
+| Colocalize         | `cy5@spot`, `cy7@spot`                         |
+| Overlap regions as | `coloc@cy5cy7`                                 |
+| By at least        | 1                                              |
+| Size Unit          | px                                             |
+| Partners           | Only the best-overlapping partner (one-to-one) |
 
 ## Step 4: Run and Inspect
 
 After running:
 
-- `cy5@spot` objects that colocalize are assigned a **tracking ID** shared with their matching `cy7@spot` partner.
-- In the results table, sort by **Tracking ID** to see matched pairs side by side.
+- Every `cy5@spot` object records its `cy7@spot` partner, and the other way round. In the [List View](/guide/results/#list-view), the **Coloc with cy7@spot** column shows how many partners a spot has (0 or 1 here); click the count to list the partner.
+- **A row per: [Coloc pairs](/guide/results/#coloc-pairs)** shows each matched pair in one row, with the partner's measurements next to the spot's own.
 - The `coloc@cy5cy7` class contains one object per colocalising pair, representing the overlap area.
 
 ## Interpreting Results

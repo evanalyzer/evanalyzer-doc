@@ -37,6 +37,23 @@ Every command supports `--help`:
 ./evanalyzer cli analyze --help
 ```
 
+## Global Options
+
+These work in every mode - the GUI, every `cli` command and `server` - also after the command name:
+
+| Option              | Description                                                                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--max-threads <n>` | Most CPU cores EVAnalyzer uses - the analysis, AI models, the results database and everything else - e.g. to keep a computer usable during a long analysis. At least 1. Default: the **Most CPU cores** [setting](/guide/settings/#viewport), else all of them |
+| `--max-ram <MB>`    | Most RAM in MB EVAnalyzer plans with - caches, threads and the results database are sized as if the computer had no more. Not a hard limit on every allocation (a container's limit is). A plain number of at least 1 (`8G` is not accepted). Default: the **Most RAM** [setting](/guide/settings/#viewport), else the computer's RAM |
+| `--ai-devices <devices>` | Where AI models (Cellpose, StarDist, U-Net, YOLOv5) run: `auto` (every GPU, else the CPU), `cpu`, or GPU numbers like `0,2`. Applies where the analysis runs - this machine, or the workers of a `server` started with it; ignored with `--remote`. Default `auto` |
+| `--gpu-slots <n>`   | Parallel AI inferences per GPU. Raise it for GPUs with memory to spare; a GPU that runs out of memory goes back down by itself. Default 1 |
+| `--ai-plugin <file>` | The AI plugin library to try first (`libevanalyzer_ai.so`, `evanalyzer_ai.dll`, `libevanalyzer_ai.dylib`) - for development and tests; a package finds its own next to the program |
+
+```sh
+# Keep 4 cores and 8 GB for everything else on a 12-core, 16 GB computer
+./evanalyzer --max-threads 8 --max-ram 8192 cli analyze --project experiment.evaproj
+```
+
 ## Running on a Server
 
 Every command can also run on another machine - for example a GPU workstation that holds the images. Add the [remote options](/remote/remote-control/#client-options):
@@ -74,9 +91,9 @@ Runs a project's enabled [pipelines](/guide/pipelines/) over its images and writ
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--project <path>` | Project file to analyze (required)                                                                                                          |
 | `--images <dir>`   | Scan this directory and use it as the project's image root before running. If omitted, the project's already-saved image list is used as-is |
-| `--threads <n>`    | Number of images to process in parallel. If omitted, EVAnalyzer picks the highest thread count that fits within available RAM and CPU cores |
+| `--threads <n>`    | Number of images to process in parallel. If omitted, EVAnalyzer picks the highest thread count that fits within available RAM and CPU cores. Never more than [`--max-threads`](#global-options) |
 
-The parallelism is automatically capped to whichever is lower — the number of CPU cores or the number of images that fit in available RAM — so a low-memory machine never launches more parallel workers than it can sustain.
+The parallelism is automatically capped to whichever is lower — the number of CPU cores (or `--max-threads`) or the number of images that fit in available RAM (or `--max-ram`) — so a low-memory machine never launches more parallel workers than it can sustain.
 
 The command prints a progress line per image as it completes, then a summary:
 
@@ -401,6 +418,8 @@ The project file is a JSON document following the EVAnalyzer schema. Key top-lev
   ]
 }
 ```
+
+The paths in `images.list` are relative to `images.root`. A project with an absolute image path, or one that contains `..` or a drive, is refused before any image is analysed: _"Cannot start: the image path "…" is outside the image folder"_.
 
 ### File extensions
 

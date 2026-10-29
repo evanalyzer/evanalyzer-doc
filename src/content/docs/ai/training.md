@@ -87,7 +87,7 @@ Once a model is in a pipeline, **SHOW ON IMAGE** in the sheet turns on the **Pre
 
 **Opacity** sets how strong a sure prediction is drawn; **Background in its colour too** also colours what is predicted as background (off: left clear); **Values under the cursor** shows the predicted class and its probability in the pixel info. A legend at the top left of the image names the classes (_pale: unsure … sure_) and hides the overlay again. The look is remembered; the overlay starts off in every session.
 
-The same certainty decides **Min Certainty** in the [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) and [AI Object Classifier](/commands/object/ai-object-classifier/) steps: predictions less sure than it are dropped.
+The same certainty decides **Min Certainty** in the [AI Pixel Classifier](/commands/ai-segmentation/pixel-classifier/) and [AI Object Classifier](/commands/object/ai-object-classifier/) steps: pixels less sure than it become background; objects less sure than it are left as they are.
 
 ### Z-stacks and time-lapses
 

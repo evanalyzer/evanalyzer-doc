@@ -101,7 +101,9 @@ An image opened for the first time is auto-scaled, every channel. To start with 
 
 ### Z-stack
 
-For images with several Z planes, the bar at the bottom of the image has a **Z** part: the plane shown (_3 / 12_), ◀ ▶ to step through the planes (also `Page Up` / `Page Down`), and a menu that picks how the z-stack is shown:
+For images with several Z planes, the bar at the bottom of the image has a **Z** part: the plane shown (_3 / 12_), ◀ ▶ to step through the planes (also `Page Up` / `Page Down`), and a menu that picks how the z-stack is shown. **Fold the bar** shrinks the bar to just its Z and T parts; **Unfold the bar** brings the rest back.
+
+The menu's choices:
 
 | Choice | Shows |
 | --- | --- |

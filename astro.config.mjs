@@ -11,6 +11,8 @@ export default defineConfig({
   // Command groups were renamed to components, then to modules: old links keep working.
   redirects: {
     "/guide/command-groups": "/guide/modules",
+    // The Downloads page became Add-ons, so "Download" means only the app.
+    "/downloads": "/add-ons",
   },
   // starlight-image-zoom doesn't support Astro's newer default "satteri"
   // markdown processor yet - stay on the remark/rehype pipeline until it does.

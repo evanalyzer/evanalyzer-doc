@@ -156,7 +156,7 @@ Every analysis writes a results database to `<project folder>/results/<date>__<j
 <details>
 <summary>How do I share a pipeline with a colleague?</summary>
 
-Save the whole project as a [project template](/guide/pipelines/#saving-a-project-as-a-template) (`.evatemplate`) - classes, plate settings and all pipelines - or a part of a pipeline as a [module](/guide/modules/#module-library) (`.evamodule`). Your colleague opens the file with **EVA › Open…**. Ready-made ones are on the [Downloads](/downloads/) page.
+Save the whole project as a [project template](/guide/pipelines/#saving-a-project-as-a-template) (`.evatemplate`) - classes, plate settings and all pipelines - or a part of a pipeline as a [module](/guide/modules/#module-library) (`.evamodule`). Your colleague opens the file with **EVA › Open…**. Ready-made ones are on the [Add-ons](/add-ons/) page.
 
 </details>
 

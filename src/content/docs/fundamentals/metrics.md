@@ -264,7 +264,7 @@ Whether an object overlaps an object of another class - the number of pixels bot
 
 ## Colocalization Partners
 
-Per partner class, how many objects of that class an object colocalises with (**Coloc with *class***), and their object IDs. Both are set by [Colocalize Objects](/commands/object/colocalization/); the partners and their values can be shown next to each object with [Coloc details](/guide/results/#colocalization-details). The link goes both ways: each partner records the object as its partner too.
+Per partner class, how many objects of that class an object colocalises with (**Coloc with *class***), and their object IDs. Both are set by [Colocalize Objects](/commands/object/colocalization/); the partners and their values can be shown next to each object with [A row per: Coloc pairs](/guide/results/#coloc-pairs). The link goes both ways: each partner records the object as its partner too.
 
 ![A ch1 spot overlapped by two ch2 spots (a, b) has Coloc with ch2 = 2 and records both IDs; c doesn't overlap and doesn't count](../../../assets/figures/metric-coloc-partners.svg)
 
