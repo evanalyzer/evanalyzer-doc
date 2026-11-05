@@ -236,7 +236,7 @@ A unique ID assigned to each object when it is created (**Object ID**): a UUID (
 
 Use the **With object ID** option in [Save Image](/commands/object/save-image/) to annotate the ID alongside the object in control images.
 
-![Each object has its own ID; Relate Objects links spots to their cell, and the Simple Tracker gives the same object the same Track ID in every frame](../../../assets/figures/metric-object-ids.svg)
+![Each object has its own ID; Relate Objects links spots to their cell, and a tracking step gives the same object the same Track ID in every frame](../../../assets/figures/metric-object-ids.svg)
 
 ### Parent
 
@@ -254,7 +254,7 @@ The children columns can aggregate with Mean, Min, Max, Std dev, Sum, Median and
 
 Links the objects that are the same physical object in consecutive time frames (**Track ID**). Every object of a tracked class gets a track ID; all objects of one track share it. Track IDs are numbered 1, 2, 3, ...; objects that were not tracked have none.
 
-Track IDs are assigned by the [Simple Tracker](/commands/dataset/simple-tracker/), which runs after all images have been analysed. See [Tracks](/guide/results/#tracks) for viewing them.
+Track IDs are assigned by a tracking step ([Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/), [Track Overlap](/commands/dataset/track-overlap/) or [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/)), which runs after all images have been analysed. See [Tracks](/guide/results/#tracks) for viewing them.
 
 ## Intersection
 

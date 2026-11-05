@@ -2,7 +2,7 @@
 
 Two fields (A01_01, A02_01), 15 frames 30 s apart, 512 x 512 px, one GFP
 channel: vesicles that drift and wander, some leave or enter at the edges.
-The project detects them and links them with a Simple Tracker step.
+The project detects them and links them with a Track Nearest Neighbor step.
 
     python3 make_tracks.py /data/ev_tracks
 """
@@ -67,11 +67,11 @@ commands = [
     {"type": "EXTRACT_OBJECTS", "maxObjectsBeforeFail": 100000, "classMapping": []},
     {"type": "CLASSIFY_OBJECTS", "originSegmentation": [], "inputClasses": [{"GLOBAL": 1}],
      "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH", "outputClass": "UNSET", "overlappingWith": "UNSET",
-     "minIntersectionArea": 0.0, "sizeUnit": "PIXELS", "minArea": 8.0, "maxArea": big,
+     "minIntersectionSize": 0.0, "sizeUnit": "PIXELS", "minSize": 8.0, "maxSize": big,
      "minCircularity": 0.0, "maxCircularity": 1.0, "minSolidity": 0.0, "maxSolidity": 1.0,
      "minAspectRatio": 0.0, "maxAspectRatio": big, "minEccentricity": 0.0, "maxEccentricity": 1.0,
      "minFeret": 0.0, "maxFeret": big, "allowEdgeTouching": True, "intensityFilters": []},
-    {"type": "SIMPLE_TRACKER", "objectClass": {"GLOBAL": 1}, "unit": "PIXELS", "maxDistance": 12.0},
+    {"type": "TRACK_NEAREST_NEIGHBOR", "objectClass": {"GLOBAL": 1}, "unit": "PIXELS", "maxDistance": 12.0},
 ]
 project = {
     "schemaVersion": 4,

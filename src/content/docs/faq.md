@@ -112,7 +112,7 @@ The series is chosen once per project and used for every image. EVAnalyzer asks 
 <details>
 <summary>How are z-stacks and time-lapses handled?</summary>
 
-A z-stack is analysed as a projection (e.g. Max intensity), one plane, or plane by plane - a project setting. A time-lapse is analysed frame by frame, and the [Simple Tracker](/commands/dataset/simple-tracker/) can link objects across frames. See [Z-stack](/guide/images/#z-stack), [Time-lapse](/guide/images/#time-lapse) and [Orthogonal views and 3D view](/guide/images/#orthogonal-views-and-3d-view).
+A z-stack is analysed as a projection (e.g. Max intensity), one plane, or plane by plane - a project setting. A time-lapse is analysed frame by frame, and a [tracking step](/commands/dataset/track-lap/) can link objects across frames. See [Z-stack](/guide/images/#z-stack), [Time-lapse](/guide/images/#time-lapse) and [Orthogonal views and 3D view](/guide/images/#orthogonal-views-and-3d-view).
 
 </details>
 

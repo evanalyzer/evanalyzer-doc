@@ -89,7 +89,7 @@ The rules that follow from this:
 - **Colocalize Objects links to internal objects** are removed when the module ends. If you want the numbers that come from them (e.g. a spot count per cell), the spot class must be a project class - a module parameter.
 - **[Relate Objects](/commands/object/relate-objects/) links to internal parents** are removed the same way: the results then have no children per parent for them. EVAnalyzer warns about both.
 - **Extract Objects** inside a module can map a segmentation class to one of the module's classes with its [class mapping](/commands/object/extract-objects/#class-mapping).
-- **Dataset steps** such as the [Simple Tracker](/commands/dataset/simple-tracker/) only work on project classes.
+- **Dataset steps** such as the [trackers](/commands/dataset/track-lap/) only work on project classes.
 - [Cross-tile merging](/fundamentals/cross-tile-merging/) merges internal objects of each use of a module separately.
 
 ## Memory slots in modules

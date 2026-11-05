@@ -35,3 +35,7 @@ Larger kernel sizes or higher sigma values remove more noise but also blur small
 ## Background
 
 Gaussian smoothing is the foundation of *scale-space theory* in computer vision - the idea that an image can be analyzed at multiple levels of detail by convolving it with Gaussians of increasing $\sigma$, from fine noise-level detail up to coarse structure. See Witkin, "Scale-Space Filtering" (*IJCAI*, 1983) and Lindeberg, "Scale-Space Theory in Computer Vision" (Springer, 1994) for the underlying theory.
+
+## Citation
+
+The step runs the Gaussian filter of kornia-rs and cites it: Riba E. et al., "Kornia-rs: A Low-Level 3D Computer Vision Library In Rust," _arXiv_, 2025. [doi:10.48550/arXiv.2505.12425](https://doi.org/10.48550/arXiv.2505.12425) See [Citation](/citation/#citing-the-algorithms-you-used) for exporting the citations of a project.

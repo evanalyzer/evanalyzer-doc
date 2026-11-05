@@ -30,3 +30,7 @@ The three modes trace out different curves through the same input→output space
 - **Linear** - correct for systematic over/under-exposure across a batch.
 - **Logarithmic** - useful when signal spans several orders of magnitude (e.g. very dim and very bright objects in the same image).
 - **Square root** - a milder alternative to log when the intensity range is not extreme.
+
+## Citation
+
+The step cites Hummel R., "Image Enhancement by Histogram Transformation," _Computer Graphics and Image Processing_, vol. 6, pp. 184-195, 1977. [doi:10.1016/S0146-664X(77)80011-7](https://doi.org/10.1016/S0146-664X(77)80011-7) See [Citation](/citation/#citing-the-algorithms-you-used) for exporting the citations of a project.

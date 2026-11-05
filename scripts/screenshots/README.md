@@ -28,7 +28,7 @@ python3 scripts/screenshots/take.py pipeline compare   # only these
    colocalization pipeline, display ranges per image), and the CLI runs one
    analysis, `dilution_series`. `make_tracks.py` writes a small time-lapse to
    `/data/ev_tracks` (two fields, 15 frames 30 s apart, moving vesicles) with
-   a Simple Tracker project; its analysis `tracking` feeds the Tracks and
+   a Track Nearest Neighbor project; its analysis `tracking` feeds the Tracks and
    Over time screenshots.
 3. **Scenes.** Each scene restarts the app, clicks to one screen and saves
    one or more PNGs. The scenes are plain Python functions in `take.py`.

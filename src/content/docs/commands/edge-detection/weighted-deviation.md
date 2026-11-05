@@ -23,3 +23,7 @@ Use Weighted Deviation to:
 | **Sigma** | Standard deviation of the Gaussian weighting within the window |
 
 A larger kernel size and higher sigma increases the scale of the detected variation. Smaller values respond to fine-grained texture.
+
+## Citation
+
+The step cites kornia-rs, whose filter it uses (Riba E. et al., "Kornia-rs: A Low-Level 3D Computer Vision Library In Rust," _arXiv_, 2025, [doi:10.48550/arXiv.2505.12425](https://doi.org/10.48550/arXiv.2505.12425)), and EVAnalyzer. See [Citation](/citation/#citing-the-algorithms-you-used) for exporting the citations of a project.

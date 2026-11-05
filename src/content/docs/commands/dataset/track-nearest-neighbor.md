@@ -1,11 +1,13 @@
 ---
-title: Simple Tracker
+title: Track Nearest Neighbor
 description: Link the objects of a time-lapse into tracks by nearest-neighbour matching between consecutive frames.
 ---
 
-The **Simple Tracker** links the objects of a time-lapse into **tracks**: each object in frame _t_ + 1 continues the track of the nearest object in frame _t_, if that one is close enough and not claimed by an even closer object. Every tracked object gets a **Track ID**, shown as a column in the [results](/guide/results/#list-view).
+**Track Nearest Neighbor** (formerly _Simple Tracker_) links the objects of a time-lapse into **tracks**: each object in frame _t_ + 1 continues the track of the nearest object in frame _t_, if that one is close enough and not claimed by an even closer object. Every tracked object gets a **Track ID**, shown as a column in the [results](/guide/results/#list-view).
 
-![Objects of frame t (filled) and frame t + 1 (rings): each ring continues the track of the nearest filled object within Max Distance; a ring with no object close enough starts a new track, an object without a partner ends its track](../../../../assets/figures/cmd-simple-tracker.svg)
+![Objects of frame t (filled) and frame t + 1 (rings): each ring continues the track of the nearest filled object within Max Distance; a ring with no object close enough starts a new track, an object without a partner ends its track](../../../../assets/figures/cmd-track-nearest-neighbor.svg)
+
+In a project file it is `TRACK_NEAREST_NEIGHBOR` - projects that still use the old Simple Tracker name have to be updated.
 
 It is a [dataset step](/guide/pipelines/#dataset-steps): it runs once after every image has been analysed, on the stored objects of all frames.
 
@@ -27,10 +29,11 @@ Per image and Z-plane, two consecutive frames are matched by **global greedy nea
 2. The pairs are linked closest first; each object is used only once.
 3. An object without a partner starts a new track. A frame without objects ends every track.
 
-Track IDs start at 1 and are unique across tracking steps: a second Simple Tracker for another class continues after the IDs the first one gave. Objects that are not tracked have no Track ID.
+Track IDs start at 1 and are unique across tracking steps: a second tracking step for another class continues after the IDs the first one gave. Objects that are not tracked have no Track ID.
 
 ## Limitations
 
 - No gap closing: an object missing in one frame ends its track, and its reappearance starts a new one.
 - No divisions or merges: each object continues at most one track.
+- For these, use [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/) (directed motion) or [Track Overlap](/commands/dataset/track-overlap/) (large objects such as cells).
 - Only project classes can be tracked, not the internal classes of a [module](/guide/modules/#internal-classes).

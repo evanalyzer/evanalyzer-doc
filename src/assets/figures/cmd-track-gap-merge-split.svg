@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="285" viewBox="0 0 440 285">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9333ea"/></marker>
+    <marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="284" rx="10"/>
+<!-- frame axis -->
+<g class="lbl-sm" text-anchor="middle">
+<text x="110" y="268">frame 1</text><text x="170" y="268">2</text><text x="230" y="268">3</text><text x="290" y="268">4</text><text x="350" y="268">5</text>
+</g>
+<!-- row labels -->
+<text class="lbl-bold" x="18" y="49">Gap</text>
+<text class="lbl-bold" x="18" y="119">Split</text>
+<text class="lbl-bold" x="18" y="199">Merge</text>
+<!-- gap closing: track 1 -->
+<circle cx="110" cy="45" r="8" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+<circle cx="170" cy="45" r="8" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+<circle cx="230" cy="45" r="8" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="3 3"/>
+<circle cx="290" cy="45" r="8" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+<circle cx="350" cy="45" r="8" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/>
+<line x1="118" y1="45" x2="162" y2="45" stroke="#2563eb" stroke-width="2"/>
+<path d="M178,41 Q230,15 282,41" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#a1)"/>
+<line x1="298" y1="45" x2="342" y2="45" stroke="#2563eb" stroke-width="2"/>
+<text class="lbl-sm" x="230" y="68" text-anchor="middle">missed</text>
+<text class="lbl-sm" x="372" y="49">track 1</text>
+<!-- split: track 2 -> 3 and 4 -->
+<circle cx="110" cy="120" r="8" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/>
+<circle cx="170" cy="120" r="8" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/>
+<circle cx="230" cy="120" r="9" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/>
+<line x1="118" y1="120" x2="162" y2="120" stroke="#ea580c" stroke-width="2"/>
+<line x1="178" y1="120" x2="221" y2="120" stroke="#ea580c" stroke-width="2"/>
+<circle cx="290" cy="98" r="7" fill="#16a34a" fill-opacity="0.35" stroke="#16a34a" stroke-width="2"/>
+<circle cx="350" cy="98" r="7" fill="#16a34a" fill-opacity="0.35" stroke="#16a34a" stroke-width="2"/>
+<circle cx="290" cy="142" r="7" fill="#9333ea" fill-opacity="0.35" stroke="#9333ea" stroke-width="2"/>
+<circle cx="350" cy="142" r="7" fill="#9333ea" fill-opacity="0.35" stroke="#9333ea" stroke-width="2"/>
+<line x1="238" y1="115" x2="281" y2="101" stroke="#16a34a" stroke-width="2" marker-end="url(#a3)"/>
+<line x1="238" y1="125" x2="281" y2="139" stroke="#9333ea" stroke-width="2" marker-end="url(#a4)"/>
+<line x1="297" y1="98" x2="343" y2="98" stroke="#16a34a" stroke-width="2"/>
+<line x1="297" y1="142" x2="343" y2="142" stroke="#9333ea" stroke-width="2"/>
+<text class="lbl-sm" x="200" y="108" text-anchor="middle">track 2</text>
+<text class="lbl-sm" x="372" y="96">track 3</text><text class="lbl-sm" x="372" y="109">parent 2</text>
+<text class="lbl-sm" x="372" y="140">track 4</text><text class="lbl-sm" x="372" y="153">parent 2</text>
+<!-- merge: tracks 5 and 6 -> 7 -->
+<circle cx="110" cy="180" r="7" fill="#0891b2" fill-opacity="0.35" stroke="#0891b2" stroke-width="2"/>
+<circle cx="170" cy="180" r="7" fill="#0891b2" fill-opacity="0.35" stroke="#0891b2" stroke-width="2"/>
+<circle cx="230" cy="180" r="7" fill="#0891b2" fill-opacity="0.35" stroke="#0891b2" stroke-width="2"/>
+<circle cx="110" cy="220" r="7" fill="#db2777" fill-opacity="0.35" stroke="#db2777" stroke-width="2"/>
+<circle cx="170" cy="220" r="7" fill="#db2777" fill-opacity="0.35" stroke="#db2777" stroke-width="2"/>
+<circle cx="230" cy="220" r="7" fill="#db2777" fill-opacity="0.35" stroke="#db2777" stroke-width="2"/>
+<line x1="117" y1="180" x2="163" y2="180" stroke="#0891b2" stroke-width="2"/>
+<line x1="177" y1="180" x2="223" y2="180" stroke="#0891b2" stroke-width="2"/>
+<line x1="117" y1="220" x2="163" y2="220" stroke="#db2777" stroke-width="2"/>
+<line x1="177" y1="220" x2="223" y2="220" stroke="#db2777" stroke-width="2"/>
+<circle cx="290" cy="200" r="10" fill="#6b7280" fill-opacity="0.35" stroke="#6b7280" stroke-width="2"/>
+<circle cx="350" cy="200" r="10" fill="#6b7280" fill-opacity="0.35" stroke="#6b7280" stroke-width="2"/>
+<line x1="237" y1="183" x2="279" y2="196" stroke="#6b7280" stroke-width="2" marker-end="url(#a5)"/>
+<line x1="237" y1="217" x2="279" y2="204" stroke="#6b7280" stroke-width="2" marker-end="url(#a5)"/>
+<line x1="300" y1="200" x2="340" y2="200" stroke="#6b7280" stroke-width="2"/>
+<text class="lbl-sm" x="170" y="170" text-anchor="middle">track 5</text>
+<text class="lbl-sm" x="170" y="240" text-anchor="middle">track 6</text>
+<text class="lbl-sm" x="372" y="198">track 7</text><text class="lbl-sm" x="372" y="211">parents 5, 6</text>
+</svg>

@@ -13,6 +13,7 @@ export default defineConfig({
     "/guide/command-groups": "/guide/modules",
     // The Downloads page became Add-ons, so "Download" means only the app.
     "/downloads": "/add-ons",
+    "/commands/dataset/simple-tracker": "/commands/dataset/track-nearest-neighbor",
   },
   // starlight-image-zoom doesn't support Astro's newer default "satteri"
   // markdown processor yet - stay on the remark/rehype pipeline until it does.
@@ -400,8 +401,20 @@ export default defineConfig({
               label: "Dataset",
               items: [
                 {
-                  label: "Simple Tracker",
-                  slug: "commands/dataset/simple-tracker",
+                  label: "Track Nearest Neighbor",
+                  slug: "commands/dataset/track-nearest-neighbor",
+                },
+                {
+                  label: "Track LAP",
+                  slug: "commands/dataset/track-lap",
+                },
+                {
+                  label: "Track Kalman",
+                  slug: "commands/dataset/track-kalman",
+                },
+                {
+                  label: "Track Overlap",
+                  slug: "commands/dataset/track-overlap",
                 },
               ],
             },

@@ -18,12 +18,13 @@ AI segmentation commands are only available in builds with the `ai` Cargo featur
 | Parameter                 | Description                                                                                                                                                     |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Model path**            | Path to a TorchScript-exported U-Net model (`.pt` / `.pth`).                                                                                                    |
-| **Object class**          | The segmentation class assigned to pixels classified as foreground.                                                                                             |
+| **Segmentation Class**    | The segmentation class assigned to pixels classified as foreground.                                                                                             |
 | **Probability threshold** | Probability above which a pixel is classified as foreground. Range: 0.0–1.0 (default 0.5).                                                                      |
 | **Output mode**           | How to interpret a multi-channel model output - `SoftmaxClasses` or `IndependentChannels`. Ignored for single-channel outputs. See [Output mode](#output-mode). |
 | **Foreground channel**    | Index of the channel holding the foreground probability, used only when the output has more than one channel. Range: 0–16 (default 1).                          |
 | **Boundary channel**      | Index of an optional boundary channel for boundary-aware models. Set to `-1` to disable (default). Range: −1–16.                                                |
 | **Boundary threshold**    | Boundary probability at or above which a pixel is excluded from the foreground. Only used when **Boundary channel** is enabled. Range: 0.0–1.0 (default 0.5).   |
+| **Piece Size** | _(advanced)_ How large the pieces are that a large tile runs through the network in: smaller ones take less RAM, larger ones are faster. **Auto** (default) or **Fixed** with a **Side** (default 1024 px, 256-4096) - see [Large tiles](#large-tiles). |
 
 ## Model requirements
 
@@ -73,6 +74,15 @@ AI UNet Segmentation → Connected Components → Watershed → Extract Objects
 ```
 
 [Connected Components](/commands/segmentation/connected-components/) labels each blob; [Watershed](/commands/segmentation/watershed/) re-splits any blob containing more than one object. This only works when touching objects form a pinched "peanut" shape - heavily overlapping objects with no waist cannot be split from the mask alone.
+
+## Large tiles
+
+A tile up to the piece size runs through the network whole; a larger one - e.g. of a whole slide - runs in square pieces, each with a margin (halo) as wide as the model's view, so the pieces fit together without seams. **Piece Size** sets their side:
+
+- **Auto**: for a model that sees only a limited neighbourhood, as large as this computer's RAM allows - 2048, 1024 or 512 px; the result is the same whatever the size, up to rounding. A model that normalises by the whole image (InstanceNorm) always gets 1024 px with a 128 px halo, because there the piece size changes the result a little (0.06-0.18 % of the pixels) - so it is the same on every computer.
+- **Fixed**: the same **Side** for every model on every computer.
+
+As a guide, a U-Net on a slide takes about 2.6 GB at once with 1024 px pieces and about 8.5 GB with 2048 px. In a project file: `"pieceSize": {"type": "AUTO"}` or `{"type": "FIXED", "side": 1024}`.
 
 ## Background
 

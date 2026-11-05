@@ -116,6 +116,11 @@ def click(x, y, wait=0.8):
     sleep(wait)
 
 
+def right_click(x, y, wait=0.8):
+    sh("xdotool", "mousemove", str(x), str(y), "click", "3")
+    sleep(wait)
+
+
 def hover(x, y, wait=0.8):
     sh("xdotool", "mousemove", str(x), str(y))
     sleep(wait)
@@ -355,6 +360,16 @@ def sc_add_step():
     click(520, 354, wait=1)        # Colocalization
     away()
     shot("screenshot-add-pipeline-step")
+
+
+def sc_add_step_trackers():
+    pipeline_cy5(with_preview=False)
+    click(*ADD_STEP, wait=1.5)
+    click(855, 181)                # Object chip off
+    click(952, 181, wait=1.5)      # Measure chip off: Dataset's four trackers are left
+    click(600, 310, wait=1)        # Track LAP
+    hover(700, 600, wait=1.5)
+    shot("screenshot-add-step-trackers")
 
 
 def sc_step_menu():
@@ -619,6 +634,17 @@ def sc_results_views():
     shot("screenshot-results-views")
 
 
+def sc_results_delete():
+    open_project()
+    click(*MODE_RESULTS, wait=2)
+    right_click(700, 149, wait=1.5)  # the analysis in the "Analyses" list
+    shot("screenshot-results-analyses-menu")
+    click(785, 260, wait=1.5)      # Delete from disk…
+    hover(1000, 760, wait=0.5)
+    shot("screenshot-results-delete-analysis")
+    click(788, 570, wait=1)        # Cancel - the analysis stays
+
+
 def sc_results_tracks():
     start_app("--project", str(TRACKS_PROJECT))
     click(372, 72, wait=3)         # read the folder: the viewer needs the image list
@@ -680,13 +706,14 @@ def wait_for_run_button(timeout=120):
 
 SCENES = {
     "images": sc_images, "image-panel": sc_image_panel, "go-to-image": sc_go_to_image, "workspace": sc_workspace, "pipeline": sc_pipeline,
-    "pick-pipeline": sc_pick_pipeline, "add-step": sc_add_step, "step-menu": sc_step_menu,
+    "pick-pipeline": sc_pick_pipeline, "add-step": sc_add_step,
+    "add-step-trackers": sc_add_step_trackers, "step-menu": sc_step_menu,
     "eva-menu": sc_eva_menu, "colors": sc_colors, "palette": sc_palette, "tuning": sc_tuning,
     "compare": sc_compare, "switcher": sc_switcher, "classes": sc_classes, "annotate": sc_annotate,
     "objects": sc_objects, "settings": sc_settings, "dialogs": sc_dialogs, "modules": sc_modules,
     "results-list": sc_results_list, "results-plate": sc_results_plate, "results-charts": sc_results_charts,
     "results-split": sc_results_split, "results-export": sc_results_export,
-    "results-views": sc_results_views,
+    "results-views": sc_results_views, "results-delete": sc_results_delete,
     "results-tracks": sc_results_tracks,
     "run": sc_run,                 # writes a second analysis: after the results scenes
     "series": sc_series,

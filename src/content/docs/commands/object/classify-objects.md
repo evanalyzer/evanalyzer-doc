@@ -89,6 +89,8 @@ Every object is evaluated once against the shape, intensity and intersection cri
 | **Reclassify on match**                             | Clear all classes, then add **Output Tag**            | No change                                             |
 | **Reclassify on mismatch**                          | No change                                            | Clear all classes, then add **Output Tag**            |
 
+With **no criterion** set - every range at its default, edge touching allowed, no intensity filter, **Intersecting With** unset - every object matches. The removing modes are the exception: **Remove objects matching criteria**, **Remove output class on match** and **Remove class on match** then remove **nothing**, without a warning. That way a [module](/guide/modules/) can switch an optional removal off by leaving its criteria open. Every other mode treats all objects as matching (e.g. **Reclassify on match** renames them all).
+
 :::note
 Two further modes - **Remove class on match** and **Remove class on mismatch** - are hidden from the command picker but still valid in project files (e.g. hand-edited or migrated from an older version): they strip every class listed in **Input Classes** (not the output class) from the object, without touching any other class it carries. "Clear all classes" removes an object's classification entirely - it still exists (its geometry and metrics are computed), but with no class assigned it won't appear in any class-filtered results, count, or export.
 :::

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9333ea"/></marker>
+    <marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<!-- legend -->
+<circle cx="22" cy="22" r="6" fill="#4b5563" fill-opacity="0.35" stroke="#4b5563" stroke-width="1.5"/><text class="lbl-sm" x="33" y="26">frame t</text>
+<circle cx="92" cy="22" r="6" fill="none" stroke="#4b5563" stroke-width="2"/><text class="lbl-sm" x="103" y="26">frame t + 1</text>
+<line x1="220" y1="40" x2="220" y2="200" stroke="#d8dce1" stroke-width="1"/>
+<!-- left: closest first -->
+<text class="lbl-bold" x="110" y="52" text-anchor="middle">Closest first</text>
+<circle cx="50" cy="95" r="10" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/><text class="lbl-bold" style="fill:#2563eb" x="32" y="99" text-anchor="middle">A</text>
+<circle cx="50" cy="155" r="10" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/><text class="lbl-bold" style="fill:#ea580c" x="32" y="159" text-anchor="middle">B</text>
+<circle cx="95" cy="123" r="10" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="130" cy="83" r="10" fill="none" stroke="#9333ea" stroke-width="2.5"/>
+<line x1="58" y1="100" x2="85" y2="117" stroke="#2563eb" stroke-width="2" marker-end="url(#a1)"/>
+<line x1="58" y1="148" x2="119" y2="91" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="lbl-sm" x="150" y="80">new track</text>
+<text class="lbl-sm" x="64" y="178">B: partner too far</text>
+<text class="lbl-sm" x="110" y="215" text-anchor="middle">A takes its nearest object first:</text>
+<text class="lbl-sm" x="110" y="230" text-anchor="middle">track B ends, one new track</text>
+<!-- right: Track LAP -->
+<text class="lbl-bold" x="330" y="52" text-anchor="middle">Track LAP</text>
+<circle cx="270" cy="95" r="10" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="2"/><text class="lbl-bold" style="fill:#2563eb" x="252" y="99" text-anchor="middle">A</text>
+<circle cx="270" cy="155" r="10" fill="#ea580c" fill-opacity="0.35" stroke="#ea580c" stroke-width="2"/><text class="lbl-bold" style="fill:#ea580c" x="252" y="159" text-anchor="middle">B</text>
+<circle cx="315" cy="123" r="10" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<circle cx="350" cy="83" r="10" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="280" y1="94" x2="337" y2="85" stroke="#2563eb" stroke-width="2" marker-end="url(#a1)"/>
+<line x1="277" y1="148" x2="304" y2="131" stroke="#ea580c" stroke-width="2" marker-end="url(#a2)"/>
+<text class="lbl-sm" x="330" y="215" text-anchor="middle">all links at once, smallest summed</text>
+<text class="lbl-sm" x="330" y="230" text-anchor="middle">squared distance: both tracks go on</text>
+</svg>

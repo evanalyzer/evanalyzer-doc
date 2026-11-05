@@ -44,8 +44,8 @@ def spot_steps(cls, threshold):
         {"type": "EXTRACT_OBJECTS", "maxObjectsBeforeFail": 100000, "classMapping": []},
         {"type": "CLASSIFY_OBJECTS", "originSegmentation": [], "inputClasses": [{"GLOBAL": cls}],
          "matchHandling": "REMOVE_ALL_CLASSES_IF_NOT_MATCH", "outputClass": "UNSET",
-         "overlappingWith": "UNSET", "minIntersectionArea": 0.0, "sizeUnit": "PIXELS",
-         "minArea": 5.0, "maxArea": big, "minCircularity": 0.0, "maxCircularity": 1.0,
+         "overlappingWith": "UNSET", "minIntersectionSize": 0.0, "sizeUnit": "PIXELS",
+         "minSize": 5.0, "maxSize": big, "minCircularity": 0.0, "maxCircularity": 1.0,
          "minSolidity": 0.0, "maxSolidity": 1.0, "minAspectRatio": 0.0, "maxAspectRatio": big,
          "minEccentricity": 0.0, "maxEccentricity": 1.0, "minFeret": 0.0, "maxFeret": big,
          "allowEdgeTouching": True, "intensityFilters": []},
@@ -61,9 +61,9 @@ def spot_pipeline(pid, name, channel, cls):
 coloc = {
     "id": 4, "name": "Coloc CY5 + FITC", "description": "", "imageSource": "SCRATCHPAD", "enabled": True,
     "steps": [{"id": 1, "enabled": True, "command": {
-        "type": "COLOCALIZATION", "classesToColoc": [{"GLOBAL": 2}, {"GLOBAL": 3}], "filterClasses": [],
+        "type": "COLOCALIZE_OBJECTS", "classesToColoc": [{"GLOBAL": 2}, {"GLOBAL": 3}], "filterClasses": [],
         "classForOverlappingAreas": {"GLOBAL": 4}, "multiplicity": "MANY_TO_MANY",
-        "sizeUnit": "PIXELS", "minColocArea": 0.0, "excludeClasses": []}}],
+        "sizeUnit": "PIXELS", "minColocSize": 0.0, "excludeClasses": []}}],
 }
 
 images = {}

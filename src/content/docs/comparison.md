@@ -109,13 +109,15 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 | Feature Name                      | Detailed Functionality                                                                                     | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
-| **Automated Particle Tracking**   | LAP (Linear Assignment Problem), Kalman filtering, or nearest-neighbor frame-to-frame linking algorithms.  | ⚠️\*       | ✅           | ✅     | -      |
+| **Automated Particle Tracking**   | LAP (Linear Assignment Problem), Kalman filtering, or nearest-neighbor frame-to-frame linking algorithms.  | ✅\*       | ✅           | ✅     | -      |
 | **Kinematic Trajectory Metrics**  | Velocity, instantaneous speed, directionality ratio, mean square displacement (MSD), confinement index.    | ⚠️†        | ✅           | ✅     | -      |
-| **Cell Division & Lineage Trees** | Handling cell division events (mitosis), branch creation, and full lineage tree visualization.             | -          | ✅           | ✅     | -      |
+| **Cell Division & Lineage Trees** | Handling cell division events (mitosis), branch creation, and full lineage tree visualization.             | ⚠️‡        | ✅           | ✅     | -      |
 | **Track Visualization**           | Track table and trails drawn on the image, stepping or playing through the time points.                    | ✅         | ⚠️           | ✅     | -      |
 | **Manual Track Editing UX**       | Interactive track visualization with easy manual link breaking, joining, path deletion, and spot tweaking. | -          | -            | ✅     | -      |
 
-\*The [Simple Tracker](/commands/dataset/simple-tracker/) links objects by greedy nearest neighbour between consecutive frames - no gap closing, no divisions or merges, no motion model.
+\*[Track LAP](/commands/dataset/track-lap/) (linear assignment, Jaqaman et al. 2008), [Track Kalman](/commands/dataset/track-kalman/) (Kalman motion model), [Track Overlap](/commands/dataset/track-overlap/) (mask overlap) and [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/) (greedy nearest neighbour). The first three close gaps and detect merges and splits.
+
+‡ Divisions and fusions are detected and the [tracks](/guide/results/#tracks) show each track's parent and child tracks, its lineage and generation, drawn on the image. No lineage tree view.
 
 †Per track: time points, path length, speed (px/frame, µm/min or µm/s) and straightness - see [Results › Tracks](/guide/results/#tracks). No MSD or confinement analysis.
 

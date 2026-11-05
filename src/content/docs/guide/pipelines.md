@@ -80,7 +80,7 @@ The stripe on a step and in the command picker tells what kind of data goes in a
 | <span class="evx-cat evx-cat-extract"></span> | **Extract** | labelled mask → objects | Extract Objects, Fill Object Holes |
 | <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | Classify Objects, Object Math, Voronoi, [Colocalize Objects](/commands/object/colocalization/), [Relate Objects](/commands/object/relate-objects/), [Propagation](/commands/object/propagation/) |
 | <span class="evx-cat evx-cat-measure"></span> | **Measure** <span class="evx-new">NEW</span> | objects / image → values | [Measure Image Intensity](/commands/measure/image-intensity/), [Measure Image / Object Texture](/commands/measure/measure-texture/), [Exclude Image](/commands/measure/exclude-image/) - see [Measurement steps](#measurement-steps) |
-| <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | all images' objects | [Simple Tracker](/commands/dataset/simple-tracker/) - see [Dataset steps](#dataset-steps) |
+| <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | all images' objects | the trackers, e.g. [Track LAP](/commands/dataset/track-lap/) - see [Dataset steps](#dataset-steps) |
 | <span class="evx-cat evx-cat-component"></span> | **Module ◆** | | A [module](/guide/modules/): several steps bundled into one, with its own parameters |
 
 A typical pipeline flow:
@@ -98,11 +98,11 @@ When a fixed sequence of steps isn't enough - for example to retry a step with o
 
 ### Adding steps
 
-Click **Add step** below the steps, or **+** between two lines (**Insert a step here**), to open the command picker. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Modules**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Extract**, **Object**, **Measure**, **Dataset**, **Module** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object**, **Measure** and **Dataset**. The pane on the right describes the chosen command, with its settings, authors and what to cite. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
+Click **Add step** below the steps, or **+** between two lines (**Insert a step here**), to open the command picker. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Modules**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Extract**, **Object**, **Measure**, **Dataset**, **Module** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object**, **Measure** and **Dataset**. The pane on the right describes the chosen command, with its settings, authors and what to cite, and under **RAM** how much memory it needs - on the open image's tiles (or, with no image, on 4096 × 4096 tiles, a whole slide's): e.g. _"… 120 MB per analysis thread, 1.2 GB once for the run (the AI network and its weights; one image at a time)"_. A command that works window by window or object by object says that its RAM doesn't grow with the image's size. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
 
 The picker stays open: each step you add goes in after the one you added before, and the footer confirms it (_"✓ Added Threshold as step 3"_). **Done** closes it. You can also add a command from the [command palette](/guide/workspace/#command-palette) (`Ctrl+K`).
 
-![The command picker next to the steps panel: category chips, the list, the description pane, "✓ Added … as step 3" in the footer](../../../assets/screenshots/screenshot-add-pipeline-step.png)
+![The command picker next to the steps panel: category chips, the list, and the description pane of Colocalize Objects with its RAM and what to cite](../../../assets/screenshots/screenshot-add-pipeline-step.png)
 
 ### Step settings
 
@@ -178,7 +178,7 @@ Later steps choose measurements by these names - [Exclude Image](/commands/measu
 
 ### Dataset steps
 
-Most steps work on one image (or one tile of it) at a time. **Dataset steps** - category **Dataset** in the command picker - run **once after every image has been analysed**, on the stored objects of all images, frames and wells, without pixels. Tracking objects through a time-lapse is the first example: [Simple Tracker](/commands/dataset/simple-tracker/).
+Most steps work on one image (or one tile of it) at a time. **Dataset steps** - category **Dataset** in the command picker - run **once after every image has been analysed**, on the stored objects of all images, frames and wells, without pixels. Tracking objects through a time-lapse is the main example: [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/), [Track Overlap](/commands/dataset/track-overlap/) or [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/).
 
 Add dataset steps at the end of a pipeline, after the objects they use are classified. They only work on project classes, and they don't run in the live preview - only in an analysis.
 

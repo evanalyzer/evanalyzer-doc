@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<!-- legend -->
+<rect x="16" y="16" width="12" height="12" rx="3" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="1.5"/><text class="lbl-sm" x="33" y="26">mask in frame t</text>
+<rect x="126" y="16" width="12" height="12" rx="3" fill="none" stroke="#ea580c" stroke-width="2"/><text class="lbl-sm" x="143" y="26">mask in frame t + 1</text>
+<line x1="290" y1="45" x2="290" y2="215" stroke="#d8dce1" stroke-width="1"/>
+<!-- linked pair: r=30, offset 12 -> IoU 0.60 -->
+<circle cx="70" cy="105" r="30" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+<circle cx="82" cy="105" r="30" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<text class="lbl-bold" x="76" y="160" text-anchor="middle">IoU 0.60</text>
+<text class="lbl-sm" x="76" y="176" text-anchor="middle">linked</text>
+<!-- not linked: offset 48 -> IoU 0.05 -->
+<circle cx="170" cy="105" r="30" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+<circle cx="218" cy="105" r="30" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<text class="lbl-bold" x="194" y="160" text-anchor="middle">IoU 0.05</text>
+<text class="lbl-sm" x="194" y="176" text-anchor="middle">below Min Overlap: not linked</text>
+<text class="lbl-sm" x="145" y="215" text-anchor="middle">frame to frame: intersection over union,</text>
+<text class="lbl-sm" x="145" y="230" text-anchor="middle">at least Min Overlap (default 0.3)</text>
+<!-- split: mother r=40, daughters r=19 fully inside -->
+<text class="lbl-bold" x="365" y="58" text-anchor="middle">Split</text>
+<circle cx="365" cy="115" r="40" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+<circle cx="365" cy="95" r="19" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<circle cx="365" cy="135" r="19" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<text class="lbl-bold" x="365" y="176" text-anchor="middle">IoU 0.23 each</text>
+<text class="lbl-sm" x="365" y="192" text-anchor="middle">but each daughter lies</text>
+<text class="lbl-sm" x="365" y="206" text-anchor="middle">fully inside: split</text>
+<text class="lbl-sm" x="365" y="230" text-anchor="middle">inside / smaller area = 1.0</text>
+</svg>

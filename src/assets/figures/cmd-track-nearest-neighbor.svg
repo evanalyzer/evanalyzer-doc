@@ -39,6 +39,6 @@
 <!-- track ends: no partner in frame t + 1 -->
 <circle cx="250" cy="150" r="11" fill="#6b7280" fill-opacity="0.3" stroke="#6b7280" stroke-width="2"/>
 <text class="lbl-sm" x="250" y="177" text-anchor="middle">track ends</text>
-<text class="lbl-bold" x="220" y="200" text-anchor="middle">Simple Tracker</text>
+<text class="lbl-bold" x="220" y="200" text-anchor="middle">Track Nearest Neighbor</text>
 <text class="lbl-sm" x="220" y="216" text-anchor="middle">each object continues the nearest track within Max Distance</text>
 </svg>

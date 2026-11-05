@@ -17,7 +17,7 @@ The Laplacian is sensitive to fine detail and noise. Apply it after [Gaussian Bl
 
 | Parameter       | Description                               |
 | --------------- | ----------------------------------------- |
-| **Kernel size** | Size of the Laplacian kernel (range 3–27) |
+| **Kernel size** | Size of the Laplacian kernel: **3** (default), **5** or **7**. Larger sizes approximate the Laplacian of Gaussian (LoG) more closely - a second derivative with binomial smoothing. |
 
 ## Background
 
@@ -30,3 +30,7 @@ $$
 Zero-crossings in the output correspond to edges in the original image. Unlike gradient-based methods (Sobel, Canny), the Laplacian is isotropic - it responds equally to edges in all directions.
 
 Pairing a Gaussian pre-smooth with the Laplacian (the LoG operator) as a principled edge/blob detector was formalized by David Marr and Ellen Hildreth, "Theory of Edge Detection," *Proceedings of the Royal Society of London B*, vol. 207, no. 1167, pp. 187-217, 1980. EVAnalyzer implements the plain discrete Laplacian; chain a [Gaussian Blur](/commands/image-processing/gaussian-blur/) step before it to reproduce LoG.
+
+## Citation
+
+The step cites Gonzalez R. C. & Woods R. E., _Digital Image Processing_, 4th edition, Pearson, 2018 (ISBN 978-0-13-335672-4). See [Citation](/citation/#citing-the-algorithms-you-used) for exporting the citations of a project.

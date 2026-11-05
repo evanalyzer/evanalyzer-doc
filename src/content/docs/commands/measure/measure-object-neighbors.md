@@ -71,6 +71,6 @@ The command runs on the whole image at once, so neighbours across tile borders a
 
 ## Limitations
 
-- **Expand until adjacent** needs the whole image in memory at once and stops with an error on images of more than 134 million pixels (128 × 1024 × 1024, about 11,585 × 11,585 px). Use **Within a distance** for whole slides.
+- **Expand until adjacent** grows the objects row by row, so it works on images of any size, whole slides included.
 - Distances are in pixels.
 - Where measured objects overlap, the shared pixels count for only one of them.

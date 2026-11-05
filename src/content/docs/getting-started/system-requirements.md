@@ -23,6 +23,8 @@ The analysis of everyday images needs only 0.2-0.5 GB of RAM (about 230 MB with 
 
 EVAnalyzer adapts to weaker computers by itself: it picks threads and cache sizes from the free RAM, so large datasets still run, just more slowly. It can also draw without a graphics card (`Settings > Viewport > Draw in software`).
 
+Every analysis writes how much RAM it needs at least to its log (_"This job needs at least … of RAM (this computer: …)"_) and warns if that is more than the computer has - smaller images, fewer channels or a smaller AI model need less. The command picker shows each step's RAM too.
+
 To keep the computer usable during a long analysis, limit the cores and RAM EVAnalyzer may use under `Settings > Performance`, or on the command line with `--max-threads N` / `--max-ram MB`.
 
 ## Operating Systems

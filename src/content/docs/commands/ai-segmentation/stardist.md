@@ -16,9 +16,10 @@ AI segmentation commands are only available in builds with the `ai` Cargo featur
 | Parameter                 | Description                                                                                                                                                                          |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Model path**            | Path to a TorchScript-exported StarDist model (`.pt` / `.pth`, via `torch.jit.script` or `torch.jit.trace`).                                                                         |
-| **Object class**          | The segmentation class assigned to every detected object's pixels.                                                                                                                   |
+| **Segmentation Class**    | The segmentation class assigned to every detected object's pixels.                                                                                                                   |
 | **Probability threshold** | Probability above which a grid cell is considered a candidate object centre. Range: 0.0–1.0 (default 0.5).                                                                           |
-| **NMS threshold**         | Pixel-overlap ratio (intersection / union) above which a lower-scoring candidate polygon is suppressed in favour of an overlapping higher-scoring one. Range: 0.0–1.0 (default 0.3). |
+| **NMS threshold**         | _(advanced)_ Pixel-overlap ratio (intersection / union) above which a lower-scoring candidate polygon is suppressed in favour of an overlapping higher-scoring one. Range: 0.0–1.0 (default 0.3). |
+| **Piece Size** | _(advanced)_ How large the pieces are that a large tile runs through the network in: smaller ones take less RAM, larger ones are faster. **Auto** (default) or **Fixed** with a **Side** (default 1024 px, 256-4096) - see [Large tiles](#large-tiles). |
 
 ## Model requirements
 
@@ -41,6 +42,18 @@ Runs on GPU automatically if CUDA is available in the linked libtorch build, oth
 :::tip[Genuine StarDist exports only]
 Only models that predict object probability + radial distances work with this command. A boundary-aware U-Net export (mask + boundary channels) is a different model type - use [AI UNet Segmentation](/commands/ai-segmentation/unet/) for those instead.
 :::
+
+## Large tiles
+
+StarDist pads every side to a multiple of 16 (mirrored), so tiles and pieces of any size work.
+
+
+A tile up to the piece size runs through the network whole; a larger one - e.g. of a whole slide - runs in square pieces, each with a margin (halo) as wide as the model's view, so the pieces fit together without seams. **Piece Size** sets their side:
+
+- **Auto**: for a model that sees only a limited neighbourhood, as large as this computer's RAM allows - 2048, 1024 or 512 px; the result is the same whatever the size, up to rounding. A model that normalises by the whole image (InstanceNorm) always gets 1024 px with a 128 px halo, because there the piece size changes the result a little (0.06-0.18 % of the pixels) - so it is the same on every computer.
+- **Fixed**: the same **Side** for every model on every computer.
+
+As a guide, a U-Net on a slide takes about 2.6 GB at once with 1024 px pieces and about 8.5 GB with 2048 px. In a project file: `"pieceSize": {"type": "AUTO"}` or `{"type": "FIXED", "side": 1024}`.
 
 ## Background
 

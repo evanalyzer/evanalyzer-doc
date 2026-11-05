@@ -75,7 +75,7 @@ Your settings and templates are in one folder in your home folder:
 evanalyzer/
 ├── settings.json      settings for this computer, incl. the servers you trust
 ├── templates/         your project templates and modules
-└── logs/crash.log     details of crashes, for bug reports
+└── logs/crash.log     details of crashes - also when an analysis runs out of memory (how much, and in which step) - for bug reports
 ```
 
 Copy this folder to take your settings, templates and modules to another computer. When you [work on a server](/remote/remote-control/), the same folder is in your home folder on the server.

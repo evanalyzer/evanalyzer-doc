@@ -129,7 +129,10 @@ Measure steps run once the objects are final. They measure the whole image or ev
 
 | Command                                              | Purpose                                                         |
 | ---------------------------------------------------- | --------------------------------------------------------------- |
-| [Simple Tracker](/commands/dataset/simple-tracker/)  | Link objects of a time-lapse into tracks (nearest neighbour)    |
+| [Track LAP](/commands/dataset/track-lap/)  | Link objects into tracks by the globally best assignment - gaps, merges and splits (random motion) |
+| [Track Kalman](/commands/dataset/track-kalman/)  | As Track LAP, predicting each track's next position from its velocity (directed motion) |
+| [Track Overlap](/commands/dataset/track-overlap/)  | Link objects into tracks by mask overlap - for large objects such as cells |
+| [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/)  | Link objects into tracks by nearest neighbour between consecutive frames |
 
 ## Modules
 

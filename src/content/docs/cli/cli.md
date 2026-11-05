@@ -12,6 +12,7 @@ The same `evanalyzer` binary handles both modes:
 ```sh
 # Linux
 ./evanalyzer                              # launch the GUI
+./evanalyzer --project experiment.evaproj # launch the GUI and open a project
 ./evanalyzer cli <command> [options...]   # run a one-shot CLI command and exit
 
 # Windows
@@ -329,6 +330,7 @@ Shared by `export csv` and `export xlsx` - mirrors the GUI's [Grouping and Aggre
 | `--agg <list>`                      | Comma-separated statistic(s) of every numeric column when grouping: `min`, `max`, `avg`, `median`, `stdev`, `sum`, and for a time course also `q1`, `q3`. Default `avg`; for a time course `avg,stdev` |
 | `--normalize <none\|t0>`            | Time course values relative to each line's first time point (`t0`: in % of it) |
 | `--layout <long\|wide\|both>`       | Time course tables: `long` (default, a row per time point × line), `wide` (per value and statistic a row per time point and a column per line; for CSV one file each next to `--out`, named `<name>_<value>.csv`) or both |
+| `--with-parents`                    | Time course per track: each track with its parents' history - a daughter's line starts with its mother's track, a fused track has a line per parent (results with divisions or fusions) |
 | `--group-by-class`                  | Accepted, but has no effect: `image` grouping always splits by class already |
 
 The `--colocalized` and `--split-colocalized` options are gone; use **A row per: Coloc pairs** in a [view](#exporting-as-a-view) for the partners of each object.

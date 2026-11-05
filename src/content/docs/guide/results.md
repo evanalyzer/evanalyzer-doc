@@ -17,13 +17,33 @@ Results are a mode of the main window: switch to **Results** in the bottom bar (
 
 In Results, the top bar holds the results' controls:
 
-- **Analysis ▾** - the analysis shown, picked from every analysis of the project's images (**ANALYSES · N**). With none open the chip says _Pick an analysis_; with none at all the menu says _"None yet - Run writes one"_. The same menu has **Refresh** and **Show the output folder**.
+- **Analysis ▾** - the analysis shown, picked from every analysis of the project's images (**ANALYSES · N**). With none open the chip says _Pick an analysis_; with none at all the menu says _"None yet - Run writes one"_. The same menu has **Refresh**, **Show the output folder** and, for the open analysis, **Delete “_name_”** - see [Deleting an analysis](#deleting-an-analysis).
 - The project's [views](#views) as tabs - each a **List**, **Plate**, **Charts** or **Tracks** - and **+** (**New view**) to add one.
 - On the right a **Z/T** stepper when the data has Z-stacks or time-lapse frames - it applies to whichever view is open -, **Full | Split with image** - the results alone, or [beside the image](#split-with-the-image) (not for Charts: _"Split view works with List, Plate and Tracks"_) - and **Export…**.
 
 Each view has its settings in a panel on the left and its content beside it. The bottom bar shows the number of images (_"81 images · 1 disabled"_).
 
 ![Results mode, List: the results bar on top, the Images, Classes and Columns lists and A row per on the left, the table of objects beside them](../../../assets/screenshots/screenshot-results-list.png)
+
+With no analysis open, Results shows the **Analyses** card: every analysis of the project with when it was written and its size. Click one to open it. Its **⋯** (or a right-click) has **Open**, **Show in the folder** (its own folder) and **Delete from disk…**.
+
+![The Analyses card with the analysis dilution_series, when it was written and its size; the menu of one open: Open, Show in the folder, Delete from disk…](../../../assets/screenshots/screenshot-results-analyses-menu.png)
+
+### Deleting an analysis
+
+**Delete from disk…** in the Analyses card - or **Delete “_name_”** in the **Analysis ▾** menu for the open one - deletes an analysis you no longer need, to free its disk space. The dialog **Delete the analysis “_name_”?** shows what goes:
+
+- the analysis' folder, relative to the project (e.g. `results/20261023T091000Z__serum/`),
+- **Results** (the results database), **Control images (_N_ files)** from [Save Image](/commands/object/save-image/) steps, **Settings of the run** and **Other files**, each with its size,
+- **Freed** - the total.
+
+![The dialog Delete the analysis “dilution_series”?: its folder, Results 19.5 MB, Settings of the run 102 KB, Freed 19.6 MB, and the buttons Cancel and Delete 19.6 MB](../../../assets/screenshots/screenshot-results-delete-analysis.png)
+
+_"Its folder is deleted from the disk, with everything in it. This can't be undone - export what you still need first."_ The project, its images and its views stay. If the analysis is open, EVA closes it first.
+
+**Delete _size_** (e.g. **Delete 860 MB**) deletes it; the list refreshes, and if the deleted analysis was open, Results goes back to the Analyses card. A file another program still has open can't be deleted: the dialog says so (_"Couldn't delete 1 file - close the program using it and try again"_) and its button becomes **Try again**. An analysis that is still running can't be deleted - stop it first.
+
+Only analysis folders in the project's `results` folder can be deleted this way. Connected to a [server](/remote/remote-control/), it deletes the analysis on the server.
 
 ## Views
 
@@ -49,7 +69,7 @@ The CLI can export a results database the way a List view shows it - see [`expor
 
 The **List** view shows one row per detected object. The default columns are **Image**, **Object ID**, **Class** (with the class's color), **Area [px]**, **Area [nm²]** and **Circularity**; more are under **Columns**:
 
-- **General** - **Object ID**, **Track ID** (the track an object belongs to, see [Simple Tracker](/commands/dataset/simple-tracker/)), **Image**, **Class**, **Count**.
+- **General** - **Object ID**, **Track ID** (the track an object belongs to, set by a [tracking step](/commands/dataset/track-lap/)), **Image**, **Class**, **Count**.
 - **Geometry** and **Shape** - area, perimeter, circularity, solidity, eccentricity, **Max Feret [px]**, **Min Feret [px]**, **Major Axis [px]**, **Minor Axis [px]**, **Equivalent Diameter [px]** and **Extent**.
 - **Coloc** - per partner class **Coloc with …**, the number of partners from [Colocalize Objects](/commands/object/colocalization/).
 - **Intensity** - per channel **Avg**, **Sum**, **Min**, **Max**, **Std Dev**, **Median**, **Lower Quartile**, **Upper Quartile** and **MAD Intensity (Ch n)**.
@@ -123,7 +143,7 @@ The **Charts** view plots the results instead of listing them. Pick the chart as
 - **Histogram** bins a chosen numeric property, optionally restricted to one class, and shows the object count and the distribution across bins. Under **Display**: the number of **Bins** and **Counts on a log scale**.
 - **Scatter** plots two numeric columns (**X** and **Y**), optionally restricted to one class. Large datasets are downsampled for drawing - **Points drawn** sets how many (**500**, **2 000**, **10 000** or **All**; _"2000 of 41227 objects plotted"_). Click a point to see its object on its image.
 - **Boxplot** draws one box (quartile box, median line, whiskers, and outlier dots) for a chosen property. **A box per** groups them by **class**, **image**, **well**, **plate row** or **plate column**. Click a box to see its objects in the List.
-- **Over time** <span class="evx-new">NEW</span> follows a property through the frames of a time-lapse. **A line per** **Class**, **Image**, **Well** or **Track** ([tracked objects](/commands/dataset/simple-tracker/)); each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. **Relative to the first time point** shows the change instead of the value, **Individual tracks, faint** draws every track behind the lines. **Export data…** above the chart writes the lines' values per time point as a table.
+- **Over time** <span class="evx-new">NEW</span> follows a property through the frames of a time-lapse. **A line per** **Class**, **Image**, **Well** or **Track** ([tracked objects](/commands/dataset/track-lap/)); each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. **Relative to the first time point** shows the change instead of the value, **Individual tracks, faint** draws every track behind the lines. For results with divisions or fusions, **History** picks **Own track** (default: each track its own line) or **With parents'** (a line per cell from its first ancestor: a daughter's line starts with its mother's track) - with **A line per** **Track** or individual tracks. **Export data…** above the chart writes the lines' values per time point as a table.
 
 ![The Over time chart: the mean area of gfp@vesicle per time point with its standard deviation as a band, every track faint behind it](../../../assets/screenshots/screenshot-results-over-time.png)
 
@@ -201,7 +221,7 @@ The innermost level bins a single image's objects into square tiles - the **Squa
 
 ## Tracks
 
-When an analysis has tracked objects - from a [Simple Tracker](/commands/dataset/simple-tracker/) step - the results bar offers a fourth view, **Tracks**: one row per track instead of one per object.
+When an analysis has tracked objects - from a tracking step such as [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/), [Track Overlap](/commands/dataset/track-overlap/) or [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/) - the results bar offers a fourth view, **Tracks**: one row per track instead of one per object.
 
 Each track shows its **Image**, **Class**, how many **Time points** it spans, how far it **Moved** (the path from point to point), its **Speed** and its **Straightness** - the distance from its first to its last point divided by the path, so 1 is a straight line and a value near 0 an object that wandered around. **Speed unit** picks **px/frame**, **µm/min** or **µm/s** (the µm units need the pixel size, µm/min and µm/s the [frame interval](/guide/images/#frame-interval)). Click a column's head to sort by it.
 
@@ -211,6 +231,8 @@ The filters above the table:
 - **At least** _N_ **time points** - leave out short tracks.
 - **From the first time point** - only tracks that are there from the start.
 - **Not touching the edge** - leave out tracks that touch the image's edge, which may have left or entered the field of view.
+
+With [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/) or [Track Overlap](/commands/dataset/track-overlap/) and merges or splits switched on, tracks have a **lineage**: a division ends a track and starts two, a fusion ends two and starts one. The summary then also counts them (_"· 3 divisions · 1 fusion"_), and a selected track's card names where it came **From** and what it goes **Into** (_"#3 (division)"_, _"#7 (fusion)"_). On the image, a line joins a track to its parent's last point, with a ring where the division or fusion happened; a selected track is drawn together with its parents and children.
 
 Click a track to see it on the right: its numbers, its **Area over time**, and **The track's time points** with the position (**X px**, **Y px**) and area at each. **Show in image** opens the split layout at that track.
 
@@ -255,9 +277,9 @@ The width of the results, whether the split is on, and **Follow selection** are 
 
 - **Objects - one row per object** - with **Images** to pick (all by default; [images left out](#leaving-images-out) are skipped unless you select them explicitly), and optionally **A row per coloc pair** (as [Coloc pairs](#coloc-pairs) in the List) and **Each image in its own file**.
 - **Per image** - the same aggregated-by-image data as [a row per image in the List](#grouping-and-aggregating-rows); optionally the **Image heatmap** (the per-image spatial heatmap grid, with its own square size).
-- **Time course - per time point** <span class="evx-new">NEW</span> - for time-lapse data: the values per frame, as the [Over time](#charts) chart shows them. **A line per** **Class**, **Image**, **Well** or **Track**; **Statistics** - any of mean, SD, median, Q1, Q3, min, max, sum (default mean and SD); **Tables** **Long**, **Wide** or **Both** (default; not offered for **Track**); optionally **Relative to the first time point (%)**.
+- **Time course - per time point** <span class="evx-new">NEW</span> - for time-lapse data: the values per frame, as the [Over time](#charts) chart shows them. **A line per** **Class**, **Image**, **Well** or **Track**; **Statistics** - any of mean, SD, median, Q1, Q3, min, max, sum (default mean and SD); **Tables** **Long**, **Wide** or **Both** (default; not offered for **Track**); optionally **Relative to the first time point (%)**, and with **A line per** **Track** **Each track with its parents' history** (as **History: With parents'** in the chart).
 - **Measurements - one row per value** <span class="evx-new">NEW</span> - when the analysis has [measurement steps](/guide/pipelines/#measurement-steps): every value on a row of its own, with what it is about - `image_name`, `image_rel_path`, `z_stack`, `t_stack`, `region`, `object_id`, `related_object_id`, `object_class_name`, `step`, `measurement`, `unit`, `key`, `value`. This long layout reads straight into R or Python, and a new measurement needs no new column. The measurements picked under **More options › Measurements** are written (none picked: all), of the chosen images, Z planes and time points. Written as `measurements.xlsx` / `.csv`.
-- **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is. Options: **Statistics** of the measurements (default mean), **At least _N_ time points**, **Only tracks from the first time point** and **Leave out tracks touching the image edge**.
+- **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is. For results with lineage, the columns **Parent tracks**, **Child tracks**, **Lineage** (the family's first track), **Generation**, **Starts with** and **Ends with** (e.g. _Division_) follow **Track**; several IDs are written as `3;7`. Options: **Statistics** of the measurements (default mean), **At least _N_ time points**, **Only tracks from the first time point** and **Leave out tracks touching the image edge**.
 - **Per well - plate layout (XLSX)** - the plate as a heatmap; optionally **Plate as list**, **Wells as heatmap** and **Wells as list**, with **Colors** for the heatmaps. Grouping, plate size and well layout are taken from the project's plate settings - the same ones the [Plate view](#grouping-images-into-wells) uses.
 - **Images with objects drawn (PNG)** <span class="evx-new">NEW</span> - each image as a PNG, with its channels in their colors (auto-scaled) and every object's box in its class color. Large images are written at the pyramid level up to 4096 px.
 
