@@ -156,6 +156,12 @@ username = "admin"
 [users.linux]
 shadow_file = "/etc/shadow"
 passwd_file = "/etc/passwd"
+group_file = "/etc/group"
+# Accounts with a lower uid (system accounts) can't log in; root never can.
+min_uid = 1000
+# Only members of these groups (primary group or listed in the group file)
+# can log in. Default: empty, every account from min_uid on.
+# allowed_groups = ["evanalyzer"]
 # [users.linux.overrides.alice]
 # allowed_dirs = ["{home}", "/data/shared"]
 
@@ -187,11 +193,18 @@ idle_timeout_minutes = 120
 # database are sized as if the computer had no more. Not a hard limit on
 # every allocation. Default: the computer's (or the container's limit).
 # max_ram_mb = 16384
+# An analysis running longer than this many minutes is cancelled, so one
+# user's analysis can't take the machine for good. Default: no limit -
+# whole slides can take hours.
+# max_job_minutes = 720
 
 [limits]
 # Not set: no limit.
 # max_workers = 20
+# At most this many logged-in client connections, all users together.
 # max_connections = 100
+# At most this many connections that aren't logged in yet. Default 32.
+# max_pending_logins = 32
 ```
 
 `max_threads` and `max_ram_mb` are per worker - and each logged-in user has their own worker - not the server's in total.
@@ -227,7 +240,7 @@ Each user's settings, templates and crash log are in the EVAnalyzer folder in th
 | `source`           | Accounts                                                                                                       | Home folder                                                     | Worker runs as                                       |
 | ------------------ | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------- |
 | `single` (default) | One account in `[users.single]`: `admin`, with a random password made up at every start and printed to the console unless `users.single.password` is set | `users.single.home`, default: a folder of its own, `single-user` in the [data folder](#server-data-folder) | the server's account |
-| `linux`            | This machine's system users, checked against `/etc/shadow`. The server needs root or membership in the `shadow` group. | from `/etc/passwd`                                              | the user's own account, if the server runs as root |
+| `linux`            | This machine's system users, checked against `/etc/shadow`. The server needs root or membership in the `shadow` group. `root` and accounts below `users.linux.min_uid` (default 1000, the system accounts) can't log in; `users.linux.allowed_groups` limits it to members of those groups. | from `/etc/passwd`                                              | the user's own account, if the server runs as root |
 | `file`             | The `[[user]]` entries of a separate users file, `[users.file] path`. No system accounts needed.                | `home` of each entry                                            | the server's account                                 |
 
 A users file for `source = "file"` lists one `[[user]]` table per account:
@@ -249,7 +262,7 @@ home = "/srv/evanalyzer/bob"
 
 ### Allowed folders
 
-A worker can read and write only its user's _allowed folders_ and the user's [EVAnalyzer folder](/guide/settings/#where-evanalyzer-stores-its-data) in their home, which holds settings and templates. The allowed folders come from:
+A worker can read and write only its user's _allowed folders_ and the user's [EVAnalyzer folder](/guide/settings/#where-evanalyzer-stores-its-data) in their home, which holds settings and templates. The templates bundled with the program can be read, not changed - every user shares them. Exports, the images an export draws, and every file a pipeline's or module's steps name (model files included; relative model paths are refused) must lie in the allowed folders. The allowed folders come from:
 
 - the account's own `allowed_dirs`: `users.single.allowed_dirs`, an `allowed_dirs` entry in the users file, or `[users.linux.overrides.<name>]`;
 - otherwise `users.default_allowed_dirs`, which defaults to `["{home}"]`.
@@ -303,7 +316,12 @@ The server starts each worker with the user's home as working directory and an e
 `[limits]` protects the machine from more work than it can do:
 
 - `max_workers` - users working at the same time. A login that would start one more worker is refused with "try again later"; users whose worker is already running can always log in.
-- `max_connections` - open client connections, all users together (one GUI or CLI is one connection).
+- `max_connections` - logged-in client connections, all users together (one GUI or CLI is one connection). Further logins are refused with "try again later".
+- `max_pending_logins` (default 32) - connections that aren't logged in yet. Each has 10 s to log in and may send at most 64 KiB until then; further connections are refused, so connections that never log in can't use up the server.
+
+`[workers] max_job_minutes` cancels an analysis that runs longer (default: no limit). A [script](/commands/image-processing/script/) stops as soon as its analysis is cancelled - by this limit or by the user.
+
+After 5 wrong passwords (or unknown sessions) from one address, its next tries are refused without checking the password: after 1 s, then 2, 4, … up to 5 minutes. A successful login or 15 quiet minutes start over. IPv6 addresses count per /64 network.
 
 ## Running the server as a service (Linux)
 

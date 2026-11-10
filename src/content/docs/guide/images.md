@@ -127,11 +127,9 @@ The two views follow the image's pan and zoom, and a yellow line marks the plane
 
 **3D view** covers the image with the whole z-stack, seen from any side: each screen pixel shows the brightest voxel along its line of sight (a maximum intensity projection), in the channels' colors and with their black and white points, as in the image. Drag to turn it, use the mouse wheel to zoom, double-click to go back to the start. For speed the volume is reduced to at most 256 pixels across and 256 planes, and drawn coarser while you turn it. The scale bar and the navigator are hidden in the 3D view.
 
-<div class="evx-shot-todo">
-<strong>Orthogonal views and 3D view</strong>
-<span>A z-stack (e.g. Fiji's Fly Brain) with Orthogonal views on: the XZ view below, the YZ view right of the image, the yellow crosshair; and the same stack in the 3D view, turned a little.</span>
-<code>src/assets/screenshots/screenshot-image-ortho.png, screenshot-image-3d.png</code>
-</div>
+![A z-stack with Orthogonal views on: plane 24 of 48 with the yellow crosshair, the XZ view below it, the YZ view to its right, "XZ below · YZ right, z spacing × 2" in the corner](../../../assets/screenshots/screenshot-image-ortho.png)
+
+![The same z-stack in the 3D view, turned a little: the nuclei and the fibre crossing the stack as a maximum intensity projection](../../../assets/screenshots/screenshot-image-3d.png)
 
 ### Time-lapse
 
@@ -182,6 +180,7 @@ Click **Annotate** in the top bar (or press `A`) to draw on the image. The annot
 | **Move** | `M` / `Esc` | Pan the image. |
 | **Select** | `S` | Select an object. |
 | **Marker** | `K` | A [measurement marker](#position-and-pixel-value). |
+| **Ruler** <span class="evx-new">NEW</span> | `L` | Drag a line to see its length. |
 | **Rectangle** | `R` | Drag a rectangular region. |
 | **Ellipse** | `E` | Drag an elliptical region. |
 | **Polygon** | `P` | Click the corners, double-click to close. |
@@ -192,6 +191,10 @@ Click **Annotate** in the top bar (or press `A`) to draw on the image. The annot
 **Paint as** picks the class of what you draw - **+ New class…** creates one and picks it at once. The paint tools stay off until a class is picked. **Size** sets the width of the brush, the wand and the eraser in pixels.
 
 The brush paints into the selected hand-drawn object, or makes a new one of the chosen class.
+
+The **ruler** measures a distance on the image: drag a line, and its length shows beside its end - in pixels and, when the image has a [pixel size](#pixel-size), in nm, µm or mm (the pixel size of each axis is taken into account). Hold `Shift` to keep the line horizontal or vertical. The line isn't saved: the next drag, another tool or another image ends it. The ruler needs no class.
+
+![The annotate bar with the Ruler active; a line dragged from a neuron's soma to the tip of a dendrite, its length beside it: 118 px · 38.2 µm](../../../assets/screenshots/screenshot-image-ruler.png)
 
 The **wand** paints the same way, but stops at edges - a stroke inside a nucleus stays inside it. When you let go, it goes along the stroke circle by circle (each as wide as **Size**) and takes only the pixels that look like the pixel at the centre of the circle and are connected to it. "Look like" is decided on what the viewer shows: the visible channels, each scaled to its 1-99 % range in view and smoothed over 3 × 3 pixels, and the color distance of each pixel to the centre pixel, split in two with Otsu's threshold. A circle without a clear edge is taken whole, as the brush does. The wand works on the pixels shown, so zoom in for finer edges. The eraser cuts hand-drawn objects: an object it empties is deleted, the others are measured again. Every stroke and every drawn shape is a step of its own for **Undo**.
 

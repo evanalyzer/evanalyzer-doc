@@ -255,6 +255,10 @@ export default defineConfig({
                   label: "Weighted Deviation",
                   slug: "commands/edge-detection/weighted-deviation",
                 },
+                {
+                  label: "Vesselness",
+                  slug: "commands/edge-detection/vesselness",
+                },
               ],
             },
             {
@@ -265,6 +269,10 @@ export default defineConfig({
                 {
                   label: "Connected Components",
                   slug: "commands/segmentation/connected-components",
+                },
+                {
+                  label: "Find Maxima",
+                  slug: "commands/segmentation/find-maxima",
                 },
                 { label: "Watershed", slug: "commands/segmentation/watershed" },
               ],
@@ -352,6 +360,14 @@ export default defineConfig({
                   label: "Relate Objects",
                   slug: "commands/object/relate-objects",
                 },
+                {
+                  label: "Skeletonize Objects",
+                  slug: "commands/object/skeletonize-objects",
+                },
+                {
+                  label: "Trace Filaments",
+                  slug: "commands/object/trace-filaments",
+                },
                 { label: "Save Image", slug: "commands/object/save-image" },
               ],
             },
@@ -395,6 +411,18 @@ export default defineConfig({
                   label: "Measure Object Distance To Parent",
                   slug: "commands/measure/measure-distance-to-parent",
                 },
+                {
+                  label: "Measure Object Skeleton",
+                  slug: "commands/measure/measure-object-skeleton",
+                },
+                {
+                  label: "Measure Object Sholl",
+                  slug: "commands/measure/measure-object-sholl",
+                },
+                {
+                  label: "Measure Filament Tree",
+                  slug: "commands/measure/measure-filament-tree",
+                },
               ],
             },
             {
@@ -415,6 +443,10 @@ export default defineConfig({
                 {
                   label: "Track Overlap",
                   slug: "commands/dataset/track-overlap",
+                },
+                {
+                  label: "Measure Track Motion",
+                  slug: "commands/dataset/measure-track-motion",
                 },
               ],
             },

@@ -2,7 +2,8 @@
 
 Two fields (A01_01, A02_01), 15 frames 30 s apart, 512 x 512 px, one GFP
 channel: vesicles that drift and wander, some leave or enter at the edges.
-The project detects them and links them with a Track Nearest Neighbor step.
+The project detects them, links them with a Track Nearest Neighbor step and
+measures how they moved (Measure Track Motion).
 
     python3 make_tracks.py /data/ev_tracks
 """
@@ -72,6 +73,9 @@ commands = [
      "minAspectRatio": 0.0, "maxAspectRatio": big, "minEccentricity": 0.0, "maxEccentricity": 1.0,
      "minFeret": 0.0, "maxFeret": big, "allowEdgeTouching": True, "intensityFilters": []},
     {"type": "TRACK_NEAREST_NEIGHBOR", "objectClass": {"GLOBAL": 1}, "unit": "PIXELS", "maxDistance": 12.0},
+    # Speed, straightness and the other motion values of Results > Tracks / Paths.
+    {"type": "MEASURE_TRACK_MOTION", "id": "motion_01", "objects": {"GLOBAL": 1}, "minStep": 1.0,
+     "unit": "PIXELS", "averageOver": 2, "driftReference": "UNSET"},
 ]
 project = {
     "schemaVersion": 4,

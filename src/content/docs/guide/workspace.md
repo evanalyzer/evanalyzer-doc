@@ -67,11 +67,7 @@ Below them come your own places <span class="evx-new">NEW</span>: **Add this fol
 
 A dialog that doesn't open in a folder of its own starts in the last folder chosen for this project - else the project's folder, the image folder or Home. Drives and network folders can take a few seconds to list; a spinner shows while the places or a folder load.
 
-<div class="evx-shot-todo">
-<strong>File dialog with places</strong>
-<span>The file dialog with Project, Images, Templates and a folder of your own under Places, the pointer on it showing its ×, "Add this folder" at the bottom.</span>
-<code>src/assets/screenshots/screenshot-file-dialog.png</code>
-</div>
+![The Open dialog: under PLACES Project (open), Templates, Home, Computer and a folder of your own, data, the pointer on it showing its ×; the project's folder listed beside it, Add this folder at the bottom](../../../assets/screenshots/screenshot-file-dialog.png)
 
 ### View
 

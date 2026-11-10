@@ -80,7 +80,7 @@ The stripe on a step and in the command picker tells what kind of data goes in a
 | <span class="evx-cat evx-cat-extract"></span> | **Extract** | labelled mask → objects | Extract Objects, Fill Object Holes |
 | <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | Classify Objects, Object Math, Voronoi, [Colocalize Objects](/commands/object/colocalization/), [Relate Objects](/commands/object/relate-objects/), [Propagation](/commands/object/propagation/) |
 | <span class="evx-cat evx-cat-measure"></span> | **Measure** <span class="evx-new">NEW</span> | objects / image → values | [Measure Image Intensity](/commands/measure/image-intensity/), [Measure Image / Object Texture](/commands/measure/measure-texture/), [Exclude Image](/commands/measure/exclude-image/) - see [Measurement steps](#measurement-steps) |
-| <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | all images' objects | the trackers, e.g. [Track LAP](/commands/dataset/track-lap/) - see [Dataset steps](#dataset-steps) |
+| <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | all images' objects | the trackers, e.g. [Track LAP](/commands/dataset/track-lap/), and [Measure Track Motion](/commands/dataset/measure-track-motion/) - see [Dataset steps](#dataset-steps) |
 | <span class="evx-cat evx-cat-component"></span> | **Module ◆** | | A [module](/guide/modules/): several steps bundled into one, with its own parameters |
 
 A typical pipeline flow:
@@ -140,11 +140,7 @@ While the preview runs, a small pill at the top of the image shows its progress;
 
 When a pipeline or module has [measurement steps](#measurement-steps), the **Measurements** panel on the right (`Alt+5`, **EVA › View › Measurements**) lists what the preview measured, by step: each measurement's name, its step and value - an image's own value (_image_), or the median over the objects (_median of 23 objects_). Its head says **visible part**: like the preview, it measures only what is in view. Click a row to show its step. When an [Exclude Image](/commands/measure/exclude-image/) step would leave the image out, a banner says so and why (_"Excluded from the results: …"_).
 
-<div class="evx-shot-todo">
-<strong>Measurements panel</strong>
-<span>The Measurements panel on the right ("visible part" in its head): rows of measurement name, step · median of N objects, value; an Exclude Image banner on top.</span>
-<code>src/assets/screenshots/screenshot-measurements-panel.png</code>
-</div>
+![The Measurements panel on the right with 15 values: the banner "Excluded from the results: Mean intensity (channel 1) of intensity_01 = 270.7, above 250" on top, then a row per value - its name, its step and "image", and the value](../../../assets/screenshots/screenshot-measurements-panel.png)
 
 ### Breakpoints
 
@@ -178,7 +174,7 @@ Later steps choose measurements by these names - [Exclude Image](/commands/measu
 
 ### Dataset steps
 
-Most steps work on one image (or one tile of it) at a time. **Dataset steps** - category **Dataset** in the command picker - run **once after every image has been analysed**, on the stored objects of all images, frames and wells, without pixels. Tracking objects through a time-lapse is the main example: [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/), [Track Overlap](/commands/dataset/track-overlap/) or [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/).
+Most steps work on one image (or one tile of it) at a time. **Dataset steps** - category **Dataset** in the command picker - run **once after every image has been analysed**, on the stored objects of all images, frames and wells, without pixels. Tracking objects through a time-lapse is the main example: [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/), [Track Overlap](/commands/dataset/track-overlap/) or [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/) - followed by [Measure Track Motion](/commands/dataset/measure-track-motion/), which measures how each track moved. Dataset steps run in the order of the pipeline, so Measure Track Motion goes after its tracker.
 
 Add dataset steps at the end of a pipeline, after the objects they use are classified. They only work on project classes, and they don't run in the live preview - only in an analysis.
 

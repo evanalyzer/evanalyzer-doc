@@ -37,6 +37,12 @@ PROJECT = DATA / "ev_plate.evaproj"
 # The time-lapse for the Tracks screenshots (make_tracks.py).
 TRACKS = Path(os.environ.get("EVA_TRACKS", "/data/ev_tracks"))
 TRACKS_PROJECT = TRACKS / "ev_tracks.evaproj"
+# The z-stack for the orthogonal views and the 3D view (make_zstack.py).
+ZSTACK = Path(os.environ.get("EVA_ZSTACK", "/data/ev_zstack"))
+ZSTACK_PROJECT = ZSTACK / "ev_zstack.evaproj"
+# The neurons for the Trees view and the Sholl profile (make_neurons.py).
+NEURONS = Path(os.environ.get("EVA_NEURONS", "/data/ev_neurons"))
+NEURONS_PROJECT = NEURONS / "ev_neurons.evaproj"
 # A file with several image series, for the "Which series" question
 # (the app repo's tests/Slide1_distal_zoom_40x.vsi). Optional.
 SERIES_IMAGE = os.environ.get("EVA_SERIES_IMAGE", "")
@@ -92,28 +98,45 @@ def stop_app():
 
 
 def start_app(*args):
-    """Starts the app (args go to it, e.g. --project) and sizes its window."""
+    """Starts the app (args go to it, e.g. --project) and sizes its window.
+    Tries three times: now and then the app can't reach the X server at once."""
     global _proc
-    stop_app()
-    log = open(CACHE / "app.log", "w")
-    _proc = subprocess.Popen(app_command() + list(args), env=env, stdout=log, stderr=subprocess.STDOUT,
-                             stdin=subprocess.DEVNULL)
-    for _ in range(160):
-        win = sh("xdotool", "search", "--onlyvisible", "--name", "EVAnalyzer").stdout.split()
-        if win:
-            sh("xdotool", "windowsize", win[0], str(W), str(H))
-            geo = sh("xdotool", "getwindowgeometry", win[0]).stdout
-            if f"{W}x{H}" in geo:
-                sh("xdotool", "windowfocus", win[0])
-                sleep(3)
-                return
-        sleep(0.25)
+    for attempt in range(3):
+        stop_app()
+        log = open(CACHE / "app.log", "w")
+        _proc = subprocess.Popen(app_command() + list(args), env=env, stdout=log, stderr=subprocess.STDOUT,
+                                 stdin=subprocess.DEVNULL)
+        for _ in range(160):
+            if _proc.poll() is not None:
+                break                  # it exited - try again
+            win = sh("xdotool", "search", "--onlyvisible", "--name", "EVAnalyzer").stdout.split()
+            if win:
+                sh("xdotool", "windowsize", win[0], str(W), str(H))
+                geo = sh("xdotool", "getwindowgeometry", win[0]).stdout
+                if f"{W}x{H}" in geo:
+                    sh("xdotool", "windowfocus", win[0])
+                    sleep(3)
+                    return
+            sleep(0.25)
+        ensure_display()
+        sleep(2)
     sys.exit("EVAnalyzer's window didn't appear - see .cache/screenshots/app.log")
+
+
+def fit_window():
+    """Back to W x H when the window grew: some views (Results with a wide
+    table) ask for more width once and the window keeps it - the right edge
+    then falls off the screen and every right-aligned button moves."""
+    win = sh("xdotool", "search", "--onlyvisible", "--name", "EVAnalyzer").stdout.split()
+    if win and f"{W}x{H}" not in sh("xdotool", "getwindowgeometry", win[0]).stdout:
+        sh("xdotool", "windowsize", win[0], str(W), str(H))
+        sleep(1.5)
 
 
 def click(x, y, wait=0.8):
     sh("xdotool", "mousemove", str(x), str(y), "click", "1")
     sleep(wait)
+    fit_window()
 
 
 def right_click(x, y, wait=0.8):
@@ -152,6 +175,17 @@ def scroll(x, y, clicks):
     sleep(0.8)
 
 
+def drag_steps(start, delta, steps=12, wait=2.5):
+    """A drag in small steps - the 3D view turns by the motion it sees."""
+    x, y = start
+    sh("xdotool", "mousemove", str(x), str(y), "mousedown", "1")
+    for i in range(1, steps + 1):
+        sh("xdotool", "mousemove", str(x + delta[0] * i // steps), str(y + delta[1] * i // steps))
+        sleep(0.05)
+    sh("xdotool", "mouseup", "1")
+    sleep(wait)
+
+
 def drag(points, wait=1.5):
     x, y = points[0]
     sh("xdotool", "mousemove", str(x), str(y), "mousedown", "1")
@@ -169,6 +203,7 @@ _step_n = 0
 
 def shot(name, wait=1.0):
     sleep(wait)
+    fit_window()
     _target.mkdir(parents=True, exist_ok=True)
     path = _target / f"{name}.png"
     sh("import", "-window", "root", str(path))
@@ -189,9 +224,9 @@ def step_shot(label):
 # One name per thing clicked more than once, so a moved button is fixed once.
 
 EVA = (36, 20)
-REFRESH_PREVIEW = (195, 20)
-ANNOTATE = (259, 20)
-COMPARE = (1137, 20)
+ANNOTATE = (195, 20)
+REFRESH_PREVIEW = (1139, 20)     # in the preview group left of "Auto preview"
+COMPARE = (1110, 20)            # only with a breakpoint image, left of the preview group
 RUN = (1343, 20)
 MODE_IMAGES, MODE_PIPELINES, MODE_RESULTS = (34, 885), (104, 885), (175, 885)
 IMAGE_ROW = (200, 360)           # 6th image of the list: A03_02
@@ -304,6 +339,33 @@ def sc_images():
     click(237, 243, wait=1.5)      # well C4
     away()
     shot("screenshot-images-plate")
+
+
+def sc_image_ortho():
+    start_app("--project", str(ZSTACK_PROJECT))
+    click(200, 140, wait=5)        # the z-stack
+    for _ in range(23):            # Z › up to plane 24 of 48
+        click(809, 838, wait=0.15)
+    sleep(2)
+    click(932, 838, wait=3)        # Orthogonal views
+    hover(1300, 880)
+    shot("screenshot-image-ortho")
+    click(1001, 838, wait=25)      # 3D view (the bar is wider with the orthogonal views); it
+    drag_steps((700, 450), (16, -24))   # turns only once the volume is loaded - in software
+    drag_steps((700, 450), (16, -24))   # rendering that takes a while
+    hover(1300, 880)
+    shot("screenshot-image-3d")
+
+
+def sc_file_dialog():
+    open_project()
+    key("ctrl+o", wait=2)          # EVA › Open…
+    click(565, 120, wait=1.5)      # "data" in the path
+    click(328, 585, wait=1.5)      # Add this folder: a place of its own
+    click(300, 143, wait=1.5)      # back to the place Project
+    hover(320, 279)                # the new place shows its ×
+    shot("screenshot-file-dialog", 0.5)
+    key("Escape")
 
 
 def sc_go_to_image():
@@ -457,7 +519,7 @@ def sc_annotate():
     click(*ANNOTATE)
     click(875, 74)                 # Paint as
     click(916, 247)                # 05 tetraspeck@bead
-    click(685, 74)                 # Brush (the bar re-lays out once a class is picked)
+    click(676, 74)                 # Brush (the bar re-lays out once a class is picked)
     path = [(600, 420), (620, 430), (650, 445), (680, 455), (710, 470), (740, 480), (770, 500),
             (790, 520), (800, 545), (795, 570), (775, 590), (745, 600), (715, 598), (690, 585),
             (670, 565), (655, 540), (640, 515), (625, 490), (612, 465), (604, 440)]
@@ -513,7 +575,7 @@ def sc_modules():
     pipeline_cy5(with_preview=False)
     hover(200, STEP_Y[1])
     click(STEP_MENU_X, STEP_Y[1])
-    click(234, 376, wait=1.5)      # Create module
+    click(234, 400, wait=1.5)      # Create module
     click(520, 159)
     type_text("Spot detection")
     click(680, 227)                # To
@@ -523,11 +585,36 @@ def sc_modules():
     click(782, 377, wait=3)        # Create module
     hover(200, STEP_Y[1])
     click(STEP_MENU_X, STEP_Y[1])
-    click(226, 432, wait=2)        # Edit module
+    click(226, 456, wait=2)        # Edit module
     click(324, 162, wait=1.5)      # Settings
     click(985, 72, wait=1.5)       # Parameters
     hover(700, 899)
     shot("screenshot-module-settings")
+
+
+def sc_measurements():
+    """A copy of the project whose CY5 pipeline ends with two measure steps
+    and an Exclude Image that leaves the image out - the demo project
+    itself stays as it is (its step counts show in other shots)."""
+    project = json.loads(PROJECT.read_text())
+    steps = project["pipelines"][1]["steps"]
+    extra = [{"type": "MEASURE_OBJECT_SHAPE", "id": "shape_01", "objects": {"GLOBAL": 2}},
+             {"type": "MEASURE_IMAGE_INTENSITY", "id": "intensity_01", "channel": 1},
+             {"type": "EXCLUDE_IMAGE", "excludeWhen": "ANY_RULE",
+              "rules": [{"measurement": "intensity_01/mean", "comparison": "ABOVE", "value": 250.0}]}]
+    steps += [{"id": len(steps) + i + 1, "enabled": True, "command": c} for i, c in enumerate(extra)]
+    measure_project = DATA / "ev_plate_measure.evaproj"
+    measure_project.write_text(json.dumps(project, indent=2))
+    start_app("--project", str(measure_project))
+    open_image()
+    click(*MODE_PIPELINES, wait=1.5)
+    click(*PICK_CY5, wait=1)
+    preview()
+    click(1175, 192, wait=1)       # fold Image,
+    click(1180, 72, wait=1)        # Classes
+    click(1175, 549, wait=1.5)     # and Objects: room for the Measurements panel
+    away()
+    shot("screenshot-measurements-panel")
 
 
 def sc_results_list():
@@ -623,7 +710,7 @@ def sc_results_export():
 def sc_results_views():
     results("plate")
     click(551, 20, wait=1.5)       # + : NEW VIEW
-    click(649, 197, wait=3)        # A copy of the view shown
+    click(620, 253, wait=3)        # A copy of the view shown (below List … Trees)
     sh("xdotool", "mousemove", "579", "20", "click", "--repeat", "2", "--delay", "80", "1")
     sleep(1)                       # double-click: rename it
     key("ctrl+a")
@@ -653,7 +740,9 @@ def sc_results_tracks():
     click(595, 148, wait=5)        # the analysis "tracking"
     # The views follow the analysis' name, "tracking" is shorter: they shift.
     click(470, 20, wait=4)         # Tracks
-    click(200, 189, wait=3)        # track #2 - a straight mover
+    # The track numbers differ from run to run: sort by speed, take the fastest.
+    click(625, 125, wait=2)        # the head of VCL
+    click(150, 156, wait=4)        # the first row - a fast, straight mover
     away()
     shot("screenshot-results-tracks")
     click(1119, 828, wait=8)       # Show in image
@@ -669,6 +758,58 @@ def sc_results_tracks():
     shot("screenshot-results-over-time")
 
 
+def neuron_results():
+    """The neurons' analysis in Results (Trace Filaments, Filament Tree, Sholl)."""
+    start_app("--project", str(NEURONS_PROJECT))
+    click(*MODE_RESULTS, wait=2)
+    click(595, 148, wait=5)        # the analysis "neurons"
+
+
+def sc_image_ruler():
+    start_app("--project", str(NEURONS_PROJECT))
+    click(200, 140, wait=6)        # A01_01: four neurons
+    click(*ANNOTATE)
+    click(566, 74)                 # Ruler (L)
+    drag([(552, 267), (440, 222)])  # from the soma of the top-left neuron to a tip
+    hover(760, 790)
+    shot("screenshot-image-ruler")
+
+
+def sc_results_trees():
+    neuron_results()
+    click(513, 20, wait=2)         # + New view
+    click(553, 216, wait=5)        # Trees
+    click(80, 158, wait=4)         # the second neuron of the list
+    hover(1300, 880)
+    shot("screenshot-results-trees")
+
+
+def sc_results_profile():
+    neuron_results()
+    click(*RESULTS_SPLIT, wait=8)  # List beside the image: select a skeleton
+    click(210, 72, wait=2)         # Classes
+    click(212, 106, wait=1.5)      # None (leaves Background ticked - it has no objects)
+    click(173, 223, wait=2)        # map2@skeleton
+    click(400, 600, wait=1.5)      # close the list
+    click(100, 167, wait=5)        # a skeleton of A01_01
+    click(410, 20, wait=5)         # Charts (the layout goes back to Full)
+    click(43, 233, wait=4)         # Profile: sholl_01 - the class's band, the selected curve
+    hover(1300, 880)
+    shot("screenshot-results-profile")
+
+
+def sc_results_paths():
+    start_app("--project", str(TRACKS_PROJECT))
+    click(372, 72, wait=3)         # read the folder: the viewer needs the image list
+    click(200, 140, wait=4)
+    click(*MODE_RESULTS, wait=2)
+    click(595, 148, wait=5)        # the analysis "tracking"
+    click(513, 20, wait=2)         # + New view
+    click(553, 188, wait=6)        # Paths
+    hover(1300, 880)
+    shot("screenshot-results-paths")
+
+
 def sc_run():
     open_project()
     open_image()
@@ -677,7 +818,8 @@ def sc_run():
     shot("screenshot-start-analysis")
     click(1247, 134)
     type_text("replicate_2", wait=0.2)
-    click(1381, 260, wait=0.7)     # Run - the demo plate takes ~2 s
+    click(1381, 260, wait=0.4)     # Run - the demo plate takes ~2 s
+    away()                         # else the eye under the pointer shows its "Hide" tip
     shot("screenshot-analysis-running", 0)
     wait_for_run_button()
     shot("screenshot-analysis-finished", 0.3)
@@ -705,16 +847,18 @@ def wait_for_run_button(timeout=120):
 
 
 SCENES = {
-    "images": sc_images, "image-panel": sc_image_panel, "go-to-image": sc_go_to_image, "workspace": sc_workspace, "pipeline": sc_pipeline,
+    "images": sc_images, "image-panel": sc_image_panel, "image-ortho": sc_image_ortho, "go-to-image": sc_go_to_image, "file-dialog": sc_file_dialog, "workspace": sc_workspace, "pipeline": sc_pipeline,
     "pick-pipeline": sc_pick_pipeline, "add-step": sc_add_step,
     "add-step-trackers": sc_add_step_trackers, "step-menu": sc_step_menu,
     "eva-menu": sc_eva_menu, "colors": sc_colors, "palette": sc_palette, "tuning": sc_tuning,
     "compare": sc_compare, "switcher": sc_switcher, "classes": sc_classes, "annotate": sc_annotate,
-    "objects": sc_objects, "settings": sc_settings, "dialogs": sc_dialogs, "modules": sc_modules,
+    "objects": sc_objects, "measurements": sc_measurements, "settings": sc_settings, "dialogs": sc_dialogs, "modules": sc_modules,
     "results-list": sc_results_list, "results-plate": sc_results_plate, "results-charts": sc_results_charts,
     "results-split": sc_results_split, "results-export": sc_results_export,
     "results-views": sc_results_views, "results-delete": sc_results_delete,
-    "results-tracks": sc_results_tracks,
+    "results-tracks": sc_results_tracks, "results-paths": sc_results_paths,
+    "results-trees": sc_results_trees, "results-profile": sc_results_profile,
+    "image-ruler": sc_image_ruler,
     "run": sc_run,                 # writes a second analysis: after the results scenes
     "series": sc_series,
     "start-page": sc_start_page,
@@ -736,10 +880,18 @@ def prepare_data():
     subprocess.run([sys.executable, str(here / "make_project.py"), str(DATA)], check=True)
     shutil.rmtree(DATA / "results", ignore_errors=True)
     analyze(PROJECT, "dilution_series")
-    if not list(TRACKS.glob("*.ome.tif")) or not TRACKS_PROJECT.exists():
+    # An older project (without Measure Track Motion) is made again.
+    if (not list(TRACKS.glob("*.ome.tif")) or not TRACKS_PROJECT.exists()
+            or "MEASURE_TRACK_MOTION" not in TRACKS_PROJECT.read_text()):
         subprocess.run([sys.executable, str(here / "make_tracks.py"), str(TRACKS)], check=True)
     shutil.rmtree(TRACKS / "results", ignore_errors=True)
     analyze(TRACKS_PROJECT, "tracking", "--images", str(TRACKS))
+    if not NEURONS_PROJECT.exists():
+        subprocess.run([sys.executable, str(here / "make_neurons.py"), str(NEURONS)], check=True)
+    shutil.rmtree(NEURONS / "results", ignore_errors=True)
+    analyze(NEURONS_PROJECT, "neurons")
+    if not ZSTACK_PROJECT.exists():
+        subprocess.run([sys.executable, str(here / "make_zstack.py"), str(ZSTACK)], check=True)
 
 
 def analyze(project, job, *extra):

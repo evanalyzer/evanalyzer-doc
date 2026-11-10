@@ -7,7 +7,7 @@ description: Link each child object to the parent object it belongs to (e.g. spo
 
 ![Spots (children) and two cells (parents): with "Its centre is in the parent" each spot is linked to the cell its centre lies in; a spot whose centre is outside every cell gets no parent](../../../../assets/figures/cmd-relate-objects.svg)
 
-It is the only step that links objects. The links are stored with each child, and the [results](/guide/results/#list-view) work out from them, per parent, how many children it has and the mean, median, ... of their measurements, and show the parent's values next to each child. It works like CellProfiler's RelateObjects.
+It is the step that links objects - the one exception is [Trace Filaments](/commands/object/trace-filaments/), which links the segments it traces to their soma and to each other itself. The links are stored with each child, and the [results](/guide/results/#list-view) work out from them, per parent, how many children it has and the mean, median, ... of their measurements, and show the parent's values next to each child. It works like CellProfiler's RelateObjects.
 
 ## Parameters
 
@@ -45,7 +45,7 @@ The object details beside the image list an object's **Parent** and **Children**
 In the exported results database, each object stores its links in `parent_ids`, a map from parent class to parent object ID. A child without a parent of a class has no entry for it.
 
 :::note
-Relate Objects replaces the earlier **Parent Object ID**, which some commands set on their own. Today only Relate Objects links objects; its link per parent class takes that place.
+Relate Objects replaces the earlier **Parent Object ID**, which some commands set on their own. Today Relate Objects links objects (and [Trace Filaments](/commands/object/trace-filaments/) its own segments); its link per parent class takes that place.
 :::
 
 [Measure Object Distance To Parent](/commands/measure/measure-distance-to-parent/) measures how far each child lies from its parent. [Propagation](/commands/object/propagation/) grows cells from nuclei; relate them afterwards to get each cell's nucleus.

@@ -9,7 +9,7 @@ description: Link the objects of a time-lapse into tracks by how much their mask
 
 It is a [dataset step](/guide/pipelines/#dataset-steps): it runs once after every image has been analysed, on the stored objects of all frames.
 
-The tracks it makes are shown in [Results › Tracks](/guide/results/#tracks): a row per track with its time points, speed and straightness, its trail on the image and - with merges and splits - its parent and child tracks.
+The tracks it makes are shown in [Results › Tracks](/guide/results/#tracks): a row per track with its time points - and, with a [Measure Track Motion](/commands/dataset/measure-track-motion/) step after it, how far it moved, its speed and straightness -, its trail on the image and - with merges and splits - its parent and child tracks.
 
 ## Parameters
 

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/></marker></defs>
+<!-- line -->
+<rect x="30" y="92" width="120" height="16" rx="8" fill="#ffe3cc" stroke="#ea580c" stroke-width="2.5" transform="rotate(-20 90 100)"/>
+<line x1="80" y1="72" x2="100" y2="128" stroke="#1f2937" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<line x1="80" y1="104" x2="100" y2="96.5" stroke="#1f2937" stroke-width="1.5" marker-end="url(#ah)"/>
+<text class="lbl-sm" x="106" y="136">λ2 large (across)</text>
+<text class="lbl-sm" x="22" y="148">λ1 ≈ 0 (along)</text>
+<text class="lbl-bold" x="90" y="170" text-anchor="middle">Line</text>
+<text class="lbl-sm" x="90" y="186" text-anchor="middle">R ≈ 0 → V high</text>
+<!-- blob -->
+<circle cx="220" cy="100" r="26" fill="#cfe0f7" stroke="#2563eb" stroke-width="2.5"/>
+<line x1="220" y1="62" x2="220" y2="138" stroke="#1f2937" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<line x1="182" y1="100" x2="258" y2="100" stroke="#1f2937" stroke-width="1.5" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text class="lbl-sm" x="262" y="96">λ1 ≈ λ2</text>
+<text class="lbl-bold" x="220" y="170" text-anchor="middle">Blob</text>
+<text class="lbl-sm" x="220" y="186" text-anchor="middle">R ≈ 1 → suppressed</text>
+<!-- flat -->
+<rect x="310" y="74" width="100" height="52" rx="6" fill="#6b7280" fill-opacity="0.2" stroke="#6b7280" stroke-width="2"/>
+<text class="lbl-bold" x="360" y="170" text-anchor="middle">Flat area</text>
+<text class="lbl-sm" x="360" y="186" text-anchor="middle">S ≈ 0 → V ≈ 0</text>
+<text class="lbl-bold" x="220" y="222" text-anchor="middle">Vesselness</text>
+<text class="lbl-sm" x="220" y="238" text-anchor="middle">|λ1| ≤ |λ2| · R = λ1 / λ2 · S = √(λ1² + λ2²)</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<!-- parent object -->
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M60,160 Q130,150 200,110 Q270,70 340,50 M200,110 Q250,165 330,175" stroke="#2563eb" stroke-width="30" stroke-opacity="0.2"/>
+<!-- longest path -->
+<path d="M60,160 Q130,150 200,110 Q270,70 340,50" stroke="#9333ea" stroke-width="7" stroke-opacity="0.45"/>
+<!-- skeleton -->
+<path d="M60,160 Q130,150 200,110 Q270,70 340,50 M200,110 Q250,165 330,175" stroke="#1f2937" stroke-width="2.5"/>
+<!-- straight distance of the lower right segment -->
+<line x1="200" y1="110" x2="330" y2="175" stroke="#1f2937" stroke-width="1" stroke-dasharray="4 3"/>
+</g>
+<g fill="#16a34a"><circle cx="60" cy="160" r="5"/><circle cx="340" cy="50" r="5"/><circle cx="330" cy="175" r="5"/></g>
+<circle cx="200" cy="110" r="6" fill="#ea580c"/>
+<text class="lbl-sm" style="fill:#ea580c" x="200" y="88" text-anchor="middle">branch point</text>
+<text class="lbl-sm" style="fill:#16a34a" x="350" y="54">end point</text>
+<text class="lbl-sm" style="fill:#9333ea" x="270" y="40" text-anchor="middle">longest path</text>
+<text class="lbl-sm" x="120" y="128" text-anchor="middle">segment 1</text>
+<text class="lbl-sm" x="250" y="60" text-anchor="middle">segment 2</text>
+<text class="lbl-sm" x="236" y="186">segment 3</text>
+<text class="lbl-sm" x="262" y="130">straight distance</text>
+<!-- diameter -->
+<line x1="95" y1="140" x2="99" y2="168" stroke="#2563eb" stroke-width="1.5"/>
+<text class="lbl-sm" style="fill:#2563eb" x="40" y="196">diameter (parent object)</text>
+<text class="lbl-bold" x="220" y="222" text-anchor="middle">Measure Object Skeleton</text>
+<text class="lbl-sm" x="220" y="238" text-anchor="middle">3 end points · 1 branch point · 3 segments</text>
+</svg>

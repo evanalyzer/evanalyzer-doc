@@ -58,6 +58,7 @@ Every brush stroke and every drawn shape is an undo step of its own.
 | `M` / `Escape` | Move              |
 | `S`            | Select            |
 | `K`            | Paint marker      |
+| `L`            | Ruler (measure a line's length) |
 | `R`            | Paint rectangle   |
 | `E`            | Paint ellipse     |
 | `P`            | Paint polygon     |

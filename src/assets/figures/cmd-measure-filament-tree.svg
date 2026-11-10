@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<!-- path distance of the lower tip of the upper branch: soma -> A -> B -> E -->
+<polyline points="108,125 190,125 270,80 360,105" fill="none" stroke="#ea580c" stroke-opacity="0.3" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="lbl-sm" style="fill:#ea580c" x="430" y="128" text-anchor="end">path distance</text>
+<text class="lbl-sm" style="fill:#ea580c" x="430" y="141" text-anchor="end">of this segment</text>
+<!-- soma -->
+<circle cx="90" cy="125" r="18" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+<text class="lbl-bold" style="fill:#2563eb" x="90" y="96" text-anchor="middle">soma</text>
+<!-- segments -->
+<g fill="none" stroke="#1f2937" stroke-width="2.5" stroke-linejoin="round">
+  <polyline points="108,125 190,125"/>
+  <polyline points="190,125 270,80"/>
+  <polyline points="190,125 350,180"/>
+  <polyline points="270,80 360,45"/>
+  <polyline points="270,80 360,105"/>
+  <polyline points="72,125 30,170"/>
+</g>
+<!-- branch points and tips -->
+<g fill="#1f2937"><circle cx="190" cy="125" r="3.5"/><circle cx="270" cy="80" r="3.5"/></g>
+<g fill="#16a34a"><circle cx="350" cy="180" r="3.5"/><circle cx="360" cy="45" r="3.5"/><circle cx="360" cy="105" r="3.5"/><circle cx="30" cy="170" r="3.5"/></g>
+<!-- level · order per segment -->
+<text class="lbl-sm" x="149" y="116" text-anchor="middle">1 · 2</text>
+<text class="lbl-sm" x="222" y="94" text-anchor="middle">2 · 2</text>
+<text class="lbl-sm" x="272" y="168" text-anchor="middle">2 · 1</text>
+<text class="lbl-sm" x="312" y="52" text-anchor="middle">3 · 1</text>
+<text class="lbl-sm" x="318" y="84" text-anchor="middle">3 · 1</text>
+<text class="lbl-sm" x="38" y="140" text-anchor="middle">1 · 1</text>
+<text class="lbl-sm" style="fill:#16a34a" x="30" y="188" text-anchor="middle">tip</text>
+<text class="lbl-sm" x="172" y="152" text-anchor="middle">branch point</text>
+<line x1="182" y1="142" x2="188" y2="130" stroke="#4b5563" stroke-width="1"/>
+<text class="lbl-bold" x="220" y="208" text-anchor="middle">Measure Filament Tree</text>
+<text class="lbl-sm" x="220" y="224" text-anchor="middle">per segment: branch level · Strahler order</text>
+<text class="lbl-sm" x="220" y="238" text-anchor="middle">per neuron: 2 primary neurites · 2 branch points · 4 tips · highest level 3</text>
+</svg>

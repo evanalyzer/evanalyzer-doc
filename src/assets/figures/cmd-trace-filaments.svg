@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<!-- search window -->
+<rect x="20" y="28" width="330" height="168" fill="none" stroke="#4b5563" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="lbl-sm" x="24" y="22">window: soma box grown by Max Reach</text>
+<!-- dim stretch of the neurite (faint stain) -->
+<path d="M120,118 C128,116 136,116 144,117" fill="none" stroke="#4b5563" stroke-opacity="0.25" stroke-width="7" stroke-linecap="round"/>
+<!-- soma -->
+<circle cx="80" cy="120" r="18" fill="#2563eb" fill-opacity="0.3" stroke="#2563eb" stroke-width="2"/>
+<text class="lbl-bold" style="fill:#2563eb" x="80" y="160" text-anchor="middle">soma</text>
+<!-- segment 1: root -->
+<polyline points="98,120 120,118 144,117 172,115" fill="none" stroke="#16a34a" stroke-width="3" stroke-linejoin="round"/>
+<text class="lbl-sm" style="fill:#16a34a" x="128" y="138" text-anchor="middle">segment 1</text>
+<text class="lbl-sm" x="128" y="104" text-anchor="middle">dim gap bridged</text>
+<!-- segment 2 -->
+<polyline points="172,115 205,92 240,78 278,66 318,58" fill="none" stroke="#9333ea" stroke-width="3" stroke-linejoin="round"/>
+<text class="lbl-sm" style="fill:#9333ea" x="262" y="98" text-anchor="middle">segment 2 → 1</text>
+<!-- segment 3 -->
+<polyline points="172,115 210,140 252,152 292,166 322,176" fill="none" stroke="#0891b2" stroke-width="3" stroke-linejoin="round"/>
+<text class="lbl-sm" style="fill:#0891b2" x="230" y="180" text-anchor="middle">segment 3 → 1</text>
+<!-- pruned short branch -->
+<polyline points="240,78 246,64 250,56" fill="none" stroke="#6b7280" stroke-width="2" stroke-dasharray="3 2"/>
+<circle cx="250" cy="56" r="3.5" fill="#6b7280"/>
+<text class="lbl-sm" x="258" y="40">pruned: shorter than</text>
+<text class="lbl-sm" x="258" y="52">Min Branch Length</text>
+<!-- branch point -->
+<circle cx="172" cy="115" r="3.5" fill="#1f2937"/>
+<line x1="172" y1="74" x2="172" y2="109" stroke="#4b5563" stroke-width="1"/>
+<text class="lbl-sm" x="172" y="70" text-anchor="middle">branch point</text>
+<!-- tips -->
+<circle cx="318" cy="58" r="4" fill="#ea580c"/>
+<circle cx="322" cy="176" r="4" fill="#ea580c"/>
+<text class="lbl-sm" style="fill:#ea580c" x="328" y="76">tip</text>
+<text class="lbl-sm" style="fill:#ea580c" x="328" y="168" text-anchor="end">tip</text>
+<!-- tip beyond the reach -->
+<circle cx="395" cy="118" r="4" fill="#6b7280"/>
+<text class="lbl-sm" x="395" y="138" text-anchor="middle">beyond</text>
+<text class="lbl-sm" x="395" y="151" text-anchor="middle">the reach</text>
+<text class="lbl-bold" x="220" y="222" text-anchor="middle">Trace Filaments</text>
+<text class="lbl-sm" x="220" y="238" text-anchor="middle">cheapest paths from the tips back to the soma · "2 → 1": linked to segment 1</text>
+</svg>

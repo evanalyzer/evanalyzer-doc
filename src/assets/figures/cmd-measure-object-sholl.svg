@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<!-- circles -->
+<circle cx="125" cy="122" r="35" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 3"/>
+<circle cx="125" cy="122" r="65" fill="none" stroke="#2563eb" stroke-width="1" stroke-dasharray="4 3"/>
+<circle cx="125" cy="122" r="95" fill="none" stroke="#2563eb" stroke-width="1" stroke-dasharray="4 3"/>
+<!-- soma -->
+<circle cx="125" cy="122" r="12" fill="#4b5563" fill-opacity="0.2" stroke="#4b5563" stroke-width="2"/>
+<circle cx="125" cy="122" r="2" fill="#1f2937"/>
+<!-- skeleton -->
+<polyline points="136.8,119.9 178.1,107.8 204.7,115.0 230.6,99.5" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="113.7,126.1 76.7,134.9 60.0,159.5" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="122.9,110.2 120.8,74.2" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="120.8,74.2 87.5,57.0 62.2,41.6" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="120.8,74.2 152.4,46.8 171.9,33.7" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="129.1,133.3 136.6,165.5 154.0,172.2" fill="none" stroke="#9333ea" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<!-- crossings -->
+<circle cx="158.9" cy="113.4" r="3.5" fill="#ea580c"/>
+<circle cx="189.0" cy="110.7" r="3.5" fill="#ea580c"/>
+<circle cx="218.8" cy="106.6" r="3.5" fill="#ea580c"/>
+<circle cx="91.3" cy="131.5" r="3.5" fill="#ea580c"/>
+<circle cx="66.4" cy="150.1" r="3.5" fill="#ea580c"/>
+<circle cx="121.6" cy="87.2" r="3.5" fill="#ea580c"/>
+<circle cx="98.4" cy="62.7" r="3.5" fill="#ea580c"/>
+<circle cx="68.6" cy="45.5" r="3.5" fill="#ea580c"/>
+<circle cx="138.9" cy="58.5" r="3.5" fill="#ea580c"/>
+<circle cx="167.2" cy="36.9" r="3.5" fill="#ea580c"/>
+<circle cx="134.4" cy="155.7" r="3.5" fill="#ea580c"/>
+<text class="lbl-sm" x="125" y="231" text-anchor="middle" style="fill:#2563eb">circles every Ring Step</text>
+<text class="lbl-sm" style="fill:#9333ea" x="290" y="20">― skeleton</text>
+<text class="lbl-sm" style="fill:#ea580c" x="360" y="20">● crossing</text>
+<!-- profile -->
+<line x1="270" y1="170" x2="415" y2="170" stroke="#4b5563" stroke-width="1"/>
+<line x1="270" y1="170" x2="270" y2="40" stroke="#4b5563" stroke-width="1"/>
+<polyline points="314.1,66.0 352.0,66.0 389.8,92.0" fill="none" stroke="#ea580c" stroke-width="2"/>
+<circle cx="314.1" cy="66.0" r="3" fill="#ea580c"/>
+<text class="lbl-sm" x="314.1" y="58.0" text-anchor="middle">4</text>
+<line x1="314.1" y1="170" x2="314.1" y2="174" stroke="#4b5563" stroke-width="1"/>
+<text class="lbl-sm" x="314.1" y="186" text-anchor="middle">r1</text>
+<circle cx="352.0" cy="66.0" r="3" fill="#ea580c"/>
+<text class="lbl-sm" x="352.0" y="58.0" text-anchor="middle">4</text>
+<line x1="352.0" y1="170" x2="352.0" y2="174" stroke="#4b5563" stroke-width="1"/>
+<text class="lbl-sm" x="352.0" y="186" text-anchor="middle">r2</text>
+<circle cx="389.8" cy="92.0" r="3" fill="#ea580c"/>
+<text class="lbl-sm" x="389.8" y="84.0" text-anchor="middle">3</text>
+<line x1="389.8" y1="170" x2="389.8" y2="174" stroke="#4b5563" stroke-width="1"/>
+<text class="lbl-sm" x="389.8" y="186" text-anchor="middle">r3</text>
+<text class="lbl-sm" x="342.5" y="200" text-anchor="middle">radius</text>
+<text class="lbl-sm" x="264" y="32">Intersections</text>
+<text class="lbl-bold" x="220" y="222" text-anchor="middle">Measure Object Sholl</text>
+<text class="lbl-sm" x="220" y="238" text-anchor="middle">crossings 4, 4, 3 · critical radius r1 · enclosing radius r3</text>
+</svg>

@@ -95,11 +95,13 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | **Spatial Distance & Clustering** | Nearest neighbor distance, Delaunay triangulation, Voronoi tessellation, object-to-boundary distance.                               | ✅\*\*     | ⚠️           | ⚠️     | ✅     |
 | **Texture Analysis (Haralick)**   | Grey-Level Co-occurrence Matrix (GLCM): contrast, correlation, energy, entropy, and local heterogeneity.                            | ✅         | ✅           | ✅     | ✅     |
 | **Image Quality Control**         | Focus score, blur, saturation and noise per image, with automatic exclusion of bad images from the results.                         | ✅         | ✅           | ⚠️     | -      |
-| **Filament & Skeleton Analysis**  | Branch point detection, filament length, segment classification, network connectivity metrics.                                      | -          | ✅           | ✅     | -      |
+| **Filament & Skeleton Analysis**  | Branch point detection, filament length, segment classification, network connectivity metrics.                                      | ✅‡        | ✅           | ✅     | -      |
 
 \*No 3D volume support.
 
 † [Pearson, Manders M1/M2, overlap, K1/K2, RWC and Costes' thresholds](/commands/measure/measure-colocalization/), per image or per object, value for value as CellProfiler's MeasureColocalization. No cytofluorogram plot.
+
+‡ [Vesselness](/commands/edge-detection/vesselness/) for thin fibres, [Skeletonize Objects](/commands/object/skeletonize-objects/) and [Measure Object Skeleton](/commands/measure/measure-object-skeleton/) (branches, branch and end points, lengths), [Trace Filaments](/commands/object/trace-filaments/) and [Measure Filament Tree](/commands/measure/measure-filament-tree/) for neurons traced from their soma (branch levels, Strahler order, a [dendrogram per neuron](/guide/results/#trees)), and [Sholl analysis](/commands/measure/measure-object-sholl/). 2D only.
 
 \*\* [Neighbour counts and first/second closest distances](/commands/measure/measure-object-neighbors/), [distance to the parent's centre and edge](/commands/measure/measure-distance-to-parent/), and [Voronoi](/commands/object/voronoi/) tessellation. No Delaunay triangulation.
 
@@ -110,7 +112,7 @@ Rows where a checkmark hides a gap like this carry a footnote.
 | Feature Name                      | Detailed Functionality                                                                                     | EVAnalyzer | CellProfiler | ImageJ | QuPath |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------- | ------------ | ------ | ------ |
 | **Automated Particle Tracking**   | LAP (Linear Assignment Problem), Kalman filtering, or nearest-neighbor frame-to-frame linking algorithms.  | ✅\*       | ✅           | ✅     | -      |
-| **Kinematic Trajectory Metrics**  | Velocity, instantaneous speed, directionality ratio, mean square displacement (MSD), confinement index.    | ⚠️†        | ✅           | ✅     | -      |
+| **Kinematic Trajectory Metrics**  | Velocity, instantaneous speed, directionality ratio, mean square displacement (MSD), confinement index.    | ✅†        | ✅           | ✅     | -      |
 | **Cell Division & Lineage Trees** | Handling cell division events (mitosis), branch creation, and full lineage tree visualization.             | ⚠️‡        | ✅           | ✅     | -      |
 | **Track Visualization**           | Track table and trails drawn on the image, stepping or playing through the time points.                    | ✅         | ⚠️           | ✅     | -      |
 | **Manual Track Editing UX**       | Interactive track visualization with easy manual link breaking, joining, path deletion, and spot tweaking. | -          | -            | ✅     | -      |
@@ -119,7 +121,7 @@ Rows where a checkmark hides a gap like this carry a footnote.
 
 ‡ Divisions and fusions are detected and the [tracks](/guide/results/#tracks) show each track's parent and child tracks, its lineage and generation, drawn on the image. No lineage tree view.
 
-†Per track: time points, path length, speed (px/frame, µm/min or µm/s) and straightness - see [Results › Tracks](/guide/results/#tracks). No MSD or confinement analysis.
+†[Measure Track Motion](/commands/dataset/measure-track-motion/) measures per track the path length, displacement, the speeds VCL, VSL and VAP (px/frame, µm/min or µm/s), the ratios LIN, STR, WOB, ALH, BCF, turning angle, angular speed and the MSD exponent α and diffusion coefficient D, shown as track columns and in the [Paths](/guide/results/#paths) view's motion map. No confinement index.
 
 ---
 

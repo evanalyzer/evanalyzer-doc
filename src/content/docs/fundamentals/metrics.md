@@ -277,11 +277,16 @@ The commands of the **Measure** category add further values - only when they are
 | [Measure Object Shape](/commands/measure/measure-object-shape/) | Per object: convex area, solidity (CellProfiler's), Euler number, max / mean / median radius |
 | [Measure Object Neighbors](/commands/measure/measure-object-neighbors/) | Per object: number of neighbours, percent touching, first and second closest distance, angle between neighbours |
 | [Measure Object Distance To Parent](/commands/measure/measure-distance-to-parent/) | Per child: distance from its centroid to its parent's centroid and to its parent's edge |
+| [Measure Object Skeleton](/commands/measure/measure-object-skeleton/) | Per skeleton: total length, longest path, end points, branch points, segments, mean segment length, mean straightness, mean diameter |
+| [Measure Object Sholl](/commands/measure/measure-object-sholl/) | Per skeleton: the intersections per circle around the soma - a [profile](/guide/results/#profiles), one value per radius - and max and mean intersections, critical and enclosing radius, Sholl regression coefficient |
+| [Measure Filament Tree](/commands/measure/measure-filament-tree/) | Per traced segment: branch level, Strahler order, path distance from the soma, length, straightness; per neuron (on its soma): total length, primary neurites, branch points, tips, highest branch level, longest path |
 | [Measure Image Texture, Measure Object Texture](/commands/measure/measure-texture/) | Per image or per object: Haralick texture features (contrast, correlation, entropy, ...) |
 | [Measure Image Colocalization, Measure Object Colocalization](/commands/measure/measure-colocalization/) | Per image or per object: Pearson, Manders M1/M2 (also with Costes' threshold), overlap, K1/K2, RWC; slope per image only |
 | [Measure Image Intensity](/commands/measure/image-intensity/) | Per image: total, mean, std dev, min, max, median, quartiles and MAD of a channel |
 | [Measure Image Quality](/commands/measure/image-quality/) | Per image: focus score, power log-log slope, percent maximal / minimal, noise |
 | [Measure Image Area Occupied](/commands/measure/area-occupied/) | Per image: the area the objects of a class cover, and its part of the image |
+
+The dataset step [Measure Track Motion](/commands/dataset/measure-track-motion/) adds 16 values per track (speeds, straightness, turning, MSD), shown in [Results › Tracks](/guide/results/#tracks).
 
 Use [Exclude Image](/commands/measure/exclude-image/) to leave images out of the results based on these values.
 

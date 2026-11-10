@@ -63,6 +63,8 @@ The **Objects** panel lists every object on the current image: the live-preview 
 
 Click a row to select it - the object is highlighted on the image, and selecting an object on the image selects its row. Click it again to unselect it.
 
+Objects of a single pixel - spots from [Find Maxima](/commands/segmentation/find-maxima/), the branch and end points of a [skeleton](/commands/object/skeletonize-objects/) - are drawn as a 5 px dot when zoomed out, so they stay visible and can be clicked. Larger objects are drawn as they are.
+
 ### Filtering
 
 Above the list are a **class filter** and a **search**. The class filter's menu picks what to **SHOW** - **All**, **Annotations** (drawn by hand) or **Detections** (found by the pipeline) - and the **CLASS** (**All classes** or one class); the chip then reads e.g. _All classes · manual_, and its **✕** resets both. The search takes an object id, a class name, or a condition on a measurement - `area > 50`, `circ < 0.6` - and several terms separated by commas.

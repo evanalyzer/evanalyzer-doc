@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 55 pipeline commands grouped by category.
+description: All 64 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -55,6 +55,7 @@ Commands for detecting edges, ridges, and local structures.
 | [Laplacian](/commands/edge-detection/laplacian/)                   | Zero-crossing edge detection                    |
 | [Structure Tensor](/commands/edge-detection/structure-tensor/)     | Local orientation and coherence                 |
 | [Weighted Deviation](/commands/edge-detection/weighted-deviation/) | Weighted local standard deviation               |
+| [Vesselness](/commands/edge-detection/vesselness/)                 | Highlight lines (fibres, neurites, vessels) of a chosen width (Frangi) |
 
 ## Segmentation
 
@@ -64,6 +65,7 @@ Commands for separating foreground objects from background.
 | -------------------------------------------------------------------- | -------------------------------------------------------------- |
 | [Threshold](/commands/segmentation/threshold/)                       | Convert greyscale to binary with manual or automatic threshold |
 | [Connected Components](/commands/segmentation/connected-components/) | Label each connected foreground region                         |
+| [Find Maxima](/commands/segmentation/find-maxima/)                   | Find spots as local maxima - one-pixel objects                 |
 | [Watershed](/commands/segmentation/watershed/)                       | Split touching objects using intensity valleys                 |
 
 ## Morphology
@@ -105,6 +107,8 @@ Commands that operate on extracted objects.
 | [Distance Transform](/commands/object/distance-transform/)     | Measure distances between object pairs                                                                       |
 | [Propagation](/commands/object/propagation/)                   | Grow a region around each seed object through a channel (e.g. cells around nuclei)                           |
 | [Relate Objects](/commands/object/relate-objects/)             | Link each child object to its parent (e.g. spots to their cell)                                              |
+| [Skeletonize Objects](/commands/object/skeletonize-objects/)   | Reduce each object to its 1-pixel skeleton, optionally with branch and end points as objects                 |
+| [Trace Filaments](/commands/object/trace-filaments/)           | Trace each neuron's neurites from its soma into a tree of segments                                           |
 | [Save Image](/commands/object/save-image/)                     | Write a control image to disk, optionally with selected classes drawn on top                                 |
 
 ## Measure
@@ -122,6 +126,9 @@ Measure steps run once the objects are final. They measure the whole image or ev
 | [Measure Object Shape](/commands/measure/measure-object-shape/)                 | Convex area, solidity, Euler number and radii of every object                 |
 | [Measure Object Neighbors](/commands/measure/measure-object-neighbors/)         | Neighbours, percent touching and closest objects                              |
 | [Measure Object Distance To Parent](/commands/measure/measure-distance-to-parent/) | Each child's distance to its parent (linked by Relate Objects)                |
+| [Measure Object Skeleton](/commands/measure/measure-object-skeleton/)           | Length, longest path, branch and end points, segments and straightness of skeletons |
+| [Measure Object Sholl](/commands/measure/measure-object-sholl/)                 | Sholl analysis of skeletons: crossings per circle around the soma (a profile) and its summary values |
+| [Measure Filament Tree](/commands/measure/measure-filament-tree/)               | Branch level, Strahler order, path distance and length per traced segment; totals per neuron |
 
 ## Dataset
 
@@ -133,6 +140,7 @@ Measure steps run once the objects are final. They measure the whole image or ev
 | [Track Kalman](/commands/dataset/track-kalman/)  | As Track LAP, predicting each track's next position from its velocity (directed motion) |
 | [Track Overlap](/commands/dataset/track-overlap/)  | Link objects into tracks by mask overlap - for large objects such as cells |
 | [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/)  | Link objects into tracks by nearest neighbour between consecutive frames |
+| [Measure Track Motion](/commands/dataset/measure-track-motion/)  | Measure how each track moved: speeds, straightness, turning and MSD (after a tracker) |
 
 ## Modules
 

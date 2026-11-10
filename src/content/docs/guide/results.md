@@ -11,6 +11,8 @@ EVAnalyzer stores the results of each analysis in a DuckDB database file, in a f
 
 The folder also holds `<job_name>.evaproj`, a copy of the exact settings that analysis used.
 
+Results written by the current version use results format 2, which can hold [profiles](#profiles). Versions up to 1.1.0-alpha.3 can't open them (_"these results were saved by a newer version of EVAnalyzer … update EVAnalyzer to open them"_). Older results open as before; when an analysis adds to an older results file, the file is upgraded to format 2.
+
 Results are a mode of the main window: switch to **Results** in the bottom bar (`Ctrl+3`).
 
 ## The results bar
@@ -18,7 +20,7 @@ Results are a mode of the main window: switch to **Results** in the bottom bar (
 In Results, the top bar holds the results' controls:
 
 - **Analysis ▾** - the analysis shown, picked from every analysis of the project's images (**ANALYSES · N**). With none open the chip says _Pick an analysis_; with none at all the menu says _"None yet - Run writes one"_. The same menu has **Refresh**, **Show the output folder** and, for the open analysis, **Delete “_name_”** - see [Deleting an analysis](#deleting-an-analysis).
-- The project's [views](#views) as tabs - each a **List**, **Plate**, **Charts** or **Tracks** - and **+** (**New view**) to add one.
+- The project's [views](#views) as tabs - each a **List**, **Plate**, **Charts**, **Tracks**, [**Paths**](#paths) or [**Trees**](#trees) - and **+** (**New view**) to add one.
 - On the right a **Z/T** stepper when the data has Z-stacks or time-lapse frames - it applies to whichever view is open -, **Full | Split with image** - the results alone, or [beside the image](#split-with-the-image) (not for Charts: _"Split view works with List, Plate and Tracks"_) - and **Export…**.
 
 Each view has its settings in a panel on the left and its content beside it. The bottom bar shows the number of images (_"81 images · 1 disabled"_).
@@ -49,12 +51,12 @@ Only analysis folders in the project's `results` folder can be deleted this way.
 
 A **view** is one way of looking at the results, with all of its settings: a List with its classes, columns and aggregations, a Plate with its value and colors, a chart with its axes, and whether the image is shown beside it. The views belong to the **project**, not to one analysis: every analysis of the project opens with the same views, so a view set up once - say _"Spots per cell"_ or _"QC"_ - shows the next analysis the same way.
 
-A new project has four views: **List**, **Plate**, **Charts** and **Tracks**. The tab of a view says its kind (**LIST**, **PLATE**, **CHART**, **TRACKS**) unless its name starts with it already. A Tracks view is dimmed while the analysis has no [tracks](#tracks).
+A new project has four views: **List**, **Plate**, **Charts** and **Tracks**. The tab of a view says its kind (**LIST**, **PLATE**, **CHART**, **TRACKS**, **PATHS**, **TREES**) unless its name starts with it already. A Tracks view is dimmed while the analysis has no [tracks](#tracks).
 
 - Click a tab to show the view. The view shown saves itself: every change of its settings is written into the project (and the project has unsaved changes).
-- **+** opens **NEW VIEW**: a **List**, **Plate**, **Charts** or **Tracks** view with the default settings, or **A copy of the view shown**. A new view is named after its kind (_"List 2"_), a copy _"… copy"_.
+- **+** opens **NEW VIEW**: a **List**, **Plate**, **Charts** or **Tracks** view with the default settings, a [**Paths**](#paths) view (only when the analysis has tracks) or a [**Trees**](#trees) view (only when it has traced neurons), or **A copy of the view shown**. A new view is named after its kind (_"List 2"_), a copy _"… copy"_.
 - Double-click a tab to rename it in place - `Enter` takes the name, `Esc` keeps the old one.
-- Right-click a tab for its menu: **SHOW AS** **List**, **Plate**, **Charts** or **Tracks** (the view keeps the settings of each kind, for switching back), **Rename…**, **Move left**, **Move right**, **Duplicate**, **Back to how it was saved** and **Delete** (not the last view).
+- Right-click a tab for its menu: **SHOW AS** **List**, **Plate**, **Charts**, **Tracks**, **Paths** or **Trees** (the view keeps the settings of each kind, for switching back), **Rename…**, **Move left**, **Move right**, **Duplicate**, **Back to how it was saved** and **Delete** (not the last view).
 - With more views than fit, the tabs scroll and **All views** lists them all (**VIEWS · N**).
 
 Creating, renaming, moving and deleting views can be undone with **Undo** (`Ctrl+Z`).
@@ -63,7 +65,7 @@ Views name classes by their id and columns by their key, so they fit every analy
 
 The CLI can export a results database the way a List view shows it - see [`export --view`](/cli/cli/#exporting-as-a-view).
 
-![The results bar with the default views List, Plate, Charts and Tracks, a copied view renamed "Wells by count" with its PLATE badge, and the + menu open: NEW VIEW List, Plate, Charts, Tracks or a copy of the view shown](../../../assets/screenshots/screenshot-results-views.png)
+![The results bar with the default views List, Plate, Charts and Tracks, a copied view renamed "Wells by count" with its PLATE badge, and the + menu open: NEW VIEW List, Plate, Charts, Tracks, Paths, Trees or a copy of the view shown](../../../assets/screenshots/screenshot-results-views.png)
 
 ## List View
 
@@ -138,12 +140,12 @@ To leave several images out at once, tick their rows (the box at the start of ea
 
 ## Charts
 
-The **Charts** view plots the results instead of listing them. Pick the chart as a tile: **Histogram**, **Scatter**, **Boxplot** or **Over time**.
+The **Charts** view plots the results instead of listing them. Pick the chart as a tile: **Histogram**, **Scatter**, **Boxplot**, **Over time** or - when the analysis has profile measurements - [**Profile**](#profiles).
 
 - **Histogram** bins a chosen numeric property, optionally restricted to one class, and shows the object count and the distribution across bins. Under **Display**: the number of **Bins** and **Counts on a log scale**.
 - **Scatter** plots two numeric columns (**X** and **Y**), optionally restricted to one class. Large datasets are downsampled for drawing - **Points drawn** sets how many (**500**, **2 000**, **10 000** or **All**; _"2000 of 41227 objects plotted"_). Click a point to see its object on its image.
 - **Boxplot** draws one box (quartile box, median line, whiskers, and outlier dots) for a chosen property. **A box per** groups them by **class**, **image**, **well**, **plate row** or **plate column**. Click a box to see its objects in the List.
-- **Over time** <span class="evx-new">NEW</span> follows a property through the frames of a time-lapse. **A line per** **Class**, **Image**, **Well** or **Track** ([tracked objects](/commands/dataset/track-lap/)); each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. **Relative to the first time point** shows the change instead of the value, **Individual tracks, faint** draws every track behind the lines. For results with divisions or fusions, **History** picks **Own track** (default: each track its own line) or **With parents'** (a line per cell from its first ancestor: a daughter's line starts with its mother's track) - with **A line per** **Track** or individual tracks. **Export data…** above the chart writes the lines' values per time point as a table.
+- **Over time** <span class="evx-new">NEW</span> follows a property through the frames of a time-lapse. **A line per** **Class**, **Image**, **Well** or **Track** ([tracked objects](/commands/dataset/track-lap/)); each line's spread is drawn as a band - under **DISPLAY** **Mean ± SD** or **Median + IQR**. **Relative to the first time point** shows the change instead of the value, **Individual tracks, faint** draws every track behind the lines. For results with divisions or fusions, **History** picks **Own track** (default: each track its own line) or **With parents'** (a line per cell from its first ancestor: a daughter's line starts with its mother's track) - with **A line per** **Track** or individual tracks. **Export data…** above the chart writes the lines' values per time point as a table.
 
 ![The Over time chart: the mean area of gfp@vesicle per time point with its standard deviation as a band, every track faint behind it](../../../assets/screenshots/screenshot-results-over-time.png)
 
@@ -152,6 +154,17 @@ The **Charts** view plots the results instead of listing them. Pick the chart as
 ![Charts: results scatter](../../../assets/screenshots/screenshot-results-scatter.png)
 
 ![Charts: results boxplot](../../../assets/screenshots/screenshot-results-boxplot.png)
+
+### Profiles
+
+<span class="evx-new">NEW</span> A **profile** is a measurement with several values per object, each at a position - for example the number of intersections per radius of [Measure Object Sholl](/commands/measure/measure-object-sholl/). The value pickers of the List, Plate and the other charts leave profiles out; the **Profile** chart draws them.
+
+- **Profile** picks the profile measurement, when there is more than one.
+- **A line per** **Class**, **Image**, **Well** or **Plate**; each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. An object without a value at a position its line has counts as 0 there (it doesn't reach that radius) - for the median and quartiles too.
+- **The selected object's curve** - select an object in the [List](#list-view) or in the [split view](#split-with-the-image) to draw its own profile on top. **Mark its highest value** marks where it peaks, and the cards below the chart show **SELECTED · MAX** (the highest value and its position), **REACHES** (its last position) and **MEAN UP TO THERE**.
+- **Export data…** above the chart opens the [export](#exporting-results) with the profile picked.
+
+![Charts › Profile: the Sholl intersections per radius of the skeletons, mean ± SD as a line with its band; the selected skeleton's curve on top, its highest value marked, and the cards SELECTED · MAX, REACHES and MEAN UP TO THERE below](../../../assets/screenshots/screenshot-results-profile.png)
 
 ## Plate View
 
@@ -223,30 +236,91 @@ The innermost level bins a single image's objects into square tiles - the **Squa
 
 When an analysis has tracked objects - from a tracking step such as [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/), [Track Overlap](/commands/dataset/track-overlap/) or [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/) - the results bar offers a fourth view, **Tracks**: one row per track instead of one per object.
 
-Each track shows its **Image**, **Class**, how many **Time points** it spans, how far it **Moved** (the path from point to point), its **Speed** and its **Straightness** - the distance from its first to its last point divided by the path, so 1 is a straight line and a value near 0 an object that wandered around. **Speed unit** picks **px/frame**, **µm/min** or **µm/s** (the µm units need the pixel size, µm/min and µm/s the [frame interval](/guide/images/#frame-interval)). Click a column's head to sort by it.
+One row per track. The table's columns:
 
-The filters above the table:
+| Column | What it is |
+| --- | --- |
+| **Track** | The track's number (_#12_), with a dot in its track color - the color of its trail on the image when trails are colored by track. |
+| **Class** | The class of the tracked objects. |
+| **Image** | The image the track is on. |
+| **Time points** | The first and last time point and, in brackets, at how many time points the track has an object: _3–41 (37)_ - fewer than the span when it has gaps. |
+| _the motion columns_ | The values of [Measure Track Motion](/commands/dataset/measure-track-motion/), see below - by default **Moved**, **VCL**, **LIN**, **Turning**, **Max distance** and **MSD alpha**. |
+| **Area px** | The track's mean object area over its time points, in pixels. |
+| **Area over time** | A small curve of the object's area from the first to the last time point, scaled to the track's own smallest and largest area - a cell that grows, divides or shrinks shows at a glance. |
 
-- **Class** and **Image** - which tracks to list.
+Click **Track**, **Time points** or a motion column's head to sort by it - the time points and values largest first, tracks without a value last; **Track** sorts by image and track number.
+
+<span class="evx-new">NEW</span> **Columns** picks the motion columns (_6 of 16_), any of the 16 values of the Measure Track Motion step after the tracking. Without that step they show _–_. The columns picked are kept with the view; with many of them the table scrolls sideways and the track's details stay in view. Each head names its unit, e.g. **VCL µm/min**:
+
+| Column | Unit | What it is |
+| --- | --- | --- |
+| **Path length** | length | The length of the whole path: every step from time point to time point added up. |
+| **Moved** | length | The displacement: the straight distance from the first to the last position. |
+| **Max distance** | length | The farthest the track ever got from its first position - high for a track that went out and came back, unlike **Moved**. |
+| **VCL** | speed | Curvilinear speed: the path length over the track's duration. This is the track's **Speed**. |
+| **VSL** | speed | Straight-line speed: **Moved** over the duration. |
+| **VAP** | speed | Average-path speed: the length of the smoothed path (each position averaged with its neighbours) over the duration. |
+| **LIN** | - | Linearity, VSL / VCL: 1 a straight line, near 0 an object that wandered around. This is the track's **Straightness**. |
+| **STR** | - | Straightness of the smoothed path, VSL / VAP. |
+| **WOB** | - | Wobble, VAP / VCL: how much the path swings around its smoothed course (1: not at all). |
+| **ALH** | length | Lateral head amplitude: twice the mean distance of the positions from the smoothed path - how wide the track zig-zags. |
+| **BCF** | /time | Beat-cross frequency: how often the track crosses its smoothed path, per time. |
+| **Turning** | ° | The mean turning angle from one step to the next, + counter-clockwise: near 0 for random turns, one sign for a track circling one way. |
+| **Turning abs** | ° | The mean turning angle without its sign (0-180°): how much the track turns, whichever way. |
+| **Angular speed** | °/time | The turning angles added up, per time. |
+| **MSD alpha** | - | The exponent of the mean squared displacement over the lag: about 1 a random walk, 2 a straight line, below 1 a track that stays in a bounded area. |
+| **MSD D** | length²/time | The coefficient of the mean squared displacement - how fast the track spreads out. |
+
+Lengths (**Moved**, **Path length**, **Max distance**, **ALH**) are in µm when every image listed has a pixel size and a [frame interval](/guide/images/#frame-interval), otherwise in px. **Speed unit** picks **px/frame**, **µm/min** or **µm/s** for the speeds, and the time of **BCF**, **Angular speed** and **MSD D** (per frame, minute or second; MSD D in px² with px/frame, else µm²). Without a pixel size and frame interval, the table stays in px and px/frame. Measure Track Motion leaves out a value a track can't have - with too few positions for the MSD, say - and the cell shows _–_. How each value is computed is on the [Measure Track Motion](/commands/dataset/measure-track-motion/#measurements) page.
+
+The bar above the table also sums up what is listed: _"412 tracks · 9864 objects · median 31 time points"_.
+
+Above the table, **Class** and **Image** pick which tracks to list. **Filters** opens the other filters (**SHOW ONLY TRACKS**); its badge counts the filters changed:
+
 - **At least** _N_ **time points** - leave out short tracks.
 - **From the first time point** - only tracks that are there from the start.
 - **Not touching the edge** - leave out tracks that touch the image's edge, which may have left or entered the field of view.
+- **Reset filters** - back to all tracks.
 
 With [Track LAP](/commands/dataset/track-lap/), [Track Kalman](/commands/dataset/track-kalman/) or [Track Overlap](/commands/dataset/track-overlap/) and merges or splits switched on, tracks have a **lineage**: a division ends a track and starts two, a fusion ends two and starts one. The summary then also counts them (_"· 3 divisions · 1 fusion"_), and a selected track's card names where it came **From** and what it goes **Into** (_"#3 (division)"_, _"#7 (fusion)"_). On the image, a line joins a track to its parent's last point, with a ring where the division or fusion happened; a selected track is drawn together with its parents and children.
 
-Click a track to see it on the right: its numbers, its **Area over time**, and **The track's time points** with the position (**X px**, **Y px**) and area at each. **Show in image** opens the split layout at that track.
+Click a track to see it on the right: its numbers - **Time points**, **Moved**, **Speed**, **Straightness** and, with Measure Track Motion, **Max distance**, **MSD α** and **Turning** -, its **Path from its start** (drawn from the origin, with the drift the step corrected taken away), with Measure Track Motion its **MSD over lag (log–log)**, its **Area over time**, and **The track's time points** with the position (**X px**, **Y px**) and area at each. **Show in image** opens the split layout at that track.
 
-![Results, Tracks: the filters on top, a row per track with time points, moved, speed and straightness; the selected track's area over time and time points on the right](../../../assets/screenshots/screenshot-results-tracks.png)
+![Results, Tracks: Class, Image, Filters and Columns on top, a row per track sorted by VCL with its time points and motion columns; the selected track's numbers, path from its start, MSD over lag, area over time and time points on the right](../../../assets/screenshots/screenshot-results-tracks.png)
 
 ### Tracks beside the image
 
-With **Split with image**, the tracks of one image are listed beside it, and the image draws each track as a trail through its time points. Click a row to select its track on the image - or an object to select its track (_Click an object to select its track_). **‹ ›** step to the previous or next image with tracks; **T** under the image steps through the time points or plays them.
+With **Split with image**, the tracks of one image are listed beside it, and the image draws each track as a trail through its time points. The table there is shorter: **Track**, **Time points**, **Speed** (VCL, in the speed unit picked - _–_ without Measure Track Motion) and **Area over time**, sortable by the first three. Click a row to select its track on the image - or an object to select its track (_Click an object to select its track_). **‹ ›** step to the previous or next image with tracks; **T** under the image steps through the time points or plays them.
 
 The panel at the top right of the image sets the trails: **Trail** **Off**, the last **10 time points** or the **Whole track**; **All tracks** or **Selected only**; **Color** by **Track** or **Class**. With a trail of _N_ time points, **−** / **+** make it shorter or longer (by 1, or by 5 above 20); the length is remembered.
 
 ![Results, Tracks split with the image: one image's tracks as a table, their trails on the image, the selected track highlighted](../../../assets/screenshots/screenshot-results-tracks-split.png)
 
 To follow a property of the tracks over time, use the [Over time](#charts) chart with **A line per: Track**.
+
+## Paths
+
+<span class="evx-new">NEW</span> A **Paths** view (**+** › **Paths**, offered when the analysis has tracks) compares how the tracks move, side by side:
+
+- **Paths from their start** - every track drawn from the same origin, so straight movers point outwards and wandering ones stay in a tangle near the centre. At most 2000 paths are drawn (an even sample); the header says how many there are.
+- **Motion map** - a dot per track: its straightness (**LIN**, 0 to 1) against its **Turning** angle or its **MSD α**, picked under **Motion map, y axis**. Directed movers sit at the right, confined or randomly moving ones to the left; an MSD α above 1 means directed, below 1 confined motion. At most 5000 dots are shown. The map needs a [Measure Track Motion](/commands/dataset/measure-track-motion/) step after the tracking - without one, it says so.
+
+Click a dot to select its track: its path is highlighted, and the caption names it with its values (_"#12 · A01_01 · LIN 0.91 · turning +2.3° · MSD α 1.84"_).
+
+The settings on the right: under **DATA** the **Class** and **Image**, **At least** _N_ **time points** (10 in a new view), **From the first time point** and **Not touching the edge** (on in a new view) - as in [Tracks](#tracks); under **DISPLAY** **Color by** **Track**, **Well** or **Class**, and **Motion map, y axis** **Turning** or **MSD α**. The view doesn't sort tracks into motion types or apply thresholds - it shows the values to judge by.
+
+![Results › Paths: every track drawn from its start on the left, the motion map (LIN against turning) beside it - the straight movers bunched at LIN 1 on the right -, the DATA and DISPLAY settings on the right](../../../assets/screenshots/screenshot-results-paths.png)
+
+## Trees
+
+<span class="evx-new">NEW</span> A **Trees** view (**+** › **Trees**, offered when the analysis has traced neurons from [Trace Filaments](/commands/object/trace-filaments/)) shows each neuron's branching:
+
+- **NEURONS** - a row per traced neuron (_image · number_) with its **Length**, primary branches (**Prim.**), branch points (**Br.**) and **Tips**, the values of [Measure Filament Tree](/commands/measure/measure-filament-tree/). Click a column's head to sort by it. With only Trace Filaments, the list says _"Add Measure Filament Tree for branch levels and lengths."_
+- **The dendrogram** of the selected neuron, its totals in the header (_"Length 1374.85 · Primary 6 · Branch points 19 · Tips 25 · Highest level 4 · Longest path 156.58"_): left to right the path distance from the soma, a row per tip, each branch point between its children. **Color by** **Branch level** or **Strahler order**. Zoom with the mouse wheel, pan by dragging.
+
+Click a branch to select its segment: the cards show its **BRANCH LEVEL**, **STRAHLER ORDER**, **PATH DISTANCE**, **LENGTH** and **STRAIGHTNESS**, and with **Split with image** the segment is selected on the image. A click on the image selects the neuron and segment under it.
+
+![Results › Trees: the traced neurons with length, primary branches, branch points and tips; the selected neuron's dendrogram colored by branch level, its totals in the header](../../../assets/screenshots/screenshot-results-trees.png)
 
 ## Split with the image
 
@@ -278,8 +352,9 @@ The width of the results, whether the split is on, and **Follow selection** are 
 - **Objects - one row per object** - with **Images** to pick (all by default; [images left out](#leaving-images-out) are skipped unless you select them explicitly), and optionally **A row per coloc pair** (as [Coloc pairs](#coloc-pairs) in the List) and **Each image in its own file**.
 - **Per image** - the same aggregated-by-image data as [a row per image in the List](#grouping-and-aggregating-rows); optionally the **Image heatmap** (the per-image spatial heatmap grid, with its own square size).
 - **Time course - per time point** <span class="evx-new">NEW</span> - for time-lapse data: the values per frame, as the [Over time](#charts) chart shows them. **A line per** **Class**, **Image**, **Well** or **Track**; **Statistics** - any of mean, SD, median, Q1, Q3, min, max, sum (default mean and SD); **Tables** **Long**, **Wide** or **Both** (default; not offered for **Track**); optionally **Relative to the first time point (%)**, and with **A line per** **Track** **Each track with its parents' history** (as **History: With parents'** in the chart).
-- **Measurements - one row per value** <span class="evx-new">NEW</span> - when the analysis has [measurement steps](/guide/pipelines/#measurement-steps): every value on a row of its own, with what it is about - `image_name`, `image_rel_path`, `z_stack`, `t_stack`, `region`, `object_id`, `related_object_id`, `object_class_name`, `step`, `measurement`, `unit`, `key`, `value`. This long layout reads straight into R or Python, and a new measurement needs no new column. The measurements picked under **More options › Measurements** are written (none picked: all), of the chosen images, Z planes and time points. Written as `measurements.xlsx` / `.csv`.
-- **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is. For results with lineage, the columns **Parent tracks**, **Child tracks**, **Lineage** (the family's first track), **Generation**, **Starts with** and **Ends with** (e.g. _Division_) follow **Track**; several IDs are written as `3;7`. Options: **Statistics** of the measurements (default mean), **At least _N_ time points**, **Only tracks from the first time point** and **Leave out tracks touching the image edge**.
+- **Measurements - one row per value** <span class="evx-new">NEW</span> - when the analysis has [measurement steps](/guide/pipelines/#measurement-steps): every value on a row of its own, with what it is about - `image_name`, `image_rel_path`, `z_stack`, `t_stack`, `region`, `object_id`, `related_object_id`, `object_class_name`, `step`, `measurement`, `unit`, `key`, `value` - and, in results of a current version, `position`: the position of a [profile](#profiles) value (e.g. the radius of a Sholl value), empty for every other value. This long layout reads straight into R or Python, and a new measurement needs no new column. The measurements picked under **More options › Measurements** are written (none picked: all), of the chosen images, Z planes and time points. Written as `measurements.xlsx` / `.csv`.
+- **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness - and with [Measure Track Motion](/commands/dataset/measure-track-motion/) its 16 motion values), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is. For results with lineage, the columns **Parent tracks**, **Child tracks**, **Lineage** (the family's first track), **Generation**, **Starts with** and **Ends with** (e.g. _Division_) follow **Track**; several IDs are written as `3;7`. Options: **Statistics** of the measurements (default mean), **At least _N_ time points**, **Only tracks from the first time point** and **Leave out tracks touching the image edge**.
+- **Profile - per radius (e.g. Sholl)** <span class="evx-new">NEW</span> - when the analysis has [profile measurements](#profiles): **Profile** picks the measurement; **What** is **The lines** (per line and radius: n, mean, SD, median, Q1, Q3 - with **A line per** **Class**, **Image**, **Well** or **Plate**, as in the chart) or **Each object** (per object and radius: its value); **Tables** **Long**, **Wide** or **Both**. In the wide tables a radius an object doesn't reach is 0, as in the chart.
 - **Per well - plate layout (XLSX)** - the plate as a heatmap; optionally **Plate as list**, **Wells as heatmap** and **Wells as list**, with **Colors** for the heatmaps. Grouping, plate size and well layout are taken from the project's plate settings - the same ones the [Plate view](#grouping-images-into-wells) uses.
 - **Images with objects drawn (PNG)** <span class="evx-new">NEW</span> - each image as a PNG, with its channels in their colors (auto-scaled) and every object's box in its class color. Large images are written at the pyramid level up to 4096 px.
 
@@ -296,9 +371,11 @@ The width of the results, whether the split is on, and **Follow selection** are 
 
 The image heatmap and the plate and well exports are XLSX-only. **Parquet** goes further: picking it ignores every other setting (filters, columns, grouping, checkboxes) and writes a single `objects.parquet` file - a raw, unfiltered dump of every column in the results database (and, when the analysis has measurements, `measurements.parquet` beside it), meant for downstream tools that read Parquet natively rather than for a human to open.
 
+In CSV exports, a text - a class, image or measurement name - that starts with `=`, `+`, `-`, `@`, a tab or a carriage return gets a `'` in front, so Excel or LibreOffice don't run it as a formula (a project shared with you could carry such names). Numbers, negative ones too, are written as they are.
+
 In XLSX exports, values that come from (or, for a well/plate, are affected by) an image left out are grayed out and struck through.
 
-Click **Start export**; a progress bar tracks the run and a message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `measurements.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`, `time_course.xlsx` - a _Long_ sheet plus the wide sheets - or `time_course.csv` plus `time_course_{name}.csv` per wide table, `tracks.xlsx`/`.csv`; the PNGs go to `images/{name}.png`), each preceded by the name prefix if one is set.
+Click **Start export**; a progress bar tracks the run and a message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `measurements.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`, `time_course.xlsx` - a _Long_ sheet plus the wide sheets - or `time_course.csv` plus `time_course_{name}.csv` per wide table, `tracks.xlsx`/`.csv`, `profile_lines.csv` (long) and `profile_lines_{statistic}.csv` (wide) or `profile_objects.csv` and `profile_objects_wide.csv` - in XLSX one workbook with a sheet each; the PNGs go to `images/{name}.png`), each preceded by the name prefix if one is set.
 
 :::tip
 For colocalization exports, partner lookups are resolved in batches of 5,000 source objects at a time - large colocalization datasets export reliably without needing to load everything at once.

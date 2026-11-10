@@ -11,7 +11,7 @@ In a project file it is `TRACK_NEAREST_NEIGHBOR` - projects that still use the o
 
 It is a [dataset step](/guide/pipelines/#dataset-steps): it runs once after every image has been analysed, on the stored objects of all frames.
 
-The tracks it makes are shown in [Results › Tracks](/guide/results/#tracks): a row per track with its time points, speed and straightness, and its trail on the image.
+The tracks it makes are shown in [Results › Tracks](/guide/results/#tracks): a row per track with its time points - and, with a [Measure Track Motion](/commands/dataset/measure-track-motion/) step after it, how far it moved, its speed and straightness -, and its trail on the image.
 
 ## Parameters
 

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="250" viewBox="0 0 440 250">
+  <style>
+    .bg { fill: #f7f8fa; stroke: #d8dce1; stroke-width: 1; }
+    .lbl { font: 13px sans-serif; fill: #1f2937; }
+    .lbl-sm { font: 11px sans-serif; fill: #4b5563; }
+    .lbl-bold { font: 13px sans-serif; font-weight: 600; fill: #1f2937; }
+  </style>
+  <defs>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ea580c"/></marker>
+  </defs>
+<rect class="bg" x="0.5" y="0.5" width="439" height="249" rx="10"/>
+<line x1="16" y1="22" x2="40" y2="22" stroke="#2563eb" stroke-width="2"/><text class="lbl-sm" x="46" y="26">path, length L</text>
+<line x1="150" y1="22" x2="174" y2="22" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/><text class="lbl-sm" x="180" y="26">average path</text>
+<line x1="280" y1="22" x2="304" y2="22" stroke="#ea580c" stroke-width="2"/><text class="lbl-sm" x="310" y="26">displacement d</text>
+<line x1="50" y1="165" x2="378" y2="67" stroke="#ea580c" stroke-width="2" marker-end="url(#a2)"/>
+<polyline points="50.0,165.0 84.3,150.3 119.3,132.7 155.0,136.7 191.7,114.7 229.3,116.7 266.0,94.0 304.0,95.3 343.0,76.7 385.0,62.0" fill="none" stroke="#16a34a" stroke-width="2" stroke-dasharray="5 3"/>
+<polyline points="50,165 85,128 118,158 155,112 192,140 228,92 268,118 302,72 342,96 385,62" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="50" cy="165" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="85" cy="128" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="118" cy="158" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="155" cy="112" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="192" cy="140" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="228" cy="92" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="268" cy="118" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="302" cy="72" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="342" cy="96" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<circle cx="385" cy="62" r="4.5" fill="#2563eb" fill-opacity="0.35" stroke="#2563eb" stroke-width="1.5"/>
+<line x1="155" y1="112" x2="178.8" y2="82.4" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="3 3"/>
+<path d="M168.8,94.9 A22,22 0 0 1 172.5,125.3" fill="none" stroke="#9333ea" stroke-width="2"/>
+<text class="lbl-bold" style="fill:#9333ea" x="181" y="108">θ</text>
+<text class="lbl-sm" x="75" y="90">turning angle</text>
+<text class="lbl-sm" x="46" y="185">first</text>
+<text class="lbl-sm" x="371" y="50">last</text>
+<text class="lbl-sm" x="220" y="222" text-anchor="middle">VCL = L / T, VSL = d / T, VAP = average path length / T</text>
+<text class="lbl-sm" x="220" y="237" text-anchor="middle">LIN = VSL / VCL: 1 for a straight line, near 0 for a wandering track</text>
+</svg>
