@@ -1,6 +1,6 @@
 ---
 title: Commands Overview
-description: All 65 pipeline commands grouped by category.
+description: All 70 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
@@ -44,6 +44,7 @@ Commands for reducing noise and enhancing signal before segmentation.
 | [Blur](/commands/image-processing/blur/)                               | Box/average blur to reduce noise                 |
 | [Gaussian Blur](/commands/image-processing/gaussian-blur/)             | Edge-preserving Gaussian blur                    |
 | [Rolling Ball](/commands/image-processing/rolling-ball/)               | Background subtraction                           |
+| [Bandpass](/commands/image-processing/bandpass/)                       | Remove fine noise and coarse background, keep objects of any size in between |
 | [Illumination Correction](/commands/image-processing/illumination-correction/) | Remove uneven illumination (vignetting) across the whole image |
 | [Rank Filter](/commands/image-processing/rank-filter/)                 | Min / median / max neighbourhood filter          |
 | [Enhance Contrast](/commands/image-processing/enhance-contrast/)       | Histogram-based contrast enhancement             |
@@ -58,7 +59,7 @@ Commands for reducing noise and enhancing signal before segmentation.
 
 ## Edge & Feature Detection
 
-Commands for detecting edges, ridges, and local structures.
+Commands for detecting edges, ridges, spots and other local structures.
 
 | Command                                                            | Purpose                                         |
 | ------------------------------------------------------------------ | ----------------------------------------------- |
@@ -66,6 +67,9 @@ Commands for detecting edges, ridges, and local structures.
 | [Sobel Edge Detection](/commands/edge-detection/sobel/)            | Fast gradient-magnitude edge detection          |
 | [Hessian](/commands/edge-detection/hessian/)                       | Second-order structure (blobs and ridges)       |
 | [Laplacian](/commands/edge-detection/laplacian/)                   | Zero-crossing edge detection                    |
+| [Laplacian of Gaussian](/commands/edge-detection/laplacian-of-gaussian/) | Enhance spots of one size before Find Maxima (scale-normalized LoG) |
+| [Difference of Gaussians](/commands/edge-detection/difference-of-gaussians/) | Enhance spots of one size before Find Maxima (approximates the LoG) |
+| [Wavelet Spots](/commands/edge-detection/wavelet-spots/)           | Enhance spots that stand out of the noise at several levels of detail |
 | [Structure Tensor](/commands/edge-detection/structure-tensor/)     | Local orientation and coherence                 |
 | [Weighted Deviation](/commands/edge-detection/weighted-deviation/) | Weighted local standard deviation               |
 | [Vesselness](/commands/edge-detection/vesselness/)                 | Highlight lines (fibres, neurites, vessels) of a chosen width (Frangi) |
@@ -118,6 +122,7 @@ Commands that operate on extracted objects.
 | [Object Transform](/commands/object/transform-objects/)        | Scale, snap, expand, shrink, or fit an ellipse to objects                                                    |
 | [Object Math](/commands/object/object-math/)                   | Boolean set operations (AND, OR, XOR, Subtract) between two object classes                                   |
 | [Propagation](/commands/object/propagation/)                   | Grow a region around each seed object through a channel (e.g. cells around nuclei)                           |
+| [Grow Regions](/commands/object/grow-regions/)                 | Grow each seed (e.g. a maximum) into its own region, with a stop level per seed - a magic wand per seed       |
 | [Relate Objects](/commands/object/relate-objects/)             | Link each child object to its parent (e.g. spots to their cell)                                              |
 | [Skeletonize Objects](/commands/object/skeletonize-objects/)   | Reduce each object to its 1-pixel skeleton, optionally with branch and end points as objects                 |
 | [Trace Filaments](/commands/object/trace-filaments/)           | Trace each neuron's neurites from its soma into a tree of segments                                           |

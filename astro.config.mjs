@@ -185,6 +185,10 @@ export default defineConfig({
                   slug: "commands/image-processing/rolling-ball",
                 },
                 {
+                  label: "Bandpass",
+                  slug: "commands/image-processing/bandpass",
+                },
+                {
                   label: "Illumination Correction",
                   slug: "commands/image-processing/illumination-correction",
                 },
@@ -246,6 +250,18 @@ export default defineConfig({
                 {
                   label: "Laplacian",
                   slug: "commands/edge-detection/laplacian",
+                },
+                {
+                  label: "Laplacian of Gaussian",
+                  slug: "commands/edge-detection/laplacian-of-gaussian",
+                },
+                {
+                  label: "Difference of Gaussians",
+                  slug: "commands/edge-detection/difference-of-gaussians",
+                },
+                {
+                  label: "Wavelet Spots",
+                  slug: "commands/edge-detection/wavelet-spots",
                 },
                 {
                   label: "Structure Tensor",
@@ -352,6 +368,10 @@ export default defineConfig({
                   slug: "commands/object/object-math",
                 },
                 { label: "Propagation", slug: "commands/object/propagation" },
+                {
+                  label: "Grow Regions",
+                  slug: "commands/object/grow-regions",
+                },
                 {
                   label: "Relate Objects",
                   slug: "commands/object/relate-objects",

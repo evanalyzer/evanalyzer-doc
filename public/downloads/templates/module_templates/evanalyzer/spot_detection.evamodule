@@ -101,7 +101,9 @@
         "type": "FIND_MAXIMA",
         "radius": 2.0,
         "radiusUnit": "PIXELS",
-        "cutoff": "MANUAL",
+        "cutoff": {
+          "type": "MANUAL"
+        },
         "minQuality": 20.0,
         "qualityUnit": "BIT",
         "insideSegmentation": false,

@@ -34,14 +34,14 @@ See [Classes & Objects](/guide/classification/) for details.
 ## 3. Build a pipeline
 
 Pipelines extract objects from image channels.
-Switch to **Pipelines** (`Ctrl+2`) and click **New pipeline** in the steps panel on the left.
-Enter a **Pipeline name** and pick the **Image source** the pipeline starts with:
+Switch to **Pipelines** (`Ctrl+2`) and click **+** (**New pipeline at the end**) in the **Pipelines** area at the top of the steps panel on the left.
+The **New pipeline** dialog opens. Enter a **Pipeline name**, pick the **Image source** the pipeline starts with and click **Add**:
 
 - **Channel** - an image channel; the usual choice.
 - **Scratchpad** - an empty image, for a pipeline that only works on objects other pipelines found.
 - **Shared memory slot** - an image an earlier pipeline stored with [Image Cache](/commands/image-processing/image-cache/).
 
-![The dialog next to the steps panel: Pipeline name, Image source (Channel picked, the channel picker open)](../../../assets/screenshots/screenshot-add-pipeline-dialog.png)
+![The New pipeline dialog next to the steps panel: Pipeline name, Image source (Channel picked, the channel picker open), Cancel and Add](../../../assets/screenshots/screenshot-add-pipeline-dialog.png)
 
 Now click **Add step** to open the command picker. It stays open, so you can add one step after another; each goes in after the one you added before. A minimal spot-detection pipeline looks like:
 

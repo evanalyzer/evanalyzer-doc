@@ -233,11 +233,13 @@ COMPARE = (1110, 20)            # only with a breakpoint image, left of the prev
 RUN = (1343, 20)
 MODE_IMAGES, MODE_PIPELINES, MODE_RESULTS = (34, 885), (104, 885), (175, 885)
 IMAGE_ROW = (200, 360)           # 6th image of the list: A03_02
-PICK_CY5 = (92, 185)             # "Pick a pipeline" list, 2nd pipeline
-STEPS_HEAD = (90, 72)            # steps panel head: opens the pipeline switcher
+PICK_CY5 = (92, 142)             # the Pipelines area's 2nd row: CY5 spots
+STEPS_HEAD = (140, 72)           # the switcher head's pipeline: opens the pipeline list
+PIPELINES_EXPAND = (352, 72)     # ⌄ at the switcher head's end: the Pipelines area again
+PIPELINE_MENU_X = 322            # a hovered pipeline row's ⋯ (Pipelines area)
 STEP_Y = {1: 123, 2: 165, 3: 207, 4: 249, 5: 291, 6: 333, 7: 375, 8: 417}
 STEP_GUTTER_X, STEP_MENU_X, STEP_EXPAND_X, STEP_PIN_X = 34, 327, 305, 349
-ADD_STEP = (200, 455)
+ADD_STEP = (68, 838)             # "+ Add step" at the steps panel's foot
 IMAGE_CENTER = (745, 450)
 OVERLAY_KNOB = (503, 838)
 EVA_VIEW = (70, 387)
@@ -367,7 +369,7 @@ def sc_image_rgb():
     away()
     shot("screenshot-image-rgb")
     click(*MODE_PIPELINES, wait=1.5)
-    click(92, 155, wait=1)         # "Pick a pipeline": Nuclei
+    click(92, 112, wait=1)         # the Pipelines area's only row: Nuclei
     click(89, STEP_Y[1], wait=1.5) # Color Filter opens on the line: its colour range editor
     away()
     shot("screenshot-color-filter-editor")
@@ -479,7 +481,7 @@ def sc_colors():
 
 def sc_palette():
     pipeline_cy5(with_preview=False)
-    click(286, 72)                 # "Ctrl K" in the steps panel head
+    click(142, 838)                # "Ctrl K" at the steps panel's foot
     type_text("min")
     away()
     shot("screenshot-command-palette")
@@ -508,12 +510,15 @@ def sc_switcher():
     click(*STEPS_HEAD)
     away()
     shot("screenshot-pipeline-switcher")
-    click(349, 181)                # CY5's ⋯
-    click(194, 244, wait=1.5)      # Edit pipeline…
+    key("Escape")
+    click(*PIPELINES_EXPAND, wait=1.2)
+    click(322, 72, wait=1.5)       # + : New pipeline
     away()
     shot("screenshot-add-pipeline-dialog")
-    click(687, 440)                # Cancel
-    click(327, 181, wait=2)        # focus on CY5
+    key("Escape", wait=1)          # Cancel - a pipeline is only made on Add
+    hover(150, PICK_CY5[1])
+    click(PIPELINE_MENU_X, PICK_CY5[1])   # CY5's ⋯
+    click(214, 478, wait=2)        # Focus on this pipeline
     away()
     shot("screenshot-pipeline-focus")
 
@@ -528,6 +533,10 @@ def sc_classes():
     click(1296, 228, wait=1.5)     # Edit name, color, …
     away()
     shot("screenshot-class-settings")
+    click(860, 413, wait=1)        # Results: Intermediate - not applied, Cancel follows
+    away()
+    shot("screenshot-class-results")
+    key("Escape")
 
 
 def sc_annotate():

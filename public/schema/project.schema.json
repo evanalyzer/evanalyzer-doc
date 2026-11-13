@@ -230,6 +230,33 @@
         "organization"
       ]
     },
+    "BandpassSettings": {
+      "description": "Removes details finer than `sigma_small` (noise) and structures coarser\nthan `sigma_large` (uneven background), keeps everything in between.\n\n[Bandpass] -> [Threshold | Find Maxima]\n\nThe result is in the image's intensity units around 0: bright objects\npositive, the removed background 0. With `sigma_large` 0 it is a plain\nblur, with `sigma_small` 0 a background subtraction.",
+      "type": "object",
+      "properties": {
+        "sigmaLarge": {
+          "description": "σ of the wider Gaussian, subtracted: structures coarser than about\nthis are removed (uneven background). Must be larger than\n`sigma_small`; 0: nothing removed.",
+          "type": "number",
+          "format": "float",
+          "default": 15,
+          "maximum": 10000,
+          "minimum": 0
+        },
+        "sigmaSmall": {
+          "description": "σ of the narrower Gaussian: details finer than about this are\nsmoothed away (noise). 0: no smoothing.",
+          "type": "number",
+          "format": "float",
+          "default": 1,
+          "maximum": 10000,
+          "minimum": 0
+        },
+        "unit": {
+          "description": "Unit both σ are expressed in.",
+          "$ref": "#/$defs/SizeUnits",
+          "default": "PIXELS"
+        }
+      }
+    },
     "BlurSettings": {
       "description": "Smooths an image by averaging pixel intensities within a local neighborhood.\n\nThis algorithm applies a uniform box filter where every pixel within the moving\nwindow contributes equally to the final value. It is a computationally fast\nmethod used for general image smoothing, blending variations, and rapid noise\nsuppression where edge precision is less critical.",
       "type": "object",
@@ -368,6 +395,11 @@
         },
         "notes": {
           "type": "string"
+        },
+        "results": {
+          "description": "What the results keep of the class's objects - missing in projects\nfrom before it: [`ClassResults::Objects`].",
+          "$ref": "#/$defs/ClassResults",
+          "default": "objects"
         }
       },
       "required": [
@@ -375,6 +407,21 @@
         "color",
         "name",
         "notes"
+      ]
+    },
+    "ClassResults": {
+      "description": "What the results keep of a class's objects. The pipeline and the viewer\nsee every class whatever it says.",
+      "oneOf": [
+        {
+          "description": "Every object with its measurements.",
+          "type": "string",
+          "const": "objects"
+        },
+        {
+          "description": "Only for later steps of the pipeline (e.g. the seeds of Grow\nRegions): nothing of the class is written to the results - an object\nin no other class isn't stored, nor its measurements.",
+          "type": "string",
+          "const": "intermediate"
+        }
       ]
     },
     "ClassificationMappingSettings": {
@@ -694,6 +741,25 @@
           "format": "int32",
           "default": 0,
           "minimum": 1
+        }
+      }
+    },
+    "DifferenceOfGaussiansSettings": {
+      "description": "Enhances spots of one size with a band-pass: a slightly blurred minus a\nmore blurred copy of the image keeps the details of a spot's size and\nremoves finer noise and coarser background and structures.\n\n[Difference of Gaussians] -> [Find Maxima] -> [Extract Objects]\n\nBright spots become positive peaks, dark spots negative ones, flat\nbackground 0. Measure intensities on the original channel, not on this\nimage.",
+      "type": "object",
+      "properties": {
+        "sigma": {
+          "description": "The scale σ of the spots to enhance (the narrower Gaussian; the\nwider one is 1.6 σ); as a guide, σ ≈\nspot radius / √2 (1.4 for spots of 4 px). Smaller details count as\nnoise, larger ones as background.",
+          "type": "number",
+          "format": "float",
+          "default": 1.5,
+          "maximum": 1000,
+          "minimum": 0.1
+        },
+        "unit": {
+          "description": "Unit `sigma` is expressed in.",
+          "$ref": "#/$defs/SizeUnits",
+          "default": "PIXELS"
         }
       }
     },
@@ -1306,13 +1372,15 @@
       ]
     },
     "FindMaximaSettings": {
-      "description": "Finds spots as local maxima: each pixel that is the brightest within the\nradius becomes one 1-pixel object.\n\n[Preprocessing (Gaussian Blur)] -> [Find Maxima] -> [Extract Objects] -> [Transform Objects (Draw Circle)]\n\nWrites the segmentation and the instance map (both replaced): the maxima\nget the segmentation class and one instance each; the image stays as it\nis. A plateau (equal neighbouring pixels) gives one maximum, its pixel\nnearest the plateau's centre; of equal maxima within the radius the one\nfound first (row order) is kept. Flat regions (a background of 0) are\nnever maxima.",
+      "description": "Finds spots as local maxima: each pixel that is the brightest within the\nradius becomes one 1-pixel object.\n\n[Laplacian of Gaussian | Difference of Gaussians | Wavelet Spots | Gaussian Blur] -> [Find Maxima] -> [Extract Objects] -> [Transform Objects (Draw Circle)]\n\nWrites the segmentation and the instance map (both replaced): the maxima\nget the segmentation class and one instance each; the image stays as it\nis. A plateau (equal neighbouring pixels) gives one maximum, its pixel\nnearest the plateau's centre; of equal maxima within the radius the one\nfound first (row order) is kept. Flat regions (a background of 0) are\nnever maxima.",
       "type": "object",
       "properties": {
         "cutoff": {
-          "description": "How the quality cut-off is chosen. A maximum's quality is the image's\nvalue at it.\n\nManual: maxima above `min_quality` are kept.\nOtsu: Otsu's method on the qualities of all maxima of the image\nsplits spots from noise peaks; `min_quality` stays the lowest cut-off,\nso an image without spots doesn't turn its noise into spots.",
+          "description": "How the quality cut-off is chosen. A maximum's quality is the image's\nvalue at it.\n\nManual: maxima above `min_quality` are kept.\nOtsu: Otsu's method on the qualities of all maxima of the image\nsplits spots from noise peaks.\nNoise: maxima more than `noise_factor` times the image's noise above\nits background are kept - the same factor fits every exposure.\n\nWith Otsu and Noise `min_quality` stays the lowest cut-off, so an\nimage without spots doesn't turn its noise into spots.",
           "$ref": "#/$defs/SegmentationFindMaximaMaximaCutoffSettings",
-          "default": "MANUAL"
+          "default": {
+            "type": "MANUAL"
+          }
         },
         "excludeAtEdges": {
           "description": "Drop maxima closer to the image border than the radius.",
@@ -1325,7 +1393,7 @@
           "default": false
         },
         "minQuality": {
-          "description": "Maxima with a quality at or below this value are dropped (with Otsu:\nthe lowest cut-off).",
+          "description": "Maxima with a quality at or below this value are dropped (with Otsu\nand Noise: the lowest cut-off).",
           "type": "number",
           "format": "float",
           "default": 0,
@@ -1466,6 +1534,82 @@
           "const": "FOLDER"
         }
       ]
+    },
+    "GrowRegionsSettings": {
+      "description": "Grows a region from each seed object through a channel, like a magic\nwand: e.g. a spot's outline from its maximum, or a nucleus from a point\ninside it.\n\n[Find Maxima] -> [Extract Objects] -> [Grow Regions]\n\nEvery seed gets its own stop level (relative to its own peak and\nbackground, so dim and bright objects keep the same shape); touching\nregions are split on the darkest line between them, may overlap, or are\nmerged. Each region keeps its seed's pixels; Relate Objects links it to\nits seed. Seeds 1024 px across or more (a tissue-sized object) don't\ngrow: their region is the seed.",
+      "type": "object",
+      "properties": {
+        "distanceUnit": {
+          "description": "Unit of `max_distance`.",
+          "$ref": "#/$defs/SizeUnits",
+          "default": "PIXELS"
+        },
+        "excludeAtEdges": {
+          "description": "Discard regions that touch the image border.",
+          "type": "boolean",
+          "default": false
+        },
+        "growthChannel": {
+          "description": "The channel the regions grow through (the raw spot or nucleus\nstain).",
+          "$ref": "#/$defs/ImageChannelIdx",
+          "default": 0
+        },
+        "mask": {
+          "description": "Regions only grow into pixels of objects carrying this class (e.g.\nthe thresholded cells). `Unset`: everywhere.",
+          "$ref": "#/$defs/ObjectClass",
+          "default": "UNSET"
+        },
+        "maxDistance": {
+          "description": "How far a region reaches at most from its seed (from the nearest\nseed pixel). Also where the background is measured: a little more\nthan the largest object's radius.",
+          "type": "number",
+          "format": "float",
+          "default": 10,
+          "maximum": 1000,
+          "minimum": 1
+        },
+        "objectsAre": {
+          "description": "Bright: objects brighter than their background (fluorescence).\nDark: objects darker than their background (brightfield, stains) -\neverything below then counts the other way round.",
+          "$ref": "#/$defs/ObjectGrowRegionsPolaritySettings",
+          "default": "BRIGHT"
+        },
+        "order": {
+          "description": "Which neighbouring pixel joins a region next.\n\nIntensity: the brightest - a region spreads downhill from its peak.\nFor objects with a bright centre that fades out (spots, blobs).\nSimilarity: the one closest to the seed's value (the median of the\nseed's pixels) - a region covers what looks like its seed. For evenly\nbright objects (nuclei, organelles); larger seeds give a steadier\nvalue than a single pixel.",
+          "$ref": "#/$defs/ObjectGrowRegionsGrowthOrderSettings",
+          "default": "INTENSITY"
+        },
+        "outputClass": {
+          "description": "The class the grown regions get.",
+          "$ref": "#/$defs/ObjectClass",
+          "default": "UNSET"
+        },
+        "seeds": {
+          "description": "Objects carrying this class are the seeds (e.g. the maxima of Find\nMaxima after Extract Objects, or nuclei): each grows into one region.",
+          "$ref": "#/$defs/ObjectClass",
+          "default": "UNSET"
+        },
+        "smoothing": {
+          "description": "Smooths the growth channel before growing (noisy images): the\ngrowth order, stop level, background and noise then come from the\nsmoothed pixels. The regions' intensities are still measured on the\nraw channel.",
+          "$ref": "#/$defs/ObjectGrowRegionsSmoothingSettings",
+          "default": {
+            "type": "NONE"
+          }
+        },
+        "stop": {
+          "description": "Which pixels may join a region (the seed's own pixels always\nbelong to it).\n\nRelative, Noise: the background is the median of the pixels just\nbeyond `max_distance` around the seed (2 px wide ring), the noise\ntheir median absolute deviation × 1.4826.",
+          "$ref": "#/$defs/ObjectGrowRegionsStopRuleSettings",
+          "default": {
+            "fraction": 0.5,
+            "type": "RELATIVE"
+          }
+        },
+        "whenRegionsMeet": {
+          "description": "What happens where regions of different seeds meet.",
+          "$ref": "#/$defs/ObjectGrowRegionsMeetingSettings",
+          "default": {
+            "type": "SEPARATE"
+          }
+        }
+      }
     },
     "HessianSettings": {
       "description": "Extracts continuous structural ridges, tubular vessels, and blobs using second-order spatial derivatives.\n\nThis algorithm constructs a localized Hessian matrix for each pixel to analyze local curvature\nand intensity topography. By evaluating the eigenvalues of this matrix, it differentiates\nbetween directional ridges (like blood vessels or filaments), distinct intensity peaks (blobs),\nand flat regions, making it highly effective for curvilinear feature extraction.",
@@ -1901,6 +2045,25 @@
         "contrast",
         "brightness"
       ]
+    },
+    "LaplacianOfGaussianSettings": {
+      "description": "Enhances spots of one size: keeps the details of a spot's size and\nremoves finer noise and coarser background and structures.\n\n[Laplacian of Gaussian] -> [Find Maxima] -> [Extract Objects]\n\nBright spots become positive peaks, dark spots negative ones, flat and\nevenly sloped background 0. Measure intensities on the original channel,\nnot on this image.",
+      "type": "object",
+      "properties": {
+        "sigma": {
+          "description": "The scale σ of the spots to enhance (Lindeberg's `t = σ²`). A\nGaussian spot of standard deviation σ responds most; as a guide, σ ≈\nspot radius / √2 (1.4 for spots of 4 px). Smaller details count as\nnoise, larger ones as background.",
+          "type": "number",
+          "format": "float",
+          "default": 1.5,
+          "maximum": 1000,
+          "minimum": 0.1
+        },
+        "unit": {
+          "description": "Unit `sigma` is expressed in.",
+          "$ref": "#/$defs/SizeUnits",
+          "default": "PIXELS"
+        }
+      }
     },
     "LaplacianSettings": {
       "description": "Configuration for the Laplacian edge detection filter.\n\nThe Laplacian is a second-order derivative operator used to find regions of\nrapid intensity change. It is particularly effective for detecting edges\nand fine details, though it is highly sensitive to noise.",
@@ -3068,6 +3231,231 @@
         }
       ]
     },
+    "ObjectGrowRegionsGrowthOrderSettings": {
+      "description": "Which neighbouring pixel joins a [`GrowRegions`] region next.",
+      "oneOf": [
+        {
+          "description": "The brightest: a region spreads downhill from its peak (spots,\nblobs).",
+          "type": "string",
+          "const": "INTENSITY"
+        },
+        {
+          "description": "The one closest to the seed's value: a region covers what looks like\nits seed (evenly bright objects).",
+          "type": "string",
+          "const": "SIMILARITY"
+        }
+      ]
+    },
+    "ObjectGrowRegionsMeetingSettings": {
+      "description": "What [`GrowRegions`] does where regions of different seeds meet.",
+      "oneOf": [
+        {
+          "description": "Each pixel goes to one region: the border lies on the darkest line\nbetween them (touching spots counted apart).",
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "SEPARATE"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "description": "Every region grows as if it were alone: a pixel may belong to\nseveral (e.g. each spot's whole halo) - a region may then take in a\nneighbouring spot if the valley between them stays above its stop\nlevel.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "OVERLAP"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "description": "Regions that meet over a shallow valley become one object (several\nmaxima on one object); regions with a deep valley between them stay\napart.",
+          "type": "object",
+          "properties": {
+            "maxValley": {
+              "description": "The deepest valley merged, as a part of the dimmer region's\ncontrast (peak - background): 0.2 merges regions whose border\nlies at most 20 % below the dimmer peak. Two objects only\ntouching at their stop level never merge below 1 - the stop\nfraction.",
+              "type": "number",
+              "format": "float",
+              "maximum": 1,
+              "minimum": 0
+            },
+            "type": {
+              "type": "string",
+              "const": "MERGE"
+            }
+          },
+          "required": [
+            "type",
+            "maxValley"
+          ]
+        }
+      ]
+    },
+    "ObjectGrowRegionsPolaritySettings": {
+      "description": "Whether [`GrowRegions`]' objects are brighter or darker than their\nbackground.",
+      "oneOf": [
+        {
+          "description": "Brighter than the background (fluorescence).",
+          "type": "string",
+          "const": "BRIGHT"
+        },
+        {
+          "description": "Darker than the background (brightfield, stains).",
+          "type": "string",
+          "const": "DARK"
+        }
+      ]
+    },
+    "ObjectGrowRegionsSmoothingSettings": {
+      "description": "How [`GrowRegions`] smooths its growth channel before growing.",
+      "oneOf": [
+        {
+          "description": "The raw channel.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "NONE"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "description": "A Gaussian of standard deviation `sigma`: noise smaller than σ no\nlonger stops or splits a region. As a guide, σ ≈ 1 - 2 px for noisy\nspots, at most about a quarter of the smallest object's radius\n(larger blurs the regions' outlines).",
+          "type": "object",
+          "properties": {
+            "sigma": {
+              "description": "The standard deviation of the Gaussian.",
+              "type": "number",
+              "format": "float",
+              "maximum": 100,
+              "minimum": 0.1
+            },
+            "type": {
+              "type": "string",
+              "const": "GAUSSIAN"
+            },
+            "unit": {
+              "description": "Unit of `sigma`.",
+              "$ref": "#/$defs/SizeUnits"
+            }
+          },
+          "required": [
+            "type",
+            "sigma",
+            "unit"
+          ]
+        }
+      ]
+    },
+    "ObjectGrowRegionsStopRuleSettings": {
+      "description": "Which pixels may join a [`GrowRegions`] region. \"Brighter\"/\"above\"\ncount the other way round for dark objects.",
+      "oneOf": [
+        {
+          "description": "A level between the background (0) and the seed (1): 0.5 cuts each\nregion at half its height (full width at half maximum), so dim and\nbright objects keep the same shape. Intensity: pixels above the\nlevel, measured from the region's peak (the brightest pixel the seed\nreaches without going down). Similarity: pixels closer to\nthe seed's value than (1 - fraction) of its contrast, on either side.\nA seed not above its background grows nothing.",
+          "type": "object",
+          "properties": {
+            "fraction": {
+              "description": "The level between the background (0) and the seed (1).",
+              "type": "number",
+              "format": "float",
+              "maximum": 1,
+              "minimum": 0
+            },
+            "type": {
+              "type": "string",
+              "const": "RELATIVE"
+            }
+          },
+          "required": [
+            "type",
+            "fraction"
+          ]
+        },
+        {
+          "description": "The classic magic wand. Intensity: pixels at most `tolerance` below\nthe region's peak. Similarity: pixels at most `tolerance` from the\nseed's value, on either side.",
+          "type": "object",
+          "properties": {
+            "tolerance": {
+              "description": "How far a pixel may lie from the peak or seed value.",
+              "type": "number",
+              "format": "float",
+              "maximum": 65535,
+              "minimum": 0
+            },
+            "type": {
+              "type": "string",
+              "const": "TOLERANCE"
+            },
+            "unit": {
+              "description": "Unit of `tolerance` (bit: 0 - 255/65535, %: 0 - 100, rel: 0 - 1).",
+              "$ref": "#/$defs/PixelUnits"
+            }
+          },
+          "required": [
+            "type",
+            "tolerance",
+            "unit"
+          ]
+        },
+        {
+          "description": "Pixels above one fixed level, the same for every seed.",
+          "type": "object",
+          "properties": {
+            "level": {
+              "description": "The level a pixel must lie above.",
+              "type": "number",
+              "format": "float",
+              "maximum": 65535,
+              "minimum": 0
+            },
+            "type": {
+              "type": "string",
+              "const": "THRESHOLD"
+            },
+            "unit": {
+              "description": "Unit of `level` (bit: 0 - 255/65535, %: 0 - 100, rel: 0 - 1).",
+              "$ref": "#/$defs/PixelUnits"
+            }
+          },
+          "required": [
+            "type",
+            "level",
+            "unit"
+          ]
+        },
+        {
+          "description": "Pixels more than `noise_factor` times the noise above the\nbackground: a region covers what stands out from the noise around\nit - the same factor fits every exposure.",
+          "type": "object",
+          "properties": {
+            "noiseFactor": {
+              "description": "How many times the noise a pixel must lie above the background.",
+              "type": "number",
+              "format": "float",
+              "maximum": 100,
+              "minimum": 0
+            },
+            "type": {
+              "type": "string",
+              "const": "NOISE"
+            }
+          },
+          "required": [
+            "type",
+            "noiseFactor"
+          ]
+        }
+      ]
+    },
     "ObjectId": {
       "description": "An object's id - a UUIDv7. Stored in JSON as the UUID string (as in the\nresults database), in binary formats as the number: project files are loaded through `serde_json::Value`, which\nkeeps numbers above 2^64 only as `f64`, so as a number the id came back\nwrong. Numbers are still read - from files written before; a rounded one\nrounds the same way everywhere in the file, so references between\nobjects (parent, children, coloc partners) still match.",
       "type": "string"
@@ -3639,6 +4027,19 @@
           "properties": {
             "type": {
               "type": "string",
+              "const": "BANDPASS"
+            }
+          },
+          "$ref": "#/$defs/BandpassSettings",
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
               "const": "BLUR"
             }
           },
@@ -3734,6 +4135,19 @@
             }
           },
           "$ref": "#/$defs/ConnectedComponentsSettings",
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "DIFFERENCE_OF_GAUSSIANS"
+            }
+          },
+          "$ref": "#/$defs/DifferenceOfGaussiansSettings",
           "required": [
             "type"
           ]
@@ -3873,6 +4287,19 @@
           "properties": {
             "type": {
               "type": "string",
+              "const": "GROW_REGIONS"
+            }
+          },
+          "$ref": "#/$defs/GrowRegionsSettings",
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
               "const": "HESSIAN"
             }
           },
@@ -3942,6 +4369,19 @@
             }
           },
           "$ref": "#/$defs/LaplacianSettings",
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "LAPLACIAN_OF_GAUSSIAN"
+            }
+          },
+          "$ref": "#/$defs/LaplacianOfGaussianSettings",
           "required": [
             "type"
           ]
@@ -4471,6 +4911,19 @@
           "properties": {
             "type": {
               "type": "string",
+              "const": "WAVELET_SPOTS"
+            }
+          },
+          "$ref": "#/$defs/WaveletSpotsSettings",
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
               "const": "WEIGHTED_DEVIATION"
             }
           },
@@ -4952,10 +5405,54 @@
     },
     "SegmentationFindMaximaMaximaCutoffSettings": {
       "description": "How [`FindMaxima`] chooses its quality cut-off.",
-      "type": "string",
-      "enum": [
-        "MANUAL",
-        "OTSU"
+      "oneOf": [
+        {
+          "description": "Maxima above `min_quality` are kept.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "MANUAL"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "description": "Otsu's method on the qualities of all maxima splits spots from noise\npeaks.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "OTSU"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "description": "Maxima more than `noise_factor` times the noise above the background\nare kept. Background: the median of all pixels; noise: their median\nabsolute deviation × 1.4826 (the standard deviation for normally\ndistributed noise). Both from the image this step gets, so after a\nblur the blurred noise counts. Spots must cover less than half the\nimage (else they raise the background).",
+          "type": "object",
+          "properties": {
+            "noiseFactor": {
+              "description": "How many times the noise a maximum must lie above the\nbackground: 3 keeps few noise peaks, 5 hardly any; lower finds\nfainter spots and more noise.",
+              "type": "number",
+              "format": "float",
+              "maximum": 100,
+              "minimum": 0
+            },
+            "type": {
+              "type": "string",
+              "const": "NOISE"
+            }
+          },
+          "required": [
+            "type",
+            "noiseFactor"
+          ]
+        }
       ]
     },
     "SegmentationMappingSettings": {
@@ -6190,6 +6687,28 @@
           "format": "float",
           "default": 0,
           "maximum": 10,
+          "minimum": 0
+        }
+      }
+    },
+    "WaveletSpotsSettings": {
+      "description": "Enhances spots by combining several levels of detail: keeps what stands\nout of the noise at each level from the finest to `levels`.\n\n[Wavelet Spots] -> [Find Maxima] -> [Extract Objects]\n\nThe result is the paper's multiscale product: positive at bright spots,\nexactly 0 everywhere else (background, dark spots, what stands out at\none level only). Its values are the image's intensities to the power of\n`levels`, so a manual cut-off in Find Maxima is the paper's detection\nlevel in these units. Measure intensities on the original channel, not\non this image.",
+      "type": "object",
+      "properties": {
+        "levels": {
+          "description": "How many levels are combined: level i holds details of about 2^i\npixels, so 3 suits spots up to about 8 px.",
+          "type": "integer",
+          "format": "uint",
+          "default": 3,
+          "maximum": 5,
+          "minimum": 2
+        },
+        "noiseFactor": {
+          "description": "A level counts at a pixel only where it is at least this many times\nits noise; 3 in the paper.",
+          "type": "number",
+          "format": "float",
+          "default": 3,
+          "maximum": 20,
           "minimum": 0
         }
       }

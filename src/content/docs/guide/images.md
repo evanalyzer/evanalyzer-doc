@@ -30,7 +30,7 @@ The images grouped into wells, by the project's plate settings (**EVA › Projec
 
 ### Go to image
 
-To switch images without the panel, click the **image chip** in the top bar. **Go to image** opens below it: type parts of the file name or folder - every word must appear in the image's path, in any order and case. The list shows up to 50 matches with their size (_"50 of 812 - type to narrow down"_), the open image ticked. `↑` / `↓` (or `Page Up` / `Page Down`) move, `Enter` opens the highlighted image, `Esc` closes. **Show all images** switches to Images mode.
+To switch images without the panel, click the **image chip** in the top bar. **Go to image** opens below it: type parts of the file name or folder - every word must appear in the image's path, in any order and case. The list shows up to 50 matches with their size (_"50 of 812 - type to narrow down"_), the open image ticked and, before you type, scrolled into the middle. `↑` / `↓` (or `Page Up` / `Page Down`) move, `Enter` opens the highlighted image, `Esc` closes. **Show all images** switches to Images mode.
 
 ![Go to image under the image chip: "C0" typed, the matching images with their size, Show all images at the bottom](../../../assets/screenshots/screenshot-go-to-image.png)
 
@@ -84,7 +84,8 @@ The **Image** panel on the right (its button above the right-hand panels shows a
 
 Each channel of the image with its color, its number (**ch 0**, **ch 1**, …) and an eye that shows or hides it. Click a channel to select it - the histogram shows the selected channel.
 
-- **Grayscale** shows the channels in white instead of their colors. Because overlaid gray channels can't be told apart, only one channel is visible at a time: switching grayscale on keeps the selected channel (or the first visible one), and showing another channel hides the previous one. The setting is saved in the project.
+- **Grayscale** shows the channels in white instead of their colors. Because overlaid gray channels can't be told apart, only one channel is visible at a time: switching grayscale on keeps the selected channel (or the first visible one), and showing another channel hides the previous one. This holds in [focus mode](/guide/pipelines/#focus-mode) too, also when the focused pipeline reads several channels. The setting is saved in the project.
+
 The small bar at the bottom left of the image holds the objects: its button shows or hides them (`O`), the slider sets their opacity in percent.
 
 ### Histogram

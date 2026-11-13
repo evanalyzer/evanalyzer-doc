@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 4,
+  "key": "NEURITE_ANALYSIS",
+  "meta": {
+    "name": "Neurite analysis",
+    "shortDescription": "Neurite skeletons, Sholl profiles and traced neurite trees per neuron",
+    "description": "Per neuron its neurite tree and Sholl profile, from a soma channel and a neurite channel (e.g. tubulin, MAP2). Somata: Gaussian blur, Otsu threshold. Neurites: vesselness at the fibre widths, Otsu threshold, skeletonized to one centre line per neurite object (\"Skeletons\") with its end points (\"Tips\"). The skeletons are linked to the soma and the neurite object they overlap most; per skeleton the skeleton values (total and longest-path length, branch and end points, segment length and straightness, mean diameter from its neurite object) and the Sholl values (circles around the linked soma's centroid every \"Ring step\": crossings per radius, most crossings, critical and enclosing radius, mean crossings, Sholl regression coefficient). Independently, each neuron is traced as a tree from its soma to the tips along the neurite channel (\"Segments\"): per segment its branch level, Strahler order, path distance and length; per neuron (on its soma) the total length, primary neurites, branch points, tips, highest branch level and longest path. Results › Trees shows the dendrograms of the traced neurons, Charts › Profile the Sholl curves. A skeleton that overlaps no soma gets no soma parent and its Sholl circles are not centred on a soma. All lengths, widths and radii are in pixels.",
+    "authors": [
+      {
+        "fullName": "Joachim Danmayr",
+        "organization": ""
+      }
+    ],
+    "creationTime": "2026-11-09T12:00:00Z",
+    "version": 1,
+    "category": "Neurons",
+    "tags": [
+      "neurite",
+      "neuron",
+      "sholl",
+      "skeleton",
+      "filament",
+      "tracing"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classes": [],
+  "steps": [
+    {
+      "id": 1,
+      "enabled": true,
+      "command": {
+        "type": "LOAD_CHANNEL",
+        "channel": 0,
+        "projection": "AUTO",
+        "zIndex": 0
+      }
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "command": {
+        "type": "GAUSSIAN_BLUR",
+        "kernelSize": 13,
+        "sigma": 2.0
+      }
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "command": {
+        "type": "THRESHOLD",
+        "thresholds": [
+          {
+            "method": {
+              "type": "OTSU",
+              "classes": {
+                "type": "TWO"
+              }
+            },
+            "minThreshold": 0.0,
+            "maxThreshold": 65535.0,
+            "unit": "BIT",
+            "segmentationClass": 1,
+            "valueSource": "ACTUAL_IMAGE"
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "enabled": true,
+      "command": {
+        "type": "CONNECTED_COMPONENTS",
+        "minSize": 1
+      }
+    },
+    {
+      "id": 5,
+      "enabled": true,
+      "command": {
+        "type": "EXTRACT_OBJECTS",
+        "maxObjectsBeforeFail": 100000,
+        "classMapping": [
+          {
+            "segmentationClass": 1,
+            "objectClass": {
+              "GLOBAL": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "enabled": true,
+      "command": {
+        "type": "LOAD_CHANNEL",
+        "channel": 1,
+        "projection": "AUTO",
+        "zIndex": 0
+      }
+    },
+    {
+      "id": 7,
+      "enabled": true,
+      "command": {
+        "type": "VESSELNESS",
+        "minWidth": 2.0,
+        "maxWidth": 6.0,
+        "widthSteps": 3,
+        "widthUnit": "PIXELS",
+        "polarity": "BRIGHT",
+        "blobSuppression": 0.5,
+        "noiseLevel": 0.0
+      }
+    },
+    {
+      "id": 8,
+      "enabled": true,
+      "command": {
+        "type": "THRESHOLD",
+        "thresholds": [
+          {
+            "method": {
+              "type": "OTSU",
+              "classes": {
+                "type": "TWO"
+              }
+            },
+            "minThreshold": 0.0,
+            "maxThreshold": 65535.0,
+            "unit": "BIT",
+            "segmentationClass": 1,
+            "valueSource": "ACTUAL_IMAGE"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "enabled": true,
+      "command": {
+        "type": "CONNECTED_COMPONENTS",
+        "minSize": 1
+      }
+    },
+    {
+      "id": 10,
+      "enabled": true,
+      "command": {
+        "type": "EXTRACT_OBJECTS",
+        "maxObjectsBeforeFail": 100000,
+        "classMapping": [
+          {
+            "segmentationClass": 1,
+            "objectClass": {
+              "GLOBAL": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "enabled": true,
+      "command": {
+        "type": "SKELETONIZE_OBJECTS",
+        "inputClass": {
+          "GLOBAL": 2
+        },
+        "skeletonClass": {
+          "GLOBAL": 3
+        },
+        "branchPointClass": "UNSET",
+        "endPointClass": {
+          "GLOBAL": 4
+        },
+        "minBranchLength": 5.0,
+        "lengthUnit": "PIXELS"
+      }
+    },
+    {
+      "id": 12,
+      "enabled": true,
+      "command": {
+        "type": "RELATE_OBJECTS",
+        "childClasses": [
+          {
+            "GLOBAL": 3
+          }
+        ],
+        "parentClasses": [
+          {
+            "GLOBAL": 1
+          }
+        ],
+        "rule": "LARGEST_OVERLAP",
+        "removeWithoutParent": false
+      }
+    },
+    {
+      "id": 13,
+      "enabled": true,
+      "command": {
+        "type": "RELATE_OBJECTS",
+        "childClasses": [
+          {
+            "GLOBAL": 3
+          }
+        ],
+        "parentClasses": [
+          {
+            "GLOBAL": 2
+          }
+        ],
+        "rule": "LARGEST_OVERLAP",
+        "removeWithoutParent": false
+      }
+    },
+    {
+      "id": 14,
+      "enabled": true,
+      "command": {
+        "type": "MEASURE_OBJECT_SKELETON",
+        "id": "skeleton",
+        "objects": {
+          "GLOBAL": 3
+        },
+        "diameterFrom": {
+          "GLOBAL": 2
+        }
+      }
+    },
+    {
+      "id": 15,
+      "enabled": true,
+      "command": {
+        "type": "MEASURE_OBJECT_SHOLL",
+        "id": "sholl",
+        "objects": {
+          "GLOBAL": 3
+        },
+        "centreFrom": {
+          "GLOBAL": 1
+        },
+        "ringStep": 10.0,
+        "firstRadius": 0.0,
+        "lastRadius": 0.0,
+        "unit": "PIXELS"
+      }
+    },
+    {
+      "id": 16,
+      "enabled": true,
+      "command": {
+        "type": "TRACE_FILAMENTS",
+        "seeds": {
+          "GLOBAL": 1
+        },
+        "targets": {
+          "GLOBAL": 4
+        },
+        "outputClass": {
+          "GLOBAL": 5
+        },
+        "channel": 1,
+        "followFibres": true,
+        "minWidth": 2.0,
+        "maxWidth": 6.0,
+        "maxReach": 300.0,
+        "minBranchLength": 5.0,
+        "unit": "PIXELS"
+      }
+    },
+    {
+      "id": 17,
+      "enabled": true,
+      "command": {
+        "type": "MEASURE_FILAMENT_TREE",
+        "id": "tree",
+        "segments": {
+          "GLOBAL": 5
+        },
+        "somata": {
+          "GLOBAL": 1
+        }
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "key": "somata",
+      "label": "Somata",
+      "description": "The cell bodies, found in the soma channel; the root of each traced tree and the centre of its Sholl circles.",
+      "section": "Classes",
+      "default": "1",
+      "bindings": [
+        {
+          "step": 5,
+          "param": "class_mapping.0.object_class"
+        },
+        {
+          "step": 12,
+          "param": "parent_classes"
+        },
+        {
+          "step": 15,
+          "param": "centre_from"
+        },
+        {
+          "step": 16,
+          "param": "seeds"
+        },
+        {
+          "step": 17,
+          "param": "somata"
+        }
+      ]
+    },
+    {
+      "key": "neurites",
+      "label": "Neurites",
+      "description": "The thresholded neurite objects of the neurite channel; the skeletons are made of them.",
+      "section": "Classes",
+      "default": "2",
+      "bindings": [
+        {
+          "step": 10,
+          "param": "class_mapping.0.object_class"
+        },
+        {
+          "step": 11,
+          "param": "input_class"
+        },
+        {
+          "step": 13,
+          "param": "parent_classes"
+        },
+        {
+          "step": 14,
+          "param": "diameter_from"
+        }
+      ]
+    },
+    {
+      "key": "skeletons",
+      "label": "Skeletons",
+      "description": "One 1-pixel-wide centre line per neurite object; carries the skeleton and Sholl values.",
+      "section": "Classes",
+      "default": "3",
+      "bindings": [
+        {
+          "step": 11,
+          "param": "skeleton_class"
+        },
+        {
+          "step": 12,
+          "param": "child_classes"
+        },
+        {
+          "step": 13,
+          "param": "child_classes"
+        },
+        {
+          "step": 14,
+          "param": "objects"
+        },
+        {
+          "step": 15,
+          "param": "objects"
+        }
+      ]
+    },
+    {
+      "key": "tips",
+      "label": "Tips",
+      "description": "The end points of the skeletons: the tips the tracing reaches from the somata.",
+      "section": "Classes",
+      "default": "4",
+      "bindings": [
+        {
+          "step": 11,
+          "param": "end_point_class"
+        },
+        {
+          "step": 16,
+          "param": "targets"
+        }
+      ]
+    },
+    {
+      "key": "segments",
+      "label": "Segments",
+      "description": "The traced tree's segments (between branch points); carry the branch level and Strahler order.",
+      "section": "Classes",
+      "default": "5",
+      "bindings": [
+        {
+          "step": 16,
+          "param": "output_class"
+        },
+        {
+          "step": 17,
+          "param": "segments"
+        }
+      ]
+    },
+    {
+      "key": "soma_channel",
+      "label": "Soma channel",
+      "description": "The channel the somata are stained in.",
+      "section": "Channels",
+      "default": 0,
+      "bindings": [
+        {
+          "step": 1,
+          "param": "channel"
+        }
+      ]
+    },
+    {
+      "key": "neurite_channel",
+      "label": "Neurite channel",
+      "description": "The channel the neurites are stained in (e.g. tubulin, MAP2).",
+      "section": "Channels",
+      "default": 1,
+      "bindings": [
+        {
+          "step": 6,
+          "param": "channel"
+        },
+        {
+          "step": 16,
+          "param": "channel"
+        }
+      ]
+    },
+    {
+      "key": "fibre_width_min",
+      "label": "Fibre width min",
+      "description": "The thinnest neurites to find and follow, in pixels.",
+      "section": "Fibres",
+      "default": 2,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "min_width"
+        },
+        {
+          "step": 16,
+          "param": "min_width"
+        }
+      ]
+    },
+    {
+      "key": "fibre_width_max",
+      "label": "Fibre width max",
+      "description": "The widest neurites to find and follow, in pixels.",
+      "section": "Fibres",
+      "default": 6,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "max_width"
+        },
+        {
+          "step": 16,
+          "param": "max_width"
+        }
+      ]
+    },
+    {
+      "key": "max_reach",
+      "label": "Max reach",
+      "description": "How far from its soma a tip may be to be traced, in pixels.",
+      "section": "Fibres",
+      "default": 300,
+      "bindings": [
+        {
+          "step": 16,
+          "param": "max_reach"
+        }
+      ]
+    },
+    {
+      "key": "min_branch_length",
+      "label": "Min branch length",
+      "description": "Side branches shorter than this are removed, in pixels.",
+      "section": "Fibres",
+      "default": 5,
+      "bindings": [
+        {
+          "step": 11,
+          "param": "min_branch_length"
+        },
+        {
+          "step": 16,
+          "param": "min_branch_length"
+        }
+      ]
+    },
+    {
+      "key": "ring_step",
+      "label": "Ring step",
+      "description": "The distance between two Sholl circles, in pixels.",
+      "section": "Sholl",
+      "default": 10,
+      "bindings": [
+        {
+          "step": 15,
+          "param": "ring_step"
+        }
+      ]
+    }
+  ],
+  "uses": []
+}

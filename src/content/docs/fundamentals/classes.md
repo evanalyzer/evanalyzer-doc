@@ -32,6 +32,17 @@ This is why defining classes in the Classification tab *before* wiring up pipeli
 
 The classes defined in the [Classes](/guide/classification/) panel are **project classes**. A [module](/guide/modules/) can also have **its own classes** for intermediate results: each use of the module gets its own copy, they never show up in the class list, and their objects are deleted when the module has run - see [Internal classes](/guide/modules/#internal-classes). An object never carries a project class and a group class at the same time.
 
+## Which classes go into the results
+
+Every project class has a **Results** setting in its [class settings](/guide/classification/#what-goes-into-the-results):
+
+- **Objects** (default) - every object of the class is stored with its measurements.
+- **Intermediate** - the class is only for later steps of the pipeline, e.g. the seeds of Grow Regions. Nothing of it is written to the results: an object that has only intermediate classes is not stored, one that also has a stored class is stored without it, and parent and colocalization partner entries to an object not stored are left out. The pipeline and the viewer see the class as usual; the Classes panel marks it **not stored**.
+
+An object without any project class - **Unset**, or with all its classes removed - is not stored either: no object row, no measurements, and no parent or partner entries pointing to it. A class an object needs in the results must therefore be a project class set to **Objects**.
+
+Because [dataset steps](/guide/pipelines/#dataset-steps) such as the trackers read the stored results, they find no objects of an intermediate class - the step gets a warning, fixed by **Store class _N_**.
+
 ## An object can carry more than one class
 
 Object classes are stored as a **set**, not a single value - an object can carry several classes at once (for example, tagged by one Classify Objects step and again by another, without either removing the first). This is what makes **Add class on match** in Classify Objects useful: it layers a class on top of whatever the object already carries, rather than replacing it.
@@ -46,4 +57,4 @@ A couple of segmentation class numbers and one object class value are reserved r
 | -------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | Segmentation class `0`                | **Background** - pixels no threshold entry matched                                          |
 | Segmentation class `0xFFFFFFFF`        | **Manual** - reserved for objects coming from manual [annotation](/guide/images/#annotating-the-image) rather than a pipeline |
-| Object class **Unset**                | No class at all - the state every object starts in before extraction assigns one, and the state **Reclassify**/**Remove all classes** modes put non-matching or matching objects back into. Unset objects don't appear in any class-filtered results, count, or export |
+| Object class **Unset**                | No class at all - the state every object starts in before extraction assigns one, and the state **Reclassify**/**Remove all classes** modes put non-matching or matching objects back into. Unset objects are not stored in the results - see below |

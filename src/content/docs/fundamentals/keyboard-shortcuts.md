@@ -35,6 +35,7 @@ Every brush stroke and every drawn shape is an undo step of its own.
 | `Shift+F5`        | Preview the whole image                            |
 | `F`               | Focus on the selected pipeline (again: show all)   |
 | `Alt`+click       | Focus on a pipeline (again: show all)              |
+| `Ctrl+Page Up` / `Ctrl+Page Down` | The previous / next pipeline           |
 | Double-click      | Edit a pipeline's name and image source            |
 | `Enter`           | The selected step's settings                       |
 | `Ctrl+/`          | Disable / enable the selected step                 |
@@ -48,6 +49,8 @@ Every brush stroke and every drawn shape is an undo step of its own.
 `F` and `Alt`+click are the quick way into [Focus Mode](/guide/pipelines/#focus-mode): they show only the channel and classes of one pipeline. Plain `F` is used because `Ctrl+F` is the image search.
 
 `F9` steps through the [breakpoint](/guide/pipelines/#breakpoints) states: stop, snapshot, off.
+
+In the [pipeline list](/guide/pipelines/#pipeline-switcher) of the switcher head, `↑` / `↓` move, `Enter` shows the pipeline, `Space` leaves it out of the run or takes it back in, `Alt+↑` / `Alt+↓` move it in the order and `Escape` closes.
 
 **Number fields** also take `↑` / `↓`, `Ctrl` + mouse wheel, and a sideways drag over the number.
 

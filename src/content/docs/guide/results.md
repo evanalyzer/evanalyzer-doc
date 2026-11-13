@@ -13,6 +13,12 @@ The folder also holds `<job_name>.evaproj`, a copy of the exact settings that an
 
 Results written by the current version use results format 2, which can hold [profiles](#profiles). Versions up to 1.1.0-alpha.3 can't open them (_"these results were saved by a newer version of EVAnalyzer … update EVAnalyzer to open them"_). Older results open as before; when an analysis adds to an older results file, the file is upgraded to format 2.
 
+The results hold the objects of the project classes whose **Results** setting is **Objects** (the default), with their measurements. Not stored are:
+
+- objects without a project class (**Unset**, or with their last class removed),
+- [intermediate classes](/guide/classification/#what-goes-into-the-results) - an object with only intermediate classes is not stored, one that also has a stored class is stored without them; an intermediate class is not listed among the results' classes,
+- parent and colocalization partner entries pointing to an object that is not stored.
+
 Results are a mode of the main window: switch to **Results** in the bottom bar (`Ctrl+3`).
 
 ## The results bar

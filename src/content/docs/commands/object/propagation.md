@@ -54,5 +54,5 @@ The regions are measured like any other object (area, shape, and the intensity o
 
 ## Limitations
 
-- No intensity threshold or maximum distance: limit the growth with a **Mask**.
+- No intensity threshold or maximum distance: limit the growth with a **Mask**, or use [Grow Regions](/commands/object/grow-regions/), which stops each region at a level of its own.
 - Only the regions are created. The cytoplasm (cell minus nucleus) is not; use [Object Math](/commands/object/object-math/) for it.

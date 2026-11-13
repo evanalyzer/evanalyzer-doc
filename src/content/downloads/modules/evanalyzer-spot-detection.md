@@ -3,7 +3,7 @@ title: "Spot detection"
 description: "Spots as local maxima (Imaris-style)"
 category: module
 file: /downloads/templates/module_templates/evanalyzer/spot_detection.evamodule
-fileSize: "5.7 KB"
+fileSize: "5.8 KB"
 tags: ["spot", "maxima", "imaris"]
 ---
 

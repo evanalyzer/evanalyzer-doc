@@ -63,6 +63,10 @@ A minimal single-step pipeline looks like:
 }
 ```
 
+## Project Classes
+
+Each entry of `classification.classes` has an `id`, `name`, `color` and `notes`, and `results` - what the results keep of the class's objects: `"objects"` (the default, also for files written before the setting existed) or `"intermediate"` (a class only for later steps, nothing of it is stored - see [What goes into the results](/guide/classification/#what-goes-into-the-results)).
+
 ## Object Classes in Steps
 
 A class setting is written as `"UNSET"`, `{"GLOBAL": 5}` (project class 5) or `{"LOCAL": 1}` (class 1 of the enclosing command group - only valid inside a group). Files written before command groups existed use `{"VALID": 5}`, which is still read as `GLOBAL`.

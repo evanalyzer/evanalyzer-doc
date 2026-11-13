@@ -20,7 +20,7 @@ As long as no project is open - when EVAnalyzer starts, and after **EVA › New*
 
 Below them, **New project from a template…** starts from the classes, plate settings and pipelines of a [project template](/guide/pipelines/#saving-a-project-as-a-template), and **Connect to a server…** works on a server with [remote control](/remote/remote-control/).
 
-**Recent projects** lists up to 12 projects you opened or saved, with their path, the number of images and pipelines and when you last used them. A project that has moved shows **Locate…**; the **✕** takes it off the list, **Clear list** empties it. Tick **Open the last project when EVAnalyzer starts** to skip the Start page.
+**Recent projects** lists up to 12 projects you opened or saved, with their path, the number of images and pipelines and when you last used them. A project that has moved shows **Locate…**. Hovering a project shows its **✕**, which takes it off the list - also for a project that wasn't found; **Clear list** empties the list. Tick **Open the last project when EVAnalyzer starts** to skip the Start page.
 
 Whatever you open - images, a project, an empty project or a template - EVAnalyzer continues in **Images**.
 
@@ -34,7 +34,7 @@ From left to right:
 - **Undo**, **Redo**, **Save**, **Annotate** (switches the [annotate bar](/guide/images/#annotating-the-image) on and off, `A`) and **AI training…** (opens [AI training](/ai/training/), which learns from the annotations).
 - The **image chip** - the image shown; click it to [go to another image](/guide/images/#go-to-image) by typing part of its name. For files with several series, **Series 2 of 5 ▾** beside it picks the [series](/guide/images/#series-selection).
 - The project's name in the middle.
-- **Compare** (only with a [breakpoint image](/guide/pipelines/#breakpoints)), then the preview in one group - **Refresh preview** (`F5`), **Preview the whole image** (`Shift+F5`, see [Live preview](/guide/pipelines/#live-preview)) and **Auto preview** - and **Run**. While an analysis runs, **Auto preview** and **Run** give way to its progress - see [Working while an analysis runs](#working-while-an-analysis-runs).
+- **Compare** (only with a [breakpoint](/guide/pipelines/#breakpoints)), then the preview in one group - **Refresh preview** (`F5`), **Preview the whole image** (`Shift+F5`, see [Live preview](/guide/pipelines/#live-preview)) and **Auto preview** - and **Run**. While an analysis runs, **Auto preview** and **Run** give way to its progress - see [Working while an analysis runs](#working-while-an-analysis-runs).
 - **Hide all panels** / **Show the panels** at the right end.
 
 In **Results** the top bar holds the results' controls instead - the analysis, the [views](/guide/results/#views) as tabs, **Full | Split with image** and **Export…** - see [Results](/guide/results/#the-results-bar).
@@ -108,7 +108,7 @@ Dialogs open where they belong - step settings next to the steps, class settings
 
 ## Command palette
 
-Press `Ctrl+K` (or the **Ctrl K** button in the steps panel's head) to find anything by typing: an action, a step of the pipeline, a setting, a command to add, an image or a class. A setting is found by its name - _"min"_ shows **Min Size · #8 ClassifyObjects · 5** - and opens its step. `↑` `↓` choose, `Enter` runs, `Esc` closes.
+Press `Ctrl+K` (or the **Ctrl K** button at the foot of the steps panel) to find anything by typing: an action, a step of the pipeline, a setting, a command to add, an image or a class. A setting is found by its name - _"min"_ shows **Min Size · #8 ClassifyObjects · 5** - and opens its step. `↑` `↓` choose, `Enter` runs, `Esc` closes.
 
 ![The command palette with min typed: steps, settings such as Min Size of step 8 ClassifyObjects, and commands to add](../../../assets/screenshots/screenshot-command-palette.png)
 
@@ -120,7 +120,7 @@ EVAnalyzer has three color schemes, picked under **EVA › View › Colors**:
 - **Dark** - near-black panels; the image behind them is black.
 - **Dim** - a softer dark grey, for long sessions in a dark room.
 
-In every scheme the image's background stays black, so fluorescence reads the same. Buttons are black (white in the dark schemes); one indigo marks focus and the selected row. The colors of channels and classes come with your data and are never changed by the scheme.
+In every scheme the image's background stays black, so fluorescence reads the same. Buttons are black (white in the dark schemes); one indigo marks focus. The selected row of every list - the shown pipeline, the open image, the picked class - is lifted, with a thin ring. The colors of channels and classes come with your data and are never changed by the scheme.
 
 ![Light, Dark and Dim: colors light](../../../assets/screenshots/screenshot-colors-light.png)
 

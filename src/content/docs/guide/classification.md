@@ -21,13 +21,13 @@ Use `<prefix>@<type>` where the prefix (typically the fluorophore) is used for s
 
 ## Classes panel
 
-Each class is a row with its color, its name, its number of objects on the current image and an eye that shows or hides its objects. Click a class to select it.
+Each class is a row with its color, its name, its number of objects on the current image and an eye that shows or hides its objects. An [intermediate class](#what-goes-into-the-results) carries a **not stored** pill. Click a class to select it.
 
 - **+** (**New class**) adds a class and opens its settings.
 - **⋯ › Edit name, color, id…** of a class opens its settings.
 - The same menu has **Copy**, **Move up** / **Move down** and **Delete class…**.
 
-![The Class settings dialog left of the right-hand panels: Name, Notes, Class ID with Auto, the color grid (7 a row)](../../../assets/screenshots/screenshot-class-settings.png)
+![The Class settings dialog left of the right-hand panels: Name, Notes, Class ID with Auto, Results with the Objects and Intermediate cards, the color grid (7 a row)](../../../assets/screenshots/screenshot-class-settings.png)
 
 **Class settings**:
 
@@ -36,6 +36,7 @@ Each class is a row with its color, its name, its number of objects on the curre
 | **Name**     | Class label, e.g. `cy5@spot`                           |
 | **Notes**    | Optional free-text description                         |
 | **Class ID** | The class's number - see below                         |
+| **Results**  | **Objects** or **Intermediate** - see [What goes into the results](#what-goes-into-the-results) |
 | **Color**    | Display color used for the class's objects in the viewer |
 
 Every class has a number, its **Class ID** - the number a [Threshold](/commands/segmentation/threshold/) entry's segmentation class must match (see [Object Classes](/fundamentals/classes/)). **Auto** gives a new class the number above the highest one, so the number of a deleted class isn't reused by accident (old pipelines and results may still refer to it). Pick a number from the list to choose a free one yourself.
@@ -43,6 +44,25 @@ Every class has a number, its **Class ID** - the number a [Threshold](/commands/
 Changing the ID of an existing class moves every reference with it: pipelines, [modules](/guide/modules/) and annotated objects that use the class switch to the new ID. Results of earlier runs keep the old one. The background keeps its ID 0.
 
 You can also create a class where you need it: the class pickers of the steps and the annotate bar's **Paint as** have **+ New class…** - the new class is picked at once.
+
+### What goes into the results
+
+**Results** in the class settings decides what an analysis writes of the class:
+
+- **Objects** - _"Every object with its measurements. Default."_
+- **Intermediate** - _"Only for later steps, e.g. seeds for Grow Regions. Shown in the viewer, not written to the results."_
+
+Use **Intermediate** for a class a pipeline only needs on the way - seeds, markers, a mask that later steps turn into the objects you want. The pipeline, the live preview and the viewer see an intermediate class like any other. In the results it is left out:
+
+- an object that has only intermediate classes is not stored - no object row, no measurements;
+- an object that also has a stored class is stored without the intermediate one;
+- parent and colocalization partner entries that point to an object not stored are left out.
+
+The same goes for an object without any project class - one that never got a class (**Unset**) or lost its last one: it is not written to the results.
+
+The Classes panel marks an intermediate class with a **not stored** pill. A [dataset step](/guide/pipelines/#dataset-steps) - a tracker, for example - reads the stored results, so it finds no objects of an intermediate class: the step gets a warning in the [Problems](/guide/pipelines/#problems) panel, and **Store class _N_** sets the class back to **Objects**.
+
+![Class settings with Results › Intermediate picked: "Only for later steps, e.g. seeds for Grow Regions. Shown in the viewer, not written to the results."](../../../assets/screenshots/screenshot-class-results.png)
 
 ### Add classes from the image
 
@@ -55,7 +75,7 @@ The Classes panel's own **⋯** menu:
 
 ### Hiding unclassified objects
 
-**⋯ › Hide unclassified objects** (in the Classes panel) hides objects that have no class yet - on by default, so a large unfiltered detection doesn't drown out the objects you've actually classified.
+**⋯ › Hide unclassified objects** (in the Classes panel) hides objects that have no class yet - on by default, so a large unfiltered detection doesn't drown out the objects you've actually classified. Such objects are not stored in the results either - see [What goes into the results](#what-goes-into-the-results).
 
 ## Objects panel
 

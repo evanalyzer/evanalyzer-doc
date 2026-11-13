@@ -73,4 +73,5 @@ Click **Run** at the top right to run the analysis. When complete:
 ## Tips
 
 - The **Tetraspeck** pipeline should be **disabled** if no calibration bead channel is available.
+- For many touching or faint spots, a spot filter ([Laplacian of Gaussian](/commands/edge-detection/laplacian-of-gaussian/), [Difference of Gaussians](/commands/edge-detection/difference-of-gaussians/) or [Wavelet Spots](/commands/edge-detection/wavelet-spots/)) followed by [Find Maxima](/commands/segmentation/find-maxima/) and [Grow Regions](/commands/object/grow-regions/) can take the place of Threshold, Connected Components and Watershed.
 - Add a [Classify Objects](/commands/object/classify-objects/) step after the EV classifier with additional filters (e.g. `Min Size: 10`) to gate the population further without rerunning the full analysis.
