@@ -21,6 +21,8 @@ print(`objects: ${instance_count()}`);
 
 ![A script step: the code keeps images in variables, decides with an if what to run next, and runs regular pipeline commands with run(); the image the last command produced is the image the next pipeline step gets](../../../../assets/figures/cmd-script.svg)
 
+Script belongs to the **Utility** category: it fits anywhere in a pipeline and the command picker always lists it. A script step has no category of its own - the step after it looks past it to the step before (see [Command categories](/commands/overview/#command-categories)).
+
 ## Parameters
 
 | Parameter   | Description                                                                                                                                                             |

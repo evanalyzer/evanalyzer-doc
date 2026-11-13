@@ -7,6 +7,8 @@ The **Image Cache** command saves or loads an intermediate image to/from a numbe
 
 Pipelines in EVAnalyzer normally run independently, each seeing only its own image data - Image Cache is the one mechanism that lets one pipeline hand a processed image to another, so a channel-specific preprocessing result (a background estimate, a mask) can be reused elsewhere instead of being recomputed.
 
+Image Cache belongs to the **Utility** category: it fits anywhere in a pipeline, the command picker always lists it, and the step after it looks past it (see [Command categories](/commands/overview/#command-categories)).
+
 ![A checkpoint stored by one pipeline and loaded by another](../../../../assets/figures/cmd-image-cache.svg)
 
 ## Parameters

@@ -1,26 +1,39 @@
 ---
 title: Commands Overview
-description: All 64 pipeline commands grouped by category.
+description: All 65 pipeline commands grouped by category.
 ---
 
 Pipeline commands are the building blocks of an analysis. Each command takes either an image or a set of objects as input and produces either a processed image or an updated set of objects as output.
 
 ## Command Categories
 
-| Category                     | Colour | Input                  | Output                         |
-| ---------------------------- | ------ | ---------------------- | ------------------------------ |
-| **Image processing**         | Grey   | Image                  | Image                          |
-| **Edge & feature detection** | Grey   | Image                  | Image                          |
-| **Segmentation**             | White  | Image                  | Binary mask                    |
-| **Morphology**               | White  | Binary/greyscale image | Image                          |
-| **AI segmentation**          | White  | Image                  | Binary mask / object instances |
-| **Object processing**        | Green  | Objects                | Objects / measurements         |
-| **Measure**                  | Blue   | Image + final objects  | Measurements                   |
-| **Dataset**                  | -      | Objects of all images  | Objects / measurements         |
+Every command belongs to a category: what goes in and what comes out. The category gives the step its coloured stripe in the pipeline and its chip in the command picker (see [Step categories](/guide/pipelines/#step-categories)).
+
+| | Category | In → out | Commands |
+| --- | --- | --- | --- |
+| <span class="evx-cat evx-cat-preprocess"></span> | **Preprocess** | image → image | [Image Processing](#image-processing), [Edge & Feature Detection](#edge--feature-detection), [Morphological Transform](/commands/morphology/morphological-transform/) |
+| <span class="evx-cat evx-cat-segment"></span> | **Segment** | image → segmentation mask | Threshold, Find Maxima, [AI Segmentation](#ai-segmentation) |
+| <span class="evx-cat evx-cat-object"></span> | **Instance Seg.** | mask → labelled mask | Connected Components, Watershed, Fill Holes, Morphological Transform |
+| <span class="evx-cat evx-cat-extract"></span> | **Extract** | labelled mask → objects | Extract Objects, Fill Object Holes |
+| <span class="evx-cat evx-cat-classify"></span> | **Object** | objects → objects | the other commands of [Object Processing](#object-processing) |
+| <span class="evx-cat evx-cat-measure"></span> | **Measure** | objects / image → values | [Measure](#measure) |
+| <span class="evx-cat evx-cat-dataset"></span> | **Dataset** | objects of all images → objects / values | [Dataset](#dataset) |
+| <span class="evx-cat evx-cat-utility"></span> | **Utility** | - | [Script](/commands/image-processing/script/), [Save Image](/commands/object/save-image/), [Image Cache](/commands/image-processing/image-cache/) |
 
 :::note
-Not every command sequence is valid. The command picker shows only those commands compatible with the current pipeline state.
+Not every command sequence is valid. The command picker starts on the categories that fit after the step before; the other chips can still be switched on.
 :::
+
+### Utility commands
+
+**Utility** steps (grey) fit anywhere in a pipeline. The command picker always lists them, whatever chips are on. They have no category of their own at their place: the step after a utility step looks past it to the step before.
+
+### Commands in several categories
+
+A command can belong to more than one category. The first is its home. [Morphological Transform](/commands/morphology/morphological-transform/) is **Preprocess** (home) and **Instance Seg.**: before a segmentation it works on the image, after one (e.g. a Threshold) on the segmentation mask.
+
+- The step's place decides which category it runs as - the first of its categories that may follow the step before it (utility steps skipped). The step's stripe shows that category's colour, and its settings show a read-only **Works on** line (_Image_ or _Segmentation mask_). Move the step to change it.
+- The command picker lists such a command once: under its home when that chip is on, else under the first of its other categories whose chip is on, with a hint naming its home (_also Preprocess_).
 
 ## Image Processing
 
@@ -35,13 +48,13 @@ Commands for reducing noise and enhancing signal before segmentation.
 | [Rank Filter](/commands/image-processing/rank-filter/)                 | Min / median / max neighbourhood filter          |
 | [Enhance Contrast](/commands/image-processing/enhance-contrast/)       | Histogram-based contrast enhancement             |
 | [Color Filter](/commands/image-processing/color-filter/)               | Retain pixels within an HSV colour range         |
+| [Color to Grayscale](/commands/image-processing/color-to-grayscale/)   | Turn an RGB image into one gray value per pixel  |
 | [Intensity Transform](/commands/image-processing/intensity-transform/) | Brightness and contrast adjustment               |
 | [Median Subtract](/commands/image-processing/median-subtract/)         | Subtract the local median for background removal |
 | [Image Math](/commands/image-processing/image-math/)                   | Combine two images mathematically                |
-| [Image Cache](/commands/image-processing/image-cache/)                 | Store or retrieve an image from cache slots      |
 | [Load Image Channel](/commands/image-processing/load-image-channel/)   | Load another channel as the current image        |
 | [Color Deconvolution](/commands/image-processing/color-deconvolution/) | Separate the stains of a brightfield RGB image (e.g. H&E, H-DAB) |
-| [Script](/commands/image-processing/script/)                           | Run your own Rhai script, using the other commands |
+| [Distance Transform](/commands/object/distance-transform/)             | Euclidean distance map of a binary image         |
 
 ## Edge & Feature Detection
 
@@ -70,11 +83,11 @@ Commands for separating foreground objects from background.
 
 ## Morphology
 
-Commands for modifying the shape of binary or greyscale regions.
+Commands for modifying the shape of regions. Morphological Transform is both **Preprocess** and **Instance Seg.** - see [Commands in several categories](#commands-in-several-categories).
 
 | Command                                                                  | Purpose                             |
 | ------------------------------------------------------------------------ | ----------------------------------- |
-| [Morphological Transform](/commands/morphology/morphological-transform/) | Erosion, dilation, opening, closing |
+| [Morphological Transform](/commands/morphology/morphological-transform/) | Dilate, erode, open, close - the image or, after a segmentation, the mask |
 
 ## AI Segmentation
 
@@ -104,12 +117,10 @@ Commands that operate on extracted objects.
 | [Voronoi](/commands/object/voronoi/)                           | Partition space from object centroids                                                                        |
 | [Object Transform](/commands/object/transform-objects/)        | Scale, snap, expand, shrink, or fit an ellipse to objects                                                    |
 | [Object Math](/commands/object/object-math/)                   | Boolean set operations (AND, OR, XOR, Subtract) between two object classes                                   |
-| [Distance Transform](/commands/object/distance-transform/)     | Measure distances between object pairs                                                                       |
 | [Propagation](/commands/object/propagation/)                   | Grow a region around each seed object through a channel (e.g. cells around nuclei)                           |
 | [Relate Objects](/commands/object/relate-objects/)             | Link each child object to its parent (e.g. spots to their cell)                                              |
 | [Skeletonize Objects](/commands/object/skeletonize-objects/)   | Reduce each object to its 1-pixel skeleton, optionally with branch and end points as objects                 |
 | [Trace Filaments](/commands/object/trace-filaments/)           | Trace each neuron's neurites from its soma into a tree of segments                                           |
-| [Save Image](/commands/object/save-image/)                     | Write a control image to disk, optionally with selected classes drawn on top                                 |
 
 ## Measure
 
@@ -142,6 +153,16 @@ Measure steps run once the objects are final. They measure the whole image or ev
 | [Track Nearest Neighbor](/commands/dataset/track-nearest-neighbor/)  | Link objects into tracks by nearest neighbour between consecutive frames |
 | [Measure Track Motion](/commands/dataset/measure-track-motion/)  | Measure how each track moved: speeds, straightness, turning and MSD (after a tracker) |
 
+## Utility
+
+Steps that fit anywhere in a pipeline - see [Utility commands](#utility-commands).
+
+| Command                                                | Purpose                                                       |
+| ------------------------------------------------------ | ------------------------------------------------------------- |
+| [Script](/commands/image-processing/script/)           | Run your own Rhai script, using the other commands            |
+| [Save Image](/commands/object/save-image/)             | Write a control image of this point of the pipeline to disk   |
+| [Image Cache](/commands/image-processing/image-cache/) | Store or retrieve an image from cache slots                   |
+
 ## Modules
 
 Several steps can be bundled into one reusable step with its own parameters - see [Modules](/guide/modules/).
@@ -157,5 +178,6 @@ Image
                       └─ Classify Objects
                            └─ Object Processing (Colocalize Objects, Propagation, Relate Objects, …)
                                 └─ Measure (Image Quality, Object Shape, Texture, …)
-                                     └─ Save Image
 ```
+
+Utility steps (Script, Save Image, Image Cache) can go anywhere in between.

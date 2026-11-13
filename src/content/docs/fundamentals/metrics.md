@@ -11,6 +11,8 @@ All metrics are calculated from the object's **mask** - the set of pixels that b
 
 Most metrics are columns in the results table (the label in brackets is the column name). A few - Aspect Ratio, Roundness, Compactness, the major axis angle, the centroid, the bounding box and Touches Edge - are stored in the results database but not offered as a results table column.
 
+For an object selected on the image, the [object card](/guide/classification/#the-selected-object) shows its area, circularity, solidity, aspect ratio, perimeter, Feret diameters, fitted ellipse, centroid and bounding box, computed the same way.
+
 ## Geometric Metrics
 
 These describe an object's shape, size and position - useful for telling apart, for example, a round healthy nucleus from a fragmented apoptotic one, or a compact vesicle from a smeared imaging artefact.
@@ -234,7 +236,7 @@ In the results the columns are named per channel, e.g. **Avg Intensity (Ch 0)**.
 
 A unique ID assigned to each object when it is created (**Object ID**): a UUID (version 7). IDs are unique across the whole results file, but they are not numbered 1, 2, 3 and can differ between runs.
 
-Use the **With object ID** option in [Save Image](/commands/object/save-image/) to annotate the ID alongside the object in control images.
+The ID is in every row of the [results](/guide/results/) and their exports, so a row can be matched to its object on the image with **Show on image**.
 
 ![Each object has its own ID; Relate Objects links spots to their cell, and a tracking step gives the same object the same Track ID in every frame](../../../assets/figures/metric-object-ids.svg)
 

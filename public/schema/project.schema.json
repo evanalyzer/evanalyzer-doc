@@ -673,6 +673,17 @@
         "range"
       ]
     },
+    "ColorToGrayscaleSettings": {
+      "description": "Turns a colour (RGB) image into a gray image - e.g. before Threshold,\nwhich needs one value per pixel. A gray image passes through unchanged.\n\nFor stains (Hematoxylin, DAB, Eosin) use Color Deconvolution instead; for\none colour range, Color Filter.",
+      "type": "object",
+      "properties": {
+        "method": {
+          "description": "How the red, green and blue of a pixel become one gray value.",
+          "$ref": "#/$defs/FiltersColorToGrayscaleGrayscaleMethodSettings",
+          "default": "BRIGHTNESS"
+        }
+      }
+    },
     "ConnectedComponentsSettings": {
       "description": "Identifies and labels discrete objects within a binary or multi-class image.\n\n[Preprocessing] -> [Segment/Threshold] -> [Fill Holes] -> [Connected Components] -> [Watershed] -> [Extract Objects]",
       "type": "object",
@@ -1034,6 +1045,46 @@
         }
       ]
     },
+    "FiltersColorToGrayscaleGrayscaleMethodSettings": {
+      "description": "How the red, green and blue of a pixel become one gray value.",
+      "oneOf": [
+        {
+          "description": "The brightness as the eye sees it: 0.2126 R + 0.7152 G + 0.0722 B\n(ITU-R BT.709) - the same value intensities of a colour image are\nmeasured with.",
+          "type": "string",
+          "const": "BRIGHTNESS"
+        },
+        {
+          "description": "The red channel alone.",
+          "type": "string",
+          "const": "RED"
+        },
+        {
+          "description": "The green channel alone - often the best contrast in H&E.",
+          "type": "string",
+          "const": "GREEN"
+        },
+        {
+          "description": "The blue channel alone.",
+          "type": "string",
+          "const": "BLUE"
+        },
+        {
+          "description": "(R + G + B) / 3.",
+          "type": "string",
+          "const": "AVERAGE"
+        },
+        {
+          "description": "The brightest of R, G and B per pixel (HSV value, as Color Filter\nuses).",
+          "type": "string",
+          "const": "MAXIMUM"
+        },
+        {
+          "description": "1 − brightness: stained tissue bright on a dark background, as\nThreshold expects objects - for brightfield slides.",
+          "type": "string",
+          "const": "DARKNESS"
+        }
+      ]
+    },
     "FiltersHessianHessianModeSettings": {
       "description": "Specifies the feature extraction method for the Hessian matrix.\n\nThe Hessian matrix describes the local second-order structure of an image,\noften used for blob detection (LoG) or ridge extraction.",
       "oneOf": [
@@ -1353,6 +1404,9 @@
               "type": "null"
             }
           ]
+        },
+        "rgbUnlinked": {
+          "type": "boolean"
         },
         "selectedChannel": {
           "type": [
@@ -2813,34 +2867,28 @@
       ]
     },
     "MorphologicalCommandSettings": {
-      "description": "A filter that applies mathematical morphology to an image.\n\nMorphological operations use a structuring element (kernel) to probe\nand modify the shapes within an image.",
+      "description": "A filter that applies mathematical morphology to an image.\n\nMorphological operations use a structuring element (kernel) to probe\nand modify the shapes within an image.\n\nIts place in the pipeline decides what it works on: before a\nsegmentation on the image, after one (e.g. a Threshold) on the\nsegmentation mask - every class transformed as its own mask: classes grow\ninto background only (Dilate) and touching classes shrink away from each\nother equally (Erode), whatever their class numbers.",
       "type": "object",
       "properties": {
         "kernelShape": {
           "description": "The geometric profile of the structuring element.",
-          "$ref": "#/$defs/MorphologyMorphologicalTransformationKernelShapesSettings"
+          "$ref": "#/$defs/MorphologyMorphologicalTransformationKernelShapesSettings",
+          "default": "BOX"
         },
         "kernelSize": {
-          "description": "The diameter of the structuring element in pixels.\nMust be an odd number (e.g., 3, 5, 7).",
+          "description": "The diameter of the structuring element in pixels.\nMust be an odd number (e.g., 3, 5, 7), so the kernel has a centre\npixel and is symmetric - an even size would shift objects.",
           "type": "integer",
           "format": "uint",
-          "minimum": 0
+          "default": 3,
+          "maximum": 101,
+          "minimum": 3
         },
         "op": {
           "description": "The transformation type (e.g., Dilate, Erode).",
-          "$ref": "#/$defs/MorphologyMorphologicalTransformationMorphOpsSettings"
-        },
-        "useGrayscale": {
-          "description": "If set the grayscale image instead of the labeld image is taken to perform a morphological transform",
-          "type": "boolean"
+          "$ref": "#/$defs/MorphologyMorphologicalTransformationMorphOpsSettings",
+          "default": "DILATE"
         }
-      },
-      "required": [
-        "op",
-        "kernelSize",
-        "kernelShape",
-        "useGrayscale"
-      ]
+      }
     },
     "MorphologyMorphologicalTransformationKernelShapesSettings": {
       "description": "The geometric structure of the kernel (structuring element).",
@@ -3660,6 +3708,19 @@
             }
           },
           "$ref": "#/$defs/ColorFilterCommandSettings",
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "COLOR_TO_GRAYSCALE"
+            }
+          },
+          "$ref": "#/$defs/ColorToGrayscaleSettings",
           "required": [
             "type"
           ]
@@ -4845,26 +4906,10 @@
       "description": "A command that exports the current image to a persistent file on disk.\n\nThis is a **transparent command**: it does not modify the image data in the\npipeline context, nor does it perform a buffer swap. It acts as a tap\nto view the state of the image at a specific point in the pipeline.",
       "type": "object",
       "properties": {
-        "displayClasses": {
-          "description": "Shows the selected classes in the image",
-          "type": "array",
-          "default": [],
-          "items": {
-            "$ref": "#/$defs/ObjectClass"
-          }
-        },
         "name": {
           "description": "Name the image should be stord under",
           "type": "string",
           "default": ""
-        },
-        "opacity": {
-          "description": "Opacity in percent of the filled `display_classes` objects (0 = only\nthe contours, 100 = solid). Contours are always drawn opaque.",
-          "type": "integer",
-          "format": "uint32",
-          "default": 50,
-          "maximum": 100,
-          "minimum": 0
         },
         "source": {
           "description": "Which image from the pipeline should be stored",
@@ -5306,6 +5351,9 @@
         },
         "pixelSizes": {
           "$ref": "#/$defs/PixelSizeSettings"
+        },
+        "rgb": {
+          "type": "boolean"
         },
         "selectedChannel": {
           "type": [

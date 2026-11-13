@@ -16,9 +16,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO = "evanalyzer/evanalyzer";
-// A commit of main (1.1.0-alpha.3 + the filament, Sholl and track-motion
-// commands): pinned, so it doesn't float. Use a release tag once one has them.
-const REF = "57df2c07afade0124043d3a7625594dfcc0b42b8";
+// A commit of main (1.1.0-alpha.3 + filaments, Sholl, track motion, colour
+// images and command categories): pinned, so it doesn't float. Use a release tag once one has them.
+const REF = "3d820f5926bc439227cbb9df2d5b398bc0f60830";
 const SCHEMA_PATH_IN_REPO = "docs/project.schema.json";
 const SOURCE_URL = `https://raw.githubusercontent.com/${REPO}/${REF}/${SCHEMA_PATH_IN_REPO}`;
 

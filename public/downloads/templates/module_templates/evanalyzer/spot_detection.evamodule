@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 4,
+  "key": "SPOT_DETECTION",
+  "meta": {
+    "name": "Spot detection",
+    "shortDescription": "Spots as local maxima (Imaris-style)",
+    "description": "Detects small, roughly round spots (EVs, vesicles, smFISH dots, foci) like Imaris \"Spots\": a strongly blurred copy of the image (background) is subtracted from a copy smoothed at the spot size (difference of Gaussians), every local maximum within the spot radius becomes one spot, maxima at or below the quality cut-off are dropped, and each spot is drawn as a circle of fixed diameter. Unlike threshold-based detection, touching spots stay separate and the result doesn't depend on a per-image threshold. The class the spots get is the module's \"Spots\" parameter. The sigmas, radius and diameter don't follow each other automatically - when spots are larger, raise all of them together (spot diameter d in px: small sigma about 0.35 x d, large sigma about 1.6 x small sigma, radius about d/2). With quality cut-off Otsu, \"Min quality\" stays the lowest cut-off, so empty images don't produce spots.",
+    "authors": [
+      {
+        "fullName": "Joachim Danmayr",
+        "organization": ""
+      }
+    ],
+    "creationTime": "2026-11-08T12:00:00Z",
+    "version": 1,
+    "category": "Spot Detection",
+    "tags": [
+      "spot",
+      "maxima",
+      "imaris"
+    ],
+    "appVersion": "0.1.0"
+  },
+  "classes": [],
+  "steps": [
+    {
+      "id": 1,
+      "enabled": true,
+      "command": {
+        "type": "IMAGE_CACHE",
+        "mode": "STORE",
+        "address": {
+          "memory": {
+            "moduleContext": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "enabled": true,
+      "command": {
+        "type": "GAUSSIAN_BLUR",
+        "kernelSize": 15,
+        "sigma": 2.3
+      }
+    },
+    {
+      "id": 3,
+      "enabled": true,
+      "command": {
+        "type": "IMAGE_CACHE",
+        "mode": "STORE",
+        "address": {
+          "memory": {
+            "moduleContext": 2
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "enabled": true,
+      "command": {
+        "type": "IMAGE_CACHE",
+        "mode": "LOAD",
+        "address": {
+          "memory": {
+            "moduleContext": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "enabled": true,
+      "command": {
+        "type": "GAUSSIAN_BLUR",
+        "kernelSize": 9,
+        "sigma": 1.4
+      }
+    },
+    {
+      "id": 6,
+      "enabled": true,
+      "command": {
+        "type": "IMAGE_MATH",
+        "operand": "SUBTRACT",
+        "secondImageAddress": {
+          "memory": {
+            "moduleContext": 2
+          }
+        },
+        "swapOperands": false
+      }
+    },
+    {
+      "id": 7,
+      "enabled": true,
+      "command": {
+        "type": "FIND_MAXIMA",
+        "radius": 2.0,
+        "radiusUnit": "PIXELS",
+        "cutoff": "MANUAL",
+        "minQuality": 20.0,
+        "qualityUnit": "BIT",
+        "insideSegmentation": false,
+        "excludeAtEdges": false,
+        "segmentationClass": 1
+      }
+    },
+    {
+      "id": 8,
+      "enabled": true,
+      "command": {
+        "type": "EXTRACT_OBJECTS",
+        "maxObjectsBeforeFail": 1000000,
+        "classMapping": [
+          {
+            "segmentationClass": 1,
+            "objectClass": {
+              "GLOBAL": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "enabled": true,
+      "command": {
+        "type": "TRANSFORM_OBJECTS",
+        "function": {
+          "type": "DRAW_CIRCLE",
+          "diameter": 4.0,
+          "unit": "PIXELS"
+        },
+        "inputClass": {
+          "GLOBAL": 1
+        },
+        "outputClass": "UNSET"
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "key": "spots",
+      "label": "Spots",
+      "description": "",
+      "section": "Classes",
+      "default": "1",
+      "bindings": [
+        {
+          "step": 8,
+          "param": "class_mapping.0.object_class"
+        },
+        {
+          "step": 9,
+          "param": "input_class"
+        }
+      ]
+    },
+    {
+      "key": "spot_radius",
+      "label": "Spot radius",
+      "description": "",
+      "section": "Detection",
+      "default": 2,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "radius"
+        }
+      ]
+    },
+    {
+      "key": "spot_diameter",
+      "label": "Spot diameter",
+      "description": "",
+      "section": "Detection",
+      "default": 4,
+      "bindings": [
+        {
+          "step": 9,
+          "param": "function.diameter"
+        }
+      ]
+    },
+    {
+      "key": "smoothing_small_sigma",
+      "label": "Smoothing (small sigma)",
+      "description": "",
+      "section": "Detection",
+      "default": 1.4,
+      "bindings": [
+        {
+          "step": 5,
+          "param": "sigma"
+        }
+      ]
+    },
+    {
+      "key": "background_large_sigma",
+      "label": "Background (large sigma)",
+      "description": "",
+      "section": "Detection",
+      "default": 2.3,
+      "bindings": [
+        {
+          "step": 2,
+          "param": "sigma"
+        }
+      ]
+    },
+    {
+      "key": "quality_cut_off",
+      "label": "Quality cut-off",
+      "description": "",
+      "section": "Detection",
+      "default": "Manual",
+      "bindings": [
+        {
+          "step": 7,
+          "param": "cutoff"
+        }
+      ]
+    },
+    {
+      "key": "min_quality",
+      "label": "Min quality",
+      "description": "",
+      "section": "Detection",
+      "default": 20,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "min_quality"
+        }
+      ]
+    },
+    {
+      "key": "exclude_at_edges",
+      "label": "Exclude at edges",
+      "description": "",
+      "section": "Filter",
+      "default": false,
+      "bindings": [
+        {
+          "step": 7,
+          "param": "exclude_at_edges"
+        }
+      ]
+    }
+  ],
+  "uses": []
+}

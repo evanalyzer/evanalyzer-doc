@@ -19,23 +19,28 @@ The same `evanalyzer` binary handles both modes:
 evanalyzer.exe cli <command> [options...]
 ```
 
-| Command                         | Purpose                                                                            |
-| ------------------------------- | ---------------------------------------------------------------------------------- |
-| [`analyze`](#analyze)           | Run a project's enabled pipelines over its images and write a new results database |
-| [`project-info`](#project-info) | Print a project's images, classes, and pipelines without running anything          |
-| [`validate`](#validate)         | Check that every image referenced by a project can be found on disk                |
-| [`cite`](#cite)                 | Write a project's methods paragraph and the citations of its steps (Markdown)      |
-| [`view`](#view)                 | Print a quick summary and a page of rows from a results database                   |
-| [`columns`](#columns)           | List the column ids available for grouping/chart axes in a results database        |
-| [`export`](#export)             | Export a results database to CSV, XLSX, or Parquet                                 |
-| [`train-classifier`](#train-classifier) | Train a pixel or object classifier from a project's labeled objects        |
-| [`jobs`](#jobs-and-attach)      | List the analyses on the `--remote` server: the running one and recently finished ones |
-| [`attach`](#jobs-and-attach)    | Follow an analysis on the `--remote` server again, e.g. after the connection dropped |
+The commands are grouped by what they work on:
 
-Every command supports `--help`:
+| Command | Purpose |
+| --- | --- |
+| [`analyze`](#analyze) | Run a project's enabled pipelines over its images and write a new results database |
+| [`project new`](#project-new) | Create a new empty project file |
+| [`project info`](#project-info) | Print a project's images, classes, and pipelines without running anything |
+| [`project validate`](#project-validate) | Check a project as a run would: its images on disk, its pipelines and modules, and the channels they read |
+| [`project cite`](#project-cite) | Write a project's methods paragraph and the citations of its steps (Markdown) |
+| [`results view`](#results-view) | Print a quick summary and a page of rows from a results database |
+| [`results columns`](#results-columns) | List the column ids available for grouping/chart axes in a results database |
+| [`results export`](#results-export) | Export a results database to CSV, XLSX, or Parquet |
+| [`jobs list`](#jobs-list-and-jobs-attach) | List the analyses on the `--remote` server: the running one and recently finished ones |
+| [`jobs attach`](#jobs-list-and-jobs-attach) | Follow an analysis on the `--remote` server again, e.g. after the connection dropped |
+| [`train-classifier`](#train-classifier) | Train a pixel or object classifier from a project's labeled objects |
+
+Every command and group has a help: `-h` prints one line per option, `--help` adds the details:
 
 ```sh
-./evanalyzer cli analyze --help
+./evanalyzer cli --help            # every command
+./evanalyzer cli results -h        # the commands of a group
+./evanalyzer cli analyze --help    # a command's options in detail
 ```
 
 ## Global Options
@@ -66,19 +71,67 @@ Every command can also run on another machine - for example a GPU workstation th
 
 All paths (`--project`, `--images`, `--db`, `--out`, `--settings`) then refer to the server, and output files are written there. See [Remote Control](/remote/remote-control/) for setting up the server.
 
-### jobs and attach
+### jobs list and jobs attach
 
-An analysis started on a server keeps running there if the connection drops - `analyze` then exits with a message naming the analysis id. Use the same `--remote` and `--user` options to find and follow it again:
+An analysis started on a server keeps running there if the connection drops - `analyze` then exits with a message naming the analysis id (_"Follow it again with `cli jobs attach --job <id>` (same --remote and --user)"_). Use the same `--remote` and `--user` options to find and follow it again:
 
 ```sh
 # List the running analysis and recently finished ones
-./evanalyzer cli --remote wss://server-name:7400 --user alice jobs
+./evanalyzer cli --remote wss://server-name:7400 --user alice jobs list
 
 # Follow the running analysis (or a specific one with --job <id>)
-./evanalyzer cli --remote wss://server-name:7400 --user alice attach
+./evanalyzer cli --remote wss://server-name:7400 --user alice jobs attach
 ```
 
-`attach` prints the progress like `analyze` does; `Ctrl+C` cancels the analysis. Both commands only work with `--remote`.
+| Argument | Description |
+| --- | --- |
+| `--job <id>` | `jobs attach` only: id of the analysis, as `jobs list` shows it. Default: the running one |
+
+`jobs attach` prints the progress like `analyze` does; `Ctrl+C` cancels the analysis. Both commands only work with `--remote`.
+
+## Docker and Compute Clusters
+
+For servers and compute clusters without a desktop, each release has command-line packages for Linux - the same program without the GUI, so no display or font libraries are needed. They hold everything but the GUI - `cli`, `server`, `worker` and `hash-password`; started without a command, the program says _"This build has no desktop app"_. See [Installation](/getting-started/installation/#command-line-packages-and-docker) for the files.
+
+The same packages are also published as a Docker image, `joda001/evanalyzer`:
+
+| Tag | Platforms | AI models (Cellpose, StarDist, U-Net, YOLOv5) |
+| --- | --- | --- |
+| `<version>`, `latest` | linux/amd64, linux/arm64 | On the CPU (amd64); none on arm64 |
+| `<version>-cuda`, `cuda` | linux/amd64 | On an NVIDIA GPU, else the CPU |
+
+`latest` and `cuda` are the newest stable release; pre-releases (e.g. `1.2.0-alpha.1`) only get their version tag.
+
+Mount the folder with the project and its images at `/data`:
+
+```sh
+docker run --rm -v "$PWD":/data joda001/evanalyzer \
+    cli analyze --project /data/my.evaproj --images /data/images --job-name run1
+```
+
+`--images` makes the mounted folder the project's image root, so image paths saved on another computer don't matter. The results land in `/data/results/` next to the project. The container runs as uid 65532: the mounted folder must be writable for it, or pass `--user "$(id -u):$(id -g)"`. Limit resources with Docker's `--cpus` / `--memory`, or with [`--max-threads` / `--max-ram`](#global-options).
+
+For the GPU, use the `cuda` tag with `--gpus all`. The host needs only the NVIDIA driver (580 or newer) and the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html):
+
+```sh
+docker run --rm --gpus all -v "$PWD":/data joda001/evanalyzer:cuda \
+    cli analyze --project /data/my.evaproj --images /data/images
+```
+
+The image also runs a [server](/remote/remote-control/): `docker run -d -p 7400:7400 -v "$PWD":/data -v evanalyzer-state:/var/lib/evanalyzer joda001/evanalyzer server --config /opt/evanalyzer/server.toml` - `docker logs` then shows the admin password and the TLS fingerprint.
+
+### Apptainer / Singularity
+
+Clusters usually run Apptainer instead of Docker. It runs the image as is, as your own user, and on any Linux - also on older cluster systems without glibc 2.39, which the plain Linux packages need:
+
+```sh
+apptainer pull evanalyzer.sif docker://joda001/evanalyzer:cuda
+apptainer run --nv --bind /scratch/me/study:/data evanalyzer.sif \
+    --max-threads "$SLURM_CPUS_PER_TASK" --max-ram 60000 \
+    cli analyze --project /data/my.evaproj --images /data/images
+```
+
+In a Slurm job script, set `--max-threads` and `--max-ram` (MB) to the job's `--cpus-per-task` and `--mem`, so EVAnalyzer plans with what the job was given, not the whole node. `--nv` passes the node's GPUs and driver in.
 
 ## analyze
 
@@ -93,6 +146,8 @@ Runs a project's enabled [pipelines](/guide/pipelines/) over its images and writ
 | `--project <path>` | Project file to analyze (required)                                                                                                          |
 | `--images <dir>`   | Scan this directory and use it as the project's image root before running. If omitted, the project's already-saved image list is used as-is |
 | `--threads <n>`    | Number of images to process in parallel. If omitted, EVAnalyzer picks the highest thread count that fits within available RAM and CPU cores. Never more than [`--max-threads`](#global-options) |
+| `--job-name <name>` | Name of the run: its results folder and `.evadb` file. Default: a random two-word name |
+| `--set <SETTING=VALUE>` | Change a step's setting for this run only (repeatable) - see [Changing settings with --set](#changing-settings-with---set) |
 
 The parallelism is automatically capped to whichever is lower — the number of CPU cores (or `--max-threads`) or the number of images that fit in available RAM (or `--max-ram`) — so a low-memory machine never launches more parallel workers than it can sustain.
 
@@ -103,7 +158,7 @@ Project:   experiment.evaproj
 Images:    48
 Pipelines: 1 enabled
 Output:    ./results/20261021T190435Z__EV Detection
-Running with 7 parallel thread(s)...
+Running with 7 parallel thread(s) (Ctrl+C to cancel)...
 
 [48/48] /data/plate1/A1_01.tif
 Done: 48 image(s) analyzed in 32.4s (0 failed)
@@ -114,12 +169,62 @@ A project with no images (and no `--images` override) fails fast with an error i
 
 Press **Ctrl+C** to request a graceful stop; in-flight images will finish before the process exits.
 
-## project-info
+### Changing settings with --set
+
+`--set` changes one setting of a step for this run, without editing the project file - e.g. to try several values of a parameter in a script:
+
+```sh
+./evanalyzer cli analyze --project experiment.evaproj \
+  --set "Varroa detection.9.minObjectSize=100" \
+  --set "Varroa detection.3.thresholds.0.method=Otsu"
+```
+
+Each value is written `Pipeline.step.setting=value`:
+
+| Part | Description |
+| --- | --- |
+| `Pipeline` | The pipeline's name. A name may contain dots - the longest pipeline name the text starts with is used |
+| `step` | The step's `id` in the project file (`"id": 9` in its entry under `steps`) - not its position in the editor's list |
+| `setting` | The setting's name as in the project file (`minObjectSize`) or as in the editor (`min_object_size`) - case and `_` don't matter. An entry of a list is addressed by its number (`thresholds.0.method`), a [module](/guide/modules/) step's parameter by its key |
+| `value` | The new value. A choice may be written as the editor shows it (`Distance Map`) or as the file spells it (`DISTANCE_MAP`); an on/off setting takes `true`/`false`, `yes`/`no`, `on`/`off` or `1`/`0` |
+
+Each change is printed before the run starts:
+
+```
+Set:       pipeline “Varroa detection”, step 9 (WATERSHED): min_object_size 0 → 100
+```
+
+A value is set as the editor sets it and read back, so a value the setting doesn't take is an error instead of being ignored. Every `--set` that doesn't apply is reported at once and nothing runs, e.g.:
+
+```
+Error: --set "Bees.1.minSize=3": no pipeline it starts with - the project has “Varroa detection”, “Varroa detection.v2”
+--set "Varroa detection.7.minSize=3": pipeline “Varroa detection” has no step 7 - its steps (id and command): 3 THRESHOLD, 9 WATERSHED
+--set "Varroa detection.9.minObjectSiz=3": pipeline “Varroa detection”, step 9 (WATERSHED) has no setting `minObjectSiz` - did you mean `min_object_size`?
+--set "Varroa detection.9.smoothingSigma=soft": pipeline “Varroa detection”, step 9 (WATERSHED): `soft` is no value for smoothing_sigma - it takes a number (it stays 0)
+```
+
+The project file stays as it is. The run's copy of the project, `<job>.evaproj` next to its results, records the values it ran with. [`project validate --set`](#project-validate) checks the project with the same changes, without running it.
+
+## project new
+
+Creates a new empty project file - to fill in with the GUI, or on a server with `--remote`, where it is created on the server's disk like every `project` command works there.
+
+```sh
+./evanalyzer cli project new --project experiment.evaproj
+```
+
+| Argument | Description |
+| --- | --- |
+| `--project <path>` | Project file to create (required). `.evaproj` is added if the name has another or no extension |
+
+The project gets the creation time and, if one is set in this computer's [settings](/guide/settings/), the author. An existing file is never overwritten: _"… already exists - choose another name or delete it first"_.
+
+## project info
 
 Prints a project's image count, classes, and pipelines without running anything - useful for sanity-checking a project file before kicking off a long batch run.
 
 ```sh
-./evanalyzer cli project-info --project experiment.evaproj
+./evanalyzer cli project info --project experiment.evaproj
 ```
 
 | Argument           | Description                              |
@@ -145,12 +250,47 @@ Pipelines (1):
 
 If the configured image root can't be found on disk, **Reachable** reports why instead of just "no".
 
-## cite
+## project validate
+
+Checks a project as a run would - a pre-flight step before starting a long headless run:
+
+- every image the project references, on disk
+- its pipelines and [modules](/guide/modules/), as the editor checks them
+- the channels the pipelines read, against the images' channels
+
+```sh
+./evanalyzer cli project validate --project experiment.evaproj
+```
+
+| Argument | Description |
+| --- | --- |
+| `--project <path>` | Project file to check (required) |
+| `--set <SETTING=VALUE>` | Check the project with a step's setting changed (repeatable), as [`analyze --set`](#changing-settings-with---set) would run it. The project file stays as it is |
+
+```
+Project:    experiment.evaproj
+Image root: /data/plate1
+Checked 48 image(s)
+All images found on disk.
+Checked 1 pipeline(s) and 0 module(s)
+No problems found in the pipelines.
+```
+
+Missing images are listed one per line, and each problem in the pipelines is printed with its place, e.g. `  warning: pipeline “EV Detection”, step 3: …` (here the step's position in the editor's list). Warnings are only printed; missing images and errors make the command fail with a non-zero exit code, e.g. _"Error: 2 of 48 image(s) could not be found on disk, 1 error(s) in the pipelines"_ - so it can guard a run in a script:
+
+```sh
+./evanalyzer cli project validate --project experiment.evaproj && \
+  ./evanalyzer cli analyze --project experiment.evaproj
+```
+
+A project file that doesn't load fails here too, with every problem at its place - see [Project File](#project-file).
+
+## project cite
 
 Writes the same file as **EVA › Cite project** in the GUI: a ready-to-paste methods paragraph naming EVAnalyzer with its version, each pipeline's steps with their citations, and the full reference list - see [Citation](/citation/#citing-the-algorithms-you-used).
 
 ```sh
-./evanalyzer cli cite --project experiment.evaproj
+./evanalyzer cli project cite --project experiment.evaproj
 ```
 
 | Argument           | Description                                                            |
@@ -158,39 +298,22 @@ Writes the same file as **EVA › Cite project** in the GUI: a ready-to-paste me
 | `--project <path>` | Project file to cite (required)                                        |
 | `--out <path>`     | Markdown file to write. Default: `citation.md` next to the project file |
 
-## validate
-
-Checks that every image referenced by a project can be found on disk. Useful as a pre-flight step before starting a long headless run.
-
-```sh
-./evanalyzer cli validate --project experiment.evaproj
-```
-
-| Argument           | Description                        |
-| ------------------ | ---------------------------------- |
-| `--project <path>` | Project file to check (required)   |
-
-The command exits with a non-zero status code if any images are missing, making it suitable for use in CI scripts:
-
-```sh
-./evanalyzer cli validate --project experiment.evaproj && \
-  ./evanalyzer cli analyze --project experiment.evaproj
-```
+It prints _"Citation written to <path>"_.
 
 ## Results Database
 
-`analyze` writes results to a `<job name>.evadb` file (DuckDB format) in `results/<date>__<job name>/` next to the project - the same file the GUI's [Results](/guide/results/) view opens. `view`, `columns`, and `export` all read from this file via `--db`.
+`analyze` writes results to a `<job name>.evadb` file (DuckDB format) in `results/<date>__<job name>/` next to the project - the same file the GUI's [Results](/guide/results/) view opens. The `results` commands - `view`, `columns` and `export` - all read from this file via `--db`.
 
 ```sh
 duckdb results.evadb "SELECT object_class_name, COUNT(*) FROM objects GROUP BY object_class_name"
 ```
 
-## view
+## results view
 
 Prints a database summary (image/class counts, T/Z-stack ranges) followed by a paginated, human-readable table of per-object rows - a quick terminal preview without exporting anything.
 
 ```sh
-./evanalyzer cli view --db results.evadb --limit 10
+./evanalyzer cli results view --db results.evadb --limit 10
 ```
 
 | Argument                      | Description                                               |
@@ -205,12 +328,12 @@ Prints a database summary (image/class counts, T/Z-stack ranges) followed by a p
 | `--transpond <true\|false>`   | Show the classes side by side, see [Filter Arguments](#filter-arguments) |
 | `--t <n\|a-b>`, `--z <n\|a-b>` | Only these time points / Z planes, see [Filter Arguments](#filter-arguments) |
 
-## columns
+## results columns
 
 Lists every column id available in a results database - including per-channel intensity columns and per-partner-class colocalization counts - grouped the same way as the GUI's Columns picker (General, Geometry, Shape, Coloc, Intensity).
 
 ```sh
-./evanalyzer cli columns --db results.evadb
+./evanalyzer cli results columns --db results.evadb
 ```
 
 | Argument      | Description                                                 |
@@ -236,17 +359,17 @@ sum_scaled_ch0                 Sum Intensity (Ch 0)           intensity
 
 Measurement steps add a column per measurement, with the id `measurement:<step ID>/<measurement>` (group **Measurements**); a measurement that points to another object also has `measurement_object:<…>`.
 
-Run this first when scripting `export` - column ids are the values to pass to `--group-by`-adjacent tooling and to `duckdb` queries against the same file.
+Run this first when scripting `results export` - column ids are the values to pass to `--group-by`-adjacent tooling and to `duckdb` queries against the same file.
 
-## export
+## results export
 
 Exports a results database to CSV, XLSX, or Parquet, with the same filtering and (for `image` grouping) aggregation logic as the GUI's [Results List view](/guide/results/#list-view). Chart image export (histogram/scatter/boxplot PNGs) isn't wired up in the CLI yet - use the GUI's [Charts](/guide/results/#charts) tab for those.
 
-### export csv / export xlsx
+### results export csv / xlsx
 
 ```sh
-./evanalyzer cli export csv --db results.evadb --out results.csv
-./evanalyzer cli export xlsx --db results.evadb --out results.xlsx \
+./evanalyzer cli results export csv --db results.evadb --out results.csv
+./evanalyzer cli results export xlsx --db results.evadb --out results.xlsx \
   --group-by image --agg avg,median
 ```
 
@@ -276,7 +399,7 @@ Exports a results database to CSV, XLSX, or Parquet, with the same filtering and
 `--measurements` writes the values of the [measurement steps](/guide/pipelines/#measurement-steps), one row per value, with the columns `image_name`, `image_rel_path`, `z_stack`, `t_stack`, `region`, `object_id`, `related_object_id`, `object_class_name`, `step`, `measurement`, `unit`, `key` and `value` - the same table as the GUI's [Measurements export](/guide/results/#exporting-results). `--image`, `--t` and `--z` restrict it; every measurement is written. Results without a measurement step fail with _"These results have no measurements - a pipeline needs a measurement step"_. It can't be combined with `--tracks`.
 
 ```sh
-./evanalyzer cli export csv --db results.evadb --out measurements.csv --measurements
+./evanalyzer cli results export csv --db results.evadb --out measurements.csv --measurements
 ```
 
 ### Exporting as a view
@@ -284,18 +407,18 @@ Exports a results database to CSV, XLSX, or Parquet, with the same filtering and
 `--view <name>` exports the results the way a [List view](/guide/results/#views) of the project shows them: its columns, classes, images (**Only disabled** exports just the images left out), its [children and linked-object columns](/guide/results/#parents-and-children), [Coloc pairs](/guide/results/#coloc-pairs), and a row per object or - with **A row per: Images** - per image with the view's aggregations. `--project` names the `.evaproj` file the view belongs to; both are needed together. The name is matched ignoring case.
 
 ```sh
-./evanalyzer cli export xlsx --db results.evadb --out qc.xlsx \
+./evanalyzer cli results export xlsx --db results.evadb --out qc.xlsx \
   --project experiment.evaproj --view QC
 ```
 
 Explicit `--image`, `--class` and `--group-by` win over the view. Columns the view names but these results lack are left out, with a note on stderr (_"Not in these results, left out of the view: …"_). A name that isn't a view of the project fails with the list of its views; a Plate, Charts or Tracks view fails with _"--view exports List views"_. It can't be combined with `--tracks` or `--measurements`.
 
-### export parquet
+### results export parquet
 
 Writes the database's raw `objects` table straight to a Parquet file via DuckDB's own `COPY ... TO ... (FORMAT parquet)` - every column, completely unfiltered. There's no column selection, image/class filtering, or grouping to apply (that's the GUI's [Parquet export](/guide/results/#exporting-results) behavior too), so it takes a plainer set of arguments than `csv`/`xlsx`:
 
 ```sh
-./evanalyzer cli export parquet --db results.evadb --out objects.parquet
+./evanalyzer cli results export parquet --db results.evadb --out objects.parquet
 ```
 
 | Argument       | Description                            |
@@ -305,7 +428,7 @@ Writes the database's raw `objects` table straight to a Parquet file via DuckDB'
 
 ### Filter Arguments
 
-Shared by `view` and every `export` subcommand:
+Shared by `results view` and every `results export` subcommand:
 
 | Argument                      | Description                                               |
 | ----------------------------- | --------------------------------------------------------- |
@@ -316,12 +439,12 @@ Shared by `view` and every `export` subcommand:
 | `--z <n\|a-b>`                | Only these Z planes, written the same way. Default: all |
 
 :::note
-`--transpond` is currently only applied by `view`; `export csv`/`export xlsx` accept it but still write the normal row layout. Use the GUI's **Transpond output table** export option for a transposed file.
+`--transpond` is currently only applied by `results view`; `results export csv`/`xlsx` accept it but still write the normal row layout. Use the GUI's **Transpond output table** export option for a transposed file.
 :::
 
 ### Group Arguments
 
-Shared by `export csv` and `export xlsx` - mirrors the GUI's [Grouping and Aggregating Rows](/guide/results/#grouping-and-aggregating-rows):
+Shared by `results export csv` and `results export xlsx` - mirrors the GUI's [Grouping and Aggregating Rows](/guide/results/#grouping-and-aggregating-rows):
 
 | Argument                            | Description                                                                                                                    |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -355,42 +478,52 @@ Every time frame with labeled objects is used; the `--t-stack` option is gone.
 
 ## Project File
 
-The CLI operates on an EVAnalyzer project file (`.evaproj`). Create and configure the project using the GUI, save it, and then use the saved file for headless runs.
+The CLI operates on an EVAnalyzer project file (`.evaproj`). Create and configure the project using the GUI (or start one with [`project new`](#project-new)), save it, and then use the saved file for headless runs.
 
 The project file is a JSON document - it can be modified programmatically using any scripting language.
 
+A project file that doesn't load - in the CLI as in the GUI - names every problem with its pipeline, step and field, e.g.:
+
+```
+the project file could not be loaded, 2 problems:
+  - pipeline “Nuclei”, step 2 (WATERSHED): smoothingSigma: invalid type: string "soft", expected f32
+  - pipeline “Nuclei”, step 4 (WATERSHD): unknown command `WATERSHD` - did you mean `WATERSHED`?
+```
+
+The step number here is its position in the pipeline. Up to 20 problems are listed.
+
 ## Automated Parameter Variation
 
-A common use case is running the same pipeline with multiple parameter sets. The project file can be modified by a script before each run.
+A common use case is running the same pipeline with multiple parameter sets. [`--set`](#changing-settings-with---set) changes a setting for one run without touching the project file, so a shell loop is enough:
 
-### Example: vary blur kernel size with Python
+```sh
+for size in 3 5 7 9; do
+  ./evanalyzer cli analyze --project experiment.evaproj \
+    --job-name "kernel-$size" \
+    --set "EV Detection.2.kernelSize=$size"
+done
+```
+
+Each run gets its own results folder, and its copy of the project (`<job>.evaproj`) records the value it ran with. Check the overrides first with `project validate --set ...`.
+
+Editing the JSON with a script before each run still works too - e.g. for changes `--set` can't make, such as adding or removing steps:
 
 ```python
 import json
 import subprocess
 
-def set_blur_kernel(filename, kernel_size):
-    with open(filename) as f:
-        data = json.load(f)
+with open("experiment.evaproj") as f:
+    data = json.load(f)
 
-    for pipeline in data.get("pipelines", []):
-        for step in pipeline.get("steps", []):
-            if step.get("command", {}).get("type") == "blur":
-                step["command"]["kernelSize"] = kernel_size
+for pipeline in data.get("pipelines", []):
+    for step in pipeline.get("steps", []):
+        if step.get("command", {}).get("type") == "gaussianBlur":
+            step["command"]["kernelSize"] = 7
 
-    with open(filename, "w") as f:
-        json.dump(data, f, indent=2)
+with open("experiment-k7.evaproj", "w") as f:
+    json.dump(data, f, indent=2)
 
-def run_analysis(project_file):
-    subprocess.run(
-        ["./evanalyzer", "cli", "analyze", "--project", project_file],
-        check=True,
-    )
-
-for size in [3, 5, 7, 9]:
-    set_blur_kernel("experiment.evaproj", size)
-    run_analysis("experiment.evaproj")
-    print(f"Finished kernel_size={size}")
+subprocess.run(["./evanalyzer", "cli", "analyze", "--project", "experiment-k7.evaproj"], check=True)
 ```
 
 ## Project File Format
@@ -411,6 +544,7 @@ The project file is a JSON document following the EVAnalyzer schema. Key top-lev
       "imageSource": { ... },
       "steps": [
         {
+          "id": 1,
           "enabled": true,
           "command": { "type": "rollingBall", "radius": 4.0, "ballType": "paraboloid" }
         },

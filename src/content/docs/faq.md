@@ -149,7 +149,7 @@ Measure them with [Measure Image Quality](/commands/measure/image-quality/) (foc
 <details>
 <summary>Where are my results, and how do I open them in Excel, R or Python?</summary>
 
-Every analysis writes a results database to `<project folder>/results/<date>__<job name>/`. Open it in **Results** mode, then [export](/guide/results/#exporting-results) to XLSX or CSV for Excel, or Parquet for R and Python; the measurements export has one value per row, which reads straight into R or pandas. The [CLI](/cli/cli/#export) exports the same without the GUI.
+Every analysis writes a results database to `<project folder>/results/<date>__<job name>/`. Open it in **Results** mode, then [export](/guide/results/#exporting-results) to XLSX or CSV for Excel, or Parquet for R and Python; the measurements export has one value per row, which reads straight into R or pandas. The [CLI](/cli/cli/#results-export) exports the same without the GUI.
 
 </details>
 

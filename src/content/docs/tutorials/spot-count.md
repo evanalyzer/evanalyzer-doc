@@ -41,7 +41,7 @@ Create a new pipeline named `EV Detection` and add the following steps in order:
 | [Watershed](/commands/segmentation/watershed/)                                                         | Tolerance: 0.5 - separates closely touching spots                         |
 | [Extract Objects](/commands/object/extract-objects/)                                                   | No settings                                                               |
 | [Classify Objects](/commands/object/classify-objects/)                                                 | Target: `ch1@spot`; Min Size: 3 px²; Min circularity: 0.1                 |
-| [Save Image](/commands/object/save-image/)                                                             | Path: `images/${imageName}` - save a control image (remove if not needed) |
+| [Save Image](/commands/object/save-image/)                                                             | Name: `control` - save a control image (remove if not needed)               |
 
 :::tip[Threshold selection]
 Open the **advanced preview** to display the image histogram alongside the segmentation result. Set the minimum threshold just above the highest background-noise peak.

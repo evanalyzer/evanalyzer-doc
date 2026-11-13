@@ -201,6 +201,10 @@ export default defineConfig({
                   slug: "commands/image-processing/color-filter",
                 },
                 {
+                  label: "Color to Grayscale",
+                  slug: "commands/image-processing/color-to-grayscale",
+                },
+                {
                   label: "Intensity Transform",
                   slug: "commands/image-processing/intensity-transform",
                 },
@@ -213,10 +217,6 @@ export default defineConfig({
                   slug: "commands/image-processing/image-math",
                 },
                 {
-                  label: "Image Cache",
-                  slug: "commands/image-processing/image-cache",
-                },
-                {
                   label: "Load Image Channel",
                   slug: "commands/image-processing/load-image-channel",
                 },
@@ -225,8 +225,8 @@ export default defineConfig({
                   slug: "commands/image-processing/color-deconvolution",
                 },
                 {
-                  label: "Script",
-                  slug: "commands/image-processing/script",
+                  label: "Distance Transform",
+                  slug: "commands/object/distance-transform",
                 },
               ],
             },
@@ -348,10 +348,6 @@ export default defineConfig({
                   slug: "commands/object/transform-objects",
                 },
                 {
-                  label: "Distance Transform",
-                  slug: "commands/object/distance-transform",
-                },
-                {
                   label: "Object Math",
                   slug: "commands/object/object-math",
                 },
@@ -368,7 +364,6 @@ export default defineConfig({
                   label: "Trace Filaments",
                   slug: "commands/object/trace-filaments",
                 },
-                { label: "Save Image", slug: "commands/object/save-image" },
               ],
             },
             {
@@ -422,6 +417,21 @@ export default defineConfig({
                 {
                   label: "Measure Filament Tree",
                   slug: "commands/measure/measure-filament-tree",
+                },
+              ],
+            },
+            {
+              label: "Utility",
+              collapsed: true,
+              items: [
+                {
+                  label: "Script",
+                  slug: "commands/image-processing/script",
+                },
+                { label: "Save Image", slug: "commands/object/save-image" },
+                {
+                  label: "Image Cache",
+                  slug: "commands/image-processing/image-cache",
                 },
               ],
             },

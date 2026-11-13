@@ -72,7 +72,7 @@ The chosen wavelength is saved in the project and applies to that channel in eve
 
 Channels the file gives no wavelength are shown white. To give them distinct colors instead, switch on **Color channels without a wavelength** in **EVA › Project settings… › Viewport** - the colors are then kept in the project as their wavelength.
 
-RGB images keep their fixed red, green and blue channel colors.
+Colour (RGB) images keep their fixed red, green and blue channel colors - see [Colour images](#colour-images).
 
 ![The color chooser open from a channel swatch: wavelength tiles, Emission (nm), Reset and Done](../../../assets/screenshots/screenshot-image-channel-color.png)
 
@@ -95,9 +95,20 @@ The histogram of the selected channel, with its black and white points as two li
 - **Values ›** shows the numbers: **Black / white** and **Axis min / max**.
 - **Use for all images** applies these settings to every image of the project.
 
-An image opened for the first time is auto-scaled, every channel. To start with the full value range instead, switch off **Auto-scale new images** in **EVA › Project settings… › Viewport**. The scaling of each image is kept in the project either way.
+An image opened for the first time is auto-scaled, every channel. To start with the full value range instead, switch off **Auto-scale new images** in **EVA › Project settings… › Viewport**. The scaling of each image is kept in the project either way. A [colour image](#colour-images) opens in true colour, with the full range 0-255.
 
 ![The Image panel: channels with their eyes, Grayscale, the histogram of CY5 with its black and white lines, Values open with Black / white and Axis min / max](../../../assets/screenshots/screenshot-image-panel.png)
+
+### Colour images
+
+A colour (RGB) image - a brightfield or H&E slide, a camera picture - shows **RGB · 3 channels** in the panel's head and lists its **Red**, **Green** and **Blue** as channels.
+
+- **Colours linked** (on by default) gives red, green and blue one black and white point, so the colours stay true: the histogram (**HISTOGRAM · RGB**) shows the three curves together, and dragging a line or **Auto-scale** moves all three. Switch it off to give each colour its own range - the histogram then shows the selected colour. Switching it on again gives all three the selected colour's range. The setting is saved in the project.
+- To look at one colour alone, hide the other two with their eyes.
+
+An analysis reads a colour image as **one** channel, channel 0 - not as three. In a step's channel picker it is listed as **Image** (_RGB · brightness_); channels 1 and up show _not in this image_, and the checks before a run report a step that reads one of them. Steps that measure intensity use the pixel's brightness. To analyse one colour or another gray value, start the pipeline with [Color to Grayscale](/commands/image-processing/color-to-grayscale/); to keep only pixels of a certain colour, use [Color Filter](/commands/image-processing/color-filter/). [AI training](/ai/training/) lists a colour image as one channel, **Image (RGB)**, and learns from all three colours.
+
+![An H&E section open: the Image panel shows RGB · 3 channels with Red, Green and Blue, Colours linked on, and HISTOGRAM · RGB with the three curves](../../../assets/screenshots/screenshot-image-rgb.png)
 
 ### Z-stack
 

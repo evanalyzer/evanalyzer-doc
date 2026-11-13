@@ -48,6 +48,17 @@ The CUDA builds bundle the CUDA runtime libraries and are packed as one `.7z` fi
 
 Extract the downloaded archive to a directory of your choice, and keep its contents together: the AI models (Cellpose, StarDist, U-Net, YOLOv5) run through the **AI plugin** in the `ai` folder next to the program (on Windows, also keep the `.dll` files next to `evanalyzer.exe`). Without it everything else works, and AI steps report _"AI models need the AI plugin (…), which is not installed"_. Besides the app, every package holds `LICENSE` and `THIRD-PARTY-NOTICES.txt` - the licences of the third-party components shipped with it.
 
+## Command-Line Packages and Docker
+
+For servers and compute clusters there are command-line packages for Linux: the same program without the GUI, so they need no display or font libraries - only glibc 2.39 or newer, like the other Linux packages. They run the [command line](/cli/cli/), the [server](/remote/remote-control/) and its workers.
+
+| Platform     | CPU-only                             | CUDA-accelerated                          |
+| ------------ | ------------------------------------ | ----------------------------------------- |
+| Linux x86-64 | `evanalyzer-cli-linux-x86_64.tar.gz` | `evanalyzer-cli-linux-x86_64-cuda.tar.xz` |
+| Linux ARM64  | `evanalyzer-cli-linux-arm64.tar.gz` (no AI models) | -                           |
+
+All three unpack with plain `tar -xf`. The same packages are published as the Docker image `joda001/evanalyzer` (tags `latest` and `cuda`), which also runs with Apptainer / Singularity on clusters with an older glibc - see [Docker and Compute Clusters](/cli/cli/#docker-and-compute-clusters).
+
 ## VS Code Extension
 
 The [EVAnalyzer File Support](/vscode/extension/) extension adds validation, autocomplete, and creation wizards for `.evapipe`, `.evaproj`, and `.evapt` files to VS Code.

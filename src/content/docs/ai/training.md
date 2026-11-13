@@ -144,7 +144,7 @@ A few rules of thumb (the same approach ilastik's pixel classification is built 
 
 - **Combine a few filter types across several sizes**, rather than many filter types at one size - small sizes pick up fine detail, larger ones add regional context.
 - **Pick the channels that tell the classes apart.** Each ticked channel multiplies the number of features.
-- **Colour (RGB) images are supported.** On an RGB image every feature is computed separately on the red, green and blue planes, so the classifier sees the colour information. A model trained on colour images can only be applied to colour images, and one trained on grayscale images only to grayscale images - EVAnalyzer refuses to apply it to the other kind. All training images of one model must therefore be of the same kind; a mixed set is refused before training starts.
+- **Colour (RGB) images are supported.** A colour image is one channel in an analysis, so the channel chips show a single chip, **Image (RGB)**. Every feature is computed separately on its red, green and blue planes, so the classifier sees the colour information - the head of **FEATURES** counts _"12 × 3 colours = 36"_. A model trained on colour images can only be applied to colour images, and one trained on grayscale images only to grayscale images - EVAnalyzer refuses to apply it to the other kind. All training images of one model must therefore be of the same kind; a mixed set is refused before training starts.
 - More features cost more inference time (every pixel of every image needs every feature computed) without necessarily improving accuracy - start small and add features only where the classifier is actually confusing two classes.
 
 <a id="choosing-object-metrics-object-classifier"></a>

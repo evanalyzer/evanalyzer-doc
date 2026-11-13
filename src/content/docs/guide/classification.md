@@ -79,20 +79,40 @@ Whether an image opens with the list or the table is set in **EVA › Project se
 
 ### The selected object
 
-The selected object's details are shown in a card beside the panel:
+The selected object's details are shown in a card beside the panel: **OBJECT** and its label, its classes, then four sections that fold open and closed with a click on their title. **SIZE & SHAPE** and **INTENSITY** are open at first; which sections are open is kept for the session. A folded section shows a summary beside its title (for example the area and the circularity). A card taller than about two thirds of the image scrolls inside.
 
-- its classes,
-- **Area** in pixels² and in the physical unit (nm²) from the image's pixel size,
-- **Circularity**,
-- **Shared by** - how many objects have the same segmentation class (_"120 objects"_),
-- per channel, the mean (**μ**) and the sum (**Σ**) of its intensity,
+**SIZE & SHAPE** - **Area** (px², with µm² below once the image has a [pixel size](/guide/images/#pixel-size)) and **Circularity** (with a 0-1 bar) as two tiles, then:
+
+| Row | Value |
+| --- | --- |
+| **Solidity** | Area over the convex hull's area. |
+| **Aspect ratio** | Major over minor axis of the fitted ellipse. |
+| **Perimeter** | In px, and µm. |
+| **Max Feret**, **Min Feret** | The longest and the narrowest caliper width, in px and µm. |
+| **Ellipse** | The fitted ellipse's major × minor axis in px, and its eccentricity (_ecc._). |
+| **Centre** | The centroid (_x · y_). |
+| **Box** | Width × height of the bounding box in px. |
+| **Plane** | Z-plane and frame (_z · t_), and **touches edge** for an object cut off by the image border. |
+
+The values are computed as the results columns compute them - see [Objects & Metrics](/fundamentals/metrics/#geometric-metrics). The µm values appear only once the pixel size is known.
+
+**INTENSITY** - one row per channel with the **mean**, **sum**, **min** and **max** of the pixels inside the object. **More** adds the median, the quartiles (_Q1–Q3_), the standard deviation (_sd_) and the _MAD_; **Fewer** hides them again. A colour image has one row, **Image (RGB)**.
+
+**MEASURED BY STEPS** - only when the live preview's pipeline has [Measure commands](/fundamentals/metrics/#measurements-from-measure-commands): their values for this object, grouped by step.
+
+**RELATIONS** -
+
+- **Same label** - how many objects have the same segmentation label (_"120 objects"_),
 - **Parent** - for an object linked by [Relate Objects](/commands/object/relate-objects/), the classes of the objects it belongs to (_"Cell"_),
 - **Children** - how many linked objects belong to it, per class (_"Spot · 7"_),
-- **Touches** - each class it colocalizes with, and how many of that class's objects.
+- **Touches** - each class it colocalizes with, and how many of that class's objects,
+- **Track** - the track ID of a tracked object.
+
+Only the rows the object has are shown. The **✕** in the card's head unselects the object.
 
 An object found by a pipeline is read-only (**From the pipeline · read-only**). An object drawn by hand can be changed.
 
-![The Objects list on the right, one object selected; its card beside it with its class, area, circularity, Shared by and the mean and sum of each channel - a pipeline object, read-only](../../../assets/screenshots/screenshot-roi-list.png)
+![The Objects list on the right, one object selected; its card beside it with its class, SIZE & SHAPE open with the Area and Circularity tiles and the shape rows, INTENSITY open with mean, sum, min and max per channel - a pipeline object, read-only](../../../assets/screenshots/screenshot-roi-list.png)
 
 ### Managing objects
 

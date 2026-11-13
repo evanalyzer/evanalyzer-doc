@@ -93,16 +93,16 @@ All paths - `--project`, `--images`, `--db`, `--out` - are paths **on the server
 An analysis belongs to the worker, not to the connection that started it. Closing the window, a dropped network or a laptop going to sleep don't stop it:
 
 - **GUI** - closing the window or choosing **Disconnect** while an analysis runs asks what to do: **Keep running on server** (or **Keep running and disconnect**) leaves it running, **Cancel analysis** stops it. The next time you connect, the GUI follows the running analysis again and reports analyses that ended in the meantime.
-- **CLI** - if the connection drops during `analyze`, the analysis keeps running on the server. `evanalyzer cli jobs` lists the running and recently finished analyses, `evanalyzer cli attach` follows the running one again (`--job <id>` for a specific one):
+- **CLI** - if the connection drops during `analyze`, the analysis keeps running on the server. `evanalyzer cli jobs list` lists the running and recently finished analyses, `evanalyzer cli jobs attach` follows the running one again (`--job <id>` for a specific one):
 
   ```sh
-  ./evanalyzer cli --remote wss://workstation:7400 --user alice jobs
-  ./evanalyzer cli --remote wss://workstation:7400 --user alice attach
+  ./evanalyzer cli --remote wss://workstation:7400 --user alice jobs list
+  ./evanalyzer cli --remote wss://workstation:7400 --user alice jobs attach
   ```
 
 Each user runs one analysis at a time - a second one is refused until the first has finished. A classifier training survives a disconnect too: the worker saves the model into the project's `models` folder itself. Previews and exports stop with their connection.
 
-A results database records how its analysis ended. One that was cancelled, failed or interrupted (crash, killed worker) shows a warning in the results window and in `evanalyzer cli view`.
+A results database records how its analysis ended. One that was cancelled, failed or interrupted (crash, killed worker) shows a warning in the results window and in `evanalyzer cli results view`.
 
 ### Reconnecting
 

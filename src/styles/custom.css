@@ -45,6 +45,7 @@
   --ink-cat-classify: #3fbf92;
   --ink-cat-dataset: #8b8bf0;
   --ink-cat-component: #e8849f;
+  --ink-cat-utility: #8b8f99;
   --ink-shadow: 0 8px 24px #0000008c;
   --ink-glass: #18181bf0;
   --ink-radius-xs: 3px;
@@ -92,6 +93,7 @@
   --ink-cat-classify: #2fa37c;
   --ink-cat-dataset: #6366f1;
   --ink-cat-component: #e06c8b;
+  --ink-cat-utility: #8a8f9c;
   --ink-shadow: 0 8px 24px #0e0f1229;
   --ink-glass: #fffffff2;
 }
@@ -395,6 +397,7 @@ site-search dialog::backdrop {
 .evx-cat-classify { --evx-cat: var(--ink-cat-classify); }
 .evx-cat-dataset { --evx-cat: var(--ink-cat-dataset); }
 .evx-cat-component { --evx-cat: var(--ink-cat-component); }
+.evx-cat-utility { --evx-cat: var(--ink-cat-utility); }
 
 /* -- "NEW" tag, as in the app (InkNewTag) ------------------------------- */
 .evx-new {

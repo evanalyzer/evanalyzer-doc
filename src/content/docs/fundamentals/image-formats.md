@@ -65,7 +65,7 @@ EVAnalyzer takes from the file, per series:
 - the frame interval of a time-lapse - the file's time increment, or else the mean step between the time stamps of the first and the last frame,
 - the objective's magnification.
 
-A wrong value can be corrected in the [image info](/guide/images/#image-info). RGB images are split into **Red**, **Green** and **Blue** channels (alpha is dropped).
+A wrong value can be corrected in the [image info](/guide/images/#image-info). The viewer shows RGB images as **Red**, **Green** and **Blue** channels (alpha is dropped); an analysis reads an RGB image as one channel, channel 0, measured by its brightness - see [Colour images](/guide/images/#colour-images).
 
 ## Big Images
 

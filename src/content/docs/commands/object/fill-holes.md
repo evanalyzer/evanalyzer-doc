@@ -31,4 +31,4 @@ Fill Holes works on the segmentation map, so a gap enclosed by several touching 
 
 ## Background
 
-Fill Holes belongs to the **Instance segmentation** category, alongside [Connected Components](/commands/segmentation/connected-components/) and [Watershed](/commands/segmentation/watershed/): it works on the segmentation map after a [Threshold](/commands/segmentation/threshold/) and before the objects are created by [Extract Objects](/commands/object/extract-objects/) (category **Extract**).
+Fill Holes belongs to the **Instance segmentation** category, alongside [Connected Components](/commands/segmentation/connected-components/), [Watershed](/commands/segmentation/watershed/) and - after a segmentation - [Morphological Transform](/commands/morphology/morphological-transform/): it works on the segmentation map after a [Threshold](/commands/segmentation/threshold/) and before the objects are created by [Extract Objects](/commands/object/extract-objects/) (category **Extract**).

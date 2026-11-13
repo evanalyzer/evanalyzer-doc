@@ -21,7 +21,7 @@ In Results, the top bar holds the results' controls:
 
 - **Analysis ▾** - the analysis shown, picked from every analysis of the project's images (**ANALYSES · N**). With none open the chip says _Pick an analysis_; with none at all the menu says _"None yet - Run writes one"_. The same menu has **Refresh**, **Show the output folder** and, for the open analysis, **Delete “_name_”** - see [Deleting an analysis](#deleting-an-analysis).
 - The project's [views](#views) as tabs - each a **List**, **Plate**, **Charts**, **Tracks**, [**Paths**](#paths) or [**Trees**](#trees) - and **+** (**New view**) to add one.
-- On the right a **Z/T** stepper when the data has Z-stacks or time-lapse frames - it applies to whichever view is open -, **Full | Split with image** - the results alone, or [beside the image](#split-with-the-image) (not for Charts: _"Split view works with List, Plate and Tracks"_) - and **Export…**.
+- On the right a **Z/T** stepper when the data has Z-stacks or time-lapse frames - it applies to whichever view is open -, **Full | Split with image** - the results alone, or [beside the image](#split-with-the-image) (of the charts only for [Profile](#profiles): _"Split view works with List, Plate, Tracks and the Profile chart"_ - another chart shows full width, and the split comes back with Profile) - and **Export…**.
 
 Each view has its settings in a panel on the left and its content beside it. The bottom bar shows the number of images (_"81 images · 1 disabled"_).
 
@@ -63,7 +63,7 @@ Creating, renaming, moving and deleting views can be undone with **Undo** (`Ctrl
 
 Views name classes by their id and columns by their key, so they fit every analysis of the project. When a view names a column the analysis shown doesn't have - for example a measurement of a step it didn't run - a banner says so: _"Not in these results, left out of the view: … - the view keeps them for other results."_ The view keeps the column for the next analysis that has it.
 
-The CLI can export a results database the way a List view shows it - see [`export --view`](/cli/cli/#exporting-as-a-view).
+The CLI can export a results database the way a List view shows it - see [`results export --view`](/cli/cli/#exporting-as-a-view).
 
 ![The results bar with the default views List, Plate, Charts and Tracks, a copied view renamed "Wells by count" with its PLATE badge, and the + menu open: NEW VIEW List, Plate, Charts, Tracks, Paths, Trees or a copy of the view shown](../../../assets/screenshots/screenshot-results-views.png)
 
@@ -163,6 +163,8 @@ The **Charts** view plots the results instead of listing them. Pick the chart as
 - **A line per** **Class**, **Image**, **Well** or **Plate**; each line's spread is drawn as a band - **Summary** **Mean ± SD** or **Median + IQR**. An object without a value at a position its line has counts as 0 there (it doesn't reach that radius) - for the median and quartiles too.
 - **The selected object's curve** - select an object in the [List](#list-view) or in the [split view](#split-with-the-image) to draw its own profile on top. **Mark its highest value** marks where it peaks, and the cards below the chart show **SELECTED · MAX** (the highest value and its position), **REACHES** (its last position) and **MEAN UP TO THERE**.
 - **Export data…** above the chart opens the [export](#exporting-results) with the profile picked.
+
+With **Split with image**, the Profile chart has the image beside it. Click an object on the image - or use **‹ ›** (or `↑` / `↓`) - to see its curve and its circles: **‹ ›** step through the objects with the profile on all images, the image's head showing which one (_n / total_). For [Measure Object Sholl](/commands/measure/measure-object-sholl/) the circles are drawn on the image around the object it was measured around (its **Centre From** parent, e.g. the soma), else around the skeleton itself; the circle of the highest value is drawn stronger.
 
 ![Charts › Profile: the Sholl intersections per radius of the skeletons, mean ± SD as a line with its band; the selected skeleton's curve on top, its highest value marked, and the cards SELECTED · MAX, REACHES and MEAN UP TO THERE below](../../../assets/screenshots/screenshot-results-profile.png)
 
@@ -315,7 +317,7 @@ The settings on the right: under **DATA** the **Class** and **Image**, **At leas
 
 <span class="evx-new">NEW</span> A **Trees** view (**+** › **Trees**, offered when the analysis has traced neurons from [Trace Filaments](/commands/object/trace-filaments/)) shows each neuron's branching:
 
-- **NEURONS** - a row per traced neuron (_image · number_) with its **Length**, primary branches (**Prim.**), branch points (**Br.**) and **Tips**, the values of [Measure Filament Tree](/commands/measure/measure-filament-tree/). Click a column's head to sort by it. With only Trace Filaments, the list says _"Add Measure Filament Tree for branch levels and lengths."_
+- **NEURONS** - the head counts them (_"12 in 3 images"_). Each image is a group row, its neurons below it by number (_#1_, _#2_ …) with their **Length px**, **Primary** branches, **Branch points** and **Tips**, the values of [Measure Filament Tree](/commands/measure/measure-filament-tree/). Click a column's head to sort by it (▾ marks the column; **Length px** at first) - the neurons are sorted within their image. With only Trace Filaments, the list says _"Add Measure Filament Tree for branch levels and lengths."_
 - **The dendrogram** of the selected neuron, its totals in the header (_"Length 1374.85 · Primary 6 · Branch points 19 · Tips 25 · Highest level 4 · Longest path 156.58"_): left to right the path distance from the soma, a row per tip, each branch point between its children. **Color by** **Branch level** or **Strahler order**. Zoom with the mouse wheel, pan by dragging.
 
 Click a branch to select its segment: the cards show its **BRANCH LEVEL**, **STRAHLER ORDER**, **PATH DISTANCE**, **LENGTH** and **STRAIGHTNESS**, and with **Split with image** the segment is selected on the image. A click on the image selects the neuron and segment under it.
@@ -324,7 +326,7 @@ Click a branch to select its segment: the cards show its **BRANCH LEVEL**, **STR
 
 ## Split with the image
 
-**Split with image** in the results bar puts the results on the left and the image on the right, with a divider between them that you can drag. It works with **List**, **Plate** and [**Tracks**](#tracks-beside-the-image).
+**Split with image** in the results bar puts the results on the left and the image on the right, with a divider between them that you can drag. It works with **List**, **Plate**, [**Tracks**](#tracks-beside-the-image) and the [**Profile**](#profiles) chart.
 
 The analysis' objects are drawn on the image, in their class colors, with their real outlines - the results keep each object's mask. (With **Keep object outlines in the results** switched off in [Project settings › Objects](/guide/settings/#objects), the results file is smaller and the objects are drawn as ellipses.) Select a row in the List and the image **flies to its object** - a yellow crosshair and a card (class, ID, area, the mean of a channel, position, and for [related objects](#parents-and-children) its **Parent** and **Children**) mark it. Click an object on the image to select its row.
 
@@ -356,7 +358,7 @@ The width of the results, whether the split is on, and **Follow selection** are 
 - **Tracks - one row per track** <span class="evx-new">NEW</span> - the [tracks table](#tracks): who (image, well, class, track), when (time points, duration), how it moved (path, distance, speed, straightness - and with [Measure Track Motion](/commands/dataset/measure-track-motion/) its 16 motion values), whether it touches the edge or is there from the start, then its measurements. Lengths in µm when the pixel size is known, durations in minutes when the frame interval is. For results with lineage, the columns **Parent tracks**, **Child tracks**, **Lineage** (the family's first track), **Generation**, **Starts with** and **Ends with** (e.g. _Division_) follow **Track**; several IDs are written as `3;7`. Options: **Statistics** of the measurements (default mean), **At least _N_ time points**, **Only tracks from the first time point** and **Leave out tracks touching the image edge**.
 - **Profile - per radius (e.g. Sholl)** <span class="evx-new">NEW</span> - when the analysis has [profile measurements](#profiles): **Profile** picks the measurement; **What** is **The lines** (per line and radius: n, mean, SD, median, Q1, Q3 - with **A line per** **Class**, **Image**, **Well** or **Plate**, as in the chart) or **Each object** (per object and radius: its value); **Tables** **Long**, **Wide** or **Both**. In the wide tables a radius an object doesn't reach is 0, as in the chart.
 - **Per well - plate layout (XLSX)** - the plate as a heatmap; optionally **Plate as list**, **Wells as heatmap** and **Wells as list**, with **Colors** for the heatmaps. Grouping, plate size and well layout are taken from the project's plate settings - the same ones the [Plate view](#grouping-images-into-wells) uses.
-- **Images with objects drawn (PNG)** <span class="evx-new">NEW</span> - each image as a PNG, with its channels in their colors (auto-scaled) and every object's box in its class color. Large images are written at the pyramid level up to 4096 px.
+- **Images with objects drawn (PNG)** <span class="evx-new">NEW</span> - a PNG per image and analysed plane, its channels in their colors and the objects of the export's **Classes** drawn in their class color. **Draw the objects** picks **Outline** (the object's contour), **Filled 50 %** (half transparent, contour opaque) or **Box** (its bounding box). Objects whose outline the results don't keep (**Keep object outlines in the results** off) are drawn as their box. An image analysed as a z-projection is written projected. Brightness and size are under **More options › Images**.
 
 **Format** - **XLSX** (default), **CSV**, or **Parquet**.
 
@@ -366,6 +368,7 @@ The width of the results, whether the split is on, and **Follow selection** are 
 - **Transpose the tables** - writes the object and image tables [transposed](#transpose), with the classes next to each other.
 - **Measurements** and **Aggregations** - which columns and aggregations to write.
 - **Z planes** and **Time points** - **All** (default) or a **Range**.
+- **Images** - for **Images with objects drawn**: **Brightness** **As in the viewer** (each channel's display range from the viewer) or **Auto per image** (each image scaled to its own 0.5 % - 99.5 % values) - channels hidden in the viewer are left out either way, and **Size** - the longer side at most **2048**, **4096** (default) or **8192 px**; smaller images keep their size, large ones are read at the pyramid level that fits.
 
 ![The export card with More options open: name prefix, transpose, measurements, aggregations, Z planes and time points](../../../assets/screenshots/screenshot-results-export-more.png)
 
@@ -375,7 +378,7 @@ In CSV exports, a text - a class, image or measurement name - that starts with `
 
 In XLSX exports, values that come from (or, for a well/plate, are affected by) an image left out are grayed out and struck through.
 
-Click **Start export**; a progress bar tracks the run and a message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `measurements.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`, `time_course.xlsx` - a _Long_ sheet plus the wide sheets - or `time_course.csv` plus `time_course_{name}.csv` per wide table, `tracks.xlsx`/`.csv`, `profile_lines.csv` (long) and `profile_lines_{statistic}.csv` (wide) or `profile_objects.csv` and `profile_objects_wide.csv` - in XLSX one workbook with a sheet each; the PNGs go to `images/{name}.png`), each preceded by the name prefix if one is set.
+Click **Start export**; a progress bar tracks the run and a message confirms completion or reports an error. For XLSX/CSV, results are named for what they contain (`list.xlsx`/`.csv`, `grouped_by_image.xlsx`/`.csv`, `measurements.xlsx`/`.csv`, `plate.xlsx`, `well.xlsx`, `plate_list.xlsx`, `well_list.xlsx`, `heatmap_{image}.xlsx`, `time_course.xlsx` - a _Long_ sheet plus the wide sheets - or `time_course.csv` plus `time_course_{name}.csv` per wide table, `tracks.xlsx`/`.csv`, `profile_lines.csv` (long) and `profile_lines_{statistic}.csv` (wide) or `profile_objects.csv` and `profile_objects_wide.csv` - in XLSX one workbook with a sheet each; the PNGs go to `images/` with the image's folders kept, e.g. `images/B1/img.png` - with `_z0002` / `_t0013` added when the results have several Z planes or time points), each preceded by the name prefix if one is set.
 
 :::tip
 For colocalization exports, partner lookups are resolved in batches of 5,000 source objects at a time - large colocalization datasets export reliably without needing to load everything at once.

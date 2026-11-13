@@ -37,7 +37,9 @@ python3 scripts/screenshots/take.py pipeline compare   # only these
    Filament Tree) and their Sholl profile; its analysis `neurons` feeds the
    Trees and Profile screenshots, and the ruler scene measures on it. `make_zstack.py` writes a z-stack to `/data/ev_zstack`
    (48 planes, nuclei, cytoplasm rims and a fibre crossing the stack) for the
-   orthogonal views and the 3D view. The Measurements panel scene writes
+   orthogonal views and the 3D view. `make_rgb.py` writes an H&E-like RGB section to
+   `/data/ev_rgb` with a Color Filter pipeline, for the colour-image
+   Image panel and the Color Filter range editor. The Measurements panel scene writes
    `ev_plate_measure.evaproj` beside the demo project: a copy with measure
    steps and an Exclude Image, so the demo project's own step counts stay.
 3. **Scenes.** Each scene restarts the app, clicks to one screen and saves
@@ -55,11 +57,12 @@ curl -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
 sudo apt-get install libxkbcommon-dev libxcursor-dev libwayland-dev libudev-dev \
     libfontconfig-dev mold cmake clang
 git clone https://github.com/evanalyzer/evanalyzer && cd evanalyzer
-cargo build --target x86_64-unknown-linux-gnu --release --no-default-features
+cargo build --target x86_64-unknown-linux-gnu --release --no-default-features --features gui
 cp target/x86_64-unknown-linux-gnu/release/evanalyzer <docs>/tools/evanalyzer-linux-x86_64/
 ```
 
-`--no-default-features` leaves out the libtorch AI plugin, which needs a
+`--no-default-features --features gui` keeps the desktop app but leaves out
+the libtorch AI plugin, which needs a
 multi-GB download and isn't needed for the screenshots. If it needs a newer glibc than the system has, `setup.sh`
 unpacks Debian trixie's glibc and libstdc++ into `.cache/screenshots/glibc`
 and `take.py` starts the app through that loader. The system's libraries

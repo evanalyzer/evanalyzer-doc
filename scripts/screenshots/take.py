@@ -40,6 +40,9 @@ TRACKS_PROJECT = TRACKS / "ev_tracks.evaproj"
 # The z-stack for the orthogonal views and the 3D view (make_zstack.py).
 ZSTACK = Path(os.environ.get("EVA_ZSTACK", "/data/ev_zstack"))
 ZSTACK_PROJECT = ZSTACK / "ev_zstack.evaproj"
+# The H&E-like colour image for the RGB screenshots (make_rgb.py).
+RGB = Path(os.environ.get("EVA_RGB", "/data/ev_rgb"))
+RGB_PROJECT = RGB / "ev_rgb.evaproj"
 # The neurons for the Trees view and the Sholl profile (make_neurons.py).
 NEURONS = Path(os.environ.get("EVA_NEURONS", "/data/ev_neurons"))
 NEURONS_PROJECT = NEURONS / "ev_neurons.evaproj"
@@ -355,6 +358,19 @@ def sc_image_ortho():
     drag_steps((700, 450), (16, -24))   # rendering that takes a while
     hover(1300, 880)
     shot("screenshot-image-3d")
+
+
+def sc_image_rgb():
+    start_app("--project", str(RGB_PROJECT))
+    click(372, 72, wait=3)         # read the folder
+    click(200, 140, wait=5)        # the H&E section
+    away()
+    shot("screenshot-image-rgb")
+    click(*MODE_PIPELINES, wait=1.5)
+    click(92, 155, wait=1)         # "Pick a pipeline": Nuclei
+    click(89, STEP_Y[1], wait=1.5) # Color Filter opens on the line: its colour range editor
+    away()
+    shot("screenshot-color-filter-editor")
 
 
 def sc_file_dialog():
@@ -695,9 +711,10 @@ def sc_results_export():
     results("list")
     click(600, 557, wait=1)
     click(*EXPORT, wait=1.5)
+    click(1017, 293, wait=1)       # Images with objects drawn (PNG): shows "Draw the objects"
     hover(1000, 899)
     shot("screenshot-results-export-dialog")
-    click(1047, 455, wait=1)       # More options ›
+    click(1047, 487, wait=1)       # More options › (lower with "Draw the objects" shown)
     hover(1000, 899)
     shot("screenshot-results-export-more")
     click(1266, 862)               # Close
@@ -793,7 +810,7 @@ def sc_results_profile():
     click(400, 600, wait=1.5)      # close the list
     click(100, 167, wait=5)        # a skeleton of A01_01
     click(410, 20, wait=5)         # Charts (the layout goes back to Full)
-    click(43, 233, wait=4)         # Profile: sholl_01 - the class's band, the selected curve
+    click(150, 180, wait=4)        # Profile (2nd row of tiles): sholl_01 - the class's band, the selected curve
     hover(1300, 880)
     shot("screenshot-results-profile")
 
@@ -847,7 +864,7 @@ def wait_for_run_button(timeout=120):
 
 
 SCENES = {
-    "images": sc_images, "image-panel": sc_image_panel, "image-ortho": sc_image_ortho, "go-to-image": sc_go_to_image, "file-dialog": sc_file_dialog, "workspace": sc_workspace, "pipeline": sc_pipeline,
+    "images": sc_images, "image-panel": sc_image_panel, "image-ortho": sc_image_ortho, "image-rgb": sc_image_rgb, "go-to-image": sc_go_to_image, "file-dialog": sc_file_dialog, "workspace": sc_workspace, "pipeline": sc_pipeline,
     "pick-pipeline": sc_pick_pipeline, "add-step": sc_add_step,
     "add-step-trackers": sc_add_step_trackers, "step-menu": sc_step_menu,
     "eva-menu": sc_eva_menu, "colors": sc_colors, "palette": sc_palette, "tuning": sc_tuning,
@@ -890,6 +907,8 @@ def prepare_data():
         subprocess.run([sys.executable, str(here / "make_neurons.py"), str(NEURONS)], check=True)
     shutil.rmtree(NEURONS / "results", ignore_errors=True)
     analyze(NEURONS_PROJECT, "neurons")
+    if not RGB_PROJECT.exists():
+        subprocess.run([sys.executable, str(here / "make_rgb.py"), str(RGB)], check=True)
     if not ZSTACK_PROJECT.exists():
         subprocess.run([sys.executable, str(here / "make_zstack.py"), str(ZSTACK)], check=True)
 
