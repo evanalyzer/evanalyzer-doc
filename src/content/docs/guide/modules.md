@@ -116,5 +116,5 @@ A module can contain other modules. Open an inner one from an opened module - th
 
 ## Limitations
 
-- Breakpoints can't be set on steps inside a module; a breakpoint on the module's own line stops after the whole module.
+- A breakpoint on the module's own line stops after the whole module. To stop at a step inside it, open it with **⋯ › Look into module** and set the breakpoint there (see [Breakpoints](/guide/pipelines/#breakpoints)); a module opened with **Edit this module** takes none.
 - Steps are selected for bundling as a range (**From** / **To**), not by Shift-click.

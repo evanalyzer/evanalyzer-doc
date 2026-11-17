@@ -42,7 +42,7 @@ Click the pipeline's name in the switcher head to open the pipeline list over th
 
 ### Pipeline actions
 
-The **⋯** of a pipeline (a row's, or the switcher head's for the shown one) has **Edit pipeline …**, **Duplicate**, **Save as module…**, **New pipeline above**, **New pipeline below**, **Move up**, **Move down**, **Move to top**, **Move to bottom**, **Focus on this pipeline** and **Delete pipeline…**.
+The **⋯** of a pipeline (a row's, or the switcher head's for the shown one) has, in this order, **Edit pipeline…** and **Focus on this pipeline**, **Duplicate** and **Save as module…**, **Move up**, **Move down**, **Move to top** and **Move to bottom**, **New pipeline above** and **New pipeline below**, and **Delete pipeline…** last.
 
 A new pipeline - from **+**, an insert line or **New pipeline above** / **below** - opens the **New pipeline** dialog first. The pipeline is only made when you click **Add**; **Cancel** or `Esc` makes none.
 
@@ -67,7 +67,7 @@ Steps run top to bottom. Each step is one line, like a line of code:
 - a colored **stripe** for its category (see below),
 - its name and a short summary of its settings (**EVA › View › Step values on a second line** puts them below the name).
 
-Click a line to open its settings right there in the panel. Hovering a line shows its buttons at the end: the **eye** (disable / enable), **⤢** ([step settings](#step-settings)), **⋯** and **⌖** ([pin to Tuning](#tuning-panel)). A selected line takes the keys:
+Click a line to open its settings right there in the panel. Hovering a line shows its buttons at the end: **⤢** ([step settings](#step-settings)), the **eye** (_Switch the step off_ / _on_) and **⋯** last. A disabled step keeps its crossed eye in place, and its content is shown faded. A selected line takes the keys:
 
 | Key | Action |
 | --- | --- |
@@ -78,9 +78,9 @@ Click a line to open its settings right there in the panel. Hovering a line show
 | `Alt+↑` / `Alt+↓` | Move up / down |
 | `Delete` | Remove the step |
 
-The same actions are in the step's **⋯** menu - **Help** (what the step does), **Settings**, **Disable**, **Breakpoint**, **Duplicate**, **Move up** / **Move down**, **Create module** ([modules](/guide/modules/)) and **Remove step**.
+The step's **⋯** menu (_Step actions_) has, in this order: **Help** (what the step does), **Settings**, **Disable**, **Breakpoint**, **Pin settings to Tuning** ([Tuning](#tuning-panel)), **Duplicate**, **Create module** ([modules](/guide/modules/)), **Move up** / **Move down**, **Add step above** / **Add step below**, and **Delete step** last. A module step has **Look into module**, **Edit this module** and **Edit modules** instead of Help, and **Save as** and **Expand** after Create module. Every ⋯ menu in EVAnalyzer keeps this order: edit, state, duplicate, move, add, delete.
 
-![A step's ⋯ menu: Help, Settings, Disable, Breakpoint, Duplicate, Move up and down, Create module, Remove step](../../../assets/screenshots/screenshot-step-menu.png)
+![A step's ⋯ menu: Help, Settings, Disable, Breakpoint, Pin settings to Tuning, Duplicate, Create module, Move up and down, Add step above and below, Delete step](../../../assets/screenshots/screenshot-step-menu.png)
 
 ### Step categories
 
@@ -117,7 +117,7 @@ When a fixed sequence of steps isn't enough - for example to retry a step with o
 
 ### Adding steps
 
-Click **Add step** below the steps to open the command picker. To put a step at another place, point between two lines, above the first or below the last: an insert line with a **+** appears (_Insert step · 4_) - click it. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Modules**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Extract**, **Object**, **Measure**, **Dataset**, **Module** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object**, **Measure** and **Dataset**. The **Utility** commands (Script, Save Image, Image Cache) have no chip: they are always listed, in their own section. A command of several categories is listed once - under its home category if that chip is on, else under its other category, with a hint naming its home: after a Threshold, Morphological Transform is listed under **Instance Seg.** with _also Preprocess_. The pane on the right describes the chosen command, with its settings, authors and what to cite, and under **RAM** how much memory it needs - on the open image's tiles (or, with no image, on 4096 × 4096 tiles, a whole slide's): e.g. _"… 120 MB per analysis thread, 1.2 GB once for the run (the AI network and its weights; one image at a time)"_. A command that works window by window or object by object says that its RAM doesn't grow with the image's size. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
+Click **Add step** below the steps to open the command picker. To put a step at another place, use **Add step above** / **below** in a step's ⋯ menu, or point at the number column between two lines (above the first or below the last): an insert line with a **+** appears (_Insert step · 4_) - click it. The rest of a line selects the step. In an empty pipeline an **Add step** button sits under the hint instead. Its head says where the step goes (_After step 8 of "CY5 spots"_); two tabs list **Commands** and **Modules**. It shows the commands by category - **All**, **Preprocess**, **Segment**, **Instance Seg.**, **Extract**, **Object**, **Measure**, **Dataset**, **Module** - with your **Recents** first and a search (**Search commands…**). It starts on the categories that fit after the step before - after a Classify Objects, **Object**, **Measure** and **Dataset**. The **Utility** commands (Script, Save Image, Image Cache) have no chip: they are always listed, in their own section. A command of several categories is listed once - under its home category if that chip is on, else under its other category, with a hint naming its home: after a Threshold, Morphological Transform is listed under **Instance Seg.** with _also Preprocess_. The pane on the right describes the chosen command, with its settings, authors and what to cite, and under **RAM** how much memory it needs - on the open image's tiles (or, with no image, on 4096 × 4096 tiles, a whole slide's): e.g. _"… 120 MB per analysis thread, 1.2 GB once for the run (the AI network and its weights; one image at a time)"_. A command that works window by window or object by object says that its RAM doesn't grow with the image's size. **Import bioimage.io model…** sets up an [AI model](/ai/bioimageio-import/).
 
 The picker stays open: each step you add goes in after the one you added before, and the footer confirms it (_"✓ Added Threshold as step 3"_). **Done** closes it. You can also add a command from the [command palette](/guide/workspace/#command-palette) (`Ctrl+K`).
 
@@ -141,7 +141,7 @@ Settings that can't work - a class that doesn't exist, a module parameter that n
 
 ## Tuning panel
 
-When a pipeline is nearly right, the last few settings that matter are often spread over several steps. **Pin** them to keep them together: the pin next to a setting (shown, like its **?**, while you point at the row) adds it to the **Tuning** panel, docked below the image; **⌖** on a step's line pins all its settings (again: unpins them).
+When a pipeline is nearly right, the last few settings that matter are often spread over several steps. **Pin** them to keep them together: the pin next to a setting (shown, like its **?**, while you point at the row) adds it to the **Tuning** panel, docked below the image; **⋯ › Pin settings to Tuning** in a step's menu pins all its settings (**Unpin from Tuning** removes them); a step with pinned settings shows a small mark after its name (_Settings pinned to Tuning_).
 
 The Tuning panel has a tab **All pinned · N**, one tab per step and **Find a setting**. Change a value there and the preview follows - without opening the steps. The pins are saved with the project; **✕** closes the panel, a new pin opens it again.
 
@@ -169,7 +169,7 @@ To see the image as it is after a step - not just the final objects - set a **br
 - **Snapshot** (orange) - the preview keeps the image of this step and runs on to the end.
 - **Off**.
 
-The steps panel's footer then offers **Breakpoint image**: which image of the step to show (e.g. **Processed image**). Breakpoints can't be set on the steps inside a module; on a module's own line, it stops after the whole module.
+The steps panel's footer then offers **Breakpoint image**: which image of the step to show (e.g. **Processed image**). On a module's own line, it stops after the whole module. To stop inside it, open the module with **⋯ › Look into module** and set the breakpoint on one of its steps (gutter, F9 or menu) - also in a module nested in it. A closed module with a breakpoint inside gets a red ring on its number, and its tip names the step (_Breakpoint inside: #3 › 2 Blur · stop_). A module opened to edit (**Edit this module**) takes no breakpoints.
 
 ### Compare with the original
 

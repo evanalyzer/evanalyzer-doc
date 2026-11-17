@@ -80,8 +80,9 @@ A dialog that doesn't open in a folder of its own starts in the last folder chos
 | **Step values on a second line** | | A step's values below its name instead of beside it. |
 | **Navigator** | | **Auto** (only zoomed in), **Always** or **Never**. |
 | **Colors** | | **Light**, **Dark** or **Dim** - see [Colors](#colors). |
+| **Size** | `Ctrl++` / `Ctrl+-`, `Ctrl+0` | Buttons and text at **100**, **125**, **150**, **175** or **200 %** - bigger for a high-resolution or a far-away screen. `Ctrl+0` goes back to 100 %. It applies at once, without a restart, and is kept in this computer's user settings instead of following the screen's own scale. Also in the command palette. |
 
-![EVA › View: the panels with Alt+1…4, Hide all panels (Tab), Step values on a second line, Navigator and Colors](../../../assets/screenshots/screenshot-eva-view.png)
+![EVA › View: the panels with Alt+1…4, Hide all panels (Tab), Step values on a second line, Navigator, Colors and Size](../../../assets/screenshots/screenshot-eva-view.png)
 
 ## Bottom bar and modes
 
@@ -120,7 +121,7 @@ EVAnalyzer has three color schemes, picked under **EVA › View › Colors**:
 - **Dark** - near-black panels; the image behind them is black.
 - **Dim** - a softer dark grey, for long sessions in a dark room.
 
-In every scheme the image's background stays black, so fluorescence reads the same. Buttons are black (white in the dark schemes); one indigo marks focus. The selected row of every list - the shown pipeline, the open image, the picked class - is lifted, with a thin ring. The colors of channels and classes come with your data and are never changed by the scheme.
+In every scheme the image's background stays black, so fluorescence reads the same. Buttons are black (white in the dark schemes); one indigo marks focus. The selected row of every list - the shown pipeline, the open image, the picked class - is lifted, with a thin ring; in the results tables (List, Tracks) the selected row is filled grey instead. The colors of channels and classes come with your data and are never changed by the scheme.
 
 ![Light, Dark and Dim: colors light](../../../assets/screenshots/screenshot-colors-light.png)
 

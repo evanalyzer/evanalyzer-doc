@@ -25,7 +25,7 @@ Each class is a row with its color, its name, its number of objects on the curre
 
 - **+** (**New class**) adds a class and opens its settings.
 - **⋯ › Edit name, color, id…** of a class opens its settings.
-- The same menu has **Copy**, **Move up** / **Move down** and **Delete class…**.
+- The same menu has **Duplicate** (a copy right below the class), **Move up** / **Move down** and **Delete class…**.
 
 ![The Class settings dialog left of the right-hand panels: Name, Notes, Class ID with Auto, Results with the Objects and Intermediate cards, the color grid (7 a row)](../../../assets/screenshots/screenshot-class-settings.png)
 

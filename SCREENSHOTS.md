@@ -9,7 +9,7 @@ python3 scripts/screenshots/take.py
 ```
 
 The current shots are taken with a build of EVAnalyzer's `main` (commit
-`a2d4a3b`, after 1.1.0-alpha.3) - the ruler, the Profile chart, the Paths
+`31c734d`, after 1.1.0-alpha.3) - the ruler, the Profile chart, the Paths
 and Trees views, colour images, the object card and images with objects
 drawn, the redesigned pipelines panel and intermediate classes are in no
 release yet. See

@@ -38,7 +38,7 @@ By default, the threshold value is calculated from the same image it's applied t
 |---|---|
 | **Actual image** | Calculate from the pipeline's current image - the same image the threshold is applied to |
 | **Raw image** | Calculate from the unedited image this channel started the pipeline with, ignoring any preprocessing (blur, illumination correction, …) applied so far |
-| **Memory** | Calculate from a snapshot stored earlier in the pipeline via [Image Cache](/commands/image-processing/image-cache/), addressed by its memory slot |
+| **Memory** | Calculate from a snapshot stored earlier in the pipeline via [Image Cache](/commands/image-processing/image-cache/) - pick its memory slot in the picker that appears below |
 
 Whichever image the value is calculated from, the resulting cut-off is always applied against the pipeline's actual current image - only where the *number* comes from changes.
 

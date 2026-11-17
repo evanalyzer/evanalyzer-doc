@@ -75,7 +75,7 @@ No. Download one archive, extract it anywhere - also into your own user folder -
 <details>
 <summary>Windows or macOS says the app can't be opened. Is it safe?</summary>
 
-Yes. Windows SmartScreen may warn about a new download, and macOS blocks apps that aren't notarized by Apple. The [installation guide](/getting-started/installation/#starting-evanalyzer) shows how to start EVAnalyzer anyway - you only need to do it once.
+Yes. The Windows program is code-signed, but SmartScreen may still warn about a new download (and releases up to 1.1.0-alpha.3 are unsigned); macOS blocks apps that aren't notarized by Apple. The [installation guide](/getting-started/installation/#starting-evanalyzer) shows how to start EVAnalyzer anyway - you only need to do it once.
 
 </details>
 

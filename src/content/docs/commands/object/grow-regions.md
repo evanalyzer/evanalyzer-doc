@@ -1,9 +1,9 @@
 ---
 title: Grow Regions
-description: Grow a region from each seed object through a channel, like a magic wand - e.g. a spot's outline from its maximum, with a stop level of its own per seed.
+description: Grow a region from each seed object through an image, like a magic wand - e.g. a spot's outline from its maximum, with a stop level of its own per seed.
 ---
 
-**Grow Regions** grows a region from each seed object through a channel, like a magic wand: for example a spot's outline from its maximum, or a nucleus from a point inside it. Pixels join a region from the seed outwards, and every seed has its own stop level - relative to its own peak and background, so dim and bright objects keep the same shape. Where regions of different seeds meet they are split on the darkest line between them, may overlap, or are merged.
+**Grow Regions** grows a region from each seed object through an image, like a magic wand: for example a spot's outline from its maximum, or a nucleus from a point inside it. Pixels join a region from the seed outwards, and every seed has its own stop level - relative to its own peak and background, so dim and bright objects keep the same shape. Where regions of different seeds meet they are split on the darkest line between them, may overlap, or are merged.
 
 ![A line through two touching spots of different brightness and their maxima as seeds: each region stops at half its own height above the background, and the border between the two lies at the valley between them](../../../../assets/figures/cmd-grow-regions.svg)
 
@@ -13,7 +13,9 @@ A typical spot pipeline:
 
 Each region is a new object of the **Output Class** and keeps its seed's pixels. The seeds stay as they are and the region is not linked to its seed: use [Relate Objects](/commands/object/relate-objects/) for that. The regions' intensities are measured on the raw channels, also with **Smoothing**. To keep the seeds (e.g. the one-pixel maxima) out of the results, give their class the class setting **Results** › **Intermediate** (see [What goes into the results](/guide/classification/#what-goes-into-the-results)).
 
-In a project file it is `GROW_REGIONS`.
+In a project file it is `GROW_REGIONS`; **Growth Channel** is written as `"PIPELINE_STEP"`, `{"IMAGE_CHANNEL": 1}` or `{"MEMORY": {"pipelineContext": 0}}` (memory slot 0 of the pipeline).
+
+Grow Regions works on the whole image, after the steps that run tile by tile. With **Pipeline Step** or **Memory** the image it grows through is kept at the step's place while the tiles run, so it sees the image as it was there, not as later steps change it.
 
 ## When to use
 
@@ -28,8 +30,8 @@ To divide the whole image (or a mask) among seeds, with no stop level - cells ar
 | Parameter | Description |
 | --- | --- |
 | **Seeds** | Objects of this class are the seeds (e.g. the maxima of Find Maxima after Extract Objects, or nuclei). Each grows into one region. |
-| **Growth Channel** | The channel the regions grow through (the raw spot or nucleus stain). |
-| **Smoothing** | Smooths the growth channel before growing (noisy images): **None** (default) or **Gaussian**. The growth order, stop level, background and noise then come from the smoothed pixels. |
+| **Growth Channel** | The image the regions grow through. **Pipeline Step** (default): the pipeline's image as it is at this step, e.g. after a background subtraction. **Image Channel**: an image channel as it was read (the raw spot or nucleus stain), picked below. **Memory**: a memory slot as it is at this step, stored earlier by [Image Cache](/commands/image-processing/image-cache/), picked below. |
+| **Smoothing** | Smooths the growth image before growing (noisy images): **None** (default) or **Gaussian**. The growth order, stop level, background and noise then come from the smoothed pixels. |
 | **Sigma** | With **Gaussian**: the standard deviation of the Gaussian. Noise smaller than σ no longer stops or splits a region. As a guide, 1-2 px for noisy spots, at most about a quarter of the smallest object's radius (larger blurs the outlines). Default 1, range 0.1-100. |
 | **Unit** | With **Gaussian**: unit of **Sigma**, **px** (default) or **nm**. |
 | **Objects Are** | **Bright** (default): objects brighter than their background (fluorescence). **Dark**: objects darker than their background (brightfield, stains) - everything below then counts the other way round. |
@@ -80,7 +82,7 @@ Pixels join a region in a priority order from the seed outwards (seeded region g
 
 **How seeds compete.** Each seed is flooded on its own, inside **Max Distance** of it. A pixel's score for a seed is the best path to it: the highest of the lowest brightness along the path (Intensity), or the lowest of the largest difference to the seed's value (Similarity). With **Separate** a pixel goes to the seed scoring best on it (then the nearer one, then the first in image order), and each region keeps the pixels connected to its seed. Because the result is defined per pixel from the seeds near it, it doesn't depend on how the image is split up.
 
-**Smoothing.** With **Gaussian**, the growth channel is smoothed with the discrete Gaussian (Lindeberg 1998) before growing, mirrored at the image's border. Every pixel gets the value it would get from smoothing the whole image.
+**Smoothing.** With **Gaussian**, the growth image is smoothed with the discrete Gaussian (Lindeberg 1998) before growing, mirrored at the image's border. Every pixel gets the value it would get from smoothing the whole image.
 
 The step runs on the whole image at once, so a region can grow across tile borders. **Exclude At Edges** checks the border of the image, not of a tile.
 

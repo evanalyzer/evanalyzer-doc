@@ -236,9 +236,9 @@ IMAGE_ROW = (200, 360)           # 6th image of the list: A03_02
 PICK_CY5 = (92, 142)             # the Pipelines area's 2nd row: CY5 spots
 STEPS_HEAD = (140, 72)           # the switcher head's pipeline: opens the pipeline list
 PIPELINES_EXPAND = (352, 72)     # ⌄ at the switcher head's end: the Pipelines area again
-PIPELINE_MENU_X = 322            # a hovered pipeline row's ⋯ (Pipelines area)
+PIPELINE_MENU_X = 348            # a hovered pipeline row's ⋯ (Pipelines area), after its eye
 STEP_Y = {1: 123, 2: 165, 3: 207, 4: 249, 5: 291, 6: 333, 7: 375, 8: 417}
-STEP_GUTTER_X, STEP_MENU_X, STEP_EXPAND_X, STEP_PIN_X = 34, 327, 305, 349
+STEP_GUTTER_X, STEP_EXPAND_X, STEP_EYE_X, STEP_MENU_X = 34, 305, 327, 349   # hover buttons: ⤢, eye, ⋯ last
 ADD_STEP = (68, 838)             # "+ Add step" at the steps panel's foot
 IMAGE_CENTER = (745, 450)
 OVERLAY_KNOB = (503, 838)
@@ -491,7 +491,8 @@ def sc_palette():
 def sc_tuning():
     pipeline_cy5()
     hover(200, STEP_Y[8])
-    click(STEP_PIN_X, STEP_Y[8], wait=1.5)   # ⌖ pins all settings of ClassifyObjects
+    click(STEP_MENU_X, STEP_Y[8])
+    click(213, 595, wait=1.5)      # ⋯ › Pin settings to Tuning: all settings of ClassifyObjects
     away()
     shot("screenshot-tuning")
 
@@ -517,8 +518,9 @@ def sc_switcher():
     shot("screenshot-add-pipeline-dialog")
     key("Escape", wait=1)          # Cancel - a pipeline is only made on Add
     hover(150, PICK_CY5[1])
+    hover(PIPELINE_MENU_X, PICK_CY5[1])
     click(PIPELINE_MENU_X, PICK_CY5[1])   # CY5's ⋯
-    click(214, 478, wait=2)        # Focus on this pipeline
+    click(214, 227, wait=2)        # Focus on this pipeline (2nd item)
     away()
     shot("screenshot-pipeline-focus")
 
@@ -529,7 +531,8 @@ def sc_classes():
     shot("screenshot-classification")
     key("Escape")
     hover(1250, 174)
-    click(1410, 174)               # cy5@spot's ⋯
+    hover(1408, 174)               # the ⋯ takes a click only once the pointer rests on it
+    click(1408, 174)               # cy5@spot's ⋯
     click(1296, 228, wait=1.5)     # Edit name, color, …
     away()
     shot("screenshot-class-settings")
@@ -600,7 +603,7 @@ def sc_modules():
     pipeline_cy5(with_preview=False)
     hover(200, STEP_Y[1])
     click(STEP_MENU_X, STEP_Y[1])
-    click(234, 400, wait=1.5)      # Create module
+    click(194, 366, wait=1.5)      # Create module
     click(520, 159)
     type_text("Spot detection")
     click(680, 227)                # To
@@ -610,7 +613,7 @@ def sc_modules():
     click(782, 377, wait=3)        # Create module
     hover(200, STEP_Y[1])
     click(STEP_MENU_X, STEP_Y[1])
-    click(226, 456, wait=2)        # Edit module
+    click(198, 236, wait=2)        # Edit this module
     click(324, 162, wait=1.5)      # Settings
     click(985, 72, wait=1.5)       # Parameters
     hover(700, 899)

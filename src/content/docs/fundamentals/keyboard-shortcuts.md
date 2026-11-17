@@ -91,6 +91,8 @@ While [comparing](/guide/pipelines/#compare-with-the-original) a breakpoint imag
 | `Ctrl+F` | Jump to the image search field                      |
 | `Tab`    | Hide / show all panels (nothing focused)            |
 | `Alt+1`…`5` | Show / hide Steps, Classes, Image, Objects, Measurements |
+| `Ctrl++` / `Ctrl+-` | Bigger / smaller buttons and text ([interface size](/guide/workspace/#view)) |
+| `Ctrl+0` | Buttons and text at 100 % |
 
 `Ctrl+1`..`3` switch the [modes](/guide/workspace/#bottom-bar-and-modes) in the bottom bar, `Alt+1`..`5` the [panels](/guide/workspace/#view) (also in **EVA › View**). `Tab` hides all panels only while no field or button has the keyboard focus - there it still moves the focus. `Ctrl+F` switches to Images first if it isn't already active, then focuses its search field.
 

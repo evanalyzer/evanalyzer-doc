@@ -105,8 +105,10 @@ Double-click `evanalyzer.exe`, or from PowerShell:
 .\evanalyzer.exe
 ```
 
+The Windows program (`evanalyzer.exe`) and its AI plugin are code-signed (since the builds after 1.1.0-alpha.3), so Windows shows a verified publisher instead of _Unknown publisher_. You can check the signature in the file's **Properties › Digital Signatures**.
+
 :::note[Windows SmartScreen warning]
-EVAnalyzer's releases are not code-signed yet, so Windows SmartScreen may block the application on first launch. This is expected and safe to dismiss.
+SmartScreen can still warn about a download that only few people have run yet, and releases up to 1.1.0-alpha.3 are not signed at all. The warning is expected and safe to dismiss:
 
 **Step 1** — When the blue "Windows protected your PC" dialog appears, click **More info**.
 
