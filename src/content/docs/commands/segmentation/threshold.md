@@ -113,3 +113,9 @@ Well suited to images with a clean, low background and sparse foreground: trimmi
 ## Maximum threshold
 
 Setting **Max threshold** to a value below 65535 restricts detection to pixels within the `[min, max]` range. This allows extraction of a specific intensity band - for example to separate bright artefacts from dim objects, or to extract the background itself by setting Min to 0 and Max to just below the signal level.
+
+## Measurements
+
+Threshold measures per image the lower threshold each entry used: **Threshold 1**, **Threshold 2**, … in the entry's unit. For an automatic method it is the cut-off the method computed on this image; for Manual the value set. The values are named after the step's **ID** (e.g. **threshold_01 · Threshold 1**). With them you can find images whose automatic threshold is off, and leave them out with [Exclude Image](/commands/measure/exclude-image/). On an image split into tiles each value is the median over the tiles.
+
+The **ID** is set on the step like that of a [measurement step](/guide/pipelines/#measurement-steps). A threshold that a [script](/commands/image-processing/script/) or another command runs has no ID and measures nothing.

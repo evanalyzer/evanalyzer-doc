@@ -58,6 +58,18 @@ Every command name, parameter name and value is checked: a typo, an unknown para
 | `instance_count()`    | Number of distinct objects in the instance map, e.g. after `connected_components`.                        |
 | `img.width`, `img.height` | Size of an image.                                                                                     |
 | `img.mean()`, `img.min()`, `img.max()` | Mean, minimum and maximum pixel value of an image.                                       |
+| `a.dot(b)`, `dot(a, b)` | The mean over the pixels of the pixel-wise product $a(x) \cdot b(x)$. Options: `#{ margin: 4 }` leaves out a border 4 px wide on each side (of every plane), e.g. the strip a shift filled with padding; `#{ mask: M }` counts only the pixels where `M` is above 0 (a grey or label image of the same size). Grey and colour images, not label images. |
+
+`dot` fits how much of one image is in another. The least-squares scale of a structure channel `T` in a spot channel `S` is $a = \langle S, T \rangle / \langle T, T \rangle$:
+
+```rust
+let S = image();
+let T = run("translate_image", channel(3), #{ dy: 1.3, dx: -0.8 });
+let a = S.dot(T, #{ margin: 3 }) / T.dot(T, #{ margin: 3 });
+print(`factor ${a}`);
+```
+
+For this with the background, the shift and the spots taken care of, use [Subtract Reference Channel](/commands/image-processing/subtract-reference-channel/).
 
 Images are values: keeping one in a variable is free, and a later command never changes an image a variable still holds. The segmentation and instance maps are not values - they belong to the step, as for any other pipeline step.
 
@@ -390,6 +402,7 @@ These functions and keywords are added by Evanalyzer and are not part of standar
 | `instance_count()`                       | Number of objects in the instance map.                           | [Images](#images)                         |
 | `img.width`, `img.height`                | Size of an image.                                                | [Images](#images)                         |
 | `img.mean()`, `img.min()`, `img.max()`   | Pixel statistics of an image.                                    | [Images](#images)                         |
+| `a.dot(b [, #{ margin, mask }])`         | Mean of the pixel-wise product of two images.                    | [Images](#images)                         |
 | `image_width`, `image_height`, `tile_x`, `tile_y`, `image_bits` | Read-only constants describing the current tile. | [Constants and output](#constants-and-output) |
 | `print(...)`                             | Writes to the log.                                               | [Constants and output](#constants-and-output) |
 

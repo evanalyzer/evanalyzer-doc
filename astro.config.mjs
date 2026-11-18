@@ -217,6 +217,14 @@ export default defineConfig({
                   slug: "commands/image-processing/median-subtract",
                 },
                 {
+                  label: "Subtract Reference Channel",
+                  slug: "commands/image-processing/subtract-reference-channel",
+                },
+                {
+                  label: "Translate Image",
+                  slug: "commands/image-processing/translate-image",
+                },
+                {
                   label: "Image Math",
                   slug: "commands/image-processing/image-math",
                 },

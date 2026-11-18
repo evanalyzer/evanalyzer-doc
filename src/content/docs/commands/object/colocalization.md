@@ -3,7 +3,7 @@ title: Colocalize Objects
 description: Find the objects of two or more classes that overlap and record them as each other's partners.
 ---
 
-The **Colocalize Objects** command answers "are these objects at the same place?". Every object of the classes to colocalize that overlaps an object of each other class records those objects as its **partners**. The [results](/guide/results/#colocalization-details) list the partners by ID and count them per class (see [Colocalization Partners](/fundamentals/metrics/#colocalization-partners)).
+The **Colocalize Objects** command answers "are these objects at the same place?". Every object of the classes to colocalize that overlaps an object of each other class records those objects as its **partners**. The [results](/guide/results/#colocalization-details) list the partners by ID and count them per class and per combination of classes (see [Colocalization Partners](/fundamentals/metrics/#colocalization-partners) and [Coloc columns](/guide/results/#coloc-columns)).
 
 Optionally, the colocalizing objects of one class also get a class of their own (for example "ch1 with ch2"), and the overlap regions become objects of their own.
 

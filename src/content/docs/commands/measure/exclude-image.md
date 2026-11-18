@@ -20,7 +20,7 @@ Each rule:
 
 | Setting         | Description                                                                                                       |
 | --------------- | ----------------------------------------------------------------------------------------------------------------- |
-| **Measurement** | The measurement, picked from the values the project's measurement steps make, e.g. _"quality_01 · Focus score (channel 0)"_. It must have one value per image (an image measurement), not one per object. |
+| **Measurement** | The measurement, picked from the values the project's measurement steps make, e.g. _"quality_01 · Focus score (channel 0)"_. It must have one value per image (an image measurement), not one per object. Besides the measurement steps, [Threshold](/commands/segmentation/threshold/#measurements) (the threshold used) and [Subtract Reference Channel](/commands/image-processing/subtract-reference-channel/#measurements) (factor, shift, fallback used, …) offer their values. |
 | **Comparison**  | **Below**: met when the measurement is smaller than the value (e.g. a focus score too low). **Above**: met when it is larger (e.g. too many saturated pixels). |
 | **Value**       | The limit, in the measurement's unit (e.g. % for _Pixels at the maximum_).                                        |
 

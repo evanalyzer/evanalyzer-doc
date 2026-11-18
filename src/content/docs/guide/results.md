@@ -79,14 +79,15 @@ The **List** view shows one row per detected object. The default columns are **I
 
 - **General** - **Object ID**, **Track ID** (the track an object belongs to, set by a [tracking step](/commands/dataset/track-lap/)), **Image**, **Class**, **Count**.
 - **Geometry** and **Shape** - area, perimeter, circularity, solidity, eccentricity, **Max Feret [px]**, **Min Feret [px]**, **Major Axis [px]**, **Minor Axis [px]**, **Equivalent Diameter [px]** and **Extent**.
-- **Coloc** - per partner class **Coloc with …**, the number of partners from [Colocalize Objects](/commands/object/colocalization/).
+- **Coloc** - which partner classes from [Colocalize Objects](/commands/object/colocalization/) an object has - per class and per combination of classes, see [Coloc columns](#coloc-columns).
 - **Intensity** - per channel **Avg**, **Sum**, **Min**, **Max**, **Std Dev**, **Median**, **Lower Quartile**, **Upper Quartile** and **MAD Intensity (Ch n)**.
 - **Measurements** <span class="evx-new">NEW</span> - the values of the pipeline's [measurement steps](/guide/pipelines/#measurement-steps), named _step ID · measurement_ (e.g. **coloc_01 · Pearson**). A measurement of the whole image shows the image's value in every row of that image. A measurement that points to another object - the nearest neighbour, the parent - has a second column **… · object**; click its cell to see that object.
 
 The settings panel has, under **SHOW**:
 
 - **Images** - **All images**, **Only enabled** or **Only disabled** (the images [left out](#leaving-images-out)).
-- three check lists - **Images**, **Classes** and **Columns** - each with **All** / **None** and a search. **Columns** groups per-channel intensity metrics so you can toggle a whole channel at once.
+- **Images** and **Classes** - check lists with **All** / **None** and a search; click the title to fold or unfold them.
+- **Columns** - **Find a column** searches all of them; below it the columns in foldable sections - **GENERAL**, **GEOMETRY**, **SHAPE**, the intensities, the measurements, … -, each titled with how many are ticked (_"SHAPE · 1 of 12"_). A section with a ticked column starts unfolded, the others folded; while you search, every section is open. The coloc columns have a box of their own ([Coloc columns](#coloc-columns)), and the **CHILDREN** and **LINKED OBJECTS** lists of [Parents and children](#parents-and-children) come after it.
 
 Above the table, **N rows** and the page; use the arrows to page through the results rather than scrolling through everything at once.
 
@@ -111,6 +112,28 @@ The **Classes** list decides which classes become column blocks.
 
 ![Transpose on, a row per image: one column block per class](../../../assets/screenshots/screenshot-results-side-by-side.png)
 
+### Coloc columns
+
+When the analysis has [Colocalize Objects](/commands/object/colocalization/) partners, **COLUMNS** has a **COLOC** box. Its columns tell for each object which of the partner classes it colocalizes with:
+
+| Column | An object counts when it has |
+| --- | --- |
+| **Coloc with B** | a partner of class B (others may be there too). |
+| **Coloc with at least B, C** | a partner of class B and one of class C (others may be there too). |
+| **Coloc with exactly B, C** | partners of class B and C and of no other class picked under **With**. |
+| **Coloc with no class** | no partner of a class picked under **With**. |
+
+The box holds:
+
+- **With** - the partner classes the columns are made of. Default: all of them. A partner of a class not picked doesn't count for **exactly** and **no class**.
+- **Coloc counts** - what a cell holds: **Objects** (_1 for an object that colocalizes, else 0_ - with **A row per: Images** the **Sum** is how many objects, the **Average** their share) or **Partners** (the number of partner objects of those classes, 0 without a match). **Coloc with no class** is only offered with **Objects**. The header is the same either way.
+- the columns in three foldable lists, **WITH EACH CLASS**, **WITH AT LEAST** and **WITH EXACTLY** (with **Coloc with no class**), titled like the sections (_"WITH AT LEAST · 1 of 3"_).
+- **Only combinations that occur** (on by default) - offers only the combinations some object has. Off, every combination of the classes under **With** is offered; with more than 8 classes only those that occur.
+
+Example: with the partner classes `cy5@spot`, `cy7@spot` and `gfp@spot` and a `Cell` row per image, **Coloc with exactly cy5@spot, cy7@spot** with **Objects** and **Aggregate: Sum** counts the cells that have a cy5 and a cy7 spot but no gfp spot.
+
+**Coloc counts**, **With** and **Only combinations that occur** are one setting for the List, the [Plate view](#plate-view) and the [Charts](#charts): the Plate and Charts settings show **Coloc counts** too, and their property pickers - and the export's **Measurements** - offer the same coloc columns.
+
 <a id="colocalization-details"></a>
 
 ### Coloc pairs
@@ -125,12 +148,12 @@ The **Classes** list decides which classes become column blocks.
 
 ### Parents and children
 
-When a pipeline links objects with [Relate Objects](/commands/object/relate-objects/) - spots to the cell they lie in, say - each child stores one parent per parent class. The **ROWS** group then offers two more lists:
+When a pipeline links objects with [Relate Objects](/commands/object/relate-objects/) - spots to the cell they lie in, say - each child stores one parent per parent class. **COLUMNS** then has two more lists, after the coloc box:
 
 - **CHILDREN** - one entry per link, _"Spot in Cell"_. Ticked, every parent row gets the children's **Count** (**Spot · Count**) and, per aggregation picked under **Of the columns** (the same choice as **Aggregate**: **Average**, **Minimum**, **Maximum**, **Std Dev**, **Sum**, **Median**, **Skewness**), that aggregate of every ticked numeric column over its children (**Spot · Mean · Area [px]**). The default aggregation is the average.
 - **LINKED OBJECTS** - one entry per parent class, _"Parent · Cell"_. Ticked, every child row gets its parent's ID (**Parent Cell**) and its parent's value of every ticked numeric column (**Parent Cell · Area [px]**).
 
-The counts and IDs are links: click a children's count to list just those children, a **Coloc with …** count to list the partners, a parent's ID to show the parent. A bar above the table names what is shown (_"Spot of Cell 3f9a0c21d4e7"_); **← Back** goes back to the full list.
+The counts and IDs are links: click a children's count to list just those children, a **Coloc with …** count of one class (with **Coloc counts: Partners**) to list the partners, a parent's ID to show the parent. A bar above the table names what is shown (_"Spot of Cell 3f9a0c21d4e7"_); **← Back** goes back to the full list.
 
 <div class="evx-shot-todo">
 <strong>Parents and children</strong>
@@ -351,7 +374,7 @@ The width of the results, whether the split is on, and **Follow selection** are 
 
 ## Exporting Results
 
-**Export…** in the results bar opens the export card below it: what to export, the **Format**, the **Classes** and the folder (**To**). **More options ›** shows the rest. Every checked option is written out together in one run. The card starts from the [view](#views) shown - its columns, classes and aggregations.
+**Export…** in the results bar opens the export card below it: what to export, the **Format**, the **Classes** and the folder (**To**). **More options ›** shows the rest. Every checked option is written out together in one run. The card starts from the [view](#views) shown - its columns, classes and aggregations -, each time it opens: a change to the table since the last export (**A row per**, **Aggregate**, **Transpose**) is taken over. Settings only the export has - **Format**, the folder, Z planes and time points, the plate options - keep their last values.
 
 ![The export card below Export…: what to export, Format, Classes and the folder](../../../assets/screenshots/screenshot-results-export-dialog.png)
 

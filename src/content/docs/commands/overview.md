@@ -52,6 +52,8 @@ Commands for reducing noise and enhancing signal before segmentation.
 | [Color to Grayscale](/commands/image-processing/color-to-grayscale/)   | Turn an RGB image into one gray value per pixel  |
 | [Intensity Transform](/commands/image-processing/intensity-transform/) | Brightness and contrast adjustment               |
 | [Median Subtract](/commands/image-processing/median-subtract/)         | Subtract the local median for background removal |
+| [Subtract Reference Channel](/commands/image-processing/subtract-reference-channel/) | Remove a signal with a channel that shows only it (e.g. filaments in a spot channel), shift and factor estimated per image |
+| [Translate Image](/commands/image-processing/translate-image/) | Shift the image by a fraction of a pixel |
 | [Image Math](/commands/image-processing/image-math/)                   | Combine two images mathematically                |
 | [Load Image Channel](/commands/image-processing/load-image-channel/)   | Load another channel as the current image        |
 | [Color Deconvolution](/commands/image-processing/color-deconvolution/) | Separate the stains of a brightfield RGB image (e.g. H&E, H-DAB) |
